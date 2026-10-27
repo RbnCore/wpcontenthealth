@@ -4,7 +4,7 @@ Tags: content health, seo, cleanup, taxonomy, wp-cli
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,12 @@ Evet. Her uygulama önceki değeri ve SHA-256 özetini günlüğe yazar; elle de
 Varsayılan olarak silinmez. Ayarlardan "Kaldırırken sil" seçilirse tablolar ve ayarlar silinir.
 
 == Changelog ==
+
+= 0.1.2 =
+* Yönetim arayüzü yenilendi: Pano, Bulgular, Etiket Doktoru, Alt Metin, Ayarlar ve Geri alma günlüğü; ilk açılış (3 adım), çekmece ayrıntısı, toplu düzeltme sihirbazı (kuru koşu → onay → uygula → geri al), duraklat/iptal/yeniden dene.
+* WordPress yönetici renk düzenine uyar; açık ve koyu (Gece yarısı) tema, 375 px'e kadar duyarlı, klavye ve ekran okuyucu erişimi.
+* Çevirilere hazır: `languages/` altında .pot ve tr_TR (.po/.mo).
+* Çekirdek davranış değişmedi: tarama motoru, 30 kural, geri alma, REST ve WP-CLI aynı; ön yüze etkisi yok.
 
 = 0.1.1 =
 * İlk sürüm: tarayıcı, 30 kural, düzeltme + geri alma, Etiket Doktoru, Alt Metin, REST, WP-CLI.

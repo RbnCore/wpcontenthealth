@@ -40,11 +40,17 @@ final class Undo {
 		return (int) $wpdb->insert_id;
 	}
 
-	/** @return array<int,object> son yığınlar (geri alınmamış satır sayısıyla) */
-	public static function batches( int $n = 20 ): array {
+	/** @return array<int,object> son yığınlar (geri alınmamış satır sayısıyla); `no` yığının ilk satır kimliği */
+	public static function batches( int $n = 20, int $offset = 0 ): array {
 		global $wpdb;
 		$t = Db::table( 'undo' );
-		return (array) $wpdb->get_results( $wpdb->prepare( "SELECT batch_id, MIN(action) action, COUNT(*) items, SUM(undone_at IS NULL) pending, MIN(created_at) created_at, MIN(user_id) user_id FROM {$t} GROUP BY batch_id ORDER BY MIN(id) DESC LIMIT %d", $n ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (array) $wpdb->get_results( $wpdb->prepare( "SELECT batch_id, MIN(id) no, MIN(action) action, MIN(object_type) object_type, COUNT(*) items, COUNT(DISTINCT object_id) objects, SUM(undone_at IS NULL) pending, MIN(created_at) created_at, MIN(user_id) user_id FROM {$t} GROUP BY batch_id ORDER BY MIN(id) DESC LIMIT %d OFFSET %d", $n, max( 0, $offset ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	}
+
+	public static function batch_count(): int {
+		global $wpdb;
+		$t = Db::table( 'undo' );
+		return (int) $wpdb->get_var( "SELECT COUNT(DISTINCT batch_id) FROM {$t}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/** @return array<int,object> */
@@ -77,6 +83,9 @@ final class Undo {
 			if ( true === $ok ) {
 				++$out['reverted'];
 				if ( ! $dry_run ) {
+					if ( (int) $row->issue_id > 0 ) {
+						Issues::set_status( array( (int) $row->issue_id ), 'open' ); // Düzeltme geri alındı: bulgu yeniden açık, tekrar düzeltilebilir.
+					}
 					$wpdb->update( Db::table( 'undo' ), array( 'undone_at' => current_time( 'mysql', true ) ), array( 'id' => (int) $row->id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				}
 			} else {

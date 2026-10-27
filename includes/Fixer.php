@@ -15,6 +15,9 @@ defined( 'ABSPATH' ) || exit;
 
 final class Fixer {
 
+	/** Tek çağrı için "son değiştirilme tarihi korunsun" geçersiz kılması (null: ayar geçerli). */
+	private static ?bool $keep_override = null;
+
 	public const ACTIONS = array(
 		'fix_ai_chat_residue',
 		'fix_ai_ui_artifacts',
@@ -91,6 +94,16 @@ final class Fixer {
 			$batch = Undo::new_batch();
 		}
 		$ctx = new Ctx();
+		self::$keep_override = isset( $opts['keep_modified'] ) ? (bool) $opts['keep_modified'] : null;
+		try {
+			return self::dispatch( $action, $issue, $dry, $batch, $opts, $ctx );
+		} finally {
+			self::$keep_override = null;
+		}
+	}
+
+	/** @param array<string,mixed> $opts */
+	private static function dispatch( string $action, object $issue, bool $dry, string $batch, array $opts, Ctx $ctx ) {
 		switch ( $action ) {
 			case 'fix_ai_chat_residue':
 				$cfg = Settings::rule( 'ai_chat_residue' );
@@ -112,7 +125,7 @@ final class Fixer {
 			case 'fix_term_delete_empty':
 				return self::term_delete( $issue, $dry, $batch );
 			case 'fix_term_merge':
-				return self::term_merge( $issue, $dry, $batch );
+				return self::term_merge( $issue, $dry, $batch, $opts );
 			case 'fix_term_noindex':
 				return self::term_noindex( $issue, $dry, $batch );
 			case 'fix_term_rename':
@@ -155,7 +168,7 @@ final class Fixer {
 		foreach ( $update as $f => $pair ) {
 			$data[ $f ] = $pair[1];
 		}
-		if ( ! Settings::get( 'keep_modified' ) ) {
+		if ( ! ( self::$keep_override ?? (bool) Settings::get( 'keep_modified' ) ) ) {
 			$data['post_modified']     = current_time( 'mysql' );
 			$data['post_modified_gmt'] = current_time( 'mysql', true );
 		}
@@ -259,8 +272,12 @@ final class Fixer {
 		);
 	}
 
-	private static function term_merge( object $issue, bool $dry, string $batch ) {
+	private static function term_merge( object $issue, bool $dry, string $batch, array $opts = array() ) {
 		$canon = (int) ( $issue->details_arr['canonical'] ?? 0 );
+		$pick  = (int) ( $opts['canonical'] ?? 0 );
+		if ( $pick && in_array( $pick, array_map( 'intval', (array) ( $issue->details_arr['group'] ?? array() ) ), true ) ) {
+			$canon = $pick; // Kullanıcının kümede seçtiği kanonik etiket.
+		}
 		if ( ! $canon || $canon === $issue->object_id ) {
 			return array( 'changes' => array() ); // Kanonik terim kendisi: dokunma.
 		}

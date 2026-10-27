@@ -3,7 +3,7 @@
  * Plugin Name:       ContentHealth — İçerik Sağlığı
  * Plugin URI:        https://github.com/RbnCore
  * Description:       WordPress "Site Sağlığı" gibi İÇERİK sağlığı paneli: yapay zekâ/arayüz kalıntısı, bozuk adres, meta, alt metin ve etiket denetimi; kuru koşu ve geri alma ile düzeltme. Dış servis çağırmaz.
- * Version:           0.1.1
+ * Version:           0.1.2
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            RBN Bilişim
@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CONTENTHEALTH_VERSION', '0.1.1' );
+define( 'CONTENTHEALTH_VERSION', '0.1.2' );
 define( 'CONTENTHEALTH_FILE', __FILE__ );
 define( 'CONTENTHEALTH_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CONTENTHEALTH_URL', plugin_dir_url( __FILE__ ) );

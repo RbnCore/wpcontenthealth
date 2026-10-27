@@ -28,8 +28,10 @@ final class Media implements Module {
 	public function admin_pages(): array {
 		return array(
 			'alt' => array(
-				'label'  => __( 'Alt Metin', 'contenthealth' ),
-				'render' => array( $this, 'render' ),
+				'label'   => __( 'Alt Metin', 'contenthealth' ),
+				'render'  => array( \ContentHealth\Screens\Alt::class, 'render' ),
+				'count'   => array( \ContentHealth\Screens\Alt::class, 'count' ),
+				'dialogs' => array( \ContentHealth\Screens\Alt::class, 'dialogs' ),
 			),
 		);
 	}
@@ -40,10 +42,5 @@ final class Media implements Module {
 
 	public function rules(): array {
 		return array( new Rules\ImagesMissingAlt(), new Rules\BrokenImageHost() );
-	}
-
-	public function render(): void {
-		echo '<p class="ch-lead">' . esc_html__( 'Alt metni olmayan görsellere şablondan alt metin yazar. Dolu alt metne dokunulmaz. Şablon etiketleri: {başlık}, {dosya_adı}, {site_adı}.', 'contenthealth' ) . '</p>';
-		Admin::fix_panel( 'images_missing_alt', __( 'Alt metni şablondan doldur', 'contenthealth' ), true, array( 'alt_template' => (string) \ContentHealth\Settings::get( 'alt_template' ) ) );
 	}
 }

@@ -35,6 +35,9 @@ final class Rest {
 		register_rest_route( self::NS, '/issues', array( 'methods' => $get, 'callback' => array( self::class, 'issues' ), 'permission_callback' => $perm ) );
 		register_rest_route( self::NS, '/issues/status', array( 'methods' => $post, 'callback' => array( self::class, 'issue_status' ), 'permission_callback' => $perm ) );
 		register_rest_route( self::NS, '/fix', array( 'methods' => $post, 'callback' => array( self::class, 'fix' ), 'permission_callback' => $perm ) );
+		register_rest_route( self::NS, '/issues/(?P<id>\d+)/detail', array( 'methods' => $get, 'callback' => array( self::class, 'issue_detail' ), 'permission_callback' => $perm ) );
+		register_rest_route( self::NS, '/pattern-test', array( 'methods' => $post, 'callback' => array( self::class, 'pattern_test' ), 'permission_callback' => $perm ) );
+		register_rest_route( self::NS, '/onboarding', array( 'methods' => $post, 'callback' => array( self::class, 'onboarding' ), 'permission_callback' => $perm ) );
 		register_rest_route( self::NS, '/undo', array( 'methods' => $post, 'callback' => array( self::class, 'undo' ), 'permission_callback' => $perm ) );
 	}
 
@@ -153,6 +156,16 @@ final class Rest {
 		if ( null !== $req->get_param( 'alt_template' ) ) {
 			$opts['alt_template'] = sanitize_text_field( (string) $req->get_param( 'alt_template' ) );
 		}
+		if ( null !== $req->get_param( 'canonical' ) ) {
+			$opts['canonical'] = (int) $req->get_param( 'canonical' );
+		}
+		if ( null !== $req->get_param( 'keep_modified' ) ) {
+			$opts['keep_modified'] = rest_sanitize_boolean( $req->get_param( 'keep_modified' ) );
+		}
+		$batch = (string) $req->get_param( 'batch' );
+		if ( preg_match( '/^[a-f0-9]{16}$/', $batch ) ) {
+			$opts['batch'] = $batch; // Sihirbaz birden çok kuralı tek geri alma yığınında toplar.
+		}
 		$res = Fixer::run_rule(
 			sanitize_key( (string) $req->get_param( 'rule' ) ),
 			array_map( 'intval', (array) $req->get_param( 'ids' ) ),
@@ -160,6 +173,34 @@ final class Rest {
 			$opts
 		);
 		return is_wp_error( $res ) ? $res : rest_ensure_response( $res );
+	}
+
+	/** @return \WP_REST_Response|\WP_Error */
+	public static function issue_detail( \WP_REST_Request $req ) {
+		$d = Screens\Issues::detail( (int) $req['id'] );
+		return $d ? rest_ensure_response( $d ) : new \WP_Error( 'not_found', __( 'Bulgu bulunamadı.', 'contenthealth' ), array( 'status' => 404 ) );
+	}
+
+	/** Ayarlar ekranındaki desen sınaması: derleme hatası ya da eşleşme (ReDoS korumalı Patterns üzerinden). */
+	public static function pattern_test( \WP_REST_Request $req ): \WP_REST_Response {
+		$pattern = mb_substr( (string) $req->get_param( 'pattern' ), 0, 300 );
+		$sample  = mb_substr( (string) $req->get_param( 'sample' ), 0, 2000 );
+		$check   = Patterns::validate_list( array( $pattern ) );
+		if ( $check['errors'] ) {
+			return rest_ensure_response( array( 'ok' => false, 'error' => $check['errors'][0] ) );
+		}
+		$m = array();
+		return rest_ensure_response( array( 'ok' => true, 'match' => Patterns::match( $pattern, $sample, $m ) ? (string) $m[0] : null ) );
+	}
+
+	/** İlk açılış sihirbazı: kısmi ayar kaydı ve tamamlandı bayrağı. */
+	public static function onboarding( \WP_REST_Request $req ): \WP_REST_Response {
+		$in  = (array) $req->get_param( 'settings' );
+		$res = $in ? Settings::save( $in ) : array( 'settings' => Settings::all(), 'errors' => array() );
+		if ( rest_sanitize_boolean( $req->get_param( 'done' ) ) ) {
+			update_option( 'contenthealth_onboarded', 1, false );
+		}
+		return rest_ensure_response( array( 'errors' => $res['errors'] ) );
 	}
 
 	public static function undo( \WP_REST_Request $req ): \WP_REST_Response {

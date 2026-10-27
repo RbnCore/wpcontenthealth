@@ -1,6 +1,7 @@
 <?php
 /**
- * Yönetim ekranı: Araçlar → ContentHealth. CSS/JS yalnız bu sayfada yüklenir.
+ * Yönetim ekranı: Araçlar → ContentHealth. Kabuk (başlık, sekmeler, canlı bölge) ve admin-post işleyicileri.
+ * CSS/JS yalnız bu sayfada yüklenir; ekranların kendisi Screens\ altındadır.
  *
  * @package ContentHealth
  */
@@ -28,7 +29,7 @@ final class Admin {
 
 	/** @param array<int,string> $links */
 	public static function links( array $links ): array {
-		array_unshift( $links, '<a href="' . esc_url( admin_url( 'tools.php?page=' . self::SLUG ) ) . '">' . esc_html__( 'Aç', 'contenthealth' ) . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( Ui::url() ) . '">' . esc_html__( 'Aç', 'contenthealth' ) . '</a>' );
 		return $links;
 	}
 
@@ -47,48 +48,95 @@ final class Admin {
 		if ( $hook !== self::$hook ) {
 			return;
 		}
-		wp_enqueue_style( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin.css', array(), CONTENTHEALTH_VERSION );
-		wp_enqueue_script( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin.js', array(), CONTENTHEALTH_VERSION, true );
+		wp_enqueue_style( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/rbn-admin-ui.css', array(), CONTENTHEALTH_VERSION );
+		wp_enqueue_script( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/contenthealth-admin.js', array(), CONTENTHEALTH_VERSION, true );
 		wp_localize_script(
 			'contenthealth-admin',
 			'ContentHealthCfg',
 			array(
 				'root'  => esc_url_raw( rest_url( Rest::NS . '/' ) ),
 				'nonce' => wp_create_nonce( 'wp_rest' ),
-				'i18n'  => array(
-					'scanning'   => __( 'Taranıyor…', 'contenthealth' ),
-					'done'       => __( 'Tarama bitti', 'contenthealth' ),
-					'start'      => __( 'Şimdi tara', 'contenthealth' ),
-					'cancel'     => __( 'İptal', 'contenthealth' ),
-					'dry'        => __( 'Kuru koşu', 'contenthealth' ),
-					'apply'      => __( 'Uygula', 'contenthealth' ),
-					'confirm'    => __( 'Değişiklikler uygulanacak ve geri alma günlüğüne yazılacak. Devam edilsin mi?', 'contenthealth' ),
-					'nothing'    => __( 'Değişecek bir şey yok.', 'contenthealth' ),
-					'changed'    => __( 'değişecek', 'contenthealth' ),
-					'applied'    => __( 'uygulandı', 'contenthealth' ),
-					'skipped'    => __( 'atlandı', 'contenthealth' ),
-					'errors'     => __( 'hata', 'contenthealth' ),
-					'undo'       => __( 'Geri al', 'contenthealth' ),
-					'undone'     => __( 'Geri alındı', 'contenthealth' ),
-					'error'      => __( 'İstek başarısız', 'contenthealth' ),
-					'removed'    => __( 'Silinecek', 'contenthealth' ),
-					'added'      => __( 'Eklenecek', 'contenthealth' ),
-					'open'       => __( 'açık', 'contenthealth' ),
-				),
+				'home'  => esc_url_raw( Ui::url() ),
+				'i18n'  => self::strings(),
 			)
 		);
 	}
 
-	/** @return array<string,array{label:string,render:callable}> */
+	/** @return array<string,string> JS'in kullandığı metinler (çeviri .po üzerinden gelir). */
+	private static function strings(): array {
+		return array(
+			'starting'     => __( 'Tarama başlıyor…', 'contenthealth' ),
+			'scanning'     => __( 'Taranıyor…', 'contenthealth' ),
+			'paused'       => __( 'Tarama duraklatıldı', 'contenthealth' ),
+			'pause'        => __( 'Duraklat', 'contenthealth' ),
+			'resume'       => __( 'Sürdür', 'contenthealth' ),
+			'cancelled'    => __( 'Tarama iptal edildi.', 'contenthealth' ),
+			'scanDone'     => __( 'Tarama bitti.', 'contenthealth' ),
+			'scanFail'     => __( 'Tarama durdu.', 'contenthealth' ),
+			'retry'        => __( 'Yeniden dene', 'contenthealth' ),
+			'resumeAt'     => __( 'Kaldığı yerden devam et', 'contenthealth' ),
+			'netError'     => __( 'Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.', 'contenthealth' ),
+			'loadFail'     => __( 'Ayrıntı yüklenemedi.', 'contenthealth' ),
+			'selected'     => __( 'bulgu seçili', 'contenthealth' ),
+			'images'       => __( 'görsel seçili', 'contenthealth' ),
+			'step1'        => __( 'Kuru koşuyu çalıştır', 'contenthealth' ),
+			'step2'        => __( 'Devam', 'contenthealth' ),
+			'step3'        => __( 'Düzeltmeleri uygula', 'contenthealth' ),
+			'close'        => __( 'Kapat', 'contenthealth' ),
+			'applying'     => __( 'Uygulanıyor…', 'contenthealth' ),
+			'dryRunning'   => __( 'Kuru koşu yapılıyor…', 'contenthealth' ),
+			'fixed'        => __( 'düzeltildi', 'contenthealth' ),
+			'skipped'      => __( 'atlandı', 'contenthealth' ),
+			'posts'        => __( 'yazı', 'contenthealth' ),
+			'sample'       => __( 'Örnek', 'contenthealth' ),
+			'dirty'        => __( 'Kaydedilmemiş değişiklik var.', 'contenthealth' ),
+			'clean'        => __( 'Kaydedilmemiş değişiklik yok.', 'contenthealth' ),
+			'patNone'      => __( 'Örnek metinde eşleşme yok.', 'contenthealth' ),
+			'patMatches'   => __( 'eşleşme', 'contenthealth' ),
+			'patBad'       => __( 'Desen geçersiz ya da çok yavaş.', 'contenthealth' ),
+			'patDel'       => __( 'Deseni sil', 'contenthealth' ),
+			'undone'       => __( 'geri alındı', 'contenthealth' ),
+			'undoFail'     => __( 'Geri alınamadı', 'contenthealth' ),
+			'merged'       => __( 'Birleştirildi', 'contenthealth' ),
+			'deleted'      => __( 'silindi', 'contenthealth' ),
+			'filled'       => __( 'Alt metin dolduruldu', 'contenthealth' ),
+			'undoAction'   => __( 'Geri al', 'contenthealth' ),
+			'undoRecord'   => __( 'Geri alma kaydı', 'contenthealth' ),
+			'noChange'     => __( 'Değişecek bir şey yok.', 'contenthealth' ),
+			'errors'       => __( 'hata', 'contenthealth' ),
+			'before'       => __( 'Önce', 'contenthealth' ),
+			'after'        => __( 'Sonra', 'contenthealth' ),
+			'wizOk'        => __( 'Devam edebilmek için onay kutusunu işaretleyin.', 'contenthealth' ),
+			'etaLeft'      => __( 'yaklaşık', 'contenthealth' ),
+			'batch'        => __( 'Parti', 'contenthealth' ),
+			'items'        => __( 'içerik', 'contenthealth' ),
+			'sec'          => __( 'sn', 'contenthealth' ),
+			'willFix'      => __( 'Değişecek', 'contenthealth' ),
+			'willSkip'     => __( 'Atlanacak', 'contenthealth' ),
+			'errorsK'      => __( 'Hata', 'contenthealth' ),
+			'next'         => __( 'Devam', 'contenthealth' ),
+			'startScan'    => __( 'İlk taramayı başlat', 'contenthealth' ),
+			'openIssues'   => __( 'açık bulgu bulundu.', 'contenthealth' ),
+		);
+	}
+
+	/**
+	 * Sekmeler: Pano, Bulgular, modül sayfaları, Geri alma günlüğü, Ayarlar.
+	 *
+	 * @return array<string,array{label:string,render:callable,count?:callable,dialogs?:callable}>
+	 */
 	private static function tabs(): array {
 		$tabs = array(
 			'overview' => array(
-				'label'  => __( 'Özet', 'contenthealth' ),
-				'render' => array( self::class, 'tab_overview' ),
+				'label'   => __( 'Pano', 'contenthealth' ),
+				'render'  => array( Screens\Overview::class, 'render' ),
+				'dialogs' => array( Screens\Overview::class, 'dialogs' ),
 			),
 			'issues'   => array(
-				'label'  => __( 'Bulgular', 'contenthealth' ),
-				'render' => array( self::class, 'tab_issues' ),
+				'label'   => __( 'Bulgular', 'contenthealth' ),
+				'render'  => array( Screens\Issues::class, 'render' ),
+				'count'   => array( Screens\Issues::class, 'count' ),
+				'dialogs' => array( Screens\Issues::class, 'dialogs' ),
 			),
 		);
 		foreach ( Plugin::modules() as $m ) {
@@ -96,237 +144,86 @@ final class Admin {
 				$tabs[ $slug ] = $page;
 			}
 		}
+		$tabs['undo']     = array(
+			'label'   => __( 'Geri alma günlüğü', 'contenthealth' ),
+			'render'  => array( Screens\UndoLog::class, 'render' ),
+			'dialogs' => array( Screens\UndoLog::class, 'dialogs' ),
+		);
 		$tabs['settings'] = array(
 			'label'  => __( 'Ayarlar', 'contenthealth' ),
-			'render' => array( self::class, 'tab_settings' ),
-		);
-		$tabs['undo']     = array(
-			'label'  => __( 'Geri alma günlüğü', 'contenthealth' ),
-			'render' => array( self::class, 'tab_undo' ),
+			'render' => array( Screens\Prefs::class, 'render' ),
 		);
 		return $tabs;
 	}
 
 	public static function render(): void {
+		Ui::sprite();
+		echo '<div class="wrap"><hr class="wp-header-end" />';
 		if ( ! current_user_can( self::CAP ) ) {
-			wp_die( esc_html__( 'Bu sayfaya erişim yetkiniz yok.', 'contenthealth' ), 403 );
+			echo '<main class="rbn-wrap" id="ch" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'lock', __( 'Bu sayfaya erişim yetkiniz yok', 'contenthealth' ), __( 'İçerik Sağlığı’nı yalnız yönetici rolü kullanabilir. Erişim için site yöneticisine başvurun.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Panoya dön', 'contenthealth' ) . '</a>' ) . '</div></section></main></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
+			return;
 		}
 		$tabs = self::tabs();
 		$cur  = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'overview'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$cur  = isset( $tabs[ $cur ] ) ? $cur : 'overview';
-		echo '<div class="wrap ch-wrap"><h1>' . esc_html__( 'ContentHealth — İçerik Sağlığı', 'contenthealth' ) . '</h1>';
+		$onb  = 'overview' === $cur && Screens\Onboarding::needed();
+
+		printf(
+			'<main class="rbn-wrap" id="ch" data-screen="%s"%s>',
+			esc_attr( $onb ? 'ilk' : $cur ),
+			Ui::tone_attr() // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sabit öznitelik.
+		);
+		echo '<p class="rbn-sr" id="live" role="status" aria-live="polite"></p>';
+		self::head( 'overview' === $cur && ! $onb, 'overview' === $cur );
+		if ( ! $onb ) {
+			self::nav( $tabs, $cur );
+		}
 		self::notices();
-		echo '<nav class="nav-tab-wrapper ch-tabs" aria-label="' . esc_attr__( 'ContentHealth sekmeleri', 'contenthealth' ) . '">';
+		if ( $onb ) {
+			Screens\Onboarding::render();
+		} else {
+			call_user_func( $tabs[ $cur ]['render'] );
+		}
+		echo '</main>';
+		if ( ! $onb && isset( $tabs[ $cur ]['dialogs'] ) ) {
+			call_user_func( $tabs[ $cur ]['dialogs'] );
+		}
+		echo '</div>';
+	}
+
+	private static function head( bool $scan_button, bool $on_overview ): void {
+		echo '<header class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'İçerik Sağlığı', 'contenthealth' ) . '</h1><span class="rbn-chip">v' . esc_html( CONTENTHEALTH_VERSION ) . '</span><span class="rbn-chip rbn-chip--ok"><span class="rbn-dot"></span>' . esc_html__( 'Etkin', 'contenthealth' ) . '</span></div><div class="rbn-head__act">';
+		if ( $scan_button ) {
+			echo '<button type="button" class="rbn-btn rbn-btn--pri" data-scan>' . Ui::icon( 'scan' ) . esc_html__( 'Şimdi tara', 'contenthealth' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} elseif ( ! $on_overview ) {
+			echo '<a class="rbn-btn rbn-btn--pri" href="' . esc_url( Ui::url( array( 'tara' => 1 ) ) ) . '">' . Ui::icon( 'scan' ) . esc_html__( 'Şimdi tara', 'contenthealth' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo '</div></header>';
+	}
+
+	/** @param array<string,array<string,mixed>> $tabs */
+	private static function nav( array $tabs, string $cur ): void {
+		echo '<nav aria-label="' . esc_attr__( 'İçerik Sağlığı bölümleri', 'contenthealth' ) . '"><ul class="rbn-tabs">';
 		foreach ( $tabs as $slug => $tab ) {
+			$count = isset( $tab['count'] ) ? (int) call_user_func( $tab['count'] ) : 0;
 			printf(
-				'<a class="nav-tab%s" href="%s">%s</a>',
-				$slug === $cur ? ' nav-tab-active' : '',
-				esc_url( add_query_arg( array( 'page' => self::SLUG, 'tab' => $slug ), admin_url( 'tools.php' ) ) ),
-				esc_html( $tab['label'] )
+				'<li><a href="%s"%s>%s%s</a></li>',
+				esc_url( Ui::url( 'overview' === $slug ? array() : array( 'tab' => $slug ) ) ),
+				$slug === $cur ? ' aria-current="page"' : '',
+				esc_html( (string) $tab['label'] ),
+				$count > 0 ? ' <span class="rbn-count">' . (int) $count . '</span>' : ''
 			);
 		}
-		echo '</nav><div class="ch-body">';
-		call_user_func( $tabs[ $cur ]['render'] );
-		echo '</div></div>';
+		echo '</ul></nav>';
 	}
 
 	private static function notices(): void {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- yalnız ileti göstergesi.
 		if ( isset( $_GET['ch_msg'] ) ) {
 			$msg = sanitize_text_field( wp_unslash( $_GET['ch_msg'] ) );
-			$cls = isset( $_GET['ch_err'] ) ? 'notice-warning' : 'notice-success';
-			echo '<div class="notice ' . esc_attr( $cls ) . ' is-dismissible"><p>' . esc_html( $msg ) . '</p></div>';
+			echo Ui::note( isset( $_GET['ch_err'] ) ? 'warn' : 'ok', '<strong>' . esc_html( $msg ) . '</strong>', '', array( 'role' => 'status', 'id' => 'flash-server' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		// phpcs:enable
-	}
-
-	public static function tab_overview(): void {
-		$s      = Rest::summary();
-		$score  = $s['score'];
-		$class  = null === $score ? 'none' : ( $score >= 85 ? 'good' : ( $score >= 60 ? 'mid' : 'bad' ) );
-		$labels = Registry::severities();
-		echo '<div class="ch-cards">';
-		echo '<section class="ch-card ch-score ch-score-' . esc_attr( $class ) . '" aria-label="' . esc_attr__( 'Sağlık puanı', 'contenthealth' ) . '"><span class="ch-score-num" id="ch-score">' . ( null === $score ? '—' : (int) $score ) . '</span><span class="ch-score-cap">/ 100</span>';
-		echo '<p class="ch-muted">' . ( $s['finished'] ? esc_html( sprintf( /* translators: %s: date */ __( 'Son tarama: %s', 'contenthealth' ), get_date_from_gmt( (string) $s['finished'], 'Y-m-d H:i' ) ) ) : esc_html__( 'Henüz tarama yapılmadı.', 'contenthealth' ) ) . '</p></section>';
-		foreach ( array( Rule::CRITICAL, Rule::WARNING, Rule::INFO ) as $k ) {
-			echo '<section class="ch-card"><span class="ch-count ch-sev-' . esc_attr( $k ) . '">' . (int) $s['severity'][ $k ] . '</span><span class="ch-muted">' . esc_html( $labels[ $k ] ) . '</span></section>';
-		}
-		echo '</div>';
-		echo '<div class="ch-scan" id="ch-scan"><button type="button" class="button button-primary" id="ch-scan-btn">' . esc_html__( 'Şimdi tara', 'contenthealth' ) . '</button> ';
-		echo '<button type="button" class="button" id="ch-cancel-btn" hidden>' . esc_html__( 'İptal', 'contenthealth' ) . '</button>';
-		echo '<div class="ch-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><span id="ch-bar"></span></div>';
-		echo '<p id="ch-scan-msg" class="ch-muted" role="status" aria-live="polite"></p></div>';
-
-		echo '<h2>' . esc_html__( 'En çok bulgu olan kurallar', 'contenthealth' ) . '</h2>';
-		if ( ! $s['rules'] ) {
-			echo '<p class="ch-muted">' . esc_html__( 'Açık bulgu yok.', 'contenthealth' ) . '</p>';
-			return;
-		}
-		echo '<table class="widefat striped ch-table"><thead><tr><th>' . esc_html__( 'Kural', 'contenthealth' ) . '</th><th>' . esc_html__( 'Ciddiyet', 'contenthealth' ) . '</th><th>' . esc_html__( 'Açık', 'contenthealth' ) . '</th></tr></thead><tbody>';
-		foreach ( array_slice( $s['rules'], 0, 12 ) as $r ) {
-			$url = add_query_arg( array( 'page' => self::SLUG, 'tab' => 'issues', 'rule' => $r['id'] ), admin_url( 'tools.php' ) );
-			echo '<tr><td><a href="' . esc_url( $url ) . '">' . esc_html( $r['label'] ) . '</a></td><td><span class="ch-badge ch-sev-' . esc_attr( $r['severity'] ) . '">' . esc_html( $labels[ $r['severity'] ] ) . '</span></td><td>' . (int) $r['open'] . '</td></tr>';
-		}
-		echo '</tbody></table>';
-	}
-
-	public static function tab_issues(): void {
-		$view = isset( $_GET['view'] ) ? (int) $_GET['view'] : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( $view ) {
-			self::issue_detail( $view );
-			return;
-		}
-		$table = new IssuesTable();
-		$table->prepare_items();
-		echo '<form method="get" action="' . esc_url( admin_url( 'tools.php' ) ) . '"><input type="hidden" name="page" value="' . esc_attr( self::SLUG ) . '" /><input type="hidden" name="tab" value="issues" />';
-		$table->search_box( __( 'Bulgularda ara', 'contenthealth' ), 'ch-search' );
-		echo '</form>';
-		echo '<form method="post" action="' . esc_url( add_query_arg( array( 'page' => self::SLUG, 'tab' => 'issues' ), admin_url( 'tools.php' ) ) ) . '">';
-		wp_nonce_field( 'contenthealth_bulk', 'ch_bulk_nonce' );
-		$table->display();
-		echo '</form>';
-		echo '<p><a class="button" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=contenthealth_export' ), 'contenthealth_export' ) ) . '">' . esc_html__( 'CSV indir', 'contenthealth' ) . '</a></p>';
-	}
-
-	private static function issue_detail( int $id ): void {
-		$issue = Issues::get( $id );
-		$back  = add_query_arg( array( 'page' => self::SLUG, 'tab' => 'issues' ), admin_url( 'tools.php' ) );
-		if ( ! $issue ) {
-			echo '<p>' . esc_html__( 'Bulgu bulunamadı.', 'contenthealth' ) . '</p><p><a href="' . esc_url( $back ) . '">&larr; ' . esc_html__( 'Bulgulara dön', 'contenthealth' ) . '</a></p>';
-			return;
-		}
-		$rule = Registry::get( $issue->rule_id );
-		echo '<p><a href="' . esc_url( $back ) . '">&larr; ' . esc_html__( 'Bulgulara dön', 'contenthealth' ) . '</a></p>';
-		echo '<h2>' . esc_html( $rule ? $rule->label() : $issue->rule_id ) . '</h2>';
-		if ( $rule ) {
-			echo '<p>' . esc_html( $rule->description() ) . '</p>';
-		}
-		echo '<h3>' . esc_html__( 'Ayrıntı', 'contenthealth' ) . '</h3><pre class="ch-pre">' . esc_html( (string) wp_json_encode( $issue->details_arr, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) ) . '</pre>';
-		if ( $rule && $rule->fix_action() && 'open' === $issue->status ) {
-			$res = Fixer::run_rule( $rule->id(), array( $issue->object_id ), true, array() );
-			if ( ! is_wp_error( $res ) && ! empty( $res['items'][0]['changes'] ) ) {
-				echo '<h3>' . esc_html__( 'Önerilen düzeltme (kuru koşu)', 'contenthealth' ) . '</h3>';
-				foreach ( $res['items'][0]['changes'] as $ch ) {
-					echo '<div class="ch-diff"><strong>' . esc_html( (string) $ch['field'] ) . '</strong>';
-					foreach ( (array) ( $ch['removed'] ?? array() ) as $l ) {
-						echo '<div class="ch-del">− ' . esc_html( (string) $l ) . '</div>';
-					}
-					foreach ( (array) ( $ch['added'] ?? array() ) as $l ) {
-						echo '<div class="ch-add">+ ' . esc_html( (string) $l ) . '</div>';
-					}
-					echo '</div>';
-				}
-			}
-		}
-	}
-
-	/**
-	 * Kuru koşu / uygula paneli (JS bağlar). Düzeltmesi olmayan kurallar için yalnız sayı gösterir.
-	 *
-	 * @param array<string,mixed> $opts İstek gövdesine eklenir (ör. alt_template).
-	 */
-	public static function fix_panel( string $rule_id, string $title, bool $fixable = true, array $opts = array() ): void {
-		$rule = Registry::get( $rule_id );
-		if ( ! $rule ) {
-			return;
-		}
-		$open = Issues::open_counts()[ $rule_id ] ?? array();
-		$n    = array_sum( $open );
-		$view = add_query_arg( array( 'page' => self::SLUG, 'tab' => 'issues', 'rule' => $rule_id ), admin_url( 'tools.php' ) );
-		echo '<section class="ch-panel" data-rule="' . esc_attr( $rule_id ) . '" data-opts="' . esc_attr( (string) wp_json_encode( $opts ) ) . '">';
-		echo '<header><h3>' . esc_html( $title ) . '</h3><span class="ch-badge ch-sev-' . esc_attr( $rule->severity() ) . '">' . (int) $n . ' ' . esc_html__( 'açık', 'contenthealth' ) . '</span></header>';
-		echo '<p class="ch-muted">' . esc_html( $rule->description() ) . '</p>';
-		echo '<p><a href="' . esc_url( $view ) . '">' . esc_html__( 'Bulguları gör', 'contenthealth' ) . '</a>';
-		if ( $fixable && $rule->fix_action() && $n > 0 ) {
-			echo ' <button type="button" class="button ch-dry">' . esc_html__( 'Kuru koşu', 'contenthealth' ) . '</button> <button type="button" class="button button-primary ch-apply" disabled>' . esc_html__( 'Uygula', 'contenthealth' ) . '</button>';
-		}
-		echo '</p><div class="ch-result" role="status" aria-live="polite"></div></section>';
-	}
-
-	public static function tab_settings(): void {
-		$all = Settings::all();
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="ch-form">';
-		wp_nonce_field( 'contenthealth_save' );
-		echo '<input type="hidden" name="action" value="contenthealth_save" />';
-		echo '<h2>' . esc_html__( 'Genel', 'contenthealth' ) . '</h2><table class="form-table" role="presentation">';
-		echo '<tr><th scope="row"><label for="ch-freq">' . esc_html__( 'Otomatik tarama', 'contenthealth' ) . '</label></th><td><select id="ch-freq" name="s[frequency]">';
-		foreach ( array(
-			'off'    => __( 'Kapalı', 'contenthealth' ),
-			'hourly' => __( 'Saatlik', 'contenthealth' ),
-			'daily'  => __( 'Günlük', 'contenthealth' ),
-			'weekly' => __( 'Haftalık', 'contenthealth' ),
-		) as $k => $v ) {
-			echo '<option value="' . esc_attr( $k ) . '"' . selected( $all['frequency'], $k, false ) . '>' . esc_html( $v ) . '</option>';
-		}
-		echo '</select></td></tr>';
-		self::num_row( 'time_budget', __( 'Parti süresi (sn)', 'contenthealth' ), (int) $all['time_budget'], 1, 20 );
-		self::num_row( 'batch_size', __( 'Parti büyüklüğü (nesne)', 'contenthealth' ), (int) $all['batch_size'], 10, 500 );
-		self::text_row( 'statuses', __( 'Taranan yazı durumları (virgülle)', 'contenthealth' ), implode( ', ', (array) $all['statuses'] ) );
-		self::text_row( 'exclude_post_types', __( 'Dışlanan yazı türleri (virgülle)', 'contenthealth' ), implode( ', ', (array) $all['exclude_post_types'] ) );
-		self::text_row( 'term_taxonomies', __( 'Taranan sınıflandırmalar (virgülle)', 'contenthealth' ), implode( ', ', (array) $all['term_taxonomies'] ) );
-		self::text_row( 'live_host', __( 'Canlı sunucu adı (hatalı adres düzeltmesi için)', 'contenthealth' ), (string) $all['live_host'], 'example.com' );
-		self::text_row( 'alt_template', __( 'Alt metin şablonu', 'contenthealth' ), (string) $all['alt_template'], '{başlık}' );
-		echo '<tr><th scope="row">' . esc_html__( 'Değiştirilme tarihi', 'contenthealth' ) . '</th><td><label><input type="checkbox" name="s[keep_modified]" value="1"' . checked( ! empty( $all['keep_modified'] ), true, false ) . ' /> ' . esc_html__( 'Düzeltmeler yazının "son değiştirilme" tarihini DEĞİŞTİRMESİN', 'contenthealth' ) . '</label></td></tr>';
-		echo '<tr><th scope="row">' . esc_html__( 'Kaldırırken', 'contenthealth' ) . '</th><td><label><input type="checkbox" name="s[delete_on_uninstall]" value="1"' . checked( ! empty( $all['delete_on_uninstall'] ), true, false ) . ' /> ' . esc_html__( 'Eklenti silinirken tüm tabloları ve ayarları da sil', 'contenthealth' ) . '</label></td></tr>';
-		echo '</table>';
-
-		echo '<h2>' . esc_html__( 'Kurallar', 'contenthealth' ) . '</h2>';
-		foreach ( Registry::groups() as $gid => $glabel ) {
-			echo '<h3>' . esc_html( $glabel ) . '</h3>';
-			foreach ( Registry::rules() as $rule ) {
-				if ( $rule->group() !== $gid ) {
-					continue;
-				}
-				$cfg = $all['rules'][ $rule->id() ];
-				$n   = 'r-' . $rule->id();
-				echo '<div class="ch-rule"><p class="ch-rule-head"><label><input type="checkbox" name="s[rules][' . esc_attr( $rule->id() ) . '][enabled]" value="1"' . checked( ! empty( $cfg['enabled'] ), true, false ) . ' /> <strong>' . esc_html( $rule->label() ) . '</strong></label> <span class="ch-badge ch-sev-' . esc_attr( $rule->severity() ) . '">' . esc_html( Registry::severities()[ $rule->severity() ] ) . '</span></p><details><summary>' . esc_html__( 'Ayrıntı ve ince ayar', 'contenthealth' ) . '</summary>';
-				echo '<p class="ch-muted">' . esc_html( $rule->description() ) . '</p>';
-				foreach ( $rule->defaults() as $key => $dv ) {
-					if ( 'enabled' === $key ) {
-						continue;
-					}
-					$fid = $n . '-' . $key;
-					echo '<p><label for="' . esc_attr( $fid ) . '">' . esc_html( $key ) . '</label><br />';
-					$name = 's[rules][' . $rule->id() . '][' . $key . ']';
-					if ( is_array( $dv ) ) {
-						echo '<textarea id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name ) . '" rows="4" class="large-text code">' . esc_textarea( implode( "\n", array_map( 'strval', (array) ( $cfg[ $key ] ?? array() ) ) ) ) . '</textarea>';
-					} elseif ( is_bool( $dv ) ) {
-						echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="0" /><input id="' . esc_attr( $fid ) . '" type="checkbox" name="' . esc_attr( $name ) . '" value="1"' . checked( ! empty( $cfg[ $key ] ), true, false ) . ' />';
-					} else {
-						echo '<input id="' . esc_attr( $fid ) . '" type="' . ( is_int( $dv ) ? 'number' : 'text' ) . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( (string) ( $cfg[ $key ] ?? '' ) ) . '" class="small-text" />';
-					}
-					echo '</p>';
-				}
-				echo '</details></div>';
-			}
-		}
-		submit_button( __( 'Ayarları kaydet', 'contenthealth' ) );
-		echo '</form>';
-	}
-
-	private static function num_row( string $key, string $label, int $val, int $min, int $max ): void {
-		echo '<tr><th scope="row"><label for="ch-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label></th><td><input id="ch-' . esc_attr( $key ) . '" type="number" min="' . (int) $min . '" max="' . (int) $max . '" name="s[' . esc_attr( $key ) . ']" value="' . (int) $val . '" class="small-text" /></td></tr>';
-	}
-
-	private static function text_row( string $key, string $label, string $val, string $ph = '' ): void {
-		echo '<tr><th scope="row"><label for="ch-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label></th><td><input id="ch-' . esc_attr( $key ) . '" type="text" name="s[' . esc_attr( $key ) . ']" value="' . esc_attr( $val ) . '" placeholder="' . esc_attr( $ph ) . '" class="regular-text" /></td></tr>';
-	}
-
-	public static function tab_undo(): void {
-		$rows = Undo::batches( 30 );
-		if ( ! $rows ) {
-			echo '<p class="ch-muted">' . esc_html__( 'Henüz uygulanmış bir düzeltme yok.', 'contenthealth' ) . '</p>';
-			return;
-		}
-		echo '<table class="widefat striped ch-table"><thead><tr><th>' . esc_html__( 'Yığın', 'contenthealth' ) . '</th><th>' . esc_html__( 'Eylem', 'contenthealth' ) . '</th><th>' . esc_html__( 'Kayıt', 'contenthealth' ) . '</th><th>' . esc_html__( 'Geri alınabilir', 'contenthealth' ) . '</th><th>' . esc_html__( 'Tarih', 'contenthealth' ) . '</th><th></th></tr></thead><tbody>';
-		foreach ( $rows as $r ) {
-			echo '<tr><td><code>' . esc_html( $r->batch_id ) . '</code></td><td>' . esc_html( $r->action ) . '</td><td>' . (int) $r->items . '</td><td>' . (int) $r->pending . '</td><td>' . esc_html( get_date_from_gmt( (string) $r->created_at, 'Y-m-d H:i' ) ) . '</td><td>';
-			if ( (int) $r->pending > 0 ) {
-				echo '<button type="button" class="button ch-undo" data-key="' . esc_attr( $r->batch_id ) . '">' . esc_html__( 'Geri al', 'contenthealth' ) . '</button>';
-			}
-			echo '</td></tr>';
-		}
-		echo '</tbody></table><div class="ch-result" id="ch-undo-result" role="status" aria-live="polite"></div>';
 	}
 
 	/* ------------------------- admin-post işleyicileri ------------------------- */
@@ -338,16 +235,19 @@ final class Admin {
 		check_admin_referer( $nonce, $field );
 	}
 
-	private static function back( string $tab, string $msg, bool $err = false ): void {
-		$args = array(
-			'page'   => self::SLUG,
-			'tab'    => $tab,
-			'ch_msg' => rawurlencode( $msg ),
+	/** @param array<string,mixed> $extra */
+	private static function back( string $tab, string $msg, bool $err = false, array $extra = array() ): void {
+		$args = array_merge(
+			array(
+				'tab'    => $tab,
+				'ch_msg' => rawurlencode( $msg ),
+			),
+			$extra
 		);
 		if ( $err ) {
 			$args['ch_err'] = 1;
 		}
-		wp_safe_redirect( add_query_arg( $args, admin_url( 'tools.php' ) ) );
+		wp_safe_redirect( Ui::url( $args ) );
 		exit;
 	}
 
@@ -357,6 +257,7 @@ final class Admin {
 		foreach ( array( 'keep_modified', 'delete_on_uninstall' ) as $b ) {
 			$in[ $b ] = ! empty( $in[ $b ] );
 		}
+		$in = Screens\Prefs::normalize( $in );
 		$res = Settings::save( $in );
 		if ( $res['errors'] ) {
 			self::back( 'settings', __( 'Kaydedildi; bazı desenler geçersiz olduğu için atlandı: ', 'contenthealth' ) . implode( ' | ', array_slice( $res['errors'], 0, 3 ) ), true );
@@ -364,16 +265,21 @@ final class Admin {
 		self::back( 'settings', __( 'Ayarlar kaydedildi.', 'contenthealth' ) );
 	}
 
+	/** Bulgu listesi formu (JS yokken de çalışır): seçilenleri / tek bulguyu yok say ya da yeniden aç. */
 	public static function bulk(): void {
-		if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || ! isset( $_POST['ids'] ) ) {
+		if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || ! isset( $_POST['ch_bulk_nonce'] ) ) {
 			return;
 		}
 		self::guard( 'contenthealth_bulk', 'ch_bulk_nonce' );
-		$act = isset( $_POST['action'] ) ? sanitize_key( wp_unslash( $_POST['action'] ) ) : '';
-		if ( ! in_array( $act, array( 'ignore', 'reopen' ), true ) && isset( $_POST['action2'] ) ) {
-			$act = sanitize_key( wp_unslash( $_POST['action2'] ) );
+		$act = isset( $_POST['ch_act'] ) ? sanitize_key( wp_unslash( $_POST['ch_act'] ) ) : '';
+		$ids = isset( $_POST['ids'] ) ? array_map( 'intval', (array) wp_unslash( $_POST['ids'] ) ) : array();
+		if ( isset( $_POST['one'] ) ) {
+			$ids = array( (int) $_POST['one'] );
+			$act = 'ignore';
+		} elseif ( isset( $_POST['reopen'] ) ) {
+			$ids = array( (int) $_POST['reopen'] );
+			$act = 'reopen';
 		}
-		$ids = array_map( 'intval', (array) wp_unslash( $_POST['ids'] ) );
 		$map = array(
 			'ignore' => 'ignored',
 			'reopen' => 'open',
@@ -383,11 +289,12 @@ final class Admin {
 		}
 		$n = Issues::set_status( $ids, $map[ $act ] );
 		/* translators: %d: number of rows */
-		self::back( 'issues', sprintf( __( '%d bulgu güncellendi.', 'contenthealth' ), $n ) );
+		self::back( 'issues', sprintf( 'ignored' === $map[ $act ] ? __( '%d bulgu yok sayıldı.', 'contenthealth' ) : __( '%d bulgu yeniden açıldı.', 'contenthealth' ), $n ) );
 	}
 
 	public static function export(): void {
 		self::guard( 'contenthealth_export' );
+		$f = Screens\Issues::filters_from( $_GET ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- guard() nonce'u doğruladı.
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
 		header( 'Content-Disposition: attachment; filename="contenthealth-bulgular.csv"' );
@@ -396,7 +303,7 @@ final class Admin {
 		fputcsv( $out, array( 'id', 'kural', 'ciddiyet', 'tür', 'nesne', 'durum', 'özet' ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fputcsv
 		$page = 1;
 		do {
-			$res = Issues::query( array( 'status' => '', 'per_page' => 500, 'page' => $page, 'order' => 'asc' ) );
+			$res = Issues::query( array_merge( $f, array( 'per_page' => 500, 'page' => $page, 'order' => 'asc' ) ) );
 			foreach ( $res['rows'] as $r ) {
 				$sum = (string) wp_json_encode( $r->details_arr, JSON_UNESCAPED_UNICODE );
 				// CSV enjeksiyonuna karşı: formül başlatan karakterle başlayan hücreleri etkisizleştir.

@@ -18,7 +18,7 @@ global $wpdb;
 foreach ( array( 'runs', 'issues', 'undo' ) as $contenthealth_t ) {
 	$wpdb->query( 'DROP TABLE IF EXISTS `' . esc_sql( $wpdb->prefix . 'contenthealth_' . $contenthealth_t ) . '`' ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared
 }
-foreach ( array( 'contenthealth_settings', 'contenthealth_db_version', 'contenthealth_noindex_terms', 'contenthealth_term_redirects' ) as $contenthealth_o ) {
+foreach ( array( 'contenthealth_settings', 'contenthealth_db_version', 'contenthealth_noindex_terms', 'contenthealth_term_redirects', 'contenthealth_onboarded' ) as $contenthealth_o ) {
 	delete_option( $contenthealth_o );
 }
 wp_clear_scheduled_hook( 'contenthealth_cron_scan' );

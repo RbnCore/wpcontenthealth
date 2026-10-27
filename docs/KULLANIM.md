@@ -2,16 +2,22 @@
 
 **Araçlar → ContentHealth** (yönetici yetkisi gerekir).
 
+## İlk açılış
+
+Eklenti ilk açıldığında 3 adımlı bir karşılama gelir: (1) ne yaptığı ve neyi değiştirmediği, (2) tarama sıklığı ile kapsam, (3) ilk tarama. **Şimdi değil** ile atlanabilir; sonra Pano'dan **Şimdi tara** kullanılır.
+
 ## Sekmeler
 
 | Sekme | Ne yapar |
 |---|---|
-| **Özet** | Sağlık puanı (0–100), kritik/uyarı/bilgi sayıları, en çok bulgusu olan kurallar, **Şimdi tara** düğmesi (AJAX, ilerleme çubuğu, iptal) |
-| **Bulgular** | Tüm bulgular: kural/ciddiyet/durum süzgeci, arama, sıralama, toplu **Yoksay / Yeniden aç**, CSV indirme. Satıra tıklayınca ayrıntı ve önerilen düzeltmenin **farkı** (silinecek `−`, eklenecek `+`) |
-| **Etiket Doktoru** | Boş, yinelenen, aşırı uzun terimler; birleştirme, silme, yeniden adlandırma, noindex |
-| **Alt Metin** | Alt metni olmayan görsellere şablondan (`{başlık}`, `{dosya_adı}`, `{site_adı}`) alt metin |
-| **Ayarlar** | Tarama sıklığı, parti süresi/büyüklüğü, taranan durumlar, dışlanan türler, kural açma/kapama ve eşikleri |
-| **Geri alma günlüğü** | Uygulanan her düzeltme yığını ve **Geri al** düğmesi |
+| **Pano** | Sağlık puanı (0–100), kritik/uyarı/bilgi sayıları, en çok bulgusu olan kurallar, son tarama bilgisi, **Şimdi tara** (ilerleme çubuğu, duraklat, iptal, ağ hatasında yeniden dene) |
+| **Bulgular** | Kural/ciddiyet/durum süzgeci, arama, sayfalama, toplu seçim. Satıra tıklayınca **çekmece**: ayrıntı ve önerilen düzeltmenin farkı (silinecek `−`, eklenecek `+`; alt alta ya da yan yana). Toplu seçimde **Düzelt…** sihirbazı: kuru koşu → örnek farklar → onay → uygula; **Yoksay / Yeniden aç**, CSV |
+| **Etiket Doktoru** | Yinelenen etiket kümeleri (kanonik etiketi siz seçersiniz) ve **birleştir**; boş etiketleri silme; çok uzun adlar |
+| **Alt Metin** | Alt metni olmayan görsellere şablondan (`{başlık}`, `{dosya_adı}`, `{site_adı}`) alt metin; canlı örnek önizleme |
+| **Ayarlar** | Tarama sıklığı, adım süresi/büyüklüğü, taranan durumlar, dışlanan türler, kural eşikleri, yapay zekâ kalıntı desenleri (ekle/sil/**dene**; yavaş ya da geçersiz regex reddedilir). Değişiklik varken kaydet çubuğu açılır |
+| **Geri alma günlüğü** | Uygulanan her düzeltme yığını, ayrıntısı ve **Geri al** |
+
+Klavye: Tab ile gezin, **Esc** çekmeceyi/iletişim kutusunu kapatır ve odak açan düğmeye döner. Durum iletileri ekran okuyucuya duyurulur.
 
 ## Güvenli düzeltme akışı
 
