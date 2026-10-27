@@ -254,7 +254,7 @@ final class Admin {
 	public static function save(): void {
 		self::guard( 'contenthealth_save' );
 		$in = isset( $_POST['s'] ) && is_array( $_POST['s'] ) ? wp_unslash( $_POST['s'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Settings::save her alanı temizler.
-		foreach ( array( 'keep_modified', 'delete_on_uninstall' ) as $b ) {
+		foreach ( array( 'keep_modified', 'audit_on_save', 'delete_on_uninstall' ) as $b ) {
 			$in[ $b ] = ! empty( $in[ $b ] );
 		}
 		$in = Screens\Prefs::normalize( $in );

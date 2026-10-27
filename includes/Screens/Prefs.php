@@ -24,8 +24,8 @@ final class Prefs {
 	private const EDITOR_RULE   = 'ai_chat_residue';
 	private const EDITOR_FIELDS = array( 'patterns_head', 'patterns_tail' );
 
-	private const TOP_BOOL = array( 'keep_modified', 'delete_on_uninstall' );
-	private const TOP_KEYS = array( 'frequency', 'time_budget', 'batch_size', 'statuses', 'exclude_post_types', 'term_taxonomies', 'keep_modified', 'delete_on_uninstall', 'live_host', 'alt_template', 'rules' );
+	private const TOP_BOOL = array( 'keep_modified', 'audit_on_save', 'delete_on_uninstall' );
+	private const TOP_KEYS = array( 'frequency', 'time_budget', 'batch_size', 'statuses', 'exclude_post_types', 'term_taxonomies', 'keep_modified', 'audit_on_save', 'delete_on_uninstall', 'live_host', 'alt_template', 'rules' );
 
 	/**
 	 * Gönderilen ayar dizisini yalnız bilinen anahtarlara indirger (Settings::save asıl temizliği yapar).
@@ -141,6 +141,7 @@ final class Prefs {
 		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-alt">' . esc_html__( 'Alt metin şablonu', 'contenthealth' ) . '</label><p class="rbn-help" id="t-alt-h">' . esc_html__( 'Kullanılabilir jetonlar: {başlık}, {dosya_adı}, {site_adı}.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><input class="rbn-input rbn-input--mono" id="t-alt" name="s[alt_template]" maxlength="200" value="' . esc_attr( (string) $s['alt_template'] ) . '" aria-describedby="t-alt-h"></div></div>';
 		echo '<div class="rbn-field"><div class="rbn-field__l"><span class="rbn-label">' . esc_html__( 'Güvenlik', 'contenthealth' ) . '</span></div><div class="rbn-field__c"><div class="rbn-stack">';
 		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-km" name="s[keep_modified]" value="1"' . checked( ! empty( $s['keep_modified'] ), true, false ) . ' aria-describedby="t-km-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Düzeltmede son değiştirilme tarihini koru', 'contenthealth' ) . '</b><span class="rbn-help" id="t-km-h">' . esc_html__( 'Açıkken düzeltilen yazılar “güncellendi” görünmez.', 'contenthealth' ) . '</span></span></label>';
+		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-as" name="s[audit_on_save]" value="1"' . checked( ! empty( $s['audit_on_save'] ), true, false ) . ' aria-describedby="t-as-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Kaydedince yeniden denetle', 'contenthealth' ) . '</b><span class="rbn-help" id="t-as-h">' . esc_html__( 'Bir yazıyı kaydettiğinizde yalnız o yazının bulguları yeniden denetlenir; elle düzelttiğiniz bulgu kendiliğinden “düzeltildi” olur. Yinelenen başlık, yetim içerik gibi tüm siteye bakan kurallar taramayı bekler.', 'contenthealth' ) . '</span></span></label>';
 		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-du" name="s[delete_on_uninstall]" value="1"' . checked( ! empty( $s['delete_on_uninstall'] ), true, false ) . ' aria-describedby="t-du-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Eklenti silinince verileri de sil', 'contenthealth' ) . '</b><span class="rbn-help" id="t-du-h">' . esc_html__( 'Kapalıyken eklenti silinse de bulgular, ayarlar ve geri alma günlüğü kalır.', 'contenthealth' ) . '</span></span></label>';
 		echo '</div></div></div></div></section>';
 	}

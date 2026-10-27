@@ -27,6 +27,7 @@ final class Settings {
 			'statuses'           => array( 'publish' ),
 			'exclude_post_types' => array( 'attachment' ),
 			'keep_modified'      => true,
+			'audit_on_save'      => true,
 			'delete_on_uninstall' => false,
 			'live_host'          => '',
 		);
@@ -96,6 +97,9 @@ final class Settings {
 		}
 		if ( array_key_exists( 'keep_modified', $in ) ) {
 			$cur['keep_modified'] = (bool) $in['keep_modified'];
+		}
+		if ( array_key_exists( 'audit_on_save', $in ) ) {
+			$cur['audit_on_save'] = (bool) $in['audit_on_save'];
 		}
 		if ( array_key_exists( 'delete_on_uninstall', $in ) ) {
 			$cur['delete_on_uninstall'] = (bool) $in['delete_on_uninstall'];

@@ -3,7 +3,7 @@
  * Plugin Name:       ContentHealth — İçerik Sağlığı
  * Plugin URI:        https://github.com/RbnCore
  * Description:       WordPress "Site Sağlığı" gibi İÇERİK sağlığı paneli: yapay zekâ/arayüz kalıntısı, bozuk adres, meta, alt metin ve etiket denetimi; kuru koşu ve geri alma ile düzeltme. Dış servis çağırmaz.
- * Version:           0.1.4
+ * Version:           0.1.5
  * Requires at least: 6.4
  * Requires PHP:      8.1
  * Author:            RBN Bilişim
@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CONTENTHEALTH_VERSION', '0.1.4' );
+define( 'CONTENTHEALTH_VERSION', '0.1.5' );
 define( 'CONTENTHEALTH_FILE', __FILE__ );
 define( 'CONTENTHEALTH_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CONTENTHEALTH_URL', plugin_dir_url( __FILE__ ) );
@@ -57,6 +57,19 @@ add_filter(
 
 add_action( 'contenthealth_cron_scan', array( \ContentHealth\Cron::class, 'run' ) );
 add_action( 'contenthealth_cron_continue', array( \ContentHealth\Cron::class, 'run' ) );
+
+/*
+ * Kayıtta yeniden denetim: yazı kaydedilince yalnız o yazının bulguları denetlenir.
+ * Kanca ucuzdur; sınıf ilk kayıtta yüklenir, ön yüzde (kayıt olmadığından) hiçbir şey çalışmaz.
+ */
+add_action(
+	'wp_after_insert_post',
+	static function ( int $post_id, \WP_Post $post, bool $update ): void {
+		\ContentHealth\SaveAudit::on_save( $post_id, $post, $update );
+	},
+	20,
+	3
+);
 
 add_action(
 	'rest_api_init',

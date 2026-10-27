@@ -4,7 +4,7 @@ Tags: content health, seo, cleanup, taxonomy, wp-cli
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
-Stable tag: 0.1.4
+Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,12 @@ Evet. Her uygulama önceki değeri ve SHA-256 özetini günlüğe yazar; elle de
 Varsayılan olarak silinmez. Ayarlardan "Kaldırırken sil" seçilirse tablolar ve ayarlar silinir.
 
 == Changelog ==
+
+= 0.1.5 =
+* Yeni: Yazı kaydedilince yalnız o yazının tek-yazılık kuralları yeniden çalışır. Elle düzeltilen bulgu kendiliğinden "düzeltildi" olur ("Elle düzeltildi" etiketi); hâlâ eşleşen açık kalır; yeni çıkan açılır. Genel (küme) kurallar kayıtta çalışmaz, taramayı bekler.
+* Yeni: Ayarlar → Güvenlik → "Kaydedince yeniden denetle" anahtarı (varsayılan açık; kapalıyken eski davranış).
+* Yeni: Bulgular listesinde "Son denetim" satırı ve açık bulguda "Yazı sonradan değişti" rozeti.
+* Revizyon, otomatik kayıt, içe aktarma ve yetkisiz bağlam denetlenmez; denetim hata verirse kayıt engellenmez.
 
 = 0.1.4 =
 * Düzeltme: "Yapay zekâ arayüz kalıntısı" bulgusu `attachment-container` (arama sonucu / medya kabı) için "değişecek bir şey yok" diyordu; düzeltici artık bu kabı da temizler. Başlık metni `<p>` içinde korunur, boş kap kalkar, görsel/bağlantı içeren kapta medya silinmez.

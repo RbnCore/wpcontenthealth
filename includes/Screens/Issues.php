@@ -13,6 +13,8 @@ use ContentHealth\Fixer;
 use ContentHealth\Issues as IssueStore;
 use ContentHealth\Registry;
 use ContentHealth\Rule;
+use ContentHealth\Runs;
+use ContentHealth\SaveAudit;
 use ContentHealth\Settings;
 use ContentHealth\Ui;
 
@@ -96,7 +98,7 @@ final class Issues {
 		$any  = IssueStore::query( array( 'status' => '', 'per_page' => 1 ) )['total'];
 
 		echo '<div class="rbn-note rbn-note--ok" role="status" id="flash" hidden></div>';
-		echo '<section class="rbn-card" aria-labelledby="h-list"><div class="rbn-card__h"><h2 id="h-list">' . esc_html__( 'Bulgular', 'contenthealth' ) . ' <span class="rbn-count" style="vertical-align:middle">' . (int) $res['total'] . '</span></h2><p>' . esc_html__( 'Tarama sonucunda bulunan içerik sorunları. Bir satırı açarak kanıtı ve önerilen düzeltmeyi görün.', 'contenthealth' ) . '</p></div>';
+		echo '<section class="rbn-card" aria-labelledby="h-list"><div class="rbn-card__h"><h2 id="h-list">' . esc_html__( 'Bulgular', 'contenthealth' ) . ' <span class="rbn-count" style="vertical-align:middle">' . (int) $res['total'] . '</span></h2><p>' . esc_html__( 'Tarama sonucunda bulunan içerik sorunları. Bir satırı açarak kanıtı ve önerilen düzeltmeyi görün.', 'contenthealth' ) . '</p>' . self::last_audit_line() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		if ( 0 === $any ) {
 			echo '<div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'scan', __( 'Henüz bulgu yok', 'contenthealth' ), __( 'Henüz tarama yapılmadı ya da tarama hiçbir sorun bulmadı. Taramayı başlatın.', 'contenthealth' ), '<button type="button" class="rbn-btn rbn-btn--pri" data-scan>' . Ui::icon( 'scan' ) . esc_html__( 'Şimdi tara', 'contenthealth' ) . '</button>' ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -125,7 +127,8 @@ final class Issues {
 		$cap = sprintf( __( 'Bulgu listesi, sayfa %1$d / %2$d', 'contenthealth' ), $page, $pages );
 		echo '<div class="rbn-tw"><table class="rbn-table rbn-table--stack rbn-table--sel" id="tbl"' . ( $open ? ' data-autoopen="' . (int) $open . '"' : '' ) . '><caption class="rbn-sr">' . esc_html( $cap ) . '</caption>';
 		echo '<thead><tr><th scope="col" class="rbn-ck"><label class="rbn-chk"><input type="checkbox" data-select-all aria-label="' . esc_attr__( 'Bu sayfadaki tüm bulguları seç', 'contenthealth' ) . '"></label></th><th scope="col">' . esc_html__( 'Nesne', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Kural', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Kanıt', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Ciddiyet', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Tarih', 'contenthealth' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Eylemler', 'contenthealth' ) . '</span></th></tr></thead><tbody>';
-		$groups = Registry::groups();
+		$groups   = Registry::groups();
+		$modified = self::modified_map( $res['rows'] );
 		foreach ( $res['rows'] as $r ) {
 			$rule  = Registry::get( $r->rule_id );
 			$title = Ui::object_title( $r );
@@ -144,7 +147,7 @@ final class Issues {
 			);
 			echo '<th scope="row"><span class="rbn-obj">' . esc_html( $title ) . '</span><span class="rbn-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th>';
 			echo '<td data-l="' . esc_attr__( 'Kural', 'contenthealth' ) . '">' . esc_html( $rule ? $rule->label() : $r->rule_id ) . '<span class="rbn-sub">' . esc_html( (string) ( $groups[ $r->group_id ] ?? $r->group_id ) ) . '</span></td>';
-			echo '<td data-l="' . esc_attr__( 'Kanıt', 'contenthealth' ) . '"><span class="rbn-ev"><mark>' . esc_html( Ui::evidence( $r ) ) . '</mark></span></td>';
+			echo '<td data-l="' . esc_attr__( 'Kanıt', 'contenthealth' ) . '"><span class="rbn-ev"><mark>' . esc_html( Ui::evidence( $r ) ) . '</mark></span>' . self::state_badge( $r, $modified ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<td data-l="' . esc_attr__( 'Ciddiyet', 'contenthealth' ) . '">' . Ui::sev_badge( $r->severity ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<td data-l="' . esc_attr__( 'Tarih', 'contenthealth' ) . '" class="rbn-nowrap">' . Ui::date( $r->last_seen ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<td><div class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" data-open="dlg-detay" data-detail="' . (int) $r->id . '" aria-label="' . esc_attr( sprintf( /* translators: %s: object title */ __( 'Ayrıntı: %s', 'contenthealth' ), $title ) ) . '">' . esc_html__( 'Ayrıntı', 'contenthealth' ) . '</button>';
@@ -158,6 +161,62 @@ final class Issues {
 		echo '</tbody></table></div></form>';
 		echo Ui::pager( (int) $res['total'], self::PER_PAGE, $page, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</section>';
+	}
+
+	/** "Son denetim: <tarih>" satırı: son tarama ile son kayıt denetiminden yeni olanı. */
+	private static function last_audit_line(): string {
+		$run  = Runs::latest_finished();
+		$full = $run ? (string) $run->finished_at : '';
+		$save = SaveAudit::last();
+		$last = max( $full, $save );
+		if ( '' === $last ) {
+			return '';
+		}
+		$how = $last === $save && '' !== $save ? __( 'yazı kaydedilirken', 'contenthealth' ) : __( 'tam tarama', 'contenthealth' );
+		/* translators: 1: date and time, 2: how (full scan / on post save) */
+		return '<p class="rbn-muted" id="last-audit">' . sprintf( esc_html__( 'Son denetim: %1$s (%2$s)', 'contenthealth' ), Ui::datetime( $last ), esc_html( $how ) ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Listedeki yazı bulguları için yazının son değişiklik zamanı (GMT), tek sorguda.
+	 *
+	 * @param array<int,object> $rows
+	 * @return array<int,string> yazı kimliği → post_modified_gmt
+	 */
+	private static function modified_map( array $rows ): array {
+		global $wpdb;
+		$ids = array();
+		foreach ( $rows as $r ) {
+			if ( 'post' === $r->object_type ) {
+				$ids[] = (int) $r->object_id;
+			}
+		}
+		$ids = array_values( array_unique( $ids ) );
+		if ( ! $ids ) {
+			return array();
+		}
+		$out = array();
+		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_modified_gmt FROM {$wpdb->posts} WHERE ID IN (" . implode( ',', array_fill( 0, count( $ids ), '%d' ) ) . ')', $ids ) ) as $p ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$out[ (int) $p->ID ] = (string) $p->post_modified_gmt;
+		}
+		return $out;
+	}
+
+	/**
+	 * Durum rozeti: elle düzeltilen bulgu "elle düzeltildi"; açık bulgu yazı ondan sonra değiştiyse "yazı sonradan değişti".
+	 * Kayıt anında denetlenen bulgunun last_seen'i kayıttan yeni olduğundan rozet çıkmaz.
+	 *
+	 * @param array<int,string> $modified
+	 */
+	private static function state_badge( object $r, array $modified ): string {
+		if ( 'fixed' === $r->status && 'user' === ( $r->details_arr['fixed_by'] ?? '' ) ) {
+			return ' ' . Ui::badge( 'ok', 'check', __( 'Elle düzeltildi', 'contenthealth' ) );
+		}
+		$mod = $modified[ (int) $r->object_id ] ?? '';
+		if ( 'open' === $r->status && 'post' === $r->object_type && '' !== $mod && strtotime( $mod . ' UTC' ) > strtotime( (string) $r->last_seen . ' UTC' ) ) {
+			return ' ' . Ui::badge( 'info', 'info', __( 'Yazı sonradan değişti', 'contenthealth' ) );
+		}
+		return '';
 	}
 
 	/** @param array<string,mixed> $f */
