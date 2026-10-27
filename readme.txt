@@ -15,7 +15,7 @@ WordPress "Site Sağlığı" gibi İÇERİK sağlığı paneli: yapay zekâ/aray
 == Description ==
 
 * 30 kural: içerik temizliği, SEO, medya, bağlantı, etiket/kategori. Her biri Ayarlar'dan açılıp kapatılır.
-* Sağlık puanı (0–100), kritik/uyarı/bilgi sayıları, süzülebilir ve aranabilir bulgu listesi, CSV dışa aktarma.
+* Hata puanı ve Öneri puanı (0–100, bulgu durumuna göre canlı), kritik/uyarı/bilgi sayıları, süzülebilir ve aranabilir bulgu listesi, CSV dışa aktarma.
 * Parti parti, kalıcı imleçli tarama: büyük sitede de sunucuyu yormaz (AJAX, WP-Cron, WP-CLI).
 * Düzeltmeler önce kuru koşu ile fark gösterir, onayla uygulanır, geri alma günlüğüne yazılır. "Son değiştirilme" tarihi ve revizyonlar değişmez.
 * Etiket Doktoru: boş etiketi silme, yinelenenleri birleştirme, uzun adı kısaltma, tek kullanımlıkları noindex.
@@ -43,6 +43,9 @@ Varsayılan olarak silinmez. Ayarlardan "Kaldırırken sil" seçilirse tablolar 
 == Changelog ==
 
 = 0.1.5 =
+* Yeni: Puan canlı. Yazı kaydedilince, bulgu düzeltilince, geri alınınca ya da yok sayılınca Pano'daki puan hemen yeniden hesaplanır (tarama beklenmez; 60 sn önbellek, değişiklikte silinir).
+* Yeni: İki puan. "Hata puanı" yalnız kritik + uyarı kurallarıyla (sitedeki hatalar), "Öneri puanı" yalnız bilgi kurallarıyla (iyileştirme önerileri) hesaplanır; Pano'da "Nasıl hesaplanır?" açıklaması var. Tarama kaydındaki puan artık Hata puanıdır; Öneri puanı tarama ayrıntısında (`suggest_score`) saklanır, eski kayıtlarda "—" görünür.
+* Yeni: Yönetim CSS/JS sürüm parametresi dosya içerik özetidir; sürüm sabit kalsa da değişen dosya yeniden indirilir.
 * Yeni: Yazı kaydedilince yalnız o yazının tek-yazılık kuralları yeniden çalışır. Elle düzeltilen bulgu kendiliğinden "düzeltildi" olur ("Elle düzeltildi" etiketi); hâlâ eşleşen açık kalır; yeni çıkan açılır. Genel (küme) kurallar kayıtta çalışmaz, taramayı bekler.
 * Yeni: Ayarlar → Güvenlik → "Kaydedince yeniden denetle" anahtarı (varsayılan açık; kapalıyken eski davranış).
 * Yeni: Bulgular listesinde "Son denetim" satırı ve açık bulguda "Yazı sonradan değişti" rozeti.

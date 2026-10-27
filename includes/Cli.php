@@ -52,7 +52,7 @@ final class Cli {
 		}
 		\WP_CLI::success(
 			sprintf(
-				'Tarama %s: puan %s, süre %.2f sn, bellek tepe %.1f MB',
+				'Tarama %s: hata puanı %s, süre %.2f sn, bellek tepe %.1f MB',
 				$run->status,
 				null === $run->score ? '-' : (string) $run->score,
 				microtime( true ) - $t0,
@@ -78,7 +78,7 @@ final class Cli {
 			\WP_CLI::print_value( $s, array( 'format' => 'json' ) );
 			return;
 		}
-		\WP_CLI::log( sprintf( 'Puan: %s  (son tarama: %s)', null === $s['score'] ? '-' : (string) $s['score'], (string) ( $s['finished'] ?? '-' ) ) );
+		\WP_CLI::log( sprintf( 'Hata puanı: %s · Öneri puanı: %s  (son tarama: %s)', null === $s['score'] ? '-' : (string) $s['score'], null === $s['suggest'] ? '-' : (string) $s['suggest'], (string) ( $s['finished'] ?? '-' ) ) );
 		\WP_CLI::log( sprintf( 'Kritik %d · Uyarı %d · Bilgi %d', $s['severity'][ Rule::CRITICAL ], $s['severity'][ Rule::WARNING ], $s['severity'][ Rule::INFO ] ) );
 		\WP_CLI\Utils\format_items( 'table', $s['rules'], array( 'id', 'severity', 'open', 'fix' ) );
 	}

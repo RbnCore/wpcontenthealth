@@ -57,6 +57,7 @@ final class Issues {
 		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$wpdb->prepare( "UPDATE {$t} SET status = 'fixed' WHERE status = 'open' AND object_type = %s AND run_id < %d AND rule_id IN ({$ph})", array_merge( array( $type, $run_id ), $rule_ids ) )
 		);
+		Score::forget();
 		return (int) $wpdb->rows_affected;
 	}
 
@@ -135,6 +136,7 @@ final class Issues {
 		$t  = Db::table( 'issues' );
 		$ph = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
 		$wpdb->query( $wpdb->prepare( "UPDATE {$t} SET status = %s WHERE id IN ({$ph})", array_merge( array( $status ), $ids ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		Score::forget();
 		return (int) $wpdb->rows_affected;
 	}
 

@@ -352,21 +352,23 @@ final class Scanner {
 		$stats = array_merge(
 			$run->stats,
 			array(
-				'severity'  => $by_sev,
-				'rules'     => $by_rule,
-				'penalties' => $sc['penalties'],
-				'seconds'   => round( microtime( true ) - (float) ( $run->state['started'] ?? microtime( true ) ), 2 ),
-				'peak_mem'  => memory_get_peak_usage( true ),
+				'severity'      => $by_sev,
+				'rules'         => $by_rule,
+				'penalties'     => $sc['penalties'],
+				'suggest_score' => $sc['suggest'],
+				'seconds'       => round( microtime( true ) - (float) ( $run->state['started'] ?? microtime( true ) ), 2 ),
+				'peak_mem'      => memory_get_peak_usage( true ),
 			)
 		);
 		Runs::update(
 			$run->id,
 			array(
 				'status'      => 'finished',
-				'score'       => $sc['score'],
+				'score'       => $sc['error'],
 				'stats'       => $stats,
 				'finished_at' => current_time( 'mysql', true ),
 			)
 		);
+		Score::forget();
 	}
 }

@@ -44,12 +44,18 @@ final class Admin {
 		add_action( 'load-' . self::$hook, array( self::class, 'bulk' ) );
 	}
 
+	/** Sürüm sabit kalsa da değişen dosya yeniden insin diye sürüm parametresi dosya içerik özetidir. */
+	private static function asset_ver( string $rel ): string {
+		$hash = is_readable( CONTENTHEALTH_DIR . $rel ) ? md5_file( CONTENTHEALTH_DIR . $rel ) : false;
+		return $hash ? CONTENTHEALTH_VERSION . '-' . substr( $hash, 0, 8 ) : CONTENTHEALTH_VERSION;
+	}
+
 	public static function assets( string $hook ): void {
 		if ( $hook !== self::$hook ) {
 			return;
 		}
-		wp_enqueue_style( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/rbn-admin-ui.css', array(), CONTENTHEALTH_VERSION );
-		wp_enqueue_script( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/contenthealth-admin.js', array(), CONTENTHEALTH_VERSION, true );
+		wp_enqueue_style( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/rbn-admin-ui.css', array(), self::asset_ver( 'assets/admin/rbn-admin-ui.css' ) );
+		wp_enqueue_script( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/contenthealth-admin.js', array(), self::asset_ver( 'assets/admin/contenthealth-admin.js' ), true );
 		wp_localize_script(
 			'contenthealth-admin',
 			'ContentHealthCfg',

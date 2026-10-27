@@ -72,9 +72,11 @@ final class Rest {
 			}
 		}
 		usort( $rules, static fn( $a, $b ) => $b['open'] <=> $a['open'] );
+		$live = $done ? Score::live() : null;
 		return array(
 			'run'      => $run ? Runs::progress( $run ) : null,
-			'score'    => $done && null !== $done->score ? (int) $done->score : null,
+			'score'    => $live ? $live['error'] : null,
+			'suggest'  => $live ? $live['suggest'] : null,
 			'finished' => $done ? $done->finished_at : null,
 			'severity' => $sev,
 			'rules'    => $rules,

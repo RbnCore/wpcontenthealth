@@ -1,6 +1,6 @@
 <?php
 /**
- * Pano: sağlık puanı, tarama durumu, puan geçmişi, grup kartları ve öncelikli kritik sorunlar.
+ * Pano: hata puanı + öneri puanı, tarama durumu, puan geçmişi, grup kartları ve öncelikli kritik sorunlar.
  *
  * @package ContentHealth
  */
@@ -62,7 +62,7 @@ final class Overview {
 		}
 		$sc = Score::compute( $sub, self::totals() );
 		return array(
-			'score'  => $sc['score'],
+			'score'  => $sc['all'],
 			'counts' => $counts,
 		);
 	}
@@ -72,11 +72,12 @@ final class Overview {
 		$active = Runs::active();
 		$open   = Issues::open_counts();
 		$hist   = array_values( array_filter( array_reverse( Runs::history( 30 ) ), static fn( $r ) => 'finished' === $r->status && null !== $r->score ) );
+		$live   = $done ? Score::live() : null;
 
 		echo '<div class="rbn-grid rbn-grid--score">';
-		self::score_card( $done, $hist );
+		self::score_card( $done, $live );
 		self::scan_card( $done, $active );
-		self::spark_card( $hist );
+		self::spark_card( $hist, $live );
 		echo '</div>';
 
 		if ( ! $done && ! $active ) {
@@ -109,36 +110,50 @@ final class Overview {
 		self::top_card();
 	}
 
-	/** @param array<int,object> $hist */
-	private static function score_card( ?object $done, array $hist ): void {
-		echo '<section class="rbn-card" aria-labelledby="h-score"><div class="rbn-card__h"><h2 id="h-score">' . esc_html__( 'Sağlık puanı', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Açık bulgulara göre 0–100.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
-		if ( ! $done || null === $done->score ) {
+	/** @param array{error:int,suggest:int}|null $live */
+	private static function score_card( ?object $done, ?array $live ): void {
+		echo '<section class="rbn-card" aria-labelledby="h-score"><div class="rbn-card__h"><h2 id="h-score">' . esc_html__( 'Hata puanı', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Sitedeki hatalar, 0–100.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		if ( ! $done || ! $live ) {
 			echo Ui::empty_state( 'chart', __( 'Puan yok', 'contenthealth' ), __( 'İlk tarama bittiğinde hesaplanır.', 'contenthealth' ) ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
-		$score = (int) $done->score;
+		$score = $live['error'];
 		$band  = Ui::band( $score );
 		printf(
-			'<div class="rbn-ring rbn-ring--%1$s"><div class="rbn-ring__svg" role="img" aria-label="%2$s"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rbn-ring__track" cx="60" cy="60" r="52"/><circle class="rbn-ring__val" cx="60" cy="60" r="52" style="--p:%3$d"/></svg><div class="rbn-ring__n" aria-hidden="true"><b>%3$d</b><span>/ 100</span></div></div>%4$s</div>',
+			'<div class="rbn-ring rbn-ring--%1$s"><div class="rbn-ring__svg" role="img" aria-label="%2$s"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rbn-ring__track" cx="60" cy="60" r="52"/><circle class="rbn-ring__val" cx="60" cy="60" r="52" style="--p:%3$d"/></svg><div class="rbn-ring__n" aria-hidden="true"><b data-score-error>%3$d</b><span>/ 100</span></div></div>%4$s</div>',
 			esc_attr( $band['key'] ),
 			/* translators: 1: score, 2: band label */
-			esc_attr( sprintf( __( 'Sağlık puanı: %1$d / 100, %2$s', 'contenthealth' ), $score, $band['label'] ) ),
+			esc_attr( sprintf( __( 'Hata puanı: %1$d / 100, %2$s', 'contenthealth' ), $score, $band['label'] ) ),
 			$score,
 			Ui::badge( $band['key'], $band['icon'], $band['label'] ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
-		$prev = count( $hist ) >= 2 ? (int) $hist[ count( $hist ) - 2 ]->score : null;
-		if ( null !== $prev ) {
-			$d   = $score - $prev;
-			$col = $d > 0 ? 'var(--rbn-ok)' : ( $d < 0 ? 'var(--rbn-err)' : 'inherit' );
-			printf(
-				'<p class="rbn-muted" style="text-align:center;margin:12px 0 0">%s%s <strong style="color:%s">%s</strong></p>',
-				Ui::icon( 'chart' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				esc_html__( 'Son taramaya göre', 'contenthealth' ),
-				esc_attr( $col ),
-				/* translators: %s: signed number */
-				esc_html( sprintf( __( '%s puan', 'contenthealth' ), ( $d > 0 ? '+' : ( $d < 0 ? '−' : '±' ) ) . abs( $d ) ) )
-			);
-		}
+		$d   = $score - (int) $done->score;
+		$col = $d > 0 ? 'var(--rbn-ok)' : ( $d < 0 ? 'var(--rbn-err)' : 'inherit' );
+		printf(
+			'<p class="rbn-muted" style="text-align:center;margin:12px 0 0">%s%s <strong style="color:%s" data-score-delta>%s</strong></p>',
+			Ui::icon( 'chart' ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			esc_html__( 'Son taramaya göre', 'contenthealth' ),
+			esc_attr( $col ),
+			/* translators: %s: signed number */
+			esc_html( sprintf( __( '%s puan', 'contenthealth' ), ( $d > 0 ? '+' : ( $d < 0 ? '−' : '±' ) ) . abs( $d ) ) )
+		);
+		$sg   = $live['suggest'];
+		$sb   = Ui::band( $sg );
+		$last = isset( $done->stats['suggest_score'] ) ? (string) (int) $done->stats['suggest_score'] : '—';
+		printf(
+			'<div class="rbn-suggest" style="margin-top:18px"><div class="rbn-progress__l"><span>%1$s</span><b style="white-space:nowrap" data-score-suggest>%3$d / 100</b></div><div class="rbn-progress rbn-progress--%4$s" role="progressbar" aria-label="%1$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%3$d" style="--w:%3$d%%"><i></i></div><p class="rbn-help" style="margin:6px 0 0">%2$s. %5$s</p></div>',
+			esc_html__( 'Öneri puanı', 'contenthealth' ),
+			esc_html__( 'İyileştirme önerileri', 'contenthealth' ),
+			$sg,
+			esc_attr( $sb['key'] ),
+			/* translators: 1: error score at last scan, 2: suggestion score at last scan or a dash */
+			esc_html( sprintf( __( 'Son taramada: hata puanı %1$d · öneri puanı %2$s', 'contenthealth' ), (int) $done->score, $last ) )
+		);
+		echo '<details class="rbn-help" style="margin-top:14px"><summary>' . esc_html__( 'Nasıl hesaplanır?', 'contenthealth' ) . '</summary><p>'
+			. esc_html__( 'Ceza = ağırlık × etkilenen içerik yüzdesi; kritik/uyarı/bilgi tavanı 15/8/3.', 'contenthealth' ) . '<br>'
+			. esc_html__( 'Hata puanı = 100 − kritik ve uyarı cezaları. Öneri puanı = 100 − bilgi cezaları.', 'contenthealth' ) . '<br>'
+			. esc_html__( 'Puan bulgu durumuna göre canlı hesaplanır; yazıyı kaydedince ya da düzeltince hemen değişir.', 'contenthealth' )
+			. '</p></details>';
 		echo '</div></section>';
 	}
 
@@ -178,26 +193,35 @@ final class Overview {
 		echo '</div><div id="scandone" hidden></div></div></section>';
 	}
 
-	/** @param array<int,object> $hist */
-	private static function spark_card( array $hist ): void {
+	/**
+	 * Tarama noktaları (Hata puanı) + son nokta "şimdi" (canlı).
+	 *
+	 * @param array<int,object>                 $hist Bitmiş taramalar, eskiden yeniye.
+	 * @param array{error:int,suggest:int}|null $live
+	 */
+	private static function spark_card( array $hist, ?array $live ): void {
+		$pts = array_map( static fn( $r ) => (int) $r->score, $hist );
+		if ( $live ) {
+			$pts[] = $live['error'];
+		}
 		/* translators: %d: scan count */
-		$sub = sprintf( __( 'Son %d tarama', 'contenthealth' ), max( 1, count( $hist ) ) );
-		echo '<section class="rbn-card" aria-labelledby="h-spark"><div class="rbn-card__h"><h2 id="h-spark">' . esc_html__( 'Zamanla puan', 'contenthealth' ) . '</h2><p>' . esc_html( $sub ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
-		if ( count( $hist ) < 2 ) {
-			echo '<p class="rbn-muted">' . esc_html__( 'Grafik için en az iki bitmiş tarama gerekir.', 'contenthealth' ) . '</p></div></section>';
+		$sub = sprintf( __( 'Son %d tarama + şimdi', 'contenthealth' ), max( 1, count( $hist ) ) );
+		echo '<section class="rbn-card" aria-labelledby="h-spark"><div class="rbn-card__h"><h2 id="h-spark">' . esc_html__( 'Zamanla hata puanı', 'contenthealth' ) . '</h2><p>' . esc_html( $sub ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		if ( count( $pts ) < 2 ) {
+			echo '<p class="rbn-muted">' . esc_html__( 'Grafik için en az bir bitmiş tarama gerekir.', 'contenthealth' ) . '</p></div></section>';
 			return;
 		}
-		$n    = count( $hist );
+		$n    = count( $pts );
 		$line = '';
-		foreach ( $hist as $i => $r ) {
-			$line .= ( 0 === $i ? 'M' : 'L' ) . round( 300 * $i / ( $n - 1 ), 1 ) . ' ' . round( 56 - 52 * ( (int) $r->score ) / 100, 1 );
+		foreach ( $pts as $i => $v ) {
+			$line .= ( 0 === $i ? 'M' : 'L' ) . round( 300 * $i / ( $n - 1 ), 1 ) . ' ' . round( 56 - 52 * $v / 100, 1 );
 		}
-		$first = (int) $hist[0]->score;
-		$last  = (int) $hist[ $n - 1 ]->score;
+		$first = $pts[0];
+		$last  = $pts[ $n - 1 ];
 		$delta = $last - $first;
 		$label = sprintf(
-			/* translators: 1: scan count, 2: first score, 3: last score, 4: signed change */
-			__( 'Son %1$d taramada puan %2$d → %3$d (%4$s)', 'contenthealth' ),
+			/* translators: 1: point count, 2: first score, 3: last score, 4: signed change */
+			__( '%1$d noktada hata puanı %2$d → %3$d (%4$s)', 'contenthealth' ),
 			$n,
 			$first,
 			$last,

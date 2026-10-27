@@ -104,6 +104,7 @@ final class SaveAudit {
 		}
 		if ( $n > 0 ) {
 			update_option( self::OPTION, current_time( 'mysql', true ), false );
+			Score::forget(); // Bulgular değişmiş olabilir: canlı puan bir sonraki okumada yeniden hesaplanır.
 		}
 	}
 
