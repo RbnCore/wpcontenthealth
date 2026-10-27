@@ -27,31 +27,90 @@ final class Transform {
 	}
 
 	private const UI_ATTR  = '~\sdata-(?:path-to-node|index-in-node|sourcepos|hveid|ved|spm-anchor-id|math)\s*=\s*(?:"[^"]*"|\'[^\']*\')~i';
+	/** Sohbet arayüzü sınıfları; jeton kendisi ya da `<ad>-…` ile başlıyorsa (ör. source-inline-chip-container) eşleşir. */
 	private const UI_CLASS = array( 'model-response-message-content', 'markdown-main-panel', 'source-inline-chip', 'math-inline', 'horizontal-scroll-wrapper', 'table-block-component' );
+	/** Arayüz öğesiyle birlikte atılan eşlik sınıfları ve öznitelikleri (yalnız arayüz sınıfı/kimliği taşıyan öğede). */
+	private const UI_COMPANION_CLASS = array( 'ng-star-inserted', 'markdown', 'stronger', 'enable-updated-hr-color' );
+	private const UI_COMPANION_ATTR  = '~\s(?:dir\s*=\s*"ltr"|aria-live\s*=\s*"[^"]*"|aria-busy\s*=\s*"[^"]*")~i';
+	/** Gemini arama sonucu / medya kabı; dedektörün `attachment-container\s+(?:search-images|youtube)` deseniyle aynı kap. */
+	private const UI_CONTAINER = 'attachment-container';
+
+	private static function is_ui_token( string $t ): bool {
+		if ( preg_match( '~^citation(?:-end)?-\d+$~', $t ) ) {
+			return true;
+		}
+		foreach ( self::UI_CLASS as $c ) {
+			if ( $t === $c || 0 === strpos( $t, $c . '-' ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/** Sohbet arayüzü öznitelikleri/sarmalayıcıları: öznitelik silinir, boşalan div/span sarmalayıcı açılır, içerik korunur. */
 	public static function ui_artifacts( string $html ): string {
+		// Açılan sarmalayıcının gövdesi aynı geçişte yeniden taranmaz; iç içe olanlar için değişmeyene dek yinele.
+		for ( $i = 0; $i < 20; $i++ ) {
+			$next = self::ui_pass( self::ui_containers( $html ) );
+			if ( $next === $html ) {
+				break;
+			}
+			$html = $next;
+		}
+		return $html;
+	}
+
+	/**
+	 * `attachment-container` kabı: içinde metin ve medya yoksa kap kalkar; başlık metni varsa kaplar açılıp metin `<p>` içinde
+	 * korunur; görsel/bağlantı/gömme varsa yalnız div sarmalayıcıları açılır, medya silinmez.
+	 */
+	private static function ui_containers( string $html ): string {
+		$pos = 0;
+		$out = '';
+		while ( preg_match( '~<div\b[^>]*\bclass\s*=\s*"(?:[^"]*\s)?' . self::UI_CONTAINER . '(?:\s[^"]*)?"[^>]*>~i', $html, $m, PREG_OFFSET_CAPTURE, $pos ) ) {
+			$start    = (int) $m[0][1];
+			$end_open = $start + strlen( $m[0][0] );
+			$close    = Text::element_end( $html, $end_open, 'div' );
+			$out     .= substr( $html, $pos, $start - $pos );
+			if ( ! $close ) {
+				$out .= $m[0][0];
+				$pos  = $end_open;
+				continue;
+			}
+			$flat = trim( (string) preg_replace( '~</?div\b[^>]*>~i', '', substr( $html, $end_open, $close[0] - $end_open ) ) );
+			if ( '' !== trim( strip_tags( $flat ) ) || preg_match( '~<(?:img|a|iframe|video|audio|picture|figure|svg|embed|object)\b~i', $flat ) ) {
+				$out .= preg_match( '~^<(?:p|h[1-6]|ul|ol|table|figure|blockquote)\b~i', $flat ) ? $flat : '<p>' . $flat . '</p>';
+			}
+			$pos = $close[1];
+		}
+		return $out . substr( $html, $pos );
+	}
+
+	private static function ui_pass( string $html ): string {
 		$html = (string) preg_replace( self::UI_ATTR, '', $html );
 		$pos  = 0;
 		$out  = '';
 		while ( preg_match( '~<(div|span|section)\b([^>]*)>~i', $html, $m, PREG_OFFSET_CAPTURE, $pos ) ) {
-			$start = (int) $m[0][1];
-			$tag   = strtolower( $m[1][0] );
-			$attrs = $m[2][0];
-			$out  .= substr( $html, $pos, $start - $pos );
-			$class = preg_match( '~\bclass\s*=\s*"([^"]*)"~i', $attrs, $cm ) ? $cm[1] : null;
-			$hit   = false;
-			if ( null !== $class ) {
-				$tokens = preg_split( '~\s+~', trim( $class ), -1, PREG_SPLIT_NO_EMPTY ) ?: array();
-				$keep   = array_values( array_filter( $tokens, static fn( $t ) => ! in_array( $t, self::UI_CLASS, true ) && ! preg_match( '~^citation(?:-end)?-\d+$~', $t ) ) );
-				$hit    = count( $keep ) !== count( $tokens );
-				if ( $hit ) {
-					$rest = (string) preg_replace( '~\s*\bclass\s*=\s*"[^"]*"~i', '', $attrs );
-					if ( $keep ) {
-						$rest .= ' class="' . implode( ' ', $keep ) . '"';
-					}
-					$attrs = $rest;
+			$start  = (int) $m[0][1];
+			$tag    = strtolower( $m[1][0] );
+			$attrs  = $m[2][0];
+			$out   .= substr( $html, $pos, $start - $pos );
+			$class  = preg_match( '~\bclass\s*=\s*"([^"]*)"~i', $attrs, $cm ) ? $cm[1] : null;
+			$id     = preg_match( '~\sid\s*=\s*"([^"]*)"~i', $attrs, $im ) ? $im[1] : '';
+			$id_hit = '' !== $id && 1 === preg_match( '~^(?:' . implode( '|', array_map( 'preg_quote', self::UI_CLASS ) ) . ')~', $id );
+			$tokens = null !== $class ? ( preg_split( '~\s+~', trim( $class ), -1, PREG_SPLIT_NO_EMPTY ) ?: array() ) : array();
+			$hit    = $id_hit || array_filter( $tokens, array( self::class, 'is_ui_token' ) );
+			if ( $hit ) {
+				$keep = array_values( array_filter( $tokens, static fn( $t ) => ! self::is_ui_token( $t ) && ! in_array( $t, self::UI_COMPANION_CLASS, true ) ) );
+				$rest = (string) preg_replace( '~\s*\bclass\s*=\s*"[^"]*"~i', '', $attrs );
+				if ( $id_hit ) {
+					$rest = (string) preg_replace( '~\sid\s*=\s*"[^"]*"~i', '', $rest );
 				}
+				$rest = (string) preg_replace( self::UI_COMPANION_ATTR, '', $rest );
+				if ( $keep ) {
+					$rest .= ' class="' . implode( ' ', $keep ) . '"';
+				}
+				$attrs = $rest;
 			}
 			$end_open = $start + strlen( $m[0][0] );
 			if ( $hit && '' === trim( $attrs ) ) {

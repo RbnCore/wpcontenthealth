@@ -165,7 +165,7 @@ final class AiUiArtifacts extends Rule {
 				'horizontal-scroll-wrapper',
 				'table-block-component',
 				'class="[^"]*\bcitation(?:-end)?-\d+',
-				'attachment-container\s+search-images',
+				'attachment-container\s+(?:search-images|youtube)',
 			),
 		);
 	}
@@ -402,9 +402,6 @@ final class LatexLeftovers extends Rule {
 			if ( Patterns::match( (string) $p, $prose, $m ) ) {
 				$items[] = array( 'sample' => Text::snippet( $m[0], 60 ) );
 			}
-		}
-		if ( false !== strpos( $obj->html, 'math-inline' ) && ! $items ) {
-			$items[] = array( 'sample' => 'math-inline' );
 		}
 		return $items ? $this->found( $items ) : null;
 	}
