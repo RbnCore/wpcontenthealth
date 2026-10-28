@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       ContentHealth — Content Health
- * Plugin URI:        https://github.com/RbnCore
+ * Plugin URI:        https://github.com/RbnCore/wpcontenthealth
  * Description:       A content-health panel in the spirit of WordPress Site Health: checks for AI and interface leftovers, broken URLs, meta, alt text and tags, and fixes them with dry run and undo. Calls no external service.
  * Version:           0.1.5
  * Requires at least: 6.4
