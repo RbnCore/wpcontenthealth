@@ -46,23 +46,23 @@ final class Prefs {
 
 	private static function label( string $key ): string {
 		$map = array(
-			'max_len'          => __( 'En çok uzunluk (karakter)', 'contenthealth' ),
-			'max_chars'        => __( 'En çok karakter', 'contenthealth' ),
-			'max_words'        => __( 'En çok kelime', 'contenthealth' ),
-			'min_words'        => __( 'En az kelime', 'contenthealth' ),
-			'min_len'          => __( 'En az uzunluk', 'contenthealth' ),
-			'min'              => __( 'En az', 'contenthealth' ),
-			'max'              => __( 'En çok', 'contenthealth' ),
-			'fuzzy_min'        => __( 'Bulanık eşleşme için en az uzunluk', 'contenthealth' ),
-			'max_requests'     => __( 'Tarama başına en çok istek', 'contenthealth' ),
-			'per_second'       => __( 'Saniyedeki istek', 'contenthealth' ),
-			'post_types'       => __( 'Yazı türleri (her satıra bir)', 'contenthealth' ),
-			'dev_hosts'        => __( 'Ek geliştirme adresleri (her satıra bir)', 'contenthealth' ),
-			'fallback_excerpt' => __( 'Özeti yedek say', 'contenthealth' ),
-			'bracket_names'    => __( 'Köşeli parantezli adları da say', 'contenthealth' ),
-			'check_bold'       => __( 'Kalın işaretlerini ara', 'contenthealth' ),
-			'check_heading'    => __( 'Başlık işaretlerini ara', 'contenthealth' ),
-			'check_bullets'    => __( 'Madde işaretlerini ara', 'contenthealth' ),
+			'max_len'          => __( 'Maximum length (characters)', 'contenthealth' ),
+			'max_chars'        => __( 'Maximum characters', 'contenthealth' ),
+			'max_words'        => __( 'Maximum words', 'contenthealth' ),
+			'min_words'        => __( 'Minimum words', 'contenthealth' ),
+			'min_len'          => __( 'Minimum length', 'contenthealth' ),
+			'min'              => __( 'Minimum', 'contenthealth' ),
+			'max'              => __( 'Maximum', 'contenthealth' ),
+			'fuzzy_min'        => __( 'Minimum length for fuzzy matching', 'contenthealth' ),
+			'max_requests'     => __( 'Maximum requests per scan', 'contenthealth' ),
+			'per_second'       => __( 'Requests per second', 'contenthealth' ),
+			'post_types'       => __( 'Post types (one per line)', 'contenthealth' ),
+			'dev_hosts'        => __( 'Extra development addresses (one per line)', 'contenthealth' ),
+			'fallback_excerpt' => __( 'Count the excerpt as a fallback', 'contenthealth' ),
+			'bracket_names'    => __( 'Also count names in square brackets', 'contenthealth' ),
+			'check_bold'       => __( 'Look for bold marks', 'contenthealth' ),
+			'check_heading'    => __( 'Look for heading marks', 'contenthealth' ),
+			'check_bullets'    => __( 'Look for list marks', 'contenthealth' ),
 		);
 		return $map[ $key ] ?? $key;
 	}
@@ -75,12 +75,12 @@ final class Prefs {
 		self::scan_card( $s );
 		self::patterns_card( $s );
 		self::seo_card();
-		echo '<div class="rbn-bar" id="savebar" role="region" aria-label="' . esc_attr__( 'Kaydetme çubuğu', 'contenthealth' ) . '"><p><span class="rbn-dot"></span><span id="savebar-t" aria-live="polite">' . esc_html__( 'Kaydedilmemiş değişiklik yok.', 'contenthealth' ) . '</span></p><div class="rbn-bar__act"><button type="button" class="rbn-btn" data-revert disabled>' . esc_html__( 'Vazgeç', 'contenthealth' ) . '</button><button type="submit" class="rbn-btn rbn-btn--pri" data-save disabled>' . Ui::icon( 'save' ) . esc_html__( 'Değişiklikleri kaydet', 'contenthealth' ) . '</button></div></div></form>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="rbn-bar" id="savebar" role="region" aria-label="' . esc_attr__( 'Save bar', 'contenthealth' ) . '"><p><span class="rbn-dot"></span><span id="savebar-t" aria-live="polite">' . esc_html__( 'There are no unsaved changes.', 'contenthealth' ) . '</span></p><div class="rbn-bar__act"><button type="button" class="rbn-btn" data-revert disabled>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="submit" class="rbn-btn rbn-btn--pri" data-save disabled>' . Ui::icon( 'save' ) . esc_html__( 'Save changes', 'contenthealth' ) . '</button></div></div></form>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/** @param array<string,mixed> $s */
 	private static function rules_card( array $s ): void {
-		echo '<section class="rbn-card" aria-labelledby="h-k"><div class="rbn-card__h"><h2 id="h-k">' . esc_html__( 'Kurallar', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Kapattığınız kural taramada çalışmaz; var olan bulguları silmez.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--flush">';
+		echo '<section class="rbn-card" aria-labelledby="h-k"><div class="rbn-card__h"><h2 id="h-k">' . esc_html__( 'Rules', 'contenthealth' ) . '</h2><p>' . esc_html__( 'A rule you turn off does not run in the scan; it does not delete existing findings.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--flush">';
 		foreach ( Registry::groups() as $gid => $glabel ) {
 			echo '<h3 class="rbn-grp">' . esc_html( (string) $glabel ) . '</h3>';
 			foreach ( Registry::rules() as $rule ) {
@@ -121,28 +121,28 @@ final class Prefs {
 	/** @param array<string,mixed> $s */
 	private static function scan_card( array $s ): void {
 		$freq = array(
-			'off'    => __( 'Yalnız elle', 'contenthealth' ),
-			'hourly' => __( 'Saatlik', 'contenthealth' ),
-			'daily'  => __( 'Günlük', 'contenthealth' ),
-			'weekly' => __( 'Haftalık', 'contenthealth' ),
+			'off'    => __( 'Manual only', 'contenthealth' ),
+			'hourly' => __( 'Hourly', 'contenthealth' ),
+			'daily'  => __( 'Daily', 'contenthealth' ),
+			'weekly' => __( 'Weekly', 'contenthealth' ),
 		);
 		$lines = static fn( string $k ): string => esc_textarea( implode( "\n", array_map( 'strval', (array) $s[ $k ] ) ) );
-		echo '<section class="rbn-card" aria-labelledby="h-t"><div class="rbn-card__h"><h2 id="h-t">' . esc_html__( 'Tarama', 'contenthealth' ) . '</h2></div><div class="rbn-card__b">';
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-sik">' . esc_html__( 'Tarama sıklığı', 'contenthealth' ) . '</label><p class="rbn-help" id="t-sik-h">' . esc_html__( 'Otomatik tarama arka planda WP-Cron ile çalışır.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><select class="rbn-select" id="t-sik" name="s[frequency]" aria-describedby="t-sik-h">';
+		echo '<section class="rbn-card" aria-labelledby="h-t"><div class="rbn-card__h"><h2 id="h-t">' . esc_html__( 'Scan', 'contenthealth' ) . '</h2></div><div class="rbn-card__b">';
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-sik">' . esc_html__( 'Scan frequency', 'contenthealth' ) . '</label><p class="rbn-help" id="t-sik-h">' . esc_html__( 'The automatic scan runs in the background with WP-Cron.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><select class="rbn-select" id="t-sik" name="s[frequency]" aria-describedby="t-sik-h">';
 		foreach ( $freq as $v => $l ) {
 			echo '<option value="' . esc_attr( $v ) . '"' . selected( (string) $s['frequency'], $v, false ) . '>' . esc_html( $l ) . '</option>';
 		}
 		echo '</select></div></div>';
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-tb">' . esc_html__( 'Adım süresi (sn)', 'contenthealth' ) . '</label><p class="rbn-help" id="t-tb-h">' . esc_html__( 'Her tarama adımının en çok süresi (1–20) ve adımdaki kayıt sayısı (10–500).', 'contenthealth' ) . '</p></div><div class="rbn-field__c rbn-row"><input class="rbn-input rbn-input--s" type="number" id="t-tb" name="s[time_budget]" min="1" max="20" value="' . (int) $s['time_budget'] . '" aria-describedby="t-tb-h"><label class="rbn-sr" for="t-bs">' . esc_html__( 'Adım başına kayıt', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--s" type="number" id="t-bs" name="s[batch_size]" min="10" max="500" value="' . (int) $s['batch_size'] . '"></div></div>';
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-st">' . esc_html__( 'Taranan yazı durumları', 'contenthealth' ) . '</label><p class="rbn-help" id="t-st-h">' . esc_html__( 'Her satıra bir durum (publish, draft…).', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><textarea class="rbn-textarea rbn-input--mono" id="t-st" name="s[statuses]" rows="2" aria-describedby="t-st-h">' . $lines( 'statuses' ) . '</textarea></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-hr">' . esc_html__( 'Hariç tutulan yazı türleri', 'contenthealth' ) . '</label><p class="rbn-help" id="t-hr-h">' . esc_html__( 'Her satıra bir yazı türü adı.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><textarea class="rbn-textarea rbn-input--mono" id="t-hr" name="s[exclude_post_types]" rows="2" aria-describedby="t-hr-h">' . $lines( 'exclude_post_types' ) . '</textarea></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-tx">' . esc_html__( 'Taranan taksonomiler', 'contenthealth' ) . '</label><p class="rbn-help" id="t-tx-h">' . esc_html__( 'Etiket Doktoru bu taksonomilere bakar. Her satıra bir ad.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><textarea class="rbn-textarea rbn-input--mono" id="t-tx" name="s[term_taxonomies]" rows="2" aria-describedby="t-tx-h">' . $lines( 'term_taxonomies' ) . '</textarea></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-lh">' . esc_html__( 'Canlı alan adı', 'contenthealth' ) . '</label><p class="rbn-help" id="t-lh-h">' . esc_html__( 'Hatalı adres düzeltmesinin hedefi. Boşsa site adresi kullanılır.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><input class="rbn-input rbn-input--mono" id="t-lh" name="s[live_host]" value="' . esc_attr( (string) $s['live_host'] ) . '" aria-describedby="t-lh-h"></div></div>';
-		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-alt">' . esc_html__( 'Alt metin şablonu', 'contenthealth' ) . '</label><p class="rbn-help" id="t-alt-h">' . esc_html__( 'Kullanılabilir jetonlar: {başlık}, {dosya_adı}, {site_adı}.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><input class="rbn-input rbn-input--mono" id="t-alt" name="s[alt_template]" maxlength="200" value="' . esc_attr( (string) $s['alt_template'] ) . '" aria-describedby="t-alt-h"></div></div>';
-		echo '<div class="rbn-field"><div class="rbn-field__l"><span class="rbn-label">' . esc_html__( 'Güvenlik', 'contenthealth' ) . '</span></div><div class="rbn-field__c"><div class="rbn-stack">';
-		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-km" name="s[keep_modified]" value="1"' . checked( ! empty( $s['keep_modified'] ), true, false ) . ' aria-describedby="t-km-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Düzeltmede son değiştirilme tarihini koru', 'contenthealth' ) . '</b><span class="rbn-help" id="t-km-h">' . esc_html__( 'Açıkken düzeltilen yazılar “güncellendi” görünmez.', 'contenthealth' ) . '</span></span></label>';
-		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-as" name="s[audit_on_save]" value="1"' . checked( ! empty( $s['audit_on_save'] ), true, false ) . ' aria-describedby="t-as-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Kaydedince yeniden denetle', 'contenthealth' ) . '</b><span class="rbn-help" id="t-as-h">' . esc_html__( 'Bir yazıyı kaydettiğinizde yalnız o yazının bulguları yeniden denetlenir; elle düzelttiğiniz bulgu kendiliğinden “düzeltildi” olur. Yinelenen başlık, yetim içerik gibi tüm siteye bakan kurallar taramayı bekler.', 'contenthealth' ) . '</span></span></label>';
-		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-du" name="s[delete_on_uninstall]" value="1"' . checked( ! empty( $s['delete_on_uninstall'] ), true, false ) . ' aria-describedby="t-du-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Eklenti silinince verileri de sil', 'contenthealth' ) . '</b><span class="rbn-help" id="t-du-h">' . esc_html__( 'Kapalıyken eklenti silinse de bulgular, ayarlar ve geri alma günlüğü kalır.', 'contenthealth' ) . '</span></span></label>';
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-tb">' . esc_html__( 'Step duration (s)', 'contenthealth' ) . '</label><p class="rbn-help" id="t-tb-h">' . esc_html__( 'Maximum duration of each scan step (1–20) and number of records per step (10–500).', 'contenthealth' ) . '</p></div><div class="rbn-field__c rbn-row"><input class="rbn-input rbn-input--s" type="number" id="t-tb" name="s[time_budget]" min="1" max="20" value="' . (int) $s['time_budget'] . '" aria-describedby="t-tb-h"><label class="rbn-sr" for="t-bs">' . esc_html__( 'Records per step', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--s" type="number" id="t-bs" name="s[batch_size]" min="10" max="500" value="' . (int) $s['batch_size'] . '"></div></div>';
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-st">' . esc_html__( 'Post statuses scanned', 'contenthealth' ) . '</label><p class="rbn-help" id="t-st-h">' . esc_html__( 'One status per line (publish, draft…).', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><textarea class="rbn-textarea rbn-input--mono" id="t-st" name="s[statuses]" rows="2" aria-describedby="t-st-h">' . $lines( 'statuses' ) . '</textarea></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-hr">' . esc_html__( 'Excluded post types', 'contenthealth' ) . '</label><p class="rbn-help" id="t-hr-h">' . esc_html__( 'One post type name per line.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><textarea class="rbn-textarea rbn-input--mono" id="t-hr" name="s[exclude_post_types]" rows="2" aria-describedby="t-hr-h">' . $lines( 'exclude_post_types' ) . '</textarea></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-tx">' . esc_html__( 'Taxonomies scanned', 'contenthealth' ) . '</label><p class="rbn-help" id="t-tx-h">' . esc_html__( 'Tag Doctor looks at these taxonomies. One name per line.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><textarea class="rbn-textarea rbn-input--mono" id="t-tx" name="s[term_taxonomies]" rows="2" aria-describedby="t-tx-h">' . $lines( 'term_taxonomies' ) . '</textarea></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-lh">' . esc_html__( 'Live domain', 'contenthealth' ) . '</label><p class="rbn-help" id="t-lh-h">' . esc_html__( 'The target of the wrong-address fix. If empty, the site address is used.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><input class="rbn-input rbn-input--mono" id="t-lh" name="s[live_host]" value="' . esc_attr( (string) $s['live_host'] ) . '" aria-describedby="t-lh-h"></div></div>';
+		echo '<div class="rbn-field"><div class="rbn-field__l"><label for="t-alt">' . esc_html__( 'Alt text template', 'contenthealth' ) . '</label><p class="rbn-help" id="t-alt-h">' . esc_html__( 'Available tokens: {title}, {file_name}, {site_name}.', 'contenthealth' ) . '</p></div><div class="rbn-field__c"><input class="rbn-input rbn-input--mono" id="t-alt" name="s[alt_template]" maxlength="200" value="' . esc_attr( (string) $s['alt_template'] ) . '" aria-describedby="t-alt-h"></div></div>';
+		echo '<div class="rbn-field"><div class="rbn-field__l"><span class="rbn-label">' . esc_html__( 'Safety', 'contenthealth' ) . '</span></div><div class="rbn-field__c"><div class="rbn-stack">';
+		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-km" name="s[keep_modified]" value="1"' . checked( ! empty( $s['keep_modified'] ), true, false ) . ' aria-describedby="t-km-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Keep the last modified date when fixing', 'contenthealth' ) . '</b><span class="rbn-help" id="t-km-h">' . esc_html__( 'When on, fixed posts do not show as “updated”.', 'contenthealth' ) . '</span></span></label>';
+		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-as" name="s[audit_on_save]" value="1"' . checked( ! empty( $s['audit_on_save'] ), true, false ) . ' aria-describedby="t-as-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Re-check on save', 'contenthealth' ) . '</b><span class="rbn-help" id="t-as-h">' . esc_html__( 'When you save a post, only that post\'s findings are checked again; a finding you fixed by hand becomes “fixed” on its own. Rules that look at the whole site, such as duplicate title and orphan content, wait for the scan.', 'contenthealth' ) . '</span></span></label>';
+		echo '<label class="rbn-switch"><input type="checkbox" role="switch" id="t-du" name="s[delete_on_uninstall]" value="1"' . checked( ! empty( $s['delete_on_uninstall'] ), true, false ) . ' aria-describedby="t-du-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html__( 'Delete data when the plugin is deleted', 'contenthealth' ) . '</b><span class="rbn-help" id="t-du-h">' . esc_html__( 'When off, findings, settings and the undo log remain even if the plugin is deleted.', 'contenthealth' ) . '</span></span></label>';
 		echo '</div></div></div></div></section>';
 	}
 
@@ -150,20 +150,20 @@ final class Prefs {
 	private static function patterns_card( array $s ): void {
 		$cfg  = $s['rules'][ self::EDITOR_RULE ] ?? array();
 		$name = array(
-			'patterns_head' => __( 'Başlangıç desenleri', 'contenthealth' ),
-			'patterns_tail' => __( 'Bitiş desenleri', 'contenthealth' ),
+			'patterns_head' => __( 'Default patterns', 'contenthealth' ),
+			'patterns_tail' => __( 'End patterns', 'contenthealth' ),
 		);
-		echo '<section class="rbn-card" aria-labelledby="h-d"><div class="rbn-card__h"><h2 id="h-d">' . esc_html__( 'Desen düzenleyici', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Sohbet kalıntısı kuralı bu desenleri arar. Kendi deseninizi ekleyip kaydetmeden test edin.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card" aria-labelledby="h-d"><div class="rbn-card__h"><h2 id="h-d">' . esc_html__( 'Pattern editor', 'contenthealth' ) . '</h2><p>' . esc_html__( 'The chat-leftover rule looks for these patterns. Add your own pattern and test it without saving.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		foreach ( self::EDITOR_FIELDS as $f ) {
 			$list = array_values( array_map( 'strval', (array) ( $cfg[ $f ] ?? array() ) ) );
 			echo '<h3 class="rbn-h3">' . esc_html( $name[ $f ] ) . '</h3><div data-pats="' . esc_attr( $f ) . '"><textarea hidden name="s[rules][' . esc_attr( self::EDITOR_RULE ) . '][' . esc_attr( $f ) . ']" data-pats-store>' . esc_textarea( implode( "\n", $list ) ) . '</textarea><ul class="rbn-pats" aria-label="' . esc_attr( $name[ $f ] ) . '">';
 			foreach ( $list as $p ) {
-				echo '<li class="rbn-pat"><code>' . esc_html( $p ) . '</code><button type="button" data-pat-del aria-label="' . esc_attr( sprintf( /* translators: %s: pattern */ __( 'Deseni sil: %s', 'contenthealth' ), mb_substr( $p, 0, 40 ) ) ) . '">' . Ui::icon( 'trash' ) . '</button></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<li class="rbn-pat"><code>' . esc_html( $p ) . '</code><button type="button" data-pat-del aria-label="' . esc_attr( sprintf( /* translators: %s: pattern */ __( 'Delete pattern: %s', 'contenthealth' ), mb_substr( $p, 0, 40 ) ) ) . '">' . Ui::icon( 'trash' ) . '</button></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
-			echo '</ul><div class="rbn-addrow"><label class="rbn-sr" for="pat-' . esc_attr( $f ) . '">' . esc_html__( 'Yeni desen', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pat-' . esc_attr( $f ) . '" data-pat-new placeholder="' . esc_attr__( 'Örn. Elbette,? işte .{0,40}:', 'contenthealth' ) . '"><button type="button" class="rbn-btn" data-pat-add>' . Ui::icon( 'plus' ) . esc_html__( 'Ekle', 'contenthealth' ) . '</button></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '</ul><div class="rbn-addrow"><label class="rbn-sr" for="pat-' . esc_attr( $f ) . '">' . esc_html__( 'New pattern', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pat-' . esc_attr( $f ) . '" data-pat-new placeholder="' . esc_attr__( 'E.g. Sure,? here is .{0,40}:', 'contenthealth' ) . '"><button type="button" class="rbn-btn" data-pat-add>' . Ui::icon( 'plus' ) . esc_html__( 'Add', 'contenthealth' ) . '</button></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
-		echo '<p class="rbn-help" id="pat-h">' . esc_html__( 'Düzenli ifade (PCRE). Geçersiz ya da aşırı yavaş desenler kayıtta reddedilir.', 'contenthealth' ) . '</p>';
-		echo '<div class="rbn-test" aria-labelledby="pt-h"><h3 class="rbn-h3" id="pt-h">' . esc_html__( 'Deseni dene', 'contenthealth' ) . '</h3><label for="pt-pat" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Desen', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pt-pat" style="margin-bottom:8px"><label for="pt-in" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Örnek metin', 'contenthealth' ) . '</label><textarea class="rbn-textarea" id="pt-in" rows="3">' . esc_textarea( __( 'İşte istediğiniz özelliklere uygun makale:', 'contenthealth' ) . "\n" . __( 'E-posta pazarlaması abonelerle iletişim kurmanın bir yoludur.', 'contenthealth' ) ) . '</textarea><div class="rbn-row" style="margin:8px 0"><button type="button" class="rbn-btn rbn-btn--sm" data-pat-test>' . Ui::icon( 'play' ) . esc_html__( 'Test et', 'contenthealth' ) . '</button></div><div id="pt-out" role="status" aria-live="polite"><p class="rbn-muted">' . esc_html__( 'Sonuç burada görünür.', 'contenthealth' ) . '</p></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<p class="rbn-help" id="pat-h">' . esc_html__( 'Regular expression (PCRE). Invalid or extremely slow patterns are rejected on save.', 'contenthealth' ) . '</p>';
+		echo '<div class="rbn-test" aria-labelledby="pt-h"><h3 class="rbn-h3" id="pt-h">' . esc_html__( 'Test the pattern', 'contenthealth' ) . '</h3><label for="pt-pat" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Pattern', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pt-pat" style="margin-bottom:8px"><label for="pt-in" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Sample text', 'contenthealth' ) . '</label><textarea class="rbn-textarea" id="pt-in" rows="3">' . esc_textarea( __( 'Here is the article that matches your requirements:', 'contenthealth' ) . "\n" . __( 'Email marketing is a way of staying in touch with subscribers.', 'contenthealth' ) ) . '</textarea><div class="rbn-row" style="margin:8px 0"><button type="button" class="rbn-btn rbn-btn--sm" data-pat-test>' . Ui::icon( 'play' ) . esc_html__( 'Test', 'contenthealth' ) . '</button></div><div id="pt-out" role="status" aria-live="polite"><p class="rbn-muted">' . esc_html__( 'The result appears here.', 'contenthealth' ) . '</p></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div></section>';
 	}
 
@@ -174,11 +174,11 @@ final class Prefs {
 			'rankmath' => 'Rank Math',
 			'aioseo'   => 'All in One SEO',
 		);
-		echo '<section class="rbn-card" aria-labelledby="h-s"><div class="rbn-card__h"><h2 id="h-s">' . esc_html__( 'SEO eklentisi', 'contenthealth' ) . '</h2></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card" aria-labelledby="h-s"><div class="rbn-card__h"><h2 id="h-s">' . esc_html__( 'SEO plugin', 'contenthealth' ) . '</h2></div><div class="rbn-card__b rbn-card__b--pad">';
 		if ( isset( $map[ $seo ] ) ) {
-			echo Ui::note( 'ok', '<p><strong>' . esc_html( sprintf( /* translators: %s: plugin name */ __( '%s algılandı.', 'contenthealth' ), $map[ $seo ] ) ) . '</strong> ' . esc_html__( 'Meta açıklama kuralı bu eklentinin alanını okur.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo Ui::note( 'ok', '<p><strong>' . esc_html( sprintf( /* translators: %s: plugin name */ __( '%s detected.', 'contenthealth' ), $map[ $seo ] ) ) . '</strong> ' . esc_html__( 'The meta description rule reads this plugin\'s field.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
-			echo Ui::note( 'info', '<p><strong>' . esc_html__( 'SEO eklentisi bulunamadı.', 'contenthealth' ) . '</strong> ' . esc_html__( 'Meta açıklama kuralı yalnız yazı özetine bakar.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo Ui::note( 'info', '<p><strong>' . esc_html__( 'No SEO plugin found.', 'contenthealth' ) . '</strong> ' . esc_html__( 'The meta description rule looks only at the post excerpt.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</div></section>';
 	}

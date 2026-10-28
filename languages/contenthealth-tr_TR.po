@@ -1,1930 +1,2250 @@
-# ContentHealth - Icerik Sagligi
-# GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: ContentHealth 0.1.3\n"
+"Project-Id-Version: ContentHealth 0.1.5\n"
 "Report-Msgid-Bugs-To: https://github.com/RbnCore\n"
+"POT-Creation-Date: 2026-10-28 12:00+0000\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Domain: contenthealth\n"
 
-#: includes/Rules/Content.php:382
-msgid "$5.3/10$ gibi dolar ayraçlı sayı/puan ve \\frac, \\times komutları."
-msgstr "$5.3/10$ gibi dolar ayraçlı sayı/puan ve \\frac, \\times komutları."
+#: includes/Cli.php:139
+msgid " · undo: "
+msgstr " · geri alma: "
 
 #: includes/Ui.php:143
+#, php-format
 msgid "%1$s #%2$d"
 msgstr "%1$s #%2$d"
 
-#: includes/Admin.php:292
-msgid "%d bulgu yeniden açıldı."
-msgstr "%d bulgu yeniden açıldı."
-
-#: includes/Admin.php:292
-msgid "%d bulgu yok sayıldı."
-msgstr "%d bulgu yok sayıldı."
-
-#: includes/Screens/Onboarding.php:54
-msgid "%d yayımlanmış içerik her zaman taranır."
-msgstr "%d yayımlanmış içerik her zaman taranır."
-
-#: includes/Screens/Tags.php:133
-msgid "%d yazı"
-msgstr "%d yazı"
-
-#: includes/Screens/Prefs.php:178 includes/Screens/Tags.php:172
-msgid "%s algılandı."
-msgstr "%s algılandı."
-
-#: includes/Screens/Alt.php:60
-msgid "%s küçük resmi"
-msgstr "%s küçük resmi"
-
-#: includes/Screens/Overview.php:139
-msgid "%s puan"
-msgstr "%s puan"
-
-#: includes/Screens/Overview.php:98
-msgid "%s puanı"
-msgstr "%s puanı"
-
-#: includes/Screens/Alt.php:61
-msgid "(dosya adı yok)"
-msgstr "(dosya adı yok)"
-
-#: includes/Screens/Onboarding.php:53
-msgid "1 / 3 · Taranacak içerik"
-msgstr "1 / 3 · Taranacak içerik"
-
-#: includes/Screens/Issues.php:312
-msgid "1 / 4 · Düzeltilecek bulgular"
-msgstr "1 / 4 · Düzeltilecek bulgular"
-
-#: includes/Screens/Onboarding.php:59
-msgid "2 / 3 · Tarama sıklığı"
-msgstr "2 / 3 · Tarama sıklığı"
-
-#: includes/Screens/Issues.php:313
-msgid "2 / 4 · Kuru koşu: hiçbir şey değiştirilmedi"
-msgstr "2 / 4 · Kuru koşu: hiçbir şey değiştirilmedi"
-
-#: includes/Screens/Onboarding.php:65
-msgid "3 / 3 · İlk tarama"
-msgstr "3 / 3 · İlk tarama"
-
-#: includes/Screens/Issues.php:314
-msgid "3 / 4 · Onay"
-msgstr "3 / 4 · Onay"
-
-#: includes/Screens/Issues.php:315
-msgid "4 / 4 · Sonuç"
-msgstr "4 / 4 · Sonuç"
-
-#: includes/Screens/Prefs.php:136
-msgid "Adım başına kayıt"
-msgstr "Adım başına kayıt"
-
-#: includes/Screens/Prefs.php:136
-msgid "Adım süresi (sn)"
-msgstr "Adım süresi (sn)"
-
-#: includes/Screens/Issues.php:311
-msgid "Adımlar"
-msgstr "Adımlar"
-
-#: includes/Modules/Media.php:31
-msgid "Alt Metin"
-msgstr "Alt Metin"
-
-#: includes/Admin.php:102
-msgid "Alt metin dolduruldu"
-msgstr "Alt metin dolduruldu"
-
-#: includes/Screens/Onboarding.php:55
-msgid "Alt metin eksiklerini bulur."
-msgstr "Alt metin eksiklerini bulur."
-
-#: includes/Screens/Alt.php:41 includes/Screens/Prefs.php:141
-msgid "Alt metin şablonu"
-msgstr "Alt metin şablonu"
-
-#: includes/Screens/Alt.php:71
-msgid "Alt metinler doldurulsun mu?"
-msgstr "Alt metinler doldurulsun mu?"
-
-#: includes/Screens/Alt.php:71
-msgid "Alt metinleri doldur"
-msgstr "Alt metinleri doldur"
-
-#: includes/Screens/Alt.php:37
-msgid "Alt metni eksik görsel yok"
-msgstr "Alt metni eksik görsel yok"
-
-#: includes/Screens/Alt.php:51
-msgid "Alt metni eksik görseller, önizleme"
-msgstr "Alt metni eksik görseller, önizleme"
-
-#: includes/Screens/Issues.php:192
-msgid "Ara"
-msgstr "Ara"
-
-#: includes/Screens/Issues.php:205
-msgid "Arama"
-msgstr "Arama"
-
-#: includes/Ui.php:210
-msgid "Arayüz kalıntısı öznitelik ve sarmalayıcıları temizler, içerik kalır."
-msgstr "Arayüz kalıntısı öznitelik ve sarmalayıcıları temizler, içerik kalır."
-
-#: includes/Admin.php:115
-msgid "Atlanacak"
-msgstr "Atlanacak"
-
-#: includes/Admin.php:153
-msgid "Ayarlar"
-msgstr "Ayarlar"
-
-#: includes/Admin.php:265
-msgid "Ayarlar kaydedildi."
-msgstr "Ayarlar kaydedildi."
-
-#: includes/Rules/Seo.php:115
-msgid "Aynı yazı türünde, büyük/küçük harf farkı hariç birebir aynı başlık."
-msgstr "Aynı yazı türünde, büyük/küçük harf farkı hariç birebir aynı başlık."
-
-#: includes/Rules/Content.php:429
-msgid "Aynı yazıda birebir tekrar eden uzun paragraflar (kopyala-yapıştır hatası)."
-msgstr "Aynı yazıda birebir tekrar eden uzun paragraflar (kopyala-yapıştır hatası)."
-
-#: includes/Screens/Issues.php:150 includes/Screens/Issues.php:306 includes/Screens/UndoLog.php:81
-msgid "Ayrıntı"
-msgstr "Ayrıntı"
-
-#: includes/Admin.php:79
-msgid "Ayrıntı yüklenemedi."
-msgstr "Ayrıntı yüklenemedi."
-
-#: includes/Screens/Issues.php:150
-msgid "Ayrıntı: %s"
-msgstr "Ayrıntı: %s"
-
-#: includes/Screens/UndoLog.php:80
-msgid "Ayrıntı: işlem #%d"
-msgstr "Ayrıntı: işlem #%d"
-
-#: includes/Admin.php:32
-msgid "Aç"
-msgstr "Aç"
-
-#: includes/Screens/Issues.php:185 includes/Screens/Issues.php:209
-msgid "Açık"
-msgstr "Açık"
-
-#: includes/Screens/Overview.php:114
-msgid "Açık bulgulara göre 0–100."
-msgstr "Açık bulgulara göre 0–100."
-
-#: includes/Screens/Overview.php:218
-msgid "Açık kritik bulgu bulunmuyor."
-msgstr "Açık kritik bulgu bulunmuyor."
-
-#: includes/Screens/Tags.php:95
-msgid "Açık yinelenen etiket bulgusu bulunmuyor."
-msgstr "Açık yinelenen etiket bulgusu bulunmuyor."
-
-#: includes/Screens/Alt.php:37
-msgid "Açık “görselde alt metin yok” bulgusu bulunmuyor."
-msgstr "Açık “görselde alt metin yok” bulgusu bulunmuyor."
-
-#: includes/Screens/Prefs.php:143
-msgid "Açıkken düzeltilen yazılar “güncellendi” görünmez."
-msgstr "Açıkken düzeltilen yazılar “güncellendi” görünmez."
-
-#: includes/Registry.php:58
-msgid "Bağlantılar"
-msgstr "Bağlantılar"
-
-#: includes/Rules/Links.php:164
-msgid "Başka hiçbir yazının içeriğinden bağlantı almayan yazı. Menü, widget ve ilgili yazı kutuları sayılmaz; yalnız içerik içi bağlantılar."
-msgstr "Başka hiçbir yazının içeriğinden bağlantı almayan yazı. Menü, widget ve ilgili yazı kutuları sayılmaz; yalnız içerik içi bağlantılar."
-
-#: includes/Screens/Prefs.php:152
-msgid "Başlangıç desenleri"
-msgstr "Başlangıç desenleri"
-
-#: includes/Rules/Seo.php:279
-msgid "Başlık düzeyi atlıyor (ör. H2’den sonra doğrudan H4)."
-msgstr "Başlık düzeyi atlıyor (ör. H2’den sonra doğrudan H4)."
-
-#: includes/Rules/Seo.php:276
-msgid "Başlık hiyerarşisi"
-msgstr "Başlık hiyerarşisi"
-
-#: includes/Screens/Prefs.php:64
-msgid "Başlık işaretlerini ara"
-msgstr "Başlık işaretlerini ara"
-
-#: includes/Screens/Issues.php:192
-msgid "Başlık veya kanıt"
-msgstr "Başlık veya kanıt"
-
-#: includes/Rules/Seo.php:164
-msgid "Başlık çok uzun"
-msgstr "Başlık çok uzun"
-
-#: includes/Registry.php:68
-msgid "Bilgi"
-msgstr "Bilgi"
-
-#: includes/Fixer.php:90
-msgid "Bilinmeyen düzeltme eylemi."
-msgstr "Bilinmeyen düzeltme eylemi."
-
-#: includes/Screens/UndoLog.php:41
-msgid "Bir düzeltme uyguladığınızda burada görünür."
-msgstr "Bir düzeltme uyguladığınızda burada görünür."
-
-#: includes/Rules/Terms.php:307
-msgid "Bir yazıya eşikten fazla etiket bağlanmış (varsayılan 15)."
-msgstr "Bir yazıya eşikten fazla etiket bağlanmış (varsayılan 15)."
-
-#: includes/Rules/Seo.php:252
-msgid "Birden çok H1"
-msgstr "Birden çok H1"
-
-#: includes/Screens/Tags.php:182
-msgid "Birleştir"
-msgstr "Birleştir"
-
-#: includes/Admin.php:100
-msgid "Birleştirildi"
-msgstr "Birleştirildi"
-
-#: includes/TermOps.php:83
-msgid "Birleştirilecek terimlerden biri yok."
-msgstr "Birleştirilecek terimlerden biri yok."
-
-#: includes/Screens/Tags.php:136
-msgid "Birleştir…"
-msgstr "Birleştir…"
-
-#: includes/Screens/Prefs.php:153
-msgid "Bitiş desenleri"
-msgstr "Bitiş desenleri"
-
-#: includes/Rules/Content.php:341
-msgid "Bozuk karakter kodlaması"
-msgstr "Bozuk karakter kodlaması"
-
-#: includes/Ui.php:214
-msgid "Boş alt metinleri şablondan doldurur; dolu olanlara dokunmaz."
-msgstr "Boş alt metinleri şablondan doldurur; dolu olanlara dokunmaz."
-
-#: includes/Rules/Content.php:469
-msgid "Boş başlık"
-msgstr "Boş başlık"
-
-#: includes/Patterns.php:33
-msgid "Boş desen."
-msgstr "Boş desen."
-
-#: includes/Screens/Tags.php:24
-msgid "Boş etiket"
-msgstr "Boş etiket"
-
-#: includes/Screens/Tags.php:91
-msgid "Boş etiketleri sil…"
-msgstr "Boş etiketleri sil…"
-
-#: includes/Rules/Terms.php:38
-msgid "Boş terim"
-msgstr "Boş terim"
-
-#: includes/Screens/Issues.php:308
-msgid "Bu düzeltme 1 içeriği değiştirecek"
-msgstr "Bu düzeltme 1 içeriği değiştirecek"
-
-#: includes/Screens/UndoLog.php:105
-msgid "Bu işlem geri alınsın mı?"
-msgstr "Bu işlem geri alınsın mı?"
-
-#: includes/Admin.php:233
-msgid "Bu işlem için yetkiniz yok."
-msgstr "Bu işlem için yetkiniz yok."
-
-#: includes/Fixer.php:44 includes/Rule.php:91
-msgid "Bu kural için otomatik düzeltme yok."
-msgstr "Bu kural için otomatik düzeltme yok."
-
-#: includes/Screens/Issues.php:127
-msgid "Bu sayfadaki tüm bulguları seç"
-msgstr "Bu sayfadaki tüm bulguları seç"
-
-#: includes/Admin.php:163
-msgid "Bu sayfaya erişim yetkiniz yok"
-msgstr "Bu sayfaya erişim yetkiniz yok"
-
-#: includes/Screens/Issues.php:110
-msgid "Bu süzgece uyan bulgu yok"
-msgstr "Bu süzgece uyan bulgu yok"
-
-#: includes/Screens/Tags.php:152
-msgid "Bu sınıfta açık bulgu yok"
-msgstr "Bu sınıfta açık bulgu yok"
-
-#: includes/Fixer.php:345
-msgid "Bu terim için otomatik ad üretilemedi; yeni adı elle girin."
-msgstr "Bu terim için otomatik ad üretilemedi; yeni adı elle girin."
-
-#: includes/Screens/Prefs.php:56
-msgid "Bulanık eşleşme için en az uzunluk"
-msgstr "Bulanık eşleşme için en az uzunluk"
-
-#: includes/Screens/Issues.php:312
-msgid "Bulgu"
-msgstr "Bulgu"
-
-#: includes/Rest.php:181
-msgid "Bulgu bulunamadı."
-msgstr "Bulgu bulunamadı."
-
-#: includes/Screens/Issues.php:125
-msgid "Bulgu listesi, sayfa %1$d / %2$d"
-msgstr "Bulgu listesi, sayfa %1$d / %2$d"
-
-#: includes/Admin.php:136 includes/Screens/Issues.php:99
-msgid "Bulgular"
-msgstr "Bulgular"
-
-#: includes/Screens/Overview.php:105
-msgid "Bulguları gör"
-msgstr "Bulguları gör"
-
-#: includes/Screens/Issues.php:177
-msgid "Bulguları süz"
-msgstr "Bulguları süz"
-
-#: includes/Rules/Terms.php:199
-msgid "Büyük/küçük harf, aksan ve noktalama farkıyla ya da tek harf farkıyla (uzun adlarda) aynı olan terimler. Birleştirme önerilir."
-msgstr "Büyük/küçük harf, aksan ve noktalama farkıyla ya da tek harf farkıyla (uzun adlarda) aynı olan terimler. Birleştirme önerilir."
-
-#: includes/Screens/Issues.php:120
-msgid "CSV indir"
-msgstr "CSV indir"
-
-#: includes/Screens/Prefs.php:140
-msgid "Canlı alan adı"
-msgstr "Canlı alan adı"
-
-#: includes/Screens/Issues.php:127 includes/Screens/Issues.php:148 includes/Screens/Issues.php:180 includes/Screens/Issues.php:204 includes/Screens/Overview.php:221 includes/Screens/Overview.php:225
-msgid "Ciddiyet"
-msgstr "Ciddiyet"
-
-#: includes/Admin.php:39
-msgid "ContentHealth"
-msgstr "ContentHealth"
-
-#: includes/Admin.php:38
-msgid "ContentHealth — İçerik Sağlığı"
-msgstr "ContentHealth — İçerik Sağlığı"
-
-#: includes/Screens/Prefs.php:165
-msgid "Desen"
-msgstr "Desen"
-
-#: includes/Screens/Prefs.php:155
-msgid "Desen düzenleyici"
-msgstr "Desen düzenleyici"
-
-#: includes/Admin.php:96
-msgid "Desen geçersiz ya da çok yavaş."
-msgstr "Desen geçersiz ya da çok yavaş."
-
-#: includes/Patterns.php:36
-msgid "Desen çok uzun."
-msgstr "Desen çok uzun."
-
-#: includes/Screens/Prefs.php:165
-msgid "Deseni dene"
-msgstr "Deseni dene"
-
-#: includes/Admin.php:97
-msgid "Deseni sil"
-msgstr "Deseni sil"
-
-#: includes/Screens/Prefs.php:160
-msgid "Deseni sil: %s"
-msgstr "Deseni sil: %s"
-
-#: includes/Admin.php:83 includes/Admin.php:117 includes/Screens/Onboarding.php:68
-msgid "Devam"
-msgstr "Devam"
-
-#: includes/Admin.php:109
-msgid "Devam edebilmek için onay kutusunu işaretleyin."
-msgstr "Devam edebilmek için onay kutusunu işaretleyin."
-
-#: includes/Admin.php:114
-msgid "Değişecek"
-msgstr "Değişecek"
-
-#: includes/Admin.php:105
-msgid "Değişecek bir şey yok."
-msgstr "Değişecek bir şey yok."
-
-#: includes/Ui.php:260
-msgid "Değişen alan:"
-msgstr "Değişen alan:"
-
-#: includes/Screens/Tags.php:183
-msgid "Değişiklikler geri alma günlüğüne yazılır; geri alınabilir."
-msgstr "Değişiklikler geri alma günlüğüne yazılır; geri alınabilir."
-
-#: includes/Screens/Prefs.php:78
-msgid "Değişiklikleri kaydet"
-msgstr "Değişiklikleri kaydet"
-
-#: includes/Screens/Issues.php:314
-msgid "Değişikliği ve işlemin geri alınabileceğini anlıyorum"
-msgstr "Değişikliği ve işlemin geri alınabileceğini anlıyorum"
-
-#: includes/Screens/Issues.php:277
-msgid "Diff görünümü"
-msgstr "Diff görünümü"
-
-#: includes/Rules/Seo.php:71
-msgid "Dolu açıklama alt ya da üst sınırın dışında (varsayılan 70–160 karakter)."
-msgstr "Dolu açıklama alt ya da üst sınırın dışında (varsayılan 70–160 karakter)."
-
-#: includes/Screens/Alt.php:51
-msgid "Dosya"
-msgstr "Dosya"
-
-#: includes/Admin.php:71 includes/Screens/Overview.php:157
-msgid "Duraklat"
-msgstr "Duraklat"
-
-#: includes/Screens/Issues.php:183 includes/Screens/Issues.php:207 includes/Screens/UndoLog.php:44 includes/Screens/UndoLog.php:62
-msgid "Durum"
-msgstr "Durum"
-
-#: includes/Screens/Issues.php:315
-msgid "Düzelen bulgular listede “Düzeltildi” olarak işaretlenir; sonraki taramada yeniden doğrulanır."
-msgstr "Düzelen bulgular listede “Düzeltildi” olarak işaretlenir; sonraki taramada yeniden doğrulanır."
-
-#: includes/Screens/Issues.php:187 includes/Screens/Issues.php:211
-msgid "Düzeltildi"
-msgstr "Düzeltildi"
-
-#: includes/Screens/Issues.php:312
-msgid "Düzeltme"
-msgstr "Düzeltme"
-
-#: includes/Screens/Issues.php:314
-msgid "Düzeltme ilerlemesi"
-msgstr "Düzeltme ilerlemesi"
-
-#: includes/Screens/Prefs.php:143
-msgid "Düzeltmede son değiştirilme tarihini koru"
-msgstr "Düzeltmede son değiştirilme tarihini koru"
-
-#: includes/Admin.php:84
-msgid "Düzeltmeleri uygula"
-msgstr "Düzeltmeleri uygula"
-
-#: includes/Screens/Issues.php:308
-msgid "Düzeltmeyi uygula"
-msgstr "Düzeltmeyi uygula"
-
-#: includes/Screens/Issues.php:306 includes/Screens/Tags.php:148
-msgid "Düzelt…"
-msgstr "Düzelt…"
-
-#: includes/Screens/Prefs.php:164
-msgid "Düzenli ifade (PCRE). Geçersiz ya da aşırı yavaş desenler kayıtta reddedilir."
-msgstr "Düzenli ifade (PCRE). Geçersiz ya da aşırı yavaş desenler kayıtta reddedilir."
-
-#: includes/Screens/Prefs.php:165
-msgid "E-posta pazarlaması abonelerle iletişim kurmanın bir yoludur."
-msgstr "E-posta pazarlaması abonelerle iletişim kurmanın bir yoludur."
-
-#: includes/Screens/Prefs.php:60
-msgid "Ek geliştirme adresleri (her satıra bir)"
-msgstr "Ek geliştirme adresleri (her satıra bir)"
-
-#: includes/Screens/Prefs.php:162
-msgid "Ekle"
-msgstr "Ekle"
-
-#: includes/Ui.php:231
-msgid "Eklenen satır: "
-msgstr "Eklenen satır: "
-
-#: includes/Screens/Prefs.php:144
-msgid "Eklenti silinince verileri de sil"
-msgstr "Eklenti silinince verileri de sil"
-
-#: includes/Screens/Alt.php:41
-msgid "Eksik alt metinler bu şablonla doldurulur. Dolu olanlara dokunulmaz."
-msgstr "Eksik alt metinler bu şablonla doldurulur. Dolu olanlara dokunulmaz."
-
-#: includes/Screens/Alt.php:50
-msgid "Eksik olanları doldur…"
-msgstr "Eksik olanları doldur…"
-
-#: includes/Screens/Prefs.php:54
-msgid "En az"
-msgstr "En az"
-
-#: includes/Screens/Prefs.php:52
-msgid "En az kelime"
-msgstr "En az kelime"
-
-#: includes/Screens/Prefs.php:53
-msgid "En az uzunluk"
-msgstr "En az uzunluk"
-
-#: includes/Screens/Prefs.php:55
-msgid "En çok"
-msgstr "En çok"
-
-#: includes/Screens/Prefs.php:50
-msgid "En çok karakter"
-msgstr "En çok karakter"
-
-#: includes/Screens/Prefs.php:51
-msgid "En çok kelime"
-msgstr "En çok kelime"
-
-#: includes/Screens/Prefs.php:49
-msgid "En çok uzunluk (karakter)"
-msgstr "En çok uzunluk (karakter)"
-
-#: includes/Screens/Tags.php:155
-msgid "Etiket"
-msgstr "Etiket"
-
-#: includes/Ui.php:138
-msgid "Etiket #%d"
-msgstr "Etiket #%d"
-
-#: includes/Modules/Taxonomy.php:31
-msgid "Etiket Doktoru"
-msgstr "Etiket Doktoru"
-
-#: includes/Screens/Prefs.php:139
-msgid "Etiket Doktoru bu taksonomilere bakar. Her satıra bir ad."
-msgstr "Etiket Doktoru bu taksonomilere bakar. Her satıra bir ad."
-
-#: includes/Rules/Terms.php:62
-msgid "Etiket adı karakter ya da kelime sınırını aşıyor; çoğunlukla cümle ya da paragraf etiket olarak girilmiştir."
-msgstr "Etiket adı karakter ya da kelime sınırını aşıyor; çoğunlukla cümle ya da paragraf etiket olarak girilmiştir."
-
-#: includes/Ui.php:218
-msgid "Etiket adını temizler."
-msgstr "Etiket adını temizler."
-
-#: includes/Screens/Tags.php:168
-msgid "Etiket arşivleri All in One SEO’nun arama görünümü ayarından yönetilir."
-msgstr "Etiket arşivleri All in One SEO’nun arama görünümü ayarından yönetilir."
-
-#: includes/Screens/Tags.php:167
-msgid "Etiket arşivleri Rank Math’ın “Başlıklar ve Meta” bölümünden yönetilir."
-msgstr "Etiket arşivleri Rank Math’ın “Başlıklar ve Meta” bölümünden yönetilir."
-
-#: includes/Screens/Tags.php:166
-msgid "Etiket arşivleri Yoast’ın “Taksonomiler” ayarından yönetilir; İçerik Sağlığı bu ayara yazmaz."
-msgstr "Etiket arşivleri Yoast’ın “Taksonomiler” ayarından yönetilir; İçerik Sağlığı bu ayara yazmaz."
-
-#: includes/Registry.php:59
-msgid "Etiket ve kategori"
-msgstr "Etiket ve kategori"
-
-#: includes/Screens/Onboarding.php:56
-msgid "Etiket ve kategoriler"
-msgstr "Etiket ve kategoriler"
-
-#: includes/Screens/Tags.php:170
-msgid "Etiketler için noindex"
-msgstr "Etiketler için noindex"
-
-#: includes/Scanner.php:105
-msgid "Etiketler ve kategoriler"
-msgstr "Etiketler ve kategoriler"
-
-#: includes/Screens/Tags.php:56
-msgid "Etiketlerde sorun görünmüyor"
-msgstr "Etiketlerde sorun görünmüyor"
-
-#: includes/Admin.php:195
-msgid "Etkin"
-msgstr "Etkin"
-
-#: includes/Fixer.php:310
-msgid "Etkin SEO eklentisi (%s) var; noindex ayarını orada yapın. ContentHealth çakışmamak için dokunmadı."
-msgstr "Etkin SEO eklentisi (%s) var; noindex ayarını orada yapın. ContentHealth çakışmamak için dokunmadı."
-
-#: includes/Screens/Issues.php:216
-msgid "Etkin süzgeç:"
-msgstr "Etkin süzgeç:"
-
-#: includes/Screens/Issues.php:216
-msgid "Etkin süzgeçler"
-msgstr "Etkin süzgeçler"
-
-#: includes/Screens/Overview.php:221
-msgid "Eylem"
-msgstr "Eylem"
-
-#: includes/Admin.php:288
-msgid "Eylem ya da seçim yok."
-msgstr "Eylem ya da seçim yok."
-
-#: includes/Screens/Issues.php:127 includes/Screens/UndoLog.php:44
-msgid "Eylemler"
-msgstr "Eylemler"
-
-#: includes/Screens/Issues.php:316 includes/Screens/Onboarding.php:68
-msgid "Geri"
-msgstr "Geri"
-
-#: includes/Admin.php:103 includes/Screens/UndoLog.php:73 includes/Screens/UndoLog.php:105
-msgid "Geri al"
-msgstr "Geri al"
-
-#: includes/Screens/UndoLog.php:71
-msgid "Geri al: işlem #%d"
-msgstr "Geri al: işlem #%d"
-
-#: includes/Admin.php:148 includes/Screens/UndoLog.php:38
-msgid "Geri alma günlüğü"
-msgstr "Geri alma günlüğü"
-
-#: includes/Admin.php:104
-msgid "Geri alma kaydı"
-msgstr "Geri alma kaydı"
-
-#: includes/Screens/UndoLog.php:105
-msgid "Geri alma sonrası bulgular, sonraki taramada yeniden açılır."
-msgstr "Geri alma sonrası bulgular, sonraki taramada yeniden açılır."
-
-#: includes/Screens/Issues.php:314
-msgid "Geri alma: Geri alma günlüğü → bu işlem → Geri al. Revizyon oluşturulmaz; günlük önceki değeri saklar."
-msgstr "Geri alma: Geri alma günlüğü → bu işlem → Geri al. Revizyon oluşturulmaz; günlük önceki değeri saklar."
-
-#: includes/Admin.php:99
-msgid "Geri alınamadı"
-msgstr "Geri alınamadı"
-
-#: includes/Screens/UndoLog.php:52
-msgid "Geri alındı"
-msgstr "Geri alındı"
-
-#: includes/Patterns.php:44
-msgid "Geçersiz desen."
-msgstr "Geçersiz desen."
-
-#: includes/Patterns.php:48
-msgid "Geçersiz ya da çok yavaş desen."
-msgstr "Geçersiz ya da çok yavaş desen."
-
-#: includes/Screens/Overview.php:187
-msgid "Grafik için en az iki bitmiş tarama gerekir."
-msgstr "Grafik için en az iki bitmiş tarama gerekir."
-
-#: includes/Screens/Issues.php:178 includes/Screens/Issues.php:202
-msgid "Grup"
-msgstr "Grup"
-
-#: includes/Screens/Overview.php:87
-msgid "Gruplara göre durum"
-msgstr "Gruplara göre durum"
-
-#: includes/Screens/Alt.php:60
-msgid "Görsel"
-msgstr "Görsel"
-
-#: includes/Rules/Media.php:67
-msgid "Görsel adresi geliştirme/staging sunucusuna (.test, localhost), tekrarlı uzantıya ya da bozuk biçime işaret ediyor."
-msgstr "Görsel adresi geliştirme/staging sunucusuna (.test, localhost), tekrarlı uzantıya ya da bozuk biçime işaret ediyor."
-
-#: includes/Rules/Media.php:64
-msgid "Görsel hatalı sunucudan"
-msgstr "Görsel hatalı sunucudan"
-
-#: includes/Rules/Media.php:30
-msgid "Görselde alt metin yok"
-msgstr "Görselde alt metin yok"
-
-#: includes/Screens/Onboarding.php:60 includes/Screens/Prefs.php:126
-msgid "Günlük"
-msgstr "Günlük"
-
-#: includes/Screens/Prefs.php:142
-msgid "Güvenlik"
-msgstr "Güvenlik"
-
-#: includes/Rules/Content.php:204
-msgid "HTML'e dönüşmemiş **kalın**, ### başlık, kod çiti, [metin](adres) bağlantısı ve \"* madde\" satırları. Kod blokları sayılmaz."
-msgstr "HTML'e dönüşmemiş **kalın**, ### başlık, kod çiti, [metin](adres) bağlantısı ve \"* madde\" satırları. Kod blokları sayılmaz."
-
-#: includes/Screens/Onboarding.php:60 includes/Screens/Prefs.php:127
-msgid "Haftalık"
-msgstr "Haftalık"
-
-#: includes/Screens/Prefs.php:138
-msgid "Hariç tutulan yazı türleri"
-msgstr "Hariç tutulan yazı türleri"
-
-#: includes/Admin.php:116
-msgid "Hata"
-msgstr "Hata"
-
-#: includes/Ui.php:213
-msgid "Hatalı / geliştirme adreslerini sitenin gerçek adresiyle değiştirir."
-msgstr "Hatalı / geliştirme adreslerini sitenin gerçek adresiyle değiştirir."
-
-#: includes/Screens/Prefs.php:140
-msgid "Hatalı adres düzeltmesinin hedefi. Boşsa site adresi kullanılır."
-msgstr "Hatalı adres düzeltmesinin hedefi. Boşsa site adresi kullanılır."
-
-#: includes/Rules/Links.php:42
-msgid "Hatalı sunucu adresi"
-msgstr "Hatalı sunucu adresi"
-
-#: includes/Screens/Issues.php:102
-msgid "Henüz bulgu yok"
-msgstr "Henüz bulgu yok"
-
-#: includes/Screens/UndoLog.php:41
-msgid "Henüz geri alınabilir bir işlem yok"
-msgstr "Henüz geri alınabilir bir işlem yok"
-
-#: includes/Screens/Overview.php:83
-msgid "Henüz tarama yapılmadı"
-msgstr "Henüz tarama yapılmadı"
-
-#: includes/Screens/Issues.php:102
-msgid "Henüz tarama yapılmadı ya da tarama hiçbir sorun bulmadı. Taramayı başlatın."
-msgstr "Henüz tarama yapılmadı ya da tarama hiçbir sorun bulmadı. Taramayı başlatın."
-
-#: includes/Screens/Overview.php:176
-msgid "Henüz tarama yapılmadı."
-msgstr "Henüz tarama yapılmadı."
-
-#: includes/Screens/UndoLog.php:38
-msgid "Her otomatik düzeltme önceki değerleriyle saklanır; istediğiniz zaman geri alabilirsiniz."
-msgstr "Her otomatik düzeltme önceki değerleriyle saklanır; istediğiniz zaman geri alabilirsiniz."
-
-#: includes/Screens/Prefs.php:137
-msgid "Her satıra bir durum (publish, draft…)."
-msgstr "Her satıra bir durum (publish, draft…)."
-
-#: includes/Screens/Prefs.php:138
-msgid "Her satıra bir yazı türü adı."
-msgstr "Her satıra bir yazı türü adı."
-
-#: includes/Screens/Prefs.php:136
-msgid "Her tarama adımının en çok süresi (1–20) ve adımdaki kayıt sayısı (10–500)."
-msgstr "Her tarama adımının en çok süresi (1–20) ve adımdaki kayıt sayısı (10–500)."
-
-#: includes/Rules/Terms.php:41
-msgid "Hiçbir içeriğe bağlı olmayan etiket ya da kategori."
-msgstr "Hiçbir içeriğe bağlı olmayan etiket ya da kategori."
-
-#: includes/Ui.php:215
-msgid "Hiçbir içeriğe bağlı olmayan etiketleri siler."
-msgstr "Hiçbir içeriğe bağlı olmayan etiketleri siler."
-
-#: includes/Screens/Alt.php:42
-msgid "Jetonlar"
-msgstr "Jetonlar"
-
-#: includes/Screens/Alt.php:42
-msgid "Jetonlara tıklayarak ekleyin. Şablon yalnız bu doldurma için kullanılır; kalıcı varsayılan Ayarlar’dadır."
-msgstr "Jetonlara tıklayarak ekleyin. Şablon yalnız bu doldurma için kullanılır; kalıcı varsayılan Ayarlar’dadır."
-
-#: includes/Admin.php:77
-msgid "Kaldığı yerden devam et"
-msgstr "Kaldığı yerden devam et"
-
-#: includes/Screens/Prefs.php:63
-msgid "Kalın işaretlerini ara"
-msgstr "Kalın işaretlerini ara"
-
-#: includes/Screens/Tags.php:122
-msgid "Kanonik etiket: %s"
-msgstr "Kanonik etiket: %s"
-
-#: includes/Screens/Issues.php:127 includes/Screens/Issues.php:147 includes/Screens/Issues.php:252 includes/Screens/Overview.php:221 includes/Screens/Overview.php:228 includes/Screens/Tags.php:155
-msgid "Kanıt"
-msgstr "Kanıt"
-
-#: includes/Screens/Prefs.php:144
-msgid "Kapalıyken eklenti silinse de bulgular, ayarlar ve geri alma günlüğü kalır."
-msgstr "Kapalıyken eklenti silinse de bulgular, ayarlar ve geri alma günlüğü kalır."
-
-#: includes/Admin.php:85 includes/Screens/Issues.php:303
-msgid "Kapat"
-msgstr "Kapat"
-
-#: includes/Screens/Prefs.php:83
-msgid "Kapattığınız kural taramada çalışmaz; var olan bulguları silmez."
-msgstr "Kapattığınız kural taramada çalışmaz; var olan bulguları silmez."
-
-#: includes/Screens/Overview.php:173 includes/Screens/UndoLog.php:44 includes/Screens/UndoLog.php:61
-msgid "Kapsam"
-msgstr "Kapsam"
-
-#: includes/Rules/Links.php:95
-msgid "Karışık içerik (http)"
-msgstr "Karışık içerik (http)"
-
-#: includes/Admin.php:263
-msgid "Kaydedildi; bazı desenler geçersiz olduğu için atlandı: "
-msgstr "Kaydedildi; bazı desenler geçersiz olduğu için atlandı: "
-
-#: includes/Admin.php:92
-msgid "Kaydedilmemiş değişiklik var."
-msgstr "Kaydedilmemiş değişiklik var."
-
-#: includes/Admin.php:93 includes/Screens/Prefs.php:78
-msgid "Kaydedilmemiş değişiklik yok."
-msgstr "Kaydedilmemiş değişiklik yok."
-
-#: includes/Screens/Prefs.php:78
-msgid "Kaydetme çubuğu"
-msgstr "Kaydetme çubuğu"
-
-#: includes/Scanner.php:138
-msgid "Koşu bulunamadı."
-msgstr "Koşu bulunamadı."
-
-#: includes/Runs.php:105
-msgid "Koşu kaydı yazılamadı."
-msgstr "Koşu kaydı yazılamadı."
-
-#: includes/Registry.php:66
-msgid "Kritik"
-msgstr "Kritik"
-
-#: includes/Screens/Overview.php:218
-msgid "Kritik sorun yok"
-msgstr "Kritik sorun yok"
-
-#: includes/Screens/Prefs.php:141
-msgid "Kullanılabilir jetonlar: {başlık}, {dosya_adı}, {site_adı}."
-msgstr "Kullanılabilir jetonlar: {başlık}, {dosya_adı}, {site_adı}."
-
-#: includes/Screens/Alt.php:51 includes/Screens/Alt.php:62
-msgid "Kullanıldığı yer"
-msgstr "Kullanıldığı yer"
-
-#: includes/Screens/Issues.php:127 includes/Screens/Issues.php:146 includes/Screens/Issues.php:179 includes/Screens/Issues.php:203 includes/Screens/Issues.php:312
-msgid "Kural"
-msgstr "Kural"
-
-#: includes/Screens/Prefs.php:83
-msgid "Kurallar"
-msgstr "Kurallar"
-
-#: includes/Screens/Issues.php:311
-msgid "Kuru koşu"
-msgstr "Kuru koşu"
-
-#: includes/Screens/Issues.php:308
-msgid "Kuru koşu yapıldı; değişiklik uygulanacak ve geri alma günlüğüne yazılacak."
-msgstr "Kuru koşu yapıldı; değişiklik uygulanacak ve geri alma günlüğüne yazılacak."
-
-#: includes/Admin.php:87
-msgid "Kuru koşu yapılıyor…"
-msgstr "Kuru koşu yapılıyor…"
-
-#: includes/Screens/Tags.php:182
-msgid "Kuru koşu: henüz bir şey değişmedi."
-msgstr "Kuru koşu: henüz bir şey değişmedi."
-
-#: includes/Admin.php:82 includes/Screens/Issues.php:316
-msgid "Kuru koşuyu çalıştır"
-msgstr "Kuru koşuyu çalıştır"
-
-#: includes/Screens/Onboarding.php:48
-msgid "Kurulum adımları"
-msgstr "Kurulum adımları"
-
-#: includes/Screens/Prefs.php:62
-msgid "Köşeli parantezli adları da say"
-msgstr "Köşeli parantezli adları da say"
-
-#: includes/Screens/Tags.php:120
-msgid "Küme %1$d · %2$s"
-msgstr "Küme %1$d · %2$s"
-
-#: includes/Screens/Alt.php:51
-msgid "Küçük resim"
-msgstr "Küçük resim"
-
-#: includes/Rules/Links.php:245
-msgid "Kırık iç bağlantı (yavaş mod)"
-msgstr "Kırık iç bağlantı (yavaş mod)"
-
-#: includes/Screens/Tags.php:131
-msgid "Kısa ad:"
-msgstr "Kısa ad:"
-
-#: includes/Screens/UndoLog.php:54
-msgid "Kısmen geri alındı"
-msgstr "Kısmen geri alındı"
-
-#: includes/Rules/Content.php:379
-msgid "LaTeX kalıntısı"
-msgstr "LaTeX kalıntısı"
-
-#: includes/Ui.php:212
-msgid "LaTeX puan kalıntılarını düz metne çevirir."
-msgstr "LaTeX puan kalıntılarını düz metne çevirir."
-
-#: includes/Screens/Prefs.php:65
-msgid "Madde işaretlerini ara"
-msgstr "Madde işaretlerini ara"
-
-#: includes/Ui.php:211
-msgid "Markdown işaretlerini HTML karşılıklarına çevirir."
-msgstr "Markdown işaretlerini HTML karşılıklarına çevirir."
-
-#: includes/Rules/Content.php:201
-msgid "Markdown kalıntısı"
-msgstr "Markdown kalıntısı"
-
-#: includes/Registry.php:57
-msgid "Medya"
-msgstr "Medya"
-
-#: includes/Screens/Onboarding.php:55
-msgid "Medya kitaplığı"
-msgstr "Medya kitaplığı"
-
-#: includes/Screens/Prefs.php:178
-msgid "Meta açıklama kuralı bu eklentinin alanını okur."
-msgstr "Meta açıklama kuralı bu eklentinin alanını okur."
-
-#: includes/Screens/Prefs.php:180
-msgid "Meta açıklama kuralı yalnız yazı özetine bakar."
-msgstr "Meta açıklama kuralı yalnız yazı özetine bakar."
-
-#: includes/Rules/Seo.php:68
-msgid "Meta açıklaması uzunluğu"
-msgstr "Meta açıklaması uzunluğu"
-
-#: includes/Rules/Seo.php:39
-msgid "Meta açıklaması yok"
-msgstr "Meta açıklaması yok"
-
-#: includes/Registry.php:56
-msgid "Meta ve SEO"
-msgstr "Meta ve SEO"
-
-#: includes/Rules/Seo.php:223
-msgid "Metin kelime sayısı eşiğin altında (varsayılan 200)."
-msgstr "Metin kelime sayısı eşiğin altında (varsayılan 200)."
-
-#: includes/Screens/Onboarding.php:48
-msgid "Ne zaman?"
-msgstr "Ne zaman?"
-
-#: includes/Screens/Issues.php:266
-msgid "Neden önemli?"
-msgstr "Neden önemli?"
-
-#: includes/Screens/Issues.php:127 includes/Screens/Overview.php:221
-msgid "Nesne"
-msgstr "Nesne"
-
-#: includes/Screens/Onboarding.php:48
-msgid "Neyi tarayalım?"
-msgstr "Neyi tarayalım?"
-
-#: includes/Screens/UndoLog.php:44
-msgid "No"
-msgstr "No"
-
-#: includes/Screens/Issues.php:311
-msgid "Onay"
-msgstr "Onay"
-
-#: includes/Ui.php:62
-msgid "Orta"
-msgstr "Orta"
-
-#: includes/Ui.php:220
-msgid "Otomatik düzeltme yok; yazıyı açıp elle düzeltin."
-msgstr "Otomatik düzeltme yok; yazıyı açıp elle düzeltin."
-
-#: includes/Screens/Prefs.php:131
-msgid "Otomatik tarama arka planda WP-Cron ile çalışır."
-msgstr "Otomatik tarama arka planda WP-Cron ile çalışır."
-
-#: includes/Screens/Onboarding.php:63
-msgid "Otomatik tarama arka planda WP-Cron ile çalışır; sonradan Ayarlar’dan değiştirebilirsiniz."
-msgstr "Otomatik tarama arka planda WP-Cron ile çalışır; sonradan Ayarlar’dan değiştirebilirsiniz."
-
-#: includes/Admin.php:131
-msgid "Pano"
-msgstr "Pano"
-
-#: includes/Admin.php:163
-msgid "Panoya dön"
-msgstr "Panoya dön"
-
-#: includes/Screens/Onboarding.php:67
-msgid "Panoya git"
-msgstr "Panoya git"
-
-#: includes/Admin.php:111
-msgid "Parti"
-msgstr "Parti"
-
-#: includes/Screens/Overview.php:116
-msgid "Puan yok"
-msgstr "Puan yok"
-
-#: includes/Screens/Prefs.php:176
-msgid "SEO eklentisi"
-msgstr "SEO eklentisi"
-
-#: includes/Screens/Prefs.php:180 includes/Screens/Tags.php:174
-msgid "SEO eklentisi bulunamadı."
-msgstr "SEO eklentisi bulunamadı."
-
-#: includes/Rules/Seo.php:42
-msgid "SEO eklentisinin (Yoast, Rank Math, AIOSEO) açıklama alanı ve özet boş. Eklenti yoksa özet okunur."
-msgstr "SEO eklentisinin (Yoast, Rank Math, AIOSEO) açıklama alanı ve özet boş. Eklenti yoksa özet okunur."
-
-#: includes/Screens/Prefs.php:125
-msgid "Saatlik"
-msgstr "Saatlik"
-
-#: includes/Screens/Prefs.php:58
-msgid "Saniyedeki istek"
-msgstr "Saniyedeki istek"
-
-#: includes/Screens/Issues.php:277
-msgid "Satır içi"
-msgstr "Satır içi"
-
-#: includes/Ui.php:197
-msgid "Sayfa"
-msgstr "Sayfa"
-
-#: includes/Ui.php:203
-msgid "Sayfalama"
-msgstr "Sayfalama"
-
-#: includes/Screens/Overview.php:114
-msgid "Sağlık puanı"
-msgstr "Sağlık puanı"
-
-#: includes/Screens/Overview.php:125
-msgid "Sağlık puanı: %1$d / 100, %2$s"
-msgstr "Sağlık puanı: %1$d / 100, %2$s"
-
-#: includes/Screens/Alt.php:59 includes/Screens/Issues.php:143
-msgid "Seç: %s"
-msgstr "Seç: %s"
-
-#: includes/Screens/Issues.php:312
-msgid "Seçilen kurallar"
-msgstr "Seçilen kurallar"
-
-#: includes/Screens/Issues.php:118
-msgid "Seçilenleri düzelt…"
-msgstr "Seçilenleri düzelt…"
-
-#: includes/Screens/Alt.php:49
-msgid "Seçili yazılardaki alt metni boş görsellerde şablonun nasıl görüneceği. Henüz hiçbir şey kaydedilmedi."
-msgstr "Seçili yazılardaki alt metni boş görsellerde şablonun nasıl görüneceği. Henüz hiçbir şey kaydedilmedi."
-
-#: includes/Screens/Issues.php:311
-msgid "Seçim"
-msgstr "Seçim"
-
-#: includes/Screens/Issues.php:121
-msgid "Seçimi kaldır"
-msgstr "Seçimi kaldır"
-
-#: includes/Ui.php:231
-msgid "Silinen satır: "
-msgstr "Silinen satır: "
-
-#: includes/Screens/Onboarding.php:65
-msgid "Site büyüklüğüne göre birkaç saniye ile birkaç dakika sürer. Tarama sürerken bu sayfadan ayrılabilirsiniz."
-msgstr "Site büyüklüğüne göre birkaç saniye ile birkaç dakika sürer. Tarama sürerken bu sayfadan ayrılabilirsiniz."
-
-#: includes/Rules/Links.php:98
-msgid "Site https iken içerikte http:// görsel, iframe, betik ya da kendi sitene http bağlantı."
-msgstr "Site https iken içerikte http:// görsel, iframe, betik ya da kendi sitene http bağlantı."
-
-#: includes/Rules/Links.php:248
-msgid "Site içi bağlantılara hız sınırlı (saniyede en çok 2) HEAD isteği atar; 404/410 ve bağlantı hatalarını bulur. Sunucuya yük bindirmemek için varsayılan kapalıdır."
-msgstr "Site içi bağlantılara hız sınırlı (saniyede en çok 2) HEAD isteği atar; 404/410 ve bağlantı hatalarını bulur. Sunucuya yük bindirmemek için varsayılan kapalıdır."
-
-#: includes/Rules/Content.php:151
-msgid "Sohbet arayüzünden yapıştırılan sarmalayıcı sınıflar ve veri öznitelikleri (data-path-to-node, model-response-message-content, math-inline …). Düzeltme sarmalayıcıyı açar, içeriği korur."
-msgstr "Sohbet arayüzünden yapıştırılan sarmalayıcı sınıflar ve veri öznitelikleri (data-path-to-node, model-response-message-content, math-inline …). Düzeltme sarmalayıcıyı açar, içeriği korur."
-
-#: includes/Screens/Prefs.php:155
-msgid "Sohbet kalıntısı kuralı bu desenleri arar. Kendi deseninizi ekleyip kaydetmeden test edin."
-msgstr "Sohbet kalıntısı kuralı bu desenleri arar. Kendi deseninizi ekleyip kaydetmeden test edin."
-
-#: includes/Screens/Overview.php:200
-msgid "Son %1$d taramada puan %2$d → %3$d (%4$s)"
-msgstr "Son %1$d taramada puan %2$d → %3$d (%4$s)"
-
-#: includes/Screens/Overview.php:184
-msgid "Son %d tarama"
-msgstr "Son %d tarama"
-
-#: includes/Screens/Alt.php:71 includes/Screens/Issues.php:278 includes/Screens/Issues.php:314
-msgid "Son değiştirilme tarihi değişmesin"
-msgstr "Son değiştirilme tarihi değişmesin"
-
-#: includes/Screens/Overview.php:169
-msgid "Son tarama"
-msgstr "Son tarama"
-
-#: includes/Screens/Overview.php:136
-msgid "Son taramaya göre"
-msgstr "Son taramaya göre"
-
-#: includes/Admin.php:108 includes/Ui.php:261
-msgid "Sonra"
-msgstr "Sonra"
-
-#: includes/Ui.php:201 includes/Ui.php:202
-msgid "Sonraki sayfa"
-msgstr "Sonraki sayfa"
-
-#: includes/Screens/Overview.php:174
-msgid "Sonraki tarama"
-msgstr "Sonraki tarama"
-
-#: includes/Screens/Issues.php:311
-msgid "Sonuç"
-msgstr "Sonuç"
-
-#: includes/Screens/Prefs.php:165
-msgid "Sonuç burada görünür."
-msgstr "Sonuç burada görünür."
-
-#: includes/Screens/Overview.php:221 includes/Screens/Overview.php:227
-msgid "Sorun"
-msgstr "Sorun"
-
-#: includes/Screens/Tags.php:59
-msgid "Sorun sınıfları"
-msgstr "Sorun sınıfları"
-
-#: includes/Admin.php:78
-msgid "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin."
-msgstr "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin."
-
-#: includes/Admin.php:72 includes/Screens/Overview.php:157
-msgid "Sürdür"
-msgstr "Sürdür"
-
-#: includes/Screens/Overview.php:171
-msgid "Süre"
-msgstr "Süre"
-
-#: includes/Screens/Issues.php:193
-msgid "Süz"
-msgstr "Süz"
-
-#: includes/Screens/Issues.php:230
-msgid "Süzgeci kaldır: %s"
-msgstr "Süzgeci kaldır: %s"
-
-#: includes/Screens/Issues.php:110
-msgid "Süzgeçleri gevşetin ya da temizleyin."
-msgstr "Süzgeçleri gevşetin ya da temizleyin."
-
-#: includes/Screens/Issues.php:110
-msgid "Süzgeçleri temizle"
-msgstr "Süzgeçleri temizle"
-
-#: includes/Screens/Overview.php:148 includes/Screens/Prefs.php:130
-msgid "Tarama"
-msgstr "Tarama"
-
-#: includes/Admin.php:68 includes/Screens/Onboarding.php:66
-msgid "Tarama başlıyor…"
-msgstr "Tarama başlıyor…"
-
-#: includes/Screens/Prefs.php:57
-msgid "Tarama başına en çok istek"
-msgstr "Tarama başına en çok istek"
-
-#: includes/Admin.php:74
-msgid "Tarama bitti."
-msgstr "Tarama bitti."
-
-#: includes/Admin.php:70 includes/Screens/Overview.php:152
-msgid "Tarama duraklatıldı"
-msgstr "Tarama duraklatıldı"
-
-#: includes/Admin.php:75
-msgid "Tarama durdu."
-msgstr "Tarama durdu."
-
-#: includes/Screens/Onboarding.php:66 includes/Screens/Overview.php:154
-msgid "Tarama ilerlemesi"
-msgstr "Tarama ilerlemesi"
-
-#: includes/Admin.php:73
-msgid "Tarama iptal edildi."
-msgstr "Tarama iptal edildi."
-
-#: includes/Screens/Issues.php:99
-msgid "Tarama sonucunda bulunan içerik sorunları. Bir satırı açarak kanıtı ve önerilen düzeltmeyi görün."
-msgstr "Tarama sonucunda bulunan içerik sorunları. Bir satırı açarak kanıtı ve önerilen düzeltmeyi görün."
-
-#: includes/Screens/Tags.php:56
-msgid "Tarama sonuçlarında etiket sorunu yok. Yeni bir tarama sonrası burada görünür."
-msgstr "Tarama sonuçlarında etiket sorunu yok. Yeni bir tarama sonrası burada görünür."
-
-#: includes/Screens/Onboarding.php:59 includes/Screens/Prefs.php:131
-msgid "Tarama sıklığı"
-msgstr "Tarama sıklığı"
-
-#: includes/Screens/Onboarding.php:57
-msgid "Taramalar"
-msgstr "Taramalar"
-
-#: includes/Screens/Prefs.php:139
-msgid "Taranan taksonomiler"
-msgstr "Taranan taksonomiler"
-
-#: includes/Screens/Prefs.php:137
-msgid "Taranan yazı durumları"
-msgstr "Taranan yazı durumları"
-
-#: includes/Admin.php:69 includes/Screens/Overview.php:152
-msgid "Taranıyor…"
-msgstr "Taranıyor…"
-
-#: includes/Screens/Issues.php:127 includes/Screens/Issues.php:149
-msgid "Tarih"
-msgstr "Tarih"
-
-#: includes/Ui.php:217
-msgid "Tek içerikli etiketi arama motoru dizininden çıkarır."
-msgstr "Tek içerikli etiketi arama motoru dizininden çıkarır."
-
-#: includes/Rules/Terms.php:97
-msgid "Tek kullanımlık terim"
-msgstr "Tek kullanımlık terim"
-
-#: includes/Screens/Tags.php:27
-msgid "Tek yazılı"
-msgstr "Tek yazılı"
-
-#: includes/Screens/Tags.php:174
-msgid "Tek yazılı etiket arşivlerine İçerik Sağlığı noindex ekleyebilir: “Tek yazılı” sınıfını açıp düzeltin. Değişiklik geri alınabilir."
-msgstr "Tek yazılı etiket arşivlerine İçerik Sağlığı noindex ekleyebilir: “Tek yazılı” sınıfını açıp düzeltin. Değişiklik geri alınabilir."
-
-#: includes/Screens/Issues.php:193
-msgid "Temizle"
-msgstr "Temizle"
-
-#: includes/Rules/Terms.php:164
-msgid "Terim adı yalnız sayı (ör. \"2019\"). Yıl etiketleri bilinçliyse kuralı kapatın."
-msgstr "Terim adı yalnız sayı (ör. \"2019\"). Yıl etiketleri bilinçliyse kuralı kapatın."
-
-#: includes/Rules/Terms.php:127
-msgid "Terim adında sohbet cümlesi, markdown işareti ya da satır sonu bulunuyor (\"İşte etiketler:\", \"**film**\")."
-msgstr "Terim adında sohbet cümlesi, markdown işareti ya da satır sonu bulunuyor (\"İşte etiketler:\", \"**film**\")."
-
-#: includes/TermOps.php:62
-msgid "Terim artık boş değil; silinmedi."
-msgstr "Terim artık boş değil; silinmedi."
-
-#: includes/Fixer.php:339
-msgid "Terim bulunamadı."
-msgstr "Terim bulunamadı."
-
-#: includes/TermOps.php:59
-msgid "Terim zaten yok."
-msgstr "Terim zaten yok."
-
-#: includes/Rules/Terms.php:124
-msgid "Terimde yapay zekâ kalıntısı"
-msgstr "Terimde yapay zekâ kalıntısı"
-
-#: includes/TermOps.php:94
-msgid "Terimler aynı sınıflandırmada değil."
-msgstr "Terimler aynı sınıflandırmada değil."
-
-#: includes/Screens/Prefs.php:165
-msgid "Test et"
-msgstr "Test et"
-
-#: includes/Screens/Issues.php:263
-msgid "Toplam bulunan: %d"
-msgstr "Toplam bulunan: %d"
-
-#: includes/Screens/Issues.php:310
-msgid "Toplu düzeltme"
-msgstr "Toplu düzeltme"
-
-#: includes/Screens/Alt.php:50 includes/Screens/Issues.php:117
-msgid "Toplu eylemler"
-msgstr "Toplu eylemler"
-
-#: includes/Screens/Overview.php:216
-msgid "Tüm bulgu listesi"
-msgstr "Tüm bulgu listesi"
-
-#: includes/Screens/Issues.php:172 includes/Screens/Issues.php:178 includes/Screens/Issues.php:180 includes/Screens/Issues.php:188 includes/Screens/Issues.php:212
-msgid "Tümü"
-msgstr "Tümü"
-
-#: includes/Screens/Alt.php:51
-msgid "Tümünü seç"
-msgstr "Tümünü seç"
-
-#: includes/Registry.php:67
-msgid "Uyarı"
-msgstr "Uyarı"
-
-#: includes/Screens/Tags.php:183
-msgid "Uygula"
-msgstr "Uygula"
-
-#: includes/Screens/UndoLog.php:44
-msgid "Uygulanan düzeltmeler"
-msgstr "Uygulanan düzeltmeler"
-
-#: includes/Screens/UndoLog.php:56
-msgid "Uygulandı"
-msgstr "Uygulandı"
-
-#: includes/Admin.php:86 includes/Screens/Issues.php:314
-msgid "Uygulanıyor…"
-msgstr "Uygulanıyor…"
-
-#: includes/Screens/Alt.php:71 includes/Screens/Issues.php:308 includes/Screens/Issues.php:316 includes/Screens/Prefs.php:78 includes/Screens/Tags.php:182 includes/Screens/Tags.php:183
-msgid "Vazgeç"
-msgstr "Vazgeç"
-
-#: includes/Screens/Tags.php:28
-msgid "YZ kalıntılı"
-msgstr "YZ kalıntılı"
-
 #: includes/Screens/Tags.php:89
-msgid "Yakın yinelenen etiketler"
-msgstr "Yakın yinelenen etiketler"
-
-#: includes/Rules/Terms.php:100
-msgid "Yalnız bir içeriğe bağlı etiket; arşiv sayfası ince içerik üretir. Yalnız bilgi amaçlıdır."
-msgstr "Yalnız bir içeriğe bağlı etiket; arşiv sayfası ince içerik üretir. Yalnız bilgi amaçlıdır."
-
-#: includes/Screens/Alt.php:71
-msgid "Yalnız boş alt metinler doldurulur; dolu olanlara dokunulmaz."
-msgstr "Yalnız boş alt metinler doldurulur; dolu olanlara dokunulmaz."
-
-#: includes/Screens/Onboarding.php:60 includes/Screens/Prefs.php:124
-msgid "Yalnız elle"
-msgstr "Yalnız elle"
-
-#: includes/Rules/Terms.php:161
-msgid "Yalnız rakamdan oluşan terim"
-msgstr "Yalnız rakamdan oluşan terim"
-
-#: includes/Screens/Tags.php:29
-msgid "Yalnız sayı"
-msgstr "Yalnız sayı"
-
-#: includes/Ui.php:209
-msgid "Yalnız sohbet girişini ve çıkışını siler; yazının geri kalanına dokunulmaz."
-msgstr "Yalnız sohbet girişini ve çıkışını siler; yazının geri kalanına dokunulmaz."
-
-#: includes/Screens/Issues.php:277
-msgid "Yan yana"
-msgstr "Yan yana"
-
-#: includes/Rules/Content.php:148
-msgid "Yapay zekâ arayüz kalıntısı"
-msgstr "Yapay zekâ arayüz kalıntısı"
-
-#: includes/Rules/Content.php:33
-msgid "Yapay zekâ sohbet kalıntısı"
-msgstr "Yapay zekâ sohbet kalıntısı"
-
-#: includes/Ui.php:143 includes/Screens/Tags.php:155 includes/Screens/Tags.php:158
-msgid "Yazı"
-msgstr "Yazı"
-
-#: includes/Rules/Seo.php:167
-msgid "Yazı başlığı ayarlı karakter sınırını aşıyor (varsayılan 70)."
-msgstr "Yazı başlığı ayarlı karakter sınırını aşıyor (varsayılan 70)."
-
-#: includes/Rules/Terms.php:304
-msgid "Yazı başına çok terim"
-msgstr "Yazı başına çok terim"
-
-#: includes/Fixer.php:142
-msgid "Yazı bulunamadı."
-msgstr "Yazı bulunamadı."
-
-#: includes/Fixer.php:177
-msgid "Yazı güncellenemedi."
-msgstr "Yazı güncellenemedi."
-
-#: includes/Screens/Issues.php:278
-msgid "Yazı listesinde “güncellendi” görünmez; geri alma günlüğü önceki değeri saklar."
-msgstr "Yazı listesinde “güncellendi” görünmez; geri alma günlüğü önceki değeri saklar."
-
-#: includes/Screens/Prefs.php:59
-msgid "Yazı türleri (her satıra bir)"
-msgstr "Yazı türleri (her satıra bir)"
-
-#: includes/Screens/Overview.php:148
-msgid "Yazı, sayfa, ürün, medya ve etiketler partiler halinde taranır."
-msgstr "Yazı, sayfa, ürün, medya ve etiketler partiler halinde taranır."
-
-#: includes/Scanner.php:102
-msgid "Yazılar"
-msgstr "Yazılar"
-
-#: includes/Screens/Onboarding.php:54
-msgid "Yazılar ve sayfalar"
-msgstr "Yazılar ve sayfalar"
-
-#: includes/Screens/Tags.php:89
-msgid "Yazım biçimi farklı ama aynı konuyu anlatan etiketler. Her kümede korunacak kanonik etiketi seçin."
-msgstr "Yazım biçimi farklı ama aynı konuyu anlatan etiketler. Her kümede korunacak kanonik etiketi seçin."
-
-#: includes/Rules/Content.php:36
-msgid "Yazının ilk ya da son bloğunda kalan sohbet cümleleri (\"İşte … :\", \"Umarım yardımcı olur\"). Yalnız ilk/son kısa blok sayılır; gövdedeki \"Elbette…\" gibi editoryal ifadelere dokunulmaz."
-msgstr "Yazının ilk ya da son bloğunda kalan sohbet cümleleri (\"İşte … :\", \"Umarım yardımcı olur\"). Yalnız ilk/son kısa blok sayılır; gövdedeki \"Elbette…\" gibi editoryal ifadelere dokunulmaz."
-
-#: includes/Screens/Issues.php:306
-msgid "Yazıyı aç"
-msgstr "Yazıyı aç"
-
-#: includes/Screens/Prefs.php:162
-msgid "Yeni desen"
-msgstr "Yeni desen"
-
-#: includes/Screens/Issues.php:154
-msgid "Yeniden aç"
-msgstr "Yeniden aç"
-
-#: includes/Admin.php:76
-msgid "Yeniden dene"
-msgstr "Yeniden dene"
-
-#: includes/Rules/Content.php:287
-msgid "Yer tutucu kalıntısı"
-msgstr "Yer tutucu kalıntısı"
-
-#: includes/Rules/Links.php:130
-msgid "Yeterince uzun içerikte siteye ait hiçbir bağlantı yok."
-msgstr "Yeterince uzun içerikte siteye ait hiçbir bağlantı yok."
-
-#: includes/Rules/Links.php:161
-msgid "Yetim içerik"
-msgstr "Yetim içerik"
-
-#: includes/Rules/Seo.php:112
-msgid "Yinelenen başlık"
-msgstr "Yinelenen başlık"
-
-#: includes/Screens/Tags.php:95
-msgid "Yinelenen etiket kümesi yok"
-msgstr "Yinelenen etiket kümesi yok"
-
-#: includes/Ui.php:216
-msgid "Yinelenen etiketleri seçilen kanonik etikette birleştirir."
-msgstr "Yinelenen etiketleri seçilen kanonik etikette birleştirir."
-
-#: includes/Screens/Tags.php:25
-msgid "Yinelenen küme"
-msgstr "Yinelenen küme"
-
-#: includes/Rules/Content.php:426
-msgid "Yinelenen paragraf"
-msgstr "Yinelenen paragraf"
-
-#: includes/Rules/Terms.php:196
-msgid "Yinelenen terim"
-msgstr "Yinelenen terim"
-
-#: includes/Screens/Onboarding.php:56
-msgid "Yinelenen ve boş etiketleri bulur."
-msgstr "Yinelenen ve boş etiketleri bulur."
-
-#: includes/Screens/Issues.php:119 includes/Screens/Issues.php:152 includes/Screens/Issues.php:306 includes/Screens/Tags.php:136
-msgid "Yok say"
-msgstr "Yok say"
-
-#: includes/Screens/Issues.php:152
-msgid "Yok say: %s"
-msgstr "Yok say: %s"
-
-#: includes/Screens/Issues.php:186 includes/Screens/Issues.php:210
-msgid "Yok sayıldı"
-msgstr "Yok sayıldı"
-
-#: includes/Screens/UndoLog.php:44 includes/Screens/UndoLog.php:59
-msgid "Zaman"
-msgstr "Zaman"
-
-#: includes/Screens/Overview.php:185
-msgid "Zamanla puan"
-msgstr "Zamanla puan"
-
-#: includes/Screens/Overview.php:174
-msgid "Zamanlanmadı (elle taranır)"
-msgstr "Zamanlanmadı (elle taranır)"
-
-#: includes/Runs.php:83
-msgid "Zaten çalışan bir tarama var."
-msgstr "Zaten çalışan bir tarama var."
-
-#: includes/Ui.php:64
-msgid "Zayıf"
-msgstr "Zayıf"
-
-#: includes/Screens/Tags.php:170
-msgid "Zayıf etiket arşivlerinin arama sonuçlarına girmesini engelleyin."
-msgstr "Zayıf etiket arşivlerinin arama sonuçlarına girmesini engelleyin."
-
-#: includes/Screens/Overview.php:216
-msgid "Ziyaretçiye doğrudan görünen kritik sorunlar."
-msgstr "Ziyaretçiye doğrudan görünen kritik sorunlar."
-
-#: includes/Rules/Content.php:290
-msgid "[Karakter 1], {{alan}}, Lorem ipsum ve \"…eklenecektir\" gibi doldurulmamış şablon metinleri. Otomatik düzeltilmez: neyle doldurulacağı editörün kararıdır."
-msgstr "[Karakter 1], {{alan}}, Lorem ipsum ve \"…eklenecektir\" gibi doldurulmamış şablon metinleri. Otomatik düzeltilmez: neyle doldurulacağı editörün kararıdır."
-
-#: includes/Undo.php:133
-msgid "alt metin sonradan değişmiş"
-msgstr "alt metin sonradan değişmiş"
-
-#: includes/Admin.php:89
-msgid "atlandı"
-msgstr "atlandı"
-
-#: includes/Admin.php:119
-msgid "açık bulgu bulundu."
-msgstr "açık bulgu bulundu."
-
-#: includes/Undo.php:167
-msgid "bilinmeyen alan"
-msgstr "bilinmeyen alan"
-
-#: includes/Screens/Alt.php:63
-msgid "boş"
-msgstr "boş"
-
-#: includes/Admin.php:80 includes/Screens/Issues.php:117
-msgid "bulgu seçili"
-msgstr "bulgu seçili"
-
-#: includes/Admin.php:88
-msgid "düzeltildi"
-msgstr "düzeltildi"
-
-#: includes/Screens/Overview.php:173 includes/Screens/UndoLog.php:50
-msgid "etiket"
-msgstr "etiket"
-
-#: includes/Admin.php:95
-msgid "eşleşme"
-msgstr "eşleşme"
-
-#: includes/Admin.php:98 includes/Screens/UndoLog.php:94
-msgid "geri alındı"
-msgstr "geri alındı"
-
-#: includes/Admin.php:81
-msgid "görsel seçili"
-msgstr "görsel seçili"
-
-#: includes/Screens/Overview.php:166
-msgid "günlük"
-msgstr "günlük"
-
-#: includes/Screens/Overview.php:167
-msgid "haftalık"
-msgstr "haftalık"
-
-#: includes/Admin.php:106
-msgid "hata"
-msgstr "hata"
-
-#: includes/Admin.php:112 includes/Screens/Overview.php:155 includes/Screens/Overview.php:173
-msgid "içerik"
-msgstr "içerik"
-
-#: includes/Undo.php:107
-msgid "içerik sonradan değişmiş"
-msgstr "içerik sonradan değişmiş"
-
-#: includes/TermOps.php:135
-msgid "kayıt bozuk"
-msgstr "kayıt bozuk"
-
-#: includes/Undo.php:160
-msgid "liste sonradan değişmiş"
-msgstr "liste sonradan değişmiş"
-
-#: includes/Undo.php:119
-msgid "meta satırı yok"
-msgstr "meta satırı yok"
-
-#: includes/Undo.php:122
-msgid "meta sonradan değişmiş"
-msgstr "meta sonradan değişmiş"
-
-#: includes/Screens/Overview.php:165
-msgid "saatlik"
-msgstr "saatlik"
-
-#: includes/Ui.php:260 includes/Ui.php:260
-msgid "satır"
-msgstr "satır"
-
-#: includes/Admin.php:101
-msgid "silindi"
-msgstr "silindi"
-
-#: includes/Screens/Onboarding.php:57
-msgid "siz onaylamadan hiçbir içerik değişmez."
-msgstr "siz onaylamadan hiçbir içerik değişmez."
-
-#: includes/Admin.php:113 includes/Screens/Overview.php:171
-msgid "sn"
-msgstr "sn"
-
-#: includes/Screens/Issues.php:251
-msgid "tarandı"
-msgstr "tarandı"
-
-#: includes/Undo.php:146
-msgid "terim sonradan değişmiş"
-msgstr "terim sonradan değişmiş"
-
-#: includes/Undo.php:143
-msgid "terim yok"
-msgstr "terim yok"
-
-#: includes/TermOps.php:138
-msgid "terim zaten var"
-msgstr "terim zaten var"
-
-#: includes/Admin.php:110
-msgid "yaklaşık"
-msgstr "yaklaşık"
-
-#: includes/Screens/Onboarding.php:57
-msgid "yalnız okur"
-msgstr "yalnız okur"
-
-#: includes/Admin.php:90 includes/Screens/UndoLog.php:50
-msgid "yazı"
-msgstr "yazı"
-
-#: includes/Screens/Alt.php:50
-msgid "yazı seçili"
-msgstr "yazı seçili"
-
-#: includes/Undo.php:104
-msgid "yazı yok"
-msgstr "yazı yok"
-
-#: includes/Screens/Tags.php:26
-msgid "Çok uzun ad"
-msgstr "Çok uzun ad"
-
-#: includes/Rules/Terms.php:59
-msgid "Çok uzun terim"
-msgstr "Çok uzun terim"
-
-#: includes/Admin.php:107 includes/Ui.php:261
-msgid "Önce"
-msgstr "Önce"
-
-#: includes/Screens/Overview.php:216
-msgid "Önce bunlara bakın"
-msgstr "Önce bunlara bakın"
-
-#: includes/Ui.php:188 includes/Ui.php:189
-msgid "Önceki sayfa"
-msgstr "Önceki sayfa"
-
-#: includes/Screens/Overview.php:221
-msgid "Öncelikli sorunlar"
-msgstr "Öncelikli sorunlar"
-
-#: includes/Rules/Seo.php:193
-msgid "Öne çıkan görsel yok"
-msgstr "Öne çıkan görsel yok"
-
-#: includes/Rules/Seo.php:196
-msgid "Öne çıkan görseli desteklenen türde (varsayılan: yazı) görsel atanmamış."
-msgstr "Öne çıkan görseli desteklenen türde (varsayılan: yazı) görsel atanmamış."
-
-#: includes/Screens/Alt.php:64
-msgid "Önerilen"
-msgstr "Önerilen"
-
-#: includes/Screens/Alt.php:51
-msgid "Önerilen alt metin"
-msgstr "Önerilen alt metin"
-
-#: includes/Screens/Issues.php:267
-msgid "Önerilen düzeltme"
-msgstr "Önerilen düzeltme"
-
-#: includes/Screens/Issues.php:314
-msgid "Önerilen. İçerikler “güncellendi” görünmez, sıralama bozulmaz."
-msgstr "Önerilen. İçerikler “güncellendi” görünmez, sıralama bozulmaz."
-
-#: includes/Screens/Alt.php:49
-msgid "Önizleme"
-msgstr "Önizleme"
-
-#: includes/Ui.php:229 includes/Screens/Issues.php:277
-msgid "Önizleme: önce / sonra"
-msgstr "Önizleme: önce / sonra"
-
-#: includes/Screens/Prefs.php:162
-msgid "Örn. Elbette,? işte .{0,40}:"
-msgstr "Örn. Elbette,? işte .{0,40}:"
-
-#: includes/Admin.php:91
-msgid "Örnek"
-msgstr "Örnek"
-
-#: includes/Screens/Issues.php:313
-msgid "Örnek değişiklikler"
-msgstr "Örnek değişiklikler"
-
-#: includes/Screens/Prefs.php:165
-msgid "Örnek metin"
-msgstr "Örnek metin"
-
-#: includes/Admin.php:94
-msgid "Örnek metinde eşleşme yok."
-msgstr "Örnek metinde eşleşme yok."
-
-#: includes/Screens/Prefs.php:61
-msgid "Özeti yedek say"
-msgstr "Özeti yedek say"
-
-#: includes/Rules/Content.php:344
-msgid "â€™, Ã¼, ÅŸ, � gibi UTF-8 metnin yanlış çözülmesiyle oluşan karakterler. Otomatik düzeltilmez."
-msgstr "â€™, Ã¼, ÅŸ, � gibi UTF-8 metnin yanlış çözülmesiyle oluşan karakterler. Otomatik düzeltilmez."
-
-#: includes/Screens/UndoLog.php:105
-msgid "İlgili içerikler düzeltmeden önceki haline döner. Araya giren elle değişiklikler ezilmez; değişmiş olanlar atlanır."
-msgstr "İlgili içerikler düzeltmeden önceki haline döner. Araya giren elle değişiklikler ezilmez; değişmiş olanlar atlanır."
-
-#: includes/Screens/Onboarding.php:48
-msgid "İlk tarama"
-msgstr "İlk tarama"
-
-#: includes/Screens/Onboarding.php:67
-msgid "İlk tarama bitti."
-msgstr "İlk tarama bitti."
-
-#: includes/Screens/Overview.php:116
-msgid "İlk tarama bittiğinde hesaplanır."
-msgstr "İlk tarama bittiğinde hesaplanır."
-
-#: includes/Admin.php:118
-msgid "İlk taramayı başlat"
-msgstr "İlk taramayı başlat"
-
-#: includes/Screens/Overview.php:83
-msgid "İlk taramayı başlatın; sonuçlar burada puan ve gruplar olarak görünür."
-msgstr "İlk taramayı başlatın; sonuçlar burada puan ve gruplar olarak görünür."
-
-#: includes/Screens/Onboarding.php:47
-msgid "İlk taramayı yapmadan önce üç kısa adım."
-msgstr "İlk taramayı yapmadan önce üç kısa adım."
-
-#: includes/Screens/Overview.php:208
-msgid "İlk: %d"
-msgstr "İlk: %d"
-
-#: includes/Rules/Seo.php:220
-msgid "İnce içerik"
-msgstr "İnce içerik"
-
-#: includes/Screens/Overview.php:229
-msgid "İncele"
-msgstr "İncele"
-
-#: includes/Screens/Overview.php:158
-msgid "İptal et"
-msgstr "İptal et"
-
-#: includes/Ui.php:59
-msgid "İyi"
-msgstr "İyi"
-
-#: includes/Rules/Links.php:127
-msgid "İç bağlantı yok"
-msgstr "İç bağlantı yok"
-
-#: includes/Patterns.php:40
-msgid "İç içe niceleyici (ReDoS riski) kabul edilmez."
-msgstr "İç içe niceleyici (ReDoS riski) kabul edilmez."
-
-#: includes/Admin.php:195
-msgid "İçerik Sağlığı"
-msgstr "İçerik Sağlığı"
-
-#: includes/Admin.php:206
-msgid "İçerik Sağlığı bölümleri"
-msgstr "İçerik Sağlığı bölümleri"
-
-#: includes/Screens/Onboarding.php:47
-msgid "İçerik Sağlığı’na hoş geldiniz"
-msgstr "İçerik Sağlığı’na hoş geldiniz"
-
-#: includes/Admin.php:163
-msgid "İçerik Sağlığı’nı yalnız yönetici rolü kullanabilir. Erişim için site yöneticisine başvurun."
-msgstr "İçerik Sağlığı’nı yalnız yönetici rolü kullanabilir. Erişim için site yöneticisine başvurun."
-
-#: includes/Registry.php:55
-msgid "İçerik temizliği"
-msgstr "İçerik temizliği"
-
-#: includes/Rules/Seo.php:255
-msgid "İçerikte birden fazla <h1> var (tema başlığı ayrıca sayılmaz)."
-msgstr "İçerikte birden fazla <h1> var (tema başlığı ayrıca sayılmaz)."
-
-#: includes/Rules/Links.php:45
-msgid "İçerikte geliştirme/staging adresi (.test, .local, localhost), tekrarlı uzantı (.test.test) ya da bozuk biçim (https.alanadi) sızıntısı. Sitenin kendi adresi hariçtir."
-msgstr "İçerikte geliştirme/staging adresi (.test, .local, localhost), tekrarlı uzantı (.test.test) ya da bozuk biçim (https.alanadi) sızıntısı. Sitenin kendi adresi hariçtir."
-
-#: includes/Rules/Media.php:33
-msgid "İçerikteki <img> etiketlerinde alt özniteliği yok ya da boş. Süs görseli (role=\"presentation\") sayılmaz."
-msgstr "İçerikteki <img> etiketlerinde alt özniteliği yok ya da boş. Süs görseli (role=\"presentation\") sayılmaz."
-
-#: includes/Rules/Content.php:472
-msgid "İçinde metin olmayan <h1>–<h6> etiketleri."
-msgstr "İçinde metin olmayan <h1>–<h6> etiketleri."
-
-#: includes/Screens/UndoLog.php:44 includes/Screens/UndoLog.php:60
-msgid "İşlem"
-msgstr "İşlem"
-
-#: includes/Screens/Prefs.php:165
-msgid "İşte istediğiniz özelliklere uygun makale:"
-msgstr "İşte istediğiniz özelliklere uygun makale:"
-
-#: includes/Screens/Alt.php:42
-msgid "Şablon"
-msgstr "Şablon"
-
-#: includes/Screens/Alt.php:51 includes/Screens/Alt.php:63
-msgid "Şimdi"
-msgstr "Şimdi"
-
-#: includes/Screens/Onboarding.php:68
-msgid "Şimdi değil"
-msgstr "Şimdi değil"
-
-#: includes/Admin.php:197 includes/Admin.php:199 includes/Screens/Alt.php:37 includes/Screens/Issues.php:102 includes/Screens/Overview.php:83 includes/Screens/Tags.php:56
-msgid "Şimdi tara"
-msgstr "Şimdi tara"
-
-#: includes/Screens/Overview.php:210
-msgid "Şimdi: %d"
-msgstr "Şimdi: %d"
-
-#: includes/Screens/Tags.php:89
-msgid "%d küme"
-msgid_plural "%d küme"
+#, php-format
+msgid "%d cluster"
+msgid_plural "%d clusters"
 msgstr[0] "%d küme"
 msgstr[1] "%d küme"
 
-#: includes/Screens/Issues.php:233
-msgid "%d sonuç"
-msgid_plural "%d sonuç"
+#: includes/Admin.php:322
+#, php-format
+msgid "%d findings ignored."
+msgstr "%d bulgu yok sayıldı."
+
+#: includes/Admin.php:322
+#, php-format
+msgid "%d findings reopened."
+msgstr "%d bulgu yeniden açıldı."
+
+#: includes/Cli.php:184
+#, php-format
+msgid "%d findings written."
+msgstr "%d bulgu yazıldı."
+
+#: includes/Screens/Overview.php:186
+#, php-format
+msgid "%d open"
+msgstr "%d açık"
+
+#: includes/Screens/Tags.php:133
+#, php-format
+msgid "%d posts"
+msgstr "%d yazı"
+
+#: includes/Screens/Onboarding.php:54
+#, php-format
+msgid "%d published items are always scanned."
+msgstr "%d yayımlanmış içerik her zaman taranır."
+
+#: includes/Screens/Issues.php:292
+#, php-format
+msgid "%d result"
+msgid_plural "%d results"
 msgstr[0] "%d sonuç"
 msgstr[1] "%d sonuç"
 
+#: includes/Screens/Prefs.php:179
+#: includes/Screens/Tags.php:172
+#, php-format
+msgid "%s detected."
+msgstr "%s algılandı."
+
+#: includes/Screens/Overview.php:139
+#, php-format
+msgid "%s points"
+msgstr "%s puan"
+
+#: includes/Screens/Overview.php:100
+#, php-format
+msgid "%s score"
+msgstr "%s puanı"
+
+#: includes/Cli.php:139
+#, php-format
+msgid "%s: changed %d, skipped %d, errors %d%s"
+msgstr "%s: değişen %d, atlanan %d, hata %d%s"
+
 #: includes/Screens/Alt.php:61
-msgid "Başlık: %1$s · %2$d görsel"
-msgid_plural "Başlık: %1$s · %2$d görsel"
+msgid "(no file name)"
+msgstr "(dosya adı yok)"
+
+#: includes/Rules/Content.php:204
+msgid "**Bold**, ### headings, code fences, [text](url) links and \"* item\" lines that were not converted to HTML. Code blocks are not counted."
+msgstr "HTML'e dönüşmemiş **kalın**, ### başlık, kod çiti, [metin](adres) bağlantısı ve \"* madde\" satırları. Kod blokları sayılmaz."
+
+#: includes/Screens/Onboarding.php:53
+msgid "1 / 3 · Content to scan"
+msgstr "1 / 3 · Taranacak içerik"
+
+#: includes/Screens/Issues.php:371
+msgid "1 / 4 · Findings to fix"
+msgstr "1 / 4 · Düzeltilecek bulgular"
+
+#: includes/Screens/Onboarding.php:59
+msgid "2 / 3 · Scan frequency"
+msgstr "2 / 3 · Tarama sıklığı"
+
+#: includes/Screens/Issues.php:372
+msgid "2 / 4 · Dry run: nothing was changed"
+msgstr "2 / 4 · Kuru koşu: hiçbir şey değiştirilmedi"
+
+#: includes/Screens/Onboarding.php:65
+msgid "3 / 3 · First scan"
+msgstr "3 / 3 · İlk tarama"
+
+#: includes/Screens/Issues.php:373
+msgid "3 / 4 · Confirm"
+msgstr "3 / 4 · Onay"
+
+#: includes/Screens/Issues.php:374
+msgid "4 / 4 · Result"
+msgstr "4 / 4 · Sonuç"
+
+#: includes/Rules/Content.php:469
+msgid "<h1>–<h6> tags with no text inside."
+msgstr "İçinde metin olmayan <h1>–<h6> etiketleri."
+
+#: includes/Rules/Media.php:33
+msgid "<img> tags in the content have no alt attribute or an empty one. Decorative images (role=\"presentation\") are not counted."
+msgstr "İçerikteki <img> etiketlerinde alt özniteliği yok ya da boş. Süs görseli (role=\"presentation\") sayılmaz."
+
+#: contenthealth.php:5
+msgctxt "Description of the plugin"
+msgid "A content-health panel in the spirit of WordPress Site Health: checks for AI and interface leftovers, broken URLs, meta, alt text and tags, and fixes them with dry run and undo. Calls no external service."
+msgstr "WordPress \"Site Sağlığı\" gibi İÇERİK sağlığı paneli: yapay zekâ/arayüz kalıntısı, bozuk adres, meta, alt metin ve etiket denetimi; kuru koşu ve geri alma ile düzeltme. Dış servis çağırmaz."
+
+#: includes/Rules/Links.php:45
+msgid "A development/staging address (.test, .local, localhost), a repeated extension (.test.test) or a broken format (https.domain) leaked into the content. The site's own address is excluded."
+msgstr "İçerikte geliştirme/staging adresi (.test, .local, localhost), tekrarlı uzantı (.test.test) ya da bozuk biçim (https.alanadi) sızıntısı. Sitenin kendi adresi hariçtir."
+
+#: includes/Screens/Issues.php:367
+msgid "A dry run was done; the change will be applied and written to the undo log."
+msgstr "Kuru koşu yapıldı; değişiklik uygulanacak ve geri alma günlüğüne yazılacak."
+
+#: includes/Rules/Seo.php:71
+msgid "A filled description is outside the lower or upper limit (default 70–160 characters)."
+msgstr "Dolu açıklama alt ya da üst sınırın dışında (varsayılan 70–160 karakter)."
+
+#: includes/Rules/Seo.php:279
+msgid "A heading level is skipped (e.g. H4 directly after H2)."
+msgstr "Başlık düzeyi atlıyor (ör. H2’den sonra doğrudan H4)."
+
+#: includes/Rules/Links.php:164
+msgid "A post that receives no link from the content of any other post. Menus, widgets and related-post boxes do not count; only in-content links."
+msgstr "Başka hiçbir yazının içeriğinden bağlantı almayan yazı. Menü, widget ve ilgili yazı kutuları sayılmaz; yalnız içerik içi bağlantılar."
+
+#: includes/Screens/Prefs.php:83
+msgid "A rule you turn off does not run in the scan; it does not delete existing findings."
+msgstr "Kapattığınız kural taramada çalışmaz; var olan bulguları silmez."
+
+#: includes/Runs.php:83
+msgid "A scan is already running."
+msgstr "Zaten çalışan bir tarama var."
+
+#: includes/Rules/Terms.php:100
+msgid "A tag attached to only one post; its archive page creates thin content. Informational only."
+msgstr "Yalnız bir içeriğe bağlı etiket; arşiv sayfası ince içerik üretir. Yalnız bilgi amaçlıdır."
+
+#: includes/Rules/Terms.php:41
+msgid "A tag or category not attached to any content."
+msgstr "Hiçbir içeriğe bağlı olmayan etiket ya da kategori."
+
+#: includes/Rules/Content.php:33
+msgid "AI chat leftover"
+msgstr "Yapay zekâ sohbet kalıntısı"
+
+#: includes/Rules/Content.php:148
+msgid "AI interface leftover"
+msgstr "Yapay zekâ arayüz kalıntısı"
+
+#: includes/Screens/Tags.php:28
+msgid "AI leftover"
+msgstr "YZ kalıntılı"
+
+#: includes/Rules/Terms.php:124
+msgid "AI leftover in a term"
+msgstr "Terimde yapay zekâ kalıntısı"
+
+#: includes/Cli.php:139
+msgid "APPLIED"
+msgstr "UYGULANDI"
+
+#: includes/Screens/Overview.php:280
+msgid "Action"
+msgstr "Eylem"
+
+#: includes/Screens/Issues.php:129
+#: includes/Screens/UndoLog.php:44
+msgid "Actions"
+msgstr "Eylemler"
+
+#: includes/Admin.php:225
+msgid "Active"
+msgstr "Etkin"
+
+#: includes/Screens/Issues.php:275
+msgid "Active filter:"
+msgstr "Etkin süzgeç:"
+
+#: includes/Screens/Issues.php:275
+msgid "Active filters"
+msgstr "Etkin süzgeçler"
+
+#: includes/Screens/Prefs.php:163
+msgid "Add"
+msgstr "Ekle"
+
+#: includes/Screens/Alt.php:42
+msgid "Add tokens by clicking them. The template is used only for this fill; the permanent default is in Settings."
+msgstr "Jetonlara tıklayarak ekleyin. Şablon yalnız bu doldurma için kullanılır; kalıcı varsayılan Ayarlar’dadır."
+
+#: includes/Ui.php:231
+msgid "Added line: "
+msgstr "Eklenen satır: "
+
+#: includes/Admin.php:138
+#: includes/Ui.php:261
+msgid "After"
+msgstr "Sonra"
+
+#: includes/Screens/UndoLog.php:105
+msgid "After the undo, the findings reopen in the next scan."
+msgstr "Geri alma sonrası bulgular, sonraki taramada yeniden açılır."
+
+#: includes/Screens/Issues.php:231
+#: includes/Screens/Issues.php:237
+#: includes/Screens/Issues.php:239
+#: includes/Screens/Issues.php:247
+#: includes/Screens/Issues.php:271
+msgid "All"
+msgstr "Tümü"
+
+#: includes/Screens/Prefs.php:62
+msgid "Also count names in square brackets"
+msgstr "Köşeli parantezli adları da say"
+
+#: includes/Modules/Media.php:31
+msgid "Alt Text"
+msgstr "Alt Metin"
+
+#: includes/Admin.php:132
+msgid "Alt text filled in"
+msgstr "Alt metin dolduruldu"
+
+#: includes/Screens/Alt.php:41
+#: includes/Screens/Prefs.php:141
+msgid "Alt text template"
+msgstr "Alt metin şablonu"
+
+#: includes/Fixer.php:310
+#, php-format
+msgid "An active SEO plugin (%s) is present; set noindex there. Content Health left it alone to avoid a conflict."
+msgstr "Etkin SEO eklentisi (%s) var; noindex ayarını orada yapın. ContentHealth çakışmamak için dokunmadı."
+
+#: includes/Rules/Seo.php:115
+msgid "An identical title within the same post type, ignoring case differences."
+msgstr "Aynı yazı türünde, büyük/küçük harf farkı hariç birebir aynı başlık."
+
+#: includes/Screens/UndoLog.php:56
+msgid "Applied"
+msgstr "Uygulandı"
+
+#: includes/Screens/UndoLog.php:44
+msgid "Applied fixes"
+msgstr "Uygulanan düzeltmeler"
+
+#: includes/Screens/Tags.php:183
+msgid "Apply"
+msgstr "Uygula"
+
+#: includes/Admin.php:114
+msgid "Apply fixes"
+msgstr "Düzeltmeleri uygula"
+
+#: includes/Screens/Issues.php:367
+msgid "Apply the fix"
+msgstr "Düzeltmeyi uygula"
+
+#: includes/Admin.php:116
+#: includes/Screens/Issues.php:373
+msgid "Applying…"
+msgstr "Uygulanıyor…"
+
+#: includes/Screens/Overview.php:246
+msgid "At least one finished scan is needed for the chart."
+msgstr "Grafik için en az bir bitmiş tarama gerekir."
+
+#: includes/Screens/Prefs.php:141
+msgid "Available tokens: {title}, {file_name}, {site_name}."
+msgstr "Kullanılabilir jetonlar: {başlık}, {dosya_adı}, {site_adı}."
+
+#: includes/Screens/Issues.php:375
+#: includes/Screens/Onboarding.php:68
+msgid "Back"
+msgstr "Geri"
+
+#: includes/Admin.php:193
+msgid "Back to the dashboard"
+msgstr "Panoya dön"
+
+#: includes/Screens/Overview.php:136
+msgid "Based on the last scan"
+msgstr "Son taramaya göre"
+
+#: includes/Admin.php:141
+msgid "Batch"
+msgstr "Parti"
+
+#: includes/Admin.php:137
+#: includes/Ui.php:261
+msgid "Before"
+msgstr "Önce"
+
+#: includes/Rules/Content.php:341
+msgid "Broken character encoding"
+msgstr "Bozuk karakter kodlaması"
+
+#: includes/Rules/Links.php:245
+msgid "Broken internal link (slow mode)"
+msgstr "Kırık iç bağlantı (yavaş mod)"
+
+#: includes/Screens/Alt.php:50
+#: includes/Screens/Issues.php:119
+msgid "Bulk actions"
+msgstr "Toplu eylemler"
+
+#: includes/Screens/Issues.php:369
+msgid "Bulk fix"
+msgstr "Toplu düzeltme"
+
+#: includes/Screens/Overview.php:118
+msgid "Calculated when the first scan finishes."
+msgstr "İlk tarama bittiğinde hesaplanır."
+
+#: includes/Screens/Alt.php:71
+#: includes/Screens/Issues.php:367
+#: includes/Screens/Issues.php:375
+#: includes/Screens/Prefs.php:78
+#: includes/Screens/Tags.php:182
+#: includes/Screens/Tags.php:183
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: includes/Screens/Overview.php:208
+msgid "Cancel scan"
+msgstr "İptal et"
+
+#: includes/Screens/Tags.php:122
+#, php-format
+msgid "Canonical tag: %s"
+msgstr "Kanonik etiket: %s"
+
+#: includes/Ui.php:260
+msgid "Changed field:"
+msgstr "Değişen alan:"
+
+#: includes/Screens/Tags.php:183
+msgid "Changes are written to the undo log; they can be undone."
+msgstr "Değişiklikler geri alma günlüğüne yazılır; geri alınabilir."
+
+#: includes/Rules/Content.php:344
+msgid "Characters such as â€™, Ã¼, ÅŸ, � caused by UTF-8 text being decoded wrongly. Not fixed automatically."
+msgstr "â€™, Ã¼, ÅŸ, � gibi UTF-8 metnin yanlış çözülmesiyle oluşan karakterler. Otomatik düzeltilmez."
+
+#: includes/Rules/Content.php:36
+msgid "Chat sentences left in the first or last block of a post (\"Here is …:\", \"I hope this helps\"). Only the first/last short block counts; editorial phrases in the body such as \"Of course…\" are left alone."
+msgstr "Yazının ilk ya da son bloğunda kalan sohbet cümleleri (\"İşte … :\", \"Umarım yardımcı olur\"). Yalnız ilk/son kısa blok sayılır; gövdedeki \"Elbette…\" gibi editoryal ifadelere dokunulmaz."
+
+#: includes/Ui.php:210
+msgid "Cleans interface-leftover attributes and wrappers; the content stays."
+msgstr "Arayüz kalıntısı öznitelik ve sarmalayıcıları temizler, içerik kalır."
+
+#: includes/Ui.php:218
+msgid "Cleans up the tag name."
+msgstr "Etiket adını temizler."
+
+#: includes/Screens/Issues.php:252
+msgid "Clear"
+msgstr "Temizle"
+
+#: includes/Screens/Issues.php:112
+msgid "Clear filters"
+msgstr "Süzgeçleri temizle"
+
+#: includes/Screens/Issues.php:123
+msgid "Clear selection"
+msgstr "Seçimi kaldır"
+
+#: includes/Admin.php:115
+#: includes/Screens/Issues.php:362
+msgid "Close"
+msgstr "Kapat"
+
+#: includes/Screens/Tags.php:120
+#, php-format
+msgid "Cluster %1$d · %2$s"
+msgstr "Küme %1$d · %2$s"
+
+#: includes/Screens/Issues.php:370
+msgid "Confirm"
+msgstr "Onay"
+
+#: includes/Admin.php:225
+#: includes/Admin.php:43
+#: includes/Admin.php:44
+msgid "Content Health"
+msgstr "İçerik Sağlığı"
+
+#: includes/Screens/Tags.php:174
+msgid "Content Health can add noindex to single-post tag archives: open the “Single post” class and fix it. The change can be undone."
+msgstr "Tek yazılı etiket arşivlerine İçerik Sağlığı noindex ekleyebilir: “Tek yazılı” sınıfını açıp düzeltin. Değişiklik geri alınabilir."
+
+#: includes/Admin.php:236
+msgid "Content Health sections"
+msgstr "İçerik Sağlığı bölümleri"
+
+#: includes/Registry.php:55
+msgid "Content cleanup"
+msgstr "İçerik temizliği"
+
+#: includes/Screens/Issues.php:101
+msgid "Content problems found by the scan. Open a row to see the evidence and the suggested fix."
+msgstr "Tarama sonucunda bulunan içerik sorunları. Bir satırı açarak kanıtı ve önerilen düzeltmeyi görün."
+
+#: contenthealth.php:54
+msgid "ContentHealth weekly"
+msgstr "ContentHealth haftalık"
+
+#: contenthealth.php:3
+msgctxt "Plugin Name of the plugin"
+msgid "ContentHealth — Content Health"
+msgstr "ContentHealth — İçerik Sağlığı"
+
+#: includes/Admin.php:113
+#: includes/Admin.php:147
+#: includes/Screens/Onboarding.php:68
+msgid "Continue"
+msgstr "Devam"
+
+#: includes/Admin.php:107
+msgid "Continue where it left off"
+msgstr "Kaldığı yerden devam et"
+
+#: includes/Ui.php:212
+msgid "Converts LaTeX score leftovers to plain text."
+msgstr "LaTeX puan kalıntılarını düz metne çevirir."
+
+#: includes/Ui.php:211
+msgid "Converts markdown marks to their HTML equivalents."
+msgstr "Markdown işaretlerini HTML karşılıklarına çevirir."
+
+#: includes/Fixer.php:345
+msgid "Could not generate a name for this term automatically; enter a new name by hand."
+msgstr "Bu terim için otomatik ad üretilemedi; yeni adı elle girin."
+
+#: includes/Admin.php:109
+msgid "Could not load the details."
+msgstr "Ayrıntı yüklenemedi."
+
+#: includes/Admin.php:108
+msgid "Could not reach the server. Check your connection and try again."
+msgstr "Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin."
+
+#: includes/Admin.php:129
+msgid "Could not undo"
+msgstr "Geri alınamadı"
+
+#: includes/Fixer.php:177
+msgid "Could not update the post."
+msgstr "Yazı güncellenemedi."
+
+#: includes/Runs.php:105
+msgid "Could not write the run record."
+msgstr "Koşu kaydı yazılamadı."
+
+#: includes/Screens/Prefs.php:61
+msgid "Count the excerpt as a fallback"
+msgstr "Özeti yedek say"
+
+#: includes/Registry.php:66
+msgid "Critical"
+msgstr "Kritik"
+
+#: includes/Cli.php:82
+#, php-format
+msgid "Critical %d · Warning %d · Info %d"
+msgstr "Kritik %d · Uyarı %d · Bilgi %d"
+
+#: includes/Screens/Overview.php:275
+msgid "Critical problems visible directly to visitors."
+msgstr "Ziyaretçiye doğrudan görünen kritik sorunlar."
+
+#: includes/Cli.php:139
+msgid "DRY RUN"
+msgstr "KURU KOŞU"
+
+#: includes/Screens/Onboarding.php:60
+#: includes/Screens/Prefs.php:126
+msgid "Daily"
+msgstr "Günlük"
+
+#: includes/Admin.php:161
+msgid "Dashboard"
+msgstr "Pano"
+
+#: includes/Screens/Issues.php:129
+#: includes/Screens/Issues.php:152
+msgid "Date"
+msgstr "Tarih"
+
+#: includes/Screens/Prefs.php:153
+msgid "Default patterns"
+msgstr "Başlangıç desenleri"
+
+#: includes/Screens/Prefs.php:145
+msgid "Delete data when the plugin is deleted"
+msgstr "Eklenti silinince verileri de sil"
+
+#: includes/Screens/Tags.php:91
+msgid "Delete empty tags…"
+msgstr "Boş etiketleri sil…"
+
+#: includes/Admin.php:127
+msgid "Delete pattern"
+msgstr "Deseni sil"
+
+#: includes/Screens/Prefs.php:161
+#, php-format
+msgid "Delete pattern: %s"
+msgstr "Deseni sil: %s"
+
+#: includes/Ui.php:231
+msgid "Deleted line: "
+msgstr "Silinen satır: "
+
+#: includes/Ui.php:215
+msgid "Deletes tags that are attached to no content."
+msgstr "Hiçbir içeriğe bağlı olmayan etiketleri siler."
+
+#: includes/Screens/Issues.php:153
+#: includes/Screens/Issues.php:365
+#: includes/Screens/UndoLog.php:81
+msgid "Details"
+msgstr "Ayrıntı"
+
+#: includes/Screens/Issues.php:153
+#, php-format
+msgid "Details: %s"
+msgstr "Ayrıntı: %s"
+
+#: includes/Screens/UndoLog.php:80
+#, php-format
+msgid "Details: operation #%d"
+msgstr "Ayrıntı: işlem #%d"
+
+#: includes/Screens/Issues.php:336
+msgid "Diff view"
+msgstr "Diff görünümü"
+
+#: includes/Screens/Tags.php:29
+msgid "Digits only"
+msgstr "Yalnız sayı"
+
+#: includes/Screens/Issues.php:122
+msgid "Download CSV"
+msgstr "CSV indir"
+
+#: includes/Screens/Issues.php:370
+msgid "Dry run"
+msgstr "Kuru koşu"
+
+#: includes/Screens/Tags.php:182
+msgid "Dry run: nothing has changed yet."
+msgstr "Kuru koşu: henüz bir şey değişmedi."
+
+#: includes/Screens/Tags.php:25
+msgid "Duplicate cluster"
+msgstr "Yinelenen küme"
+
+#: includes/Rules/Content.php:423
+msgid "Duplicate paragraph"
+msgstr "Yinelenen paragraf"
+
+#: includes/Rules/Terms.php:196
+msgid "Duplicate term"
+msgstr "Yinelenen terim"
+
+#: includes/Rules/Seo.php:112
+msgid "Duplicate title"
+msgstr "Yinelenen başlık"
+
+#: includes/Screens/Overview.php:221
+msgid "Duration"
+msgstr "Süre"
+
+#: includes/Screens/Prefs.php:163
+msgid "E.g. Sure,? here is .{0,40}:"
+msgstr "Örn. Elbette,? işte .{0,40}:"
+
+#: includes/Cli.php:137
+msgid "ERROR: "
+msgstr "HATA: "
+
+#: includes/Screens/Prefs.php:166
+msgid "Email marketing is a way of staying in touch with subscribers."
+msgstr "E-posta pazarlaması abonelerle iletişim kurmanın bir yoludur."
+
+#: includes/Rules/Content.php:466
+msgid "Empty heading"
+msgstr "Boş başlık"
+
+#: includes/Patterns.php:33
+msgid "Empty pattern."
+msgstr "Boş desen."
+
+#: includes/Screens/Tags.php:24
+msgid "Empty tag"
+msgstr "Boş etiket"
+
+#: includes/Rules/Terms.php:38
+msgid "Empty term"
+msgstr "Boş terim"
+
+#: includes/Screens/Prefs.php:154
+msgid "End patterns"
+msgstr "Bitiş desenleri"
+
+#: includes/Admin.php:146
+msgid "Error"
+msgstr "Hata"
+
+#: includes/Screens/Overview.php:116
+msgid "Error score"
+msgstr "Hata puanı"
+
+#: includes/Screens/Overview.php:173
+msgid "Error score = Critical + Warning only; Suggestion score = Info only."
+msgstr "Hata puanı = yalnız Kritik + Uyarı; Öneri puanı = yalnız Bilgi."
+
+#: includes/Screens/Overview.php:259
+#, php-format
+msgid "Error score over %1$d points: %2$d → %3$d (%4$s)"
+msgstr "%1$d noktada hata puanı %2$d → %3$d (%4$s)"
+
+#: includes/Screens/Overview.php:244
+msgid "Error score over time"
+msgstr "Zamanla hata puanı"
+
+#: includes/Screens/Overview.php:127
+#, php-format
+msgid "Error score: %1$d / 100, %2$s"
+msgstr "Hata puanı: %1$d / 100, %2$s"
+
+#: includes/Cli.php:81
+#, php-format
+msgid "Error score: %s · Suggestion score: %s  (last scan: %s)"
+msgstr "Hata puanı: %s · Öneri puanı: %s  (son tarama: %s)"
+
+#: includes/Screens/Overview.php:116
+msgid "Errors on the site, 0–100."
+msgstr "Sitedeki hatalar, 0–100."
+
+#: includes/Screens/UndoLog.php:38
+msgid "Every automatic fix is stored with its previous values; you can undo it at any time."
+msgstr "Her otomatik düzeltme önceki değerleriyle saklanır; istediğiniz zaman geri alabilirsiniz."
+
+#: includes/Screens/Issues.php:129
+#: includes/Screens/Issues.php:150
+#: includes/Screens/Issues.php:311
+#: includes/Screens/Overview.php:280
+#: includes/Screens/Overview.php:287
+#: includes/Screens/Tags.php:155
+msgid "Evidence"
+msgstr "Kanıt"
+
+#: includes/Screens/Prefs.php:138
+msgid "Excluded post types"
+msgstr "Hariç tutulan yazı türleri"
+
+#: includes/Screens/Prefs.php:60
+msgid "Extra development addresses (one per line)"
+msgstr "Ek geliştirme adresleri (her satıra bir)"
+
+#: includes/Ui.php:62
+msgid "Fair"
+msgstr "Orta"
+
+#: includes/Screens/Alt.php:51
+msgid "File"
+msgstr "Dosya"
+
+#: includes/Screens/Alt.php:71
+msgid "Fill in alt texts"
+msgstr "Alt metinleri doldur"
+
+#: includes/Screens/Alt.php:50
+msgid "Fill in missing…"
+msgstr "Eksik olanları doldur…"
+
+#: includes/Screens/Alt.php:71
+msgid "Fill in the alt texts?"
+msgstr "Alt metinler doldurulsun mu?"
+
+#: includes/Ui.php:214
+msgid "Fills empty alt texts from the template; existing ones are not touched."
+msgstr "Boş alt metinleri şablondan doldurur; dolu olanlara dokunmaz."
+
+#: includes/Screens/Issues.php:252
+msgid "Filter"
+msgstr "Süz"
+
+#: includes/Screens/Issues.php:236
+msgid "Filter findings"
+msgstr "Bulguları süz"
+
+#: includes/Screens/Issues.php:371
+msgid "Finding"
+msgstr "Bulgu"
+
+#: includes/Rest.php:183
+msgid "Finding not found."
+msgstr "Bulgu bulunamadı."
+
+#: includes/Admin.php:166
+#: includes/Screens/Issues.php:101
+msgid "Findings"
+msgstr "Bulgular"
+
+#: includes/Screens/Issues.php:127
+#, php-format
+msgid "Findings list, page %1$d / %2$d"
+msgstr "Bulgu listesi, sayfa %1$d / %2$d"
+
+#: includes/Screens/Onboarding.php:56
+msgid "Finds duplicate and empty tags."
+msgstr "Yinelenen ve boş etiketleri bulur."
+
+#: includes/Screens/Onboarding.php:55
+msgid "Finds missing alt texts."
+msgstr "Alt metin eksiklerini bulur."
+
+#: includes/Screens/Onboarding.php:48
+msgid "First scan"
+msgstr "İlk tarama"
+
+#: includes/Screens/Overview.php:267
+#, php-format
+msgid "First: %d"
+msgstr "İlk: %d"
+
+#: includes/Screens/Issues.php:371
+msgid "Fix"
+msgstr "Düzeltme"
+
+#: includes/Screens/Issues.php:373
+msgid "Fix progress"
+msgstr "Düzeltme ilerlemesi"
+
+#: includes/Screens/Issues.php:120
+msgid "Fix selected…"
+msgstr "Seçilenleri düzelt…"
+
+#: includes/Screens/Issues.php:246
+#: includes/Screens/Issues.php:270
+msgid "Fixed"
+msgstr "Düzeltildi"
+
+#: includes/Screens/Issues.php:213
+msgid "Fixed by hand"
+msgstr "Elle düzeltildi"
+
+#: includes/Screens/Issues.php:374
+msgid "Fixed findings are marked “Fixed” in the list; they are verified again in the next scan."
+msgstr "Düzelen bulgular listede “Düzeltildi” olarak işaretlenir; sonraki taramada yeniden doğrulanır."
+
+#: includes/Screens/Issues.php:365
+#: includes/Screens/Tags.php:148
+msgid "Fix…"
+msgstr "Düzelt…"
+
+#: includes/Screens/Overview.php:275
+msgid "Full list of findings"
+msgstr "Tüm bulgu listesi"
+
+#: includes/Screens/Onboarding.php:67
+msgid "Go to the dashboard"
+msgstr "Panoya git"
+
+#: includes/Ui.php:59
+msgid "Good"
+msgstr "İyi"
+
+#: includes/Screens/Issues.php:237
+#: includes/Screens/Issues.php:261
+msgid "Group"
+msgstr "Grup"
+
+#: includes/Rules/Seo.php:276
+msgid "Heading hierarchy"
+msgstr "Başlık hiyerarşisi"
+
+#: includes/Screens/Prefs.php:166
+msgid "Here is the article that matches your requirements:"
+msgstr "İşte istediğiniz özelliklere uygun makale:"
+
+#: includes/Screens/Prefs.php:125
+msgid "Hourly"
+msgstr "Saatlik"
+
+#: includes/Screens/Overview.php:168
+msgid "How is the score calculated?"
+msgstr "Puan nasıl hesaplanır?"
+
+#: includes/Screens/Alt.php:49
+msgid "How the template will look on images with empty alt text in the selected posts. Nothing has been saved yet."
+msgstr "Seçili yazılardaki alt metni boş görsellerde şablonun nasıl görüneceği. Henüz hiçbir şey kaydedilmedi."
+
+#: includes/Screens/Issues.php:373
+msgid "I understand the change and that the operation can be undone"
+msgstr "Değişikliği ve işlemin geri alınabileceğini anlıyorum"
+
+#: includes/Screens/Issues.php:121
+#: includes/Screens/Issues.php:155
+#: includes/Screens/Issues.php:365
+#: includes/Screens/Tags.php:136
+msgid "Ignore"
+msgstr "Yok say"
+
+#: includes/Screens/Issues.php:155
+#, php-format
+msgid "Ignore: %s"
+msgstr "Yok say: %s"
+
+#: includes/Screens/Issues.php:245
+#: includes/Screens/Issues.php:269
+msgid "Ignored"
+msgstr "Yok sayıldı"
+
+#: includes/Screens/Alt.php:60
+msgid "Image"
+msgstr "Görsel"
+
+#: includes/Rules/Media.php:64
+msgid "Image from a wrong server"
+msgstr "Görsel hatalı sunucudan"
+
+#: includes/Rules/Media.php:30
+msgid "Image has no alt text"
+msgstr "Görselde alt metin yok"
+
+#: includes/Screens/Alt.php:51
+msgid "Images missing alt text, preview"
+msgstr "Alt metni eksik görseller, önizleme"
+
+#: includes/Screens/Overview.php:147
+msgid "Improvement suggestions"
+msgstr "İyileştirme önerileri"
+
+#: includes/Screens/Overview.php:151
+#, php-format
+msgid "In the last scan: error score %1$d · suggestion score %2$s"
+msgstr "Son taramada: hata puanı %1$d · öneri puanı %2$s"
+
+#: includes/Registry.php:68
+msgid "Info"
+msgstr "Bilgi"
+
+#: includes/Screens/Issues.php:336
+msgid "Inline"
+msgstr "Satır içi"
+
+#: includes/Patterns.php:48
+msgid "Invalid or too slow pattern."
+msgstr "Geçersiz ya da çok yavaş desen."
+
+#: includes/Patterns.php:44
+msgid "Invalid pattern."
+msgstr "Geçersiz desen."
+
+#: includes/Screens/UndoLog.php:41
+msgid "It appears here when you apply a fix."
+msgstr "Bir düzeltme uyguladığınızda burada görünür."
+
+#: includes/Screens/Onboarding.php:65
+msgid "It takes a few seconds to a few minutes depending on the site size. You can leave this page while the scan runs."
+msgstr "Site büyüklüğüne göre birkaç saniye ile birkaç dakika sürer. Tarama sürerken bu sayfadan ayrılabilirsiniz."
+
+#: includes/Screens/Alt.php:71
+#: includes/Screens/Issues.php:337
+#: includes/Screens/Issues.php:373
+msgid "Keep the last modified date unchanged"
+msgstr "Son değiştirilme tarihi değişmesin"
+
+#: includes/Screens/Prefs.php:143
+msgid "Keep the last modified date when fixing"
+msgstr "Düzeltmede son değiştirilme tarihini koru"
+
+#: includes/Screens/Tags.php:170
+msgid "Keep weak tag archives out of search results."
+msgstr "Zayıf etiket arşivlerinin arama sonuçlarına girmesini engelleyin."
+
+#: includes/Rules/Content.php:379
+msgid "LaTeX leftover"
+msgstr "LaTeX kalıntısı"
+
+#: includes/Screens/Overview.php:243
+#, php-format
+msgid "Last %d scans + now"
+msgstr "Son %d tarama + şimdi"
+
+#: includes/Screens/Issues.php:177
+#, php-format
+msgid "Last check: %1$s (%2$s)"
+msgstr "Son denetim: %1$s (%2$s)"
+
+#: includes/Screens/Overview.php:219
+msgid "Last scan"
+msgstr "Son tarama"
+
+#: includes/Admin.php:34
+msgid "Launch"
+msgstr "Aç"
+
+#: includes/Screens/Overview.php:169
+msgid "Level"
+msgstr "Önem"
+
+#: includes/Registry.php:58
+msgid "Links"
+msgstr "Bağlantılar"
+
+#: includes/Screens/Prefs.php:140
+msgid "Live domain"
+msgstr "Canlı alan adı"
+
+#: includes/Rules/Content.php:426
+msgid "Long paragraphs repeated exactly within the same post (copy-paste mistake)."
+msgstr "Aynı yazıda birebir tekrar eden uzun paragraflar (kopyala-yapıştır hatası)."
+
+#: includes/Screens/Overview.php:275
+msgid "Look at these first"
+msgstr "Önce bunlara bakın"
+
+#: includes/Screens/Prefs.php:63
+msgid "Look for bold marks"
+msgstr "Kalın işaretlerini ara"
+
+#: includes/Screens/Prefs.php:64
+msgid "Look for heading marks"
+msgstr "Başlık işaretlerini ara"
+
+#: includes/Screens/Prefs.php:65
+msgid "Look for list marks"
+msgstr "Madde işaretlerini ara"
+
+#: includes/Screens/Issues.php:112
+msgid "Loosen or clear the filters."
+msgstr "Süzgeçleri gevşetin ya da temizleyin."
+
+#: includes/Screens/Onboarding.php:60
+#: includes/Screens/Prefs.php:124
+msgid "Manual only"
+msgstr "Yalnız elle"
+
+#: includes/Rules/Content.php:201
+msgid "Markdown leftover"
+msgstr "Markdown kalıntısı"
+
+#: includes/Screens/Prefs.php:55
+msgid "Maximum"
+msgstr "En çok"
+
+#: includes/Screens/Prefs.php:50
+msgid "Maximum characters"
+msgstr "En çok karakter"
+
+#: includes/Screens/Prefs.php:136
+msgid "Maximum duration of each scan step (1–20) and number of records per step (10–500)."
+msgstr "Her tarama adımının en çok süresi (1–20) ve adımdaki kayıt sayısı (10–500)."
+
+#: includes/Screens/Prefs.php:49
+msgid "Maximum length (characters)"
+msgstr "En çok uzunluk (karakter)"
+
+#: includes/Screens/Overview.php:169
+msgid "Maximum penalty per rule"
+msgstr "Kural başına en çok ceza"
+
+#: includes/Screens/Prefs.php:57
+msgid "Maximum requests per scan"
+msgstr "Tarama başına en çok istek"
+
+#: includes/Screens/Prefs.php:51
+msgid "Maximum words"
+msgstr "En çok kelime"
+
+#: includes/Registry.php:57
+msgid "Media"
+msgstr "Medya"
+
+#: includes/Screens/Onboarding.php:55
+msgid "Media library"
+msgstr "Medya kitaplığı"
+
+#: includes/Screens/Tags.php:182
+msgid "Merge"
+msgstr "Birleştir"
+
+#: includes/Admin.php:130
+msgid "Merged"
+msgstr "Birleştirildi"
+
+#: includes/Ui.php:216
+msgid "Merges duplicate tags into the chosen canonical tag."
+msgstr "Yinelenen etiketleri seçilen kanonik etikette birleştirir."
+
+#: includes/Screens/Tags.php:136
+msgid "Merge…"
+msgstr "Birleştir…"
+
+#: includes/Registry.php:56
+msgid "Meta and SEO"
+msgstr "Meta ve SEO"
+
+#: includes/Rules/Seo.php:68
+msgid "Meta description length"
+msgstr "Meta açıklaması uzunluğu"
+
+#: includes/Screens/Prefs.php:54
+msgid "Minimum"
+msgstr "En az"
+
+#: includes/Screens/Prefs.php:53
+msgid "Minimum length"
+msgstr "En az uzunluk"
+
+#: includes/Screens/Prefs.php:56
+msgid "Minimum length for fuzzy matching"
+msgstr "Bulanık eşleşme için en az uzunluk"
+
+#: includes/Screens/Prefs.php:52
+msgid "Minimum words"
+msgstr "En az kelime"
+
+#: includes/Screens/Alt.php:41
+msgid "Missing alt texts are filled with this template. Existing ones are not touched."
+msgstr "Eksik alt metinler bu şablonla doldurulur. Dolu olanlara dokunulmaz."
+
+#: includes/Rules/Links.php:95
+msgid "Mixed content (http)"
+msgstr "Karışık içerik (http)"
+
+#: includes/Rules/Terms.php:307
+msgid "More tags than the threshold are attached to one post (default 15)."
+msgstr "Bir yazıya eşikten fazla etiket bağlanmış (varsayılan 15)."
+
+#: includes/Rules/Seo.php:252
+msgid "Multiple H1"
+msgstr "Birden çok H1"
+
+#: includes/Screens/Tags.php:89
+msgid "Near-duplicate tags"
+msgstr "Yakın yinelenen etiketler"
+
+#: includes/Patterns.php:40
+msgid "Nested quantifiers (ReDoS risk) are not accepted."
+msgstr "İç içe niceleyici (ReDoS riski) kabul edilmez."
+
+#: includes/Screens/Prefs.php:163
+msgid "New pattern"
+msgstr "Yeni desen"
+
+#: includes/Ui.php:201
+#: includes/Ui.php:202
+msgid "Next page"
+msgstr "Sonraki sayfa"
+
+#: includes/Screens/Overview.php:224
+msgid "Next scan"
+msgstr "Sonraki tarama"
+
+#: includes/Screens/Prefs.php:181
+#: includes/Screens/Tags.php:174
+msgid "No SEO plugin found."
+msgstr "SEO eklentisi bulunamadı."
+
+#: includes/Admin.php:318
+msgid "No action or selection."
+msgstr "Eylem ya da seçim yok."
+
+#: includes/Ui.php:220
+msgid "No automatic fix; open the post and fix it by hand."
+msgstr "Otomatik düzeltme yok; yazıyı açıp elle düzeltin."
+
+#: includes/Screens/Overview.php:277
+msgid "No critical problems"
+msgstr "Kritik sorun yok"
+
+#: includes/Screens/Tags.php:95
+msgid "No duplicate tag clusters"
+msgstr "Yinelenen etiket kümesi yok"
+
+#: includes/Rules/Seo.php:193
+msgid "No featured image"
+msgstr "Öne çıkan görsel yok"
+
+#: includes/Rules/Seo.php:196
+msgid "No featured image is assigned to a post of a supported type (default: post)."
+msgstr "Öne çıkan görseli desteklenen türde (varsayılan: yazı) görsel atanmamış."
+
+#: includes/Screens/Issues.php:112
+msgid "No findings match this filter"
+msgstr "Bu süzgece uyan bulgu yok"
+
+#: includes/Screens/Issues.php:104
+msgid "No findings yet"
+msgstr "Henüz bulgu yok"
+
+#: includes/Screens/Alt.php:37
+msgid "No image is missing alt text"
+msgstr "Alt metni eksik görsel yok"
+
+#: includes/Rules/Links.php:127
+msgid "No internal links"
+msgstr "İç bağlantı yok"
+
+#: includes/Admin.php:124
+msgid "No match in the sample text."
+msgstr "Örnek metinde eşleşme yok."
+
+#: includes/Rules/Seo.php:39
+msgid "No meta description"
+msgstr "Meta açıklaması yok"
+
+#: includes/Screens/Tags.php:152
+msgid "No open findings in this class"
+msgstr "Bu sınıfta açık bulgu yok"
+
+#: includes/Screens/Tags.php:56
+msgid "No problems seen in tags"
+msgstr "Etiketlerde sorun görünmüyor"
+
+#: includes/Screens/Overview.php:179
+msgid "No rule is losing points"
+msgstr "Puan kaybettiren kural yok"
+
+#: includes/Screens/Overview.php:85
+msgid "No scan has been run yet"
+msgstr "Henüz tarama yapılmadı"
+
+#: includes/Screens/Issues.php:104
+msgid "No scan has been run yet, or the scan found no problems. Start a scan."
+msgstr "Henüz tarama yapılmadı ya da tarama hiçbir sorun bulmadı. Taramayı başlatın."
+
+#: includes/Screens/Overview.php:226
+msgid "No scan has been run yet."
+msgstr "Henüz tarama yapılmadı."
+
+#: includes/Screens/Overview.php:118
+msgid "No score"
+msgstr "Puan yok"
+
+#: includes/Screens/UndoLog.php:41
+msgid "No undoable operation yet"
+msgstr "Henüz geri alınabilir bir işlem yok"
+
+#: includes/Screens/UndoLog.php:44
+msgid "No."
+msgstr "No"
+
+#: includes/Screens/Tags.php:170
+msgid "Noindex for tags"
+msgstr "Etiketler için noindex"
+
+#: includes/Screens/Onboarding.php:68
+msgid "Not now"
+msgstr "Şimdi değil"
+
+#: includes/Screens/Overview.php:224
+msgid "Not scheduled (scanned manually)"
+msgstr "Zamanlanmadı (elle taranır)"
+
+#: includes/Admin.php:135
+msgid "Nothing to change."
+msgstr "Değişecek bir şey yok."
+
+#: includes/Screens/Alt.php:51
+#: includes/Screens/Alt.php:63
+msgid "Now"
+msgstr "Şimdi"
+
+#: includes/Screens/Overview.php:269
+#, php-format
+msgid "Now: %d"
+msgstr "Şimdi: %d"
+
+#: includes/Rules/Content.php:382
+msgid "Numbers/scores in dollar delimiters like $5.3/10$ and the \\frac, \\times commands."
+msgstr "$5.3/10$ gibi dolar ayraçlı sayı/puan ve \\frac, \\times komutları."
+
+#: includes/Screens/Issues.php:129
+#: includes/Screens/Overview.php:280
+msgid "Object"
+msgstr "Nesne"
+
+#: includes/TermOps.php:83
+msgid "One of the terms to merge does not exist."
+msgstr "Birleştirilecek terimlerden biri yok."
+
+#: includes/Screens/Prefs.php:138
+msgid "One post type name per line."
+msgstr "Her satıra bir yazı türü adı."
+
+#: includes/Screens/Prefs.php:137
+msgid "One status per line (publish, draft…)."
+msgstr "Her satıra bir durum (publish, draft…)."
+
+#: includes/Screens/Alt.php:71
+msgid "Only empty alt texts are filled; existing ones are not touched."
+msgstr "Yalnız boş alt metinler doldurulur; dolu olanlara dokunulmaz."
+
+#: includes/Admin.php:193
+msgid "Only the administrator role can use Content Health. Ask your site administrator for access."
+msgstr "İçerik Sağlığı’nı yalnız yönetici rolü kullanabilir. Erişim için site yöneticisine başvurun."
+
+#: includes/Screens/Issues.php:244
+#: includes/Screens/Issues.php:268
+msgid "Open"
+msgstr "Açık"
+
+#: includes/Screens/Issues.php:365
+msgid "Open post"
+msgstr "Yazıyı aç"
+
+#: includes/Screens/UndoLog.php:44
+#: includes/Screens/UndoLog.php:60
+msgid "Operation"
+msgstr "İşlem"
+
+#: includes/Rules/Links.php:161
+msgid "Orphan content"
+msgstr "Yetim içerik"
+
+#: includes/Ui.php:197
+msgid "Page"
+msgstr "Sayfa"
+
+#: includes/Ui.php:203
+msgid "Pagination"
+msgstr "Sayfalama"
+
+#: includes/Screens/UndoLog.php:54
+msgid "Partly undone"
+msgstr "Kısmen geri alındı"
+
+#: includes/Screens/Prefs.php:166
+msgid "Pattern"
+msgstr "Desen"
+
+#: includes/Screens/Prefs.php:156
+msgid "Pattern editor"
+msgstr "Desen düzenleyici"
+
+#: includes/Patterns.php:36
+msgid "Pattern is too long."
+msgstr "Desen çok uzun."
+
+#: includes/Admin.php:101
+#: includes/Screens/Overview.php:207
+msgid "Pause"
+msgstr "Duraklat"
+
+#: includes/Rules/Content.php:287
+msgid "Placeholder leftover"
+msgstr "Yer tutucu kalıntısı"
+
+#: includes/Ui.php:64
+msgid "Poor"
+msgstr "Zayıf"
+
+#: includes/Screens/Tags.php:155
+#: includes/Screens/Tags.php:158
+#: includes/Ui.php:143
+msgid "Post"
+msgstr "Yazı"
+
+#: includes/Screens/Issues.php:217
+msgid "Post changed afterwards"
+msgstr "Yazı sonradan değişti"
+
+#: includes/Fixer.php:142
+msgid "Post not found."
+msgstr "Yazı bulunamadı."
+
+#: includes/Screens/Prefs.php:137
+msgid "Post statuses scanned"
+msgstr "Taranan yazı durumları"
+
+#: includes/Screens/Prefs.php:59
+msgid "Post types (one per line)"
+msgstr "Yazı türleri (her satıra bir)"
+
+#: includes/Scanner.php:102
+msgid "Posts"
+msgstr "Yazılar"
+
+#: includes/Screens/Onboarding.php:54
+msgid "Posts and pages"
+msgstr "Yazılar ve sayfalar"
+
+#: includes/Screens/Overview.php:198
+msgid "Posts, pages, products, media and tags are scanned in batches."
+msgstr "Yazı, sayfa, ürün, medya ve etiketler partiler halinde taranır."
+
+#: includes/Screens/Alt.php:49
+msgid "Preview"
+msgstr "Önizleme"
+
+#: includes/Screens/Issues.php:336
+#: includes/Ui.php:229
+msgid "Preview: before / after"
+msgstr "Önizleme: önce / sonra"
+
+#: includes/Ui.php:188
+#: includes/Ui.php:189
+msgid "Previous page"
+msgstr "Önceki sayfa"
+
+#: includes/Screens/Overview.php:280
+msgid "Priority problems"
+msgstr "Öncelikli sorunlar"
+
+#: includes/Screens/Overview.php:280
+#: includes/Screens/Overview.php:286
+msgid "Problem"
+msgstr "Sorun"
+
+#: includes/Screens/Tags.php:59
+msgid "Problem classes"
+msgstr "Sorun sınıfları"
+
+#: includes/Screens/Prefs.php:144
+msgid "Re-check on save"
+msgstr "Kaydedince yeniden denetle"
+
+#: includes/Screens/Issues.php:373
+msgid "Recommended. Items do not show as “updated” and the ordering is not disturbed."
+msgstr "Önerilen. İçerikler “güncellendi” görünmez, sıralama bozulmaz."
+
+#: includes/Screens/Prefs.php:136
+msgid "Records per step"
+msgstr "Adım başına kayıt"
+
+#: includes/Screens/Prefs.php:165
+msgid "Regular expression (PCRE). Invalid or extremely slow patterns are rejected on save."
+msgstr "Düzenli ifade (PCRE). Geçersiz ya da aşırı yavaş desenler kayıtta reddedilir."
+
+#: includes/Screens/Issues.php:289
+#, php-format
+msgid "Remove filter: %s"
+msgstr "Süzgeci kaldır: %s"
+
+#: includes/Ui.php:209
+msgid "Removes only the chat intro and outro; the rest of the post is not touched."
+msgstr "Yalnız sohbet girişini ve çıkışını siler; yazının geri kalanına dokunulmaz."
+
+#: includes/Ui.php:217
+msgid "Removes the single-item tag from the search engine index."
+msgstr "Tek içerikli etiketi arama motoru dizininden çıkarır."
+
+#: includes/Screens/Issues.php:157
+msgid "Reopen"
+msgstr "Yeniden aç"
+
+#: includes/Ui.php:213
+msgid "Replaces wrong / development addresses with the site's real address."
+msgstr "Hatalı / geliştirme adreslerini sitenin gerçek adresiyle değiştirir."
+
+#: includes/Screens/Prefs.php:58
+msgid "Requests per second"
+msgstr "Saniyedeki istek"
+
+#: includes/Screens/Issues.php:370
+msgid "Result"
+msgstr "Sonuç"
+
+#: includes/Admin.php:102
+#: includes/Screens/Overview.php:207
+msgid "Resume"
+msgstr "Sürdür"
+
+#: includes/Cli.php:161
+#, php-format
+msgid "Reverted %d, skipped %d"
+msgstr "Geri alınan %d, atlanan %d"
+
+#: includes/Screens/Overview.php:288
+msgid "Review"
+msgstr "İncele"
+
+#: includes/Screens/Issues.php:129
+#: includes/Screens/Issues.php:149
+#: includes/Screens/Issues.php:238
+#: includes/Screens/Issues.php:262
+#: includes/Screens/Issues.php:371
+msgid "Rule"
+msgstr "Kural"
+
+#: includes/Screens/Prefs.php:83
+msgid "Rules"
+msgstr "Kurallar"
+
+#: includes/Admin.php:112
+#: includes/Screens/Issues.php:375
+msgid "Run dry run"
+msgstr "Kuru koşuyu çalıştır"
+
+#: includes/Scanner.php:138
+msgid "Run not found."
+msgstr "Koşu bulunamadı."
+
+#: includes/Admin.php:117
+msgid "Running dry run…"
+msgstr "Kuru koşu yapılıyor…"
+
+#: includes/Screens/Prefs.php:177
+msgid "SEO plugin"
+msgstr "SEO eklentisi"
+
+#: includes/Screens/Prefs.php:142
+msgid "Safety"
+msgstr "Güvenlik"
+
+#: includes/Admin.php:121
+msgid "Sample"
+msgstr "Örnek"
+
+#: includes/Screens/Issues.php:372
+msgid "Sample changes"
+msgstr "Örnek değişiklikler"
+
+#: includes/Screens/Prefs.php:166
+msgid "Sample text"
+msgstr "Örnek metin"
+
+#: includes/Screens/Prefs.php:78
+msgid "Save bar"
+msgstr "Kaydetme çubuğu"
+
+#: includes/Screens/Prefs.php:78
+msgid "Save changes"
+msgstr "Değişiklikleri kaydet"
+
+#: includes/Admin.php:293
+msgid "Saved; some patterns were skipped because they are invalid: "
+msgstr "Kaydedildi; bazı desenler geçersiz olduğu için atlandı: "
+
+#: includes/Screens/Overview.php:198
+#: includes/Screens/Prefs.php:130
+msgid "Scan"
+msgstr "Tarama"
+
+#: includes/Cli.php:55
+#, php-format
+msgid "Scan %s: error score %s, time %.2f s, peak memory %.1f MB"
+msgstr "Tarama %s: hata puanı %s, süre %.2f sn, bellek tepe %.1f MB"
+
+#: includes/Admin.php:103
+msgid "Scan cancelled."
+msgstr "Tarama iptal edildi."
+
+#: includes/Admin.php:104
+msgid "Scan finished."
+msgstr "Tarama bitti."
+
+#: includes/Screens/Onboarding.php:59
+#: includes/Screens/Prefs.php:131
+msgid "Scan frequency"
+msgstr "Tarama sıklığı"
+
+#: includes/Admin.php:227
+#: includes/Admin.php:229
+#: includes/Screens/Alt.php:37
+#: includes/Screens/Issues.php:104
+#: includes/Screens/Overview.php:85
+#: includes/Screens/Tags.php:56
+msgid "Scan now"
+msgstr "Şimdi tara"
+
+#: includes/Admin.php:100
+#: includes/Screens/Overview.php:202
+msgid "Scan paused"
+msgstr "Tarama duraklatıldı"
+
+#: includes/Screens/Onboarding.php:66
+#: includes/Screens/Overview.php:204
+msgid "Scan progress"
+msgstr "Tarama ilerlemesi"
+
+#: includes/Admin.php:105
+msgid "Scan stopped."
+msgstr "Tarama durdu."
+
+#: includes/Admin.php:99
+#: includes/Screens/Overview.php:202
+msgid "Scanning…"
+msgstr "Taranıyor…"
+
+#: includes/Screens/Onboarding.php:57
+msgid "Scans"
+msgstr "Taramalar"
+
+#: includes/Screens/Overview.php:223
+#: includes/Screens/UndoLog.php:44
+#: includes/Screens/UndoLog.php:61
+msgid "Scope"
+msgstr "Kapsam"
+
+#: includes/Screens/Overview.php:168
+msgid "Score = 100 − Σ penalty. Penalty = weight × percentage of affected content; the penalty of each rule cannot exceed its cap."
+msgstr "Puan = 100 − Σ ceza. Ceza = ağırlık × etkilenen içerik yüzdesi; her kuralın cezası tavanı aşamaz."
+
+#: includes/Screens/Issues.php:251
+msgid "Search"
+msgstr "Ara"
+
+#: includes/Screens/Issues.php:264
+msgid "Search term"
+msgstr "Arama"
+
+#: includes/Screens/Alt.php:51
+msgid "Select all"
+msgstr "Tümünü seç"
+
+#: includes/Screens/Issues.php:129
+msgid "Select all findings on this page"
+msgstr "Bu sayfadaki tüm bulguları seç"
+
+#: includes/Screens/Alt.php:59
+#: includes/Screens/Issues.php:146
+#, php-format
+msgid "Select: %s"
+msgstr "Seç: %s"
+
+#: includes/Screens/Issues.php:371
+msgid "Selected rules"
+msgstr "Seçilen kurallar"
+
+#: includes/Screens/Issues.php:370
+msgid "Selection"
+msgstr "Seçim"
+
+#: includes/Rules/Links.php:248
+msgid "Sends a rate-limited (at most 2 per second) HEAD request to internal links; finds 404/410 and connection errors. Off by default so it does not load the server."
+msgstr "Site içi bağlantılara hız sınırlı (saniyede en çok 2) HEAD isteği atar; 404/410 ve bağlantı hatalarını bulur. Sunucuya yük bindirmemek için varsayılan kapalıdır."
+
+#: includes/Admin.php:183
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: includes/Admin.php:295
+msgid "Settings saved."
+msgstr "Ayarlar kaydedildi."
+
+#: includes/Screens/Onboarding.php:48
+msgid "Setup steps"
+msgstr "Kurulum adımları"
+
+#: includes/Screens/Issues.php:129
+#: includes/Screens/Issues.php:151
+#: includes/Screens/Issues.php:239
+#: includes/Screens/Issues.php:263
+#: includes/Screens/Overview.php:280
+#: includes/Screens/Overview.php:284
+msgid "Severity"
+msgstr "Ciddiyet"
+
+#: includes/Screens/Tags.php:131
+msgid "Short name:"
+msgstr "Kısa ad:"
+
+#: includes/Screens/Issues.php:336
+msgid "Side by side"
+msgstr "Yan yana"
+
+#: includes/Screens/Tags.php:27
+msgid "Single post"
+msgstr "Tek yazılı"
+
+#: includes/Rules/Terms.php:97
+msgid "Single-use term"
+msgstr "Tek kullanımlık terim"
+
+#: includes/Admin.php:148
+msgid "Start the first scan"
+msgstr "İlk taramayı başlat"
+
+#: includes/Screens/Overview.php:85
+msgid "Start the first scan; the results appear here as a score and groups."
+msgstr "İlk taramayı başlatın; sonuçlar burada puan ve gruplar olarak görünür."
+
+#: includes/Admin.php:98
+#: includes/Screens/Onboarding.php:66
+msgid "Starting scan…"
+msgstr "Tarama başlıyor…"
+
+#: includes/Screens/Issues.php:242
+#: includes/Screens/Issues.php:266
+#: includes/Screens/UndoLog.php:44
+#: includes/Screens/UndoLog.php:62
+msgid "Status"
+msgstr "Durum"
+
+#: includes/Screens/Overview.php:89
+msgid "Status by group"
+msgstr "Gruplara göre durum"
+
+#: includes/Screens/Prefs.php:136
+msgid "Step duration (s)"
+msgstr "Adım süresi (sn)"
+
+#: includes/Screens/Issues.php:370
+msgid "Steps"
+msgstr "Adımlar"
+
+#: includes/Screens/Alt.php:64
+msgid "Suggested"
+msgstr "Önerilen"
+
+#: includes/Screens/Alt.php:51
+msgid "Suggested alt text"
+msgstr "Önerilen alt metin"
+
+#: includes/Screens/Issues.php:326
+msgid "Suggested fix"
+msgstr "Önerilen düzeltme"
+
+#: includes/Screens/Overview.php:146
+msgid "Suggestion score"
+msgstr "Öneri puanı"
+
+#: includes/Screens/Tags.php:155
+msgid "Tag"
+msgstr "Etiket"
+
+#: includes/Ui.php:138
+#, php-format
+msgid "Tag #%d"
+msgstr "Etiket #%d"
+
+#: includes/Modules/Taxonomy.php:31
+msgid "Tag Doctor"
+msgstr "Etiket Doktoru"
+
+#: includes/Screens/Prefs.php:139
+msgid "Tag Doctor looks at these taxonomies. One name per line."
+msgstr "Etiket Doktoru bu taksonomilere bakar. Her satıra bir ad."
+
+#: includes/Registry.php:59
+msgid "Tag and category"
+msgstr "Etiket ve kategori"
+
+#: includes/Screens/Tags.php:168
+msgid "Tag archives are managed in All in One SEO's search appearance settings."
+msgstr "Etiket arşivleri All in One SEO’nun arama görünümü ayarından yönetilir."
+
+#: includes/Screens/Tags.php:167
+msgid "Tag archives are managed in Rank Math's “Titles & Meta” section."
+msgstr "Etiket arşivleri Rank Math’ın “Başlıklar ve Meta” bölümünden yönetilir."
+
+#: includes/Screens/Tags.php:166
+msgid "Tag archives are managed in Yoast's “Taxonomies” setting; Content Health does not write to that setting."
+msgstr "Etiket arşivleri Yoast’ın “Taksonomiler” ayarından yönetilir; İçerik Sağlığı bu ayara yazmaz."
+
+#: includes/Screens/Onboarding.php:56
+msgid "Tags & categories"
+msgstr "Etiket ve kategoriler"
+
+#: includes/Scanner.php:105
+msgid "Tags and categories"
+msgstr "Etiketler ve kategoriler"
+
+#: includes/Screens/Tags.php:89
+msgid "Tags that are spelled differently but describe the same topic. In each cluster, choose the canonical tag to keep."
+msgstr "Yazım biçimi farklı ama aynı konuyu anlatan etiketler. Her kümede korunacak kanonik etiketi seçin."
+
+#: includes/Screens/Prefs.php:139
+msgid "Taxonomies scanned"
+msgstr "Taranan taksonomiler"
+
+#: includes/Screens/Alt.php:42
+msgid "Template"
+msgstr "Şablon"
+
+#: includes/Rules/Terms.php:161
+msgid "Term made only of digits"
+msgstr "Yalnız rakamdan oluşan terim"
+
+#: includes/Fixer.php:339
+msgid "Term not found."
+msgstr "Terim bulunamadı."
+
+#: includes/Rules/Terms.php:199
+msgid "Terms that are the same apart from case, accents and punctuation, or a single-letter difference (in long names). Merging is recommended."
+msgstr "Büyük/küçük harf, aksan ve noktalama farkıyla ya da tek harf farkıyla (uzun adlarda) aynı olan terimler. Birleştirme önerilir."
+
+#: includes/Screens/Prefs.php:166
+msgid "Test"
+msgstr "Test et"
+
+#: includes/Screens/Prefs.php:166
+msgid "Test the pattern"
+msgstr "Deseni dene"
+
+#: includes/Screens/Overview.php:177
+msgid "The 3 rules costing the most points right now"
+msgstr "Şu an en çok puan götüren 3 kural"
+
+#: includes/Screens/UndoLog.php:105
+msgid "The affected items return to their state before the fix. Manual changes made in between are not overwritten; changed items are skipped."
+msgstr "İlgili içerikler düzeltmeden önceki haline döner. Araya giren elle değişiklikler ezilmez; değişmiş olanlar atlanır."
+
+#: includes/Screens/Prefs.php:131
+msgid "The automatic scan runs in the background with WP-Cron."
+msgstr "Otomatik tarama arka planda WP-Cron ile çalışır."
+
+#: includes/Screens/Onboarding.php:63
+msgid "The automatic scan runs in the background with WP-Cron; you can change it later in Settings."
+msgstr "Otomatik tarama arka planda WP-Cron ile çalışır; sonradan Ayarlar’dan değiştirebilirsiniz."
+
+#: includes/Screens/Prefs.php:156
+msgid "The chat-leftover rule looks for these patterns. Add your own pattern and test it without saving."
+msgstr "Sohbet kalıntısı kuralı bu desenleri arar. Kendi deseninizi ekleyip kaydetmeden test edin."
+
+#: includes/Rules/Seo.php:255
+msgid "The content has more than one <h1> (the theme title is not counted separately)."
+msgstr "İçerikte birden fazla <h1> var (tema başlığı ayrıca sayılmaz)."
+
+#: includes/Rules/Seo.php:42
+msgid "The description field of the SEO plugin (Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read."
+msgstr "SEO eklentisinin (Yoast, Rank Math, AIOSEO) açıklama alanı ve özet boş. Eklenti yoksa özet okunur."
+
+#: includes/Screens/Onboarding.php:67
+msgid "The first scan has finished."
+msgstr "İlk tarama bitti."
+
+#: includes/Rules/Media.php:67
+msgid "The image address points to a development/staging server (.test, localhost), a repeated extension or a broken format."
+msgstr "Görsel adresi geliştirme/staging sunucusuna (.test, localhost), tekrarlı uzantıya ya da bozuk biçime işaret ediyor."
+
+#: includes/Screens/Prefs.php:181
+msgid "The meta description rule looks only at the post excerpt."
+msgstr "Meta açıklama kuralı yalnız yazı özetine bakar."
+
+#: includes/Screens/Prefs.php:179
+msgid "The meta description rule reads this plugin's field."
+msgstr "Meta açıklama kuralı bu eklentinin alanını okur."
+
+#: includes/Admin.php:126
+msgid "The pattern is invalid or too slow."
+msgstr "Desen geçersiz ya da çok yavaş."
+
+#: includes/Screens/Issues.php:337
+msgid "The post list does not show “updated”; the undo log keeps the previous value."
+msgstr "Yazı listesinde “güncellendi” görünmez; geri alma günlüğü önceki değeri saklar."
+
+#: includes/Rules/Seo.php:167
+msgid "The post title exceeds the set character limit (default 70)."
+msgstr "Yazı başlığı ayarlı karakter sınırını aşıyor (varsayılan 70)."
+
+#: includes/Screens/Prefs.php:166
+msgid "The result appears here."
+msgstr "Sonuç burada görünür."
+
+#: includes/Screens/Tags.php:56
+msgid "The scan results contain no tag problems. They appear here after a new scan."
+msgstr "Tarama sonuçlarında etiket sorunu yok. Yeni bir tarama sonrası burada görünür."
+
+#: includes/Rules/Terms.php:62
+msgid "The tag name exceeds the character or word limit; usually a sentence or paragraph was entered as a tag."
+msgstr "Etiket adı karakter ya da kelime sınırını aşıyor; çoğunlukla cümle ya da paragraf etiket olarak girilmiştir."
+
+#: includes/Screens/Prefs.php:140
+msgid "The target of the wrong-address fix. If empty, the site address is used."
+msgstr "Hatalı adres düzeltmesinin hedefi. Boşsa site adresi kullanılır."
+
+#: includes/TermOps.php:62
+msgid "The term is no longer empty; it was not deleted."
+msgstr "Terim artık boş değil; silinmedi."
+
+#: includes/Rules/Terms.php:127
+msgid "The term name contains a chat sentence, a markdown mark or a line break (\"Here are the tags:\", \"**movie**\")."
+msgstr "Terim adında sohbet cümlesi, markdown işareti ya da satır sonu bulunuyor (\"İşte etiketler:\", \"**film**\")."
+
+#: includes/Rules/Terms.php:164
+msgid "The term name is only a number (e.g. \"2019\"). Turn the rule off if year tags are intentional."
+msgstr "Terim adı yalnız sayı (ör. \"2019\"). Yıl etiketleri bilinçliyse kuralı kapatın."
+
+#: includes/TermOps.php:59
+msgid "The term no longer exists."
+msgstr "Terim zaten yok."
+
+#: includes/TermOps.php:94
+msgid "The terms are not in the same taxonomy."
+msgstr "Terimler aynı sınıflandırmada değil."
+
+#: includes/Rules/Seo.php:223
+msgid "The word count of the text is below the threshold (default 200)."
+msgstr "Metin kelime sayısı eşiğin altında (varsayılan 200)."
+
+#: includes/Screens/Overview.php:277
+msgid "There are no open critical findings."
+msgstr "Açık kritik bulgu bulunmuyor."
+
+#: includes/Screens/Tags.php:95
+msgid "There are no open duplicate-tag findings."
+msgstr "Açık yinelenen etiket bulgusu bulunmuyor."
+
+#: includes/Admin.php:123
+#: includes/Screens/Prefs.php:78
+msgid "There are no unsaved changes."
+msgstr "Kaydedilmemiş değişiklik yok."
+
+#: includes/Admin.php:122
+msgid "There are unsaved changes."
+msgstr "Kaydedilmemiş değişiklik var."
+
+#: includes/Fixer.php:44
+#: includes/Rule.php:91
+msgid "There is no automatic fix for this rule."
+msgstr "Bu kural için otomatik düzeltme yok."
+
+#: includes/Rules/Links.php:130
+msgid "There is no link to the site anywhere in a sufficiently long post."
+msgstr "Yeterince uzun içerikte siteye ait hiçbir bağlantı yok."
+
+#: includes/Screens/Alt.php:37
+msgid "There is no open “image has no alt text” finding."
+msgstr "Açık “görselde alt metin yok” bulgusu bulunmuyor."
+
+#: includes/Rules/Seo.php:220
+msgid "Thin content"
+msgstr "İnce içerik"
+
+#: includes/Screens/Issues.php:367
+msgid "This fix will change 1 item"
+msgstr "Bu düzeltme 1 içeriği değiştirecek"
+
+#: includes/Screens/Onboarding.php:47
+msgid "Three short steps before the first scan."
+msgstr "İlk taramayı yapmadan önce üç kısa adım."
+
+#: includes/Screens/Alt.php:51
+msgid "Thumbnail"
+msgstr "Küçük resim"
+
+#: includes/Screens/Alt.php:60
+#, php-format
+msgid "Thumbnail of %s"
+msgstr "%s küçük resmi"
+
+#: includes/Admin.php:139
+msgid "Tick the confirmation box to continue."
+msgstr "Devam edebilmek için onay kutusunu işaretleyin."
+
+#: includes/Screens/UndoLog.php:44
+#: includes/Screens/UndoLog.php:59
+msgid "Time"
+msgstr "Zaman"
+
+#: includes/Screens/Issues.php:251
+msgid "Title or evidence"
+msgstr "Başlık veya kanıt"
+
+#: includes/Rules/Seo.php:164
+msgid "Title too long"
+msgstr "Başlık çok uzun"
+
+#: includes/Screens/Alt.php:61
+#, php-format
+msgid "Title: %1$s · %2$d image"
+msgid_plural "Title: %1$s · %2$d images"
 msgstr[0] "Başlık: %1$s · %2$d görsel"
 msgstr[1] "Başlık: %1$s · %2$d görsel"
+
+#: includes/Screens/Alt.php:42
+msgid "Tokens"
+msgstr "Jetonlar"
+
+#: includes/Rules/Terms.php:304
+msgid "Too many terms per post"
+msgstr "Yazı başına çok terim"
+
+#: includes/Screens/Issues.php:322
+#, php-format
+msgid "Total found: %d"
+msgstr "Toplam bulunan: %d"
+
+#: includes/Admin.php:106
+msgid "Try again"
+msgstr "Yeniden dene"
+
+#: includes/Admin.php:133
+#: includes/Screens/UndoLog.php:105
+#: includes/Screens/UndoLog.php:73
+msgid "Undo"
+msgstr "Geri al"
+
+#: includes/Admin.php:178
+#: includes/Screens/UndoLog.php:38
+msgid "Undo log"
+msgstr "Geri alma günlüğü"
+
+#: includes/Admin.php:134
+msgid "Undo record"
+msgstr "Geri alma kaydı"
+
+#: includes/Screens/UndoLog.php:105
+msgid "Undo this operation?"
+msgstr "Bu işlem geri alınsın mı?"
+
+#: includes/Screens/Issues.php:373
+msgid "Undo: Undo log → this operation → Undo. No revision is created; the log keeps the previous value."
+msgstr "Geri alma: Geri alma günlüğü → bu işlem → Geri al. Revizyon oluşturulmaz; günlük önceki değeri saklar."
+
+#: includes/Screens/UndoLog.php:71
+#, php-format
+msgid "Undo: operation #%d"
+msgstr "Geri al: işlem #%d"
+
+#: includes/Screens/UndoLog.php:52
+msgid "Undone"
+msgstr "Geri alındı"
+
+#: includes/Rules/Content.php:290
+msgid "Unfilled template text such as [Character 1], {{field}}, Lorem ipsum and \"…to be added\". Not fixed automatically: what to fill in is the editor's decision."
+msgstr "[Karakter 1], {{alan}}, Lorem ipsum ve \"…eklenecektir\" gibi doldurulmamış şablon metinleri. Otomatik düzeltilmez: neyle doldurulacağı editörün kararıdır."
+
+#: includes/Fixer.php:90
+msgid "Unknown fix action."
+msgstr "Bilinmeyen düzeltme eylemi."
+
+#: includes/Screens/Alt.php:51
+#: includes/Screens/Alt.php:62
+msgid "Used in"
+msgstr "Kullanıldığı yer"
+
+#: includes/Screens/Tags.php:26
+msgid "Very long name"
+msgstr "Çok uzun ad"
+
+#: includes/Rules/Terms.php:59
+msgid "Very long term"
+msgstr "Çok uzun terim"
+
+#: includes/Screens/Overview.php:107
+msgid "View findings"
+msgstr "Bulguları gör"
+
+#: includes/Registry.php:67
+msgid "Warning"
+msgstr "Uyarı"
+
+#: includes/Screens/Onboarding.php:60
+#: includes/Screens/Prefs.php:127
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: includes/Screens/Overview.php:169
+msgid "Weight and cap by severity"
+msgstr "Önem derecesine göre ağırlık ve tavan"
+
+#: includes/Screens/Overview.php:169
+msgid "Weight per percent"
+msgstr "Yüzde başına ağırlık"
+
+#: includes/Screens/Onboarding.php:47
+msgid "Welcome to Content Health"
+msgstr "İçerik Sağlığı’na hoş geldiniz"
+
+#: includes/Screens/Onboarding.php:48
+msgid "What should we scan?"
+msgstr "Neyi tarayalım?"
+
+#: includes/Screens/Prefs.php:145
+msgid "When off, findings, settings and the undo log remain even if the plugin is deleted."
+msgstr "Kapalıyken eklenti silinse de bulgular, ayarlar ve geri alma günlüğü kalır."
+
+#: includes/Screens/Prefs.php:143
+msgid "When on, fixed posts do not show as “updated”."
+msgstr "Açıkken düzeltilen yazılar “güncellendi” görünmez."
+
+#: includes/Screens/Prefs.php:144
+msgid "When you save a post, only that post's findings are checked again; a finding you fixed by hand becomes “fixed” on its own. Rules that look at the whole site, such as duplicate title and orphan content, wait for the scan."
+msgstr "Bir yazıyı kaydettiğinizde yalnız o yazının bulguları yeniden denetlenir; elle düzelttiğiniz bulgu kendiliğinden “düzeltildi” olur. Yinelenen başlık, yetim içerik gibi tüm siteye bakan kurallar taramayı bekler."
+
+#: includes/Screens/Onboarding.php:48
+msgid "When?"
+msgstr "Ne zaman?"
+
+#: includes/Rules/Links.php:98
+msgid "While the site is on https, the content has an http:// image, iframe, script or an http link to your own site."
+msgstr "Site https iken içerikte http:// görsel, iframe, betik ya da kendi sitene http bağlantı."
+
+#: includes/Screens/Issues.php:325
+msgid "Why does it matter?"
+msgstr "Neden önemli?"
+
+#: includes/Admin.php:145
+msgid "Will be skipped"
+msgstr "Atlanacak"
+
+#: includes/Admin.php:144
+msgid "Will change"
+msgstr "Değişecek"
+
+#: includes/Rules/Content.php:151
+msgid "Wrapper classes and data attributes pasted from a chat interface (data-path-to-node, model-response-message-content, math-inline …). The fix unwraps the wrapper and keeps the content."
+msgstr "Sohbet arayüzünden yapıştırılan sarmalayıcı sınıflar ve veri öznitelikleri (data-path-to-node, model-response-message-content, math-inline …). Düzeltme sarmalayıcıyı açar, içeriği korur."
+
+#: includes/Rules/Links.php:42
+msgid "Wrong server address"
+msgstr "Hatalı sunucu adresi"
+
+#: includes/Admin.php:193
+msgid "You do not have access to this page"
+msgstr "Bu sayfaya erişim yetkiniz yok"
+
+#: includes/Admin.php:263
+msgid "You do not have permission for this action."
+msgstr "Bu işlem için yetkiniz yok."
+
+#: includes/Admin.php:140
+msgid "about"
+msgstr "yaklaşık"
+
+#: includes/Undo.php:136
+msgid "alt text changed afterwards"
+msgstr "alt metin sonradan değişmiş"
+
+#: includes/TermOps.php:135
+msgid "broken record"
+msgstr "kayıt bozuk"
+
+#: includes/Undo.php:110
+msgid "content changed afterwards"
+msgstr "içerik sonradan değişmiş"
+
+#: includes/Admin.php:330
+msgid "contenthealth-findings"
+msgstr "contenthealth-bulgular"
+
+#: includes/Screens/Overview.php:216
+msgid "daily"
+msgstr "günlük"
+
+#: includes/Admin.php:131
+msgid "deleted"
+msgstr "silindi"
+
+#: includes/Screens/Alt.php:63
+msgid "empty"
+msgstr "boş"
+
+#: includes/Admin.php:136
+msgid "errors"
+msgstr "hata"
+
+#: includes/Admin.php:110
+#: includes/Screens/Issues.php:119
+msgid "findings selected"
+msgstr "bulgu seçili"
+
+#: includes/Admin.php:118
+msgid "fixed"
+msgstr "düzeltildi"
+
+#: includes/Screens/Issues.php:175
+msgid "full scan"
+msgstr "tam tarama"
+
+#: includes/Screens/Overview.php:215
+msgid "hourly"
+msgstr "saatlik"
+
+#: includes/Admin.php:111
+msgid "images selected"
+msgstr "görsel seçili"
+
+#: includes/Admin.php:142
+#: includes/Screens/Overview.php:205
+#: includes/Screens/Overview.php:223
+msgid "items"
+msgstr "içerik"
+
+#: includes/Ui.php:260
+msgid "line"
+msgstr "satır"
+
+#: includes/Undo.php:163
+msgid "list changed afterwards"
+msgstr "liste sonradan değişmiş"
+
+#: includes/Admin.php:125
+msgid "matches"
+msgstr "eşleşme"
+
+#: includes/Undo.php:125
+msgid "meta changed afterwards"
+msgstr "meta sonradan değişmiş"
+
+#: includes/Undo.php:122
+msgid "meta row is gone"
+msgstr "meta satırı yok"
+
+#: includes/Screens/Onboarding.php:57
+msgid "no content changes unless you approve."
+msgstr "siz onaylamadan hiçbir içerik değişmez."
+
+#: includes/Admin.php:333
+msgctxt "CSV column header"
+msgid "object"
+msgstr "nesne"
+
+#: includes/Screens/Onboarding.php:57
+msgid "only read"
+msgstr "yalnız okur"
+
+#: includes/Admin.php:149
+msgid "open findings found."
+msgstr "açık bulgu bulundu."
+
+#: includes/Undo.php:107
+msgid "post is gone"
+msgstr "yazı yok"
+
+#: includes/Admin.php:120
+#: includes/Screens/UndoLog.php:50
+msgid "posts"
+msgstr "yazı"
+
+#: includes/Screens/Alt.php:50
+msgid "posts selected"
+msgstr "yazı seçili"
+
+#: includes/Admin.php:333
+msgctxt "CSV column header"
+msgid "rule"
+msgstr "kural"
+
+#: includes/Admin.php:143
+#: includes/Screens/Overview.php:221
+msgid "s"
+msgstr "sn"
+
+#: includes/Screens/Issues.php:310
+msgid "scanned"
+msgstr "tarandı"
+
+#: includes/Admin.php:333
+msgctxt "CSV column header"
+msgid "severity"
+msgstr "ciddiyet"
+
+#: includes/Admin.php:119
+msgid "skipped"
+msgstr "atlandı"
+
+#: includes/Admin.php:333
+msgctxt "CSV column header"
+msgid "status"
+msgstr "durum"
+
+#: includes/Admin.php:333
+msgctxt "CSV column header"
+msgid "summary"
+msgstr "özet"
+
+#: includes/Screens/Overview.php:223
+#: includes/Screens/UndoLog.php:50
+msgid "tags"
+msgstr "etiket"
+
+#: includes/TermOps.php:138
+msgid "term already exists"
+msgstr "terim zaten var"
+
+#: includes/Undo.php:149
+msgid "term changed afterwards"
+msgstr "terim sonradan değişmiş"
+
+#: includes/Undo.php:146
+msgid "term is gone"
+msgstr "terim yok"
+
+#: includes/Admin.php:333
+msgctxt "CSV column header"
+msgid "type"
+msgstr "tür"
+
+#: includes/Admin.php:128
+#: includes/Screens/UndoLog.php:94
+msgid "undone"
+msgstr "geri alındı"
+
+#: includes/Undo.php:170
+msgid "unknown field"
+msgstr "bilinmeyen alan"
+
+#: includes/Screens/Overview.php:217
+msgid "weekly"
+msgstr "haftalık"
+
+#: includes/Screens/Issues.php:175
+msgid "when a post is saved"
+msgstr "yazı kaydedilirken"
+
+#: includes/Screens/Alt.php:43
+msgid "{file_name}"
+msgstr "{dosya_adı}"
+
+#: includes/Screens/Alt.php:43
+msgid "{site_name}"
+msgstr "{site_adı}"
+
+#: includes/Fixer.php:120
+#: includes/Modules/Media.php:25
+#: includes/Screens/Alt.php:32
+#: includes/Screens/Alt.php:43
+msgid "{title}"
+msgstr "{başlık}"
+
+#: includes/Fixer.php:297
+#, php-format
+msgid "→ %s (%d relations will be moved)"
+msgstr "→ %s (%d ilişki taşınır)"
+
+#: includes/Screens/Overview.php:188
+#, php-format
+msgid "−%s points"
+msgstr "−%s puan"

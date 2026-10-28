@@ -22,13 +22,13 @@ final class Media implements Module {
 	public function register(): void {}
 
 	public function settings(): array {
-		return array( 'alt_template' => '{başlık}' );
+		return array( 'alt_template' => __( '{title}', 'contenthealth' ) );
 	}
 
 	public function admin_pages(): array {
 		return array(
 			'alt' => array(
-				'label'   => __( 'Alt Metin', 'contenthealth' ),
+				'label'   => __( 'Alt Text', 'contenthealth' ),
 				'render'  => array( \ContentHealth\Screens\Alt::class, 'render' ),
 				'count'   => array( \ContentHealth\Screens\Alt::class, 'count' ),
 				'dialogs' => array( \ContentHealth\Screens\Alt::class, 'dialogs' ),

@@ -39,10 +39,10 @@ final class BadHostUrl extends LinkRule {
 		return Rule::CRITICAL;
 	}
 	public function label(): string {
-		return __( 'Hatalı sunucu adresi', 'contenthealth' );
+		return __( 'Wrong server address', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'İçerikte geliştirme/staging adresi (.test, .local, localhost), tekrarlı uzantı (.test.test) ya da bozuk biçim (https.alanadi) sızıntısı. Sitenin kendi adresi hariçtir.', 'contenthealth' );
+		return __( 'A development/staging address (.test, .local, localhost), a repeated extension (.test.test) or a broken format (https.domain) leaked into the content. The site\'s own address is excluded.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_bad_host_url';
@@ -92,10 +92,10 @@ final class MixedContent extends LinkRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Karışık içerik (http)', 'contenthealth' );
+		return __( 'Mixed content (http)', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Site https iken içerikte http:// görsel, iframe, betik ya da kendi sitene http bağlantı.', 'contenthealth' );
+		return __( 'While the site is on https, the content has an http:// image, iframe, script or an http link to your own site.', 'contenthealth' );
 	}
 	public function check( object $obj, Ctx $ctx ): ?array {
 		if ( ! $ctx->https ) {
@@ -124,10 +124,10 @@ final class NoInternalLinks extends LinkRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'İç bağlantı yok', 'contenthealth' );
+		return __( 'No internal links', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Yeterince uzun içerikte siteye ait hiçbir bağlantı yok.', 'contenthealth' );
+		return __( 'There is no link to the site anywhere in a sufficiently long post.', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -158,10 +158,10 @@ final class OrphanContent extends LinkRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Yetim içerik', 'contenthealth' );
+		return __( 'Orphan content', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Başka hiçbir yazının içeriğinden bağlantı almayan yazı. Menü, widget ve ilgili yazı kutuları sayılmaz; yalnız içerik içi bağlantılar.', 'contenthealth' );
+		return __( 'A post that receives no link from the content of any other post. Menus, widgets and related-post boxes do not count; only in-content links.', 'contenthealth' );
 	}
 	public function scopes(): array {
 		return array( 'global' );
@@ -242,10 +242,10 @@ final class BrokenInternalLinks extends LinkRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Kırık iç bağlantı (yavaş mod)', 'contenthealth' );
+		return __( 'Broken internal link (slow mode)', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Site içi bağlantılara hız sınırlı (saniyede en çok 2) HEAD isteği atar; 404/410 ve bağlantı hatalarını bulur. Sunucuya yük bindirmemek için varsayılan kapalıdır.', 'contenthealth' );
+		return __( 'Sends a rate-limited (at most 2 per second) HEAD request to internal links; finds 404/410 and connection errors. Off by default so it does not load the server.', 'contenthealth' );
 	}
 	public function scopes(): array {
 		return array( 'global' );

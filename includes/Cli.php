@@ -52,7 +52,7 @@ final class Cli {
 		}
 		\WP_CLI::success(
 			sprintf(
-				'Tarama %s: hata puanı %s, süre %.2f sn, bellek tepe %.1f MB',
+				__( 'Scan %s: error score %s, time %.2f s, peak memory %.1f MB', 'contenthealth' ),
 				$run->status,
 				null === $run->score ? '-' : (string) $run->score,
 				microtime( true ) - $t0,
@@ -78,8 +78,8 @@ final class Cli {
 			\WP_CLI::print_value( $s, array( 'format' => 'json' ) );
 			return;
 		}
-		\WP_CLI::log( sprintf( 'Hata puanı: %s · Öneri puanı: %s  (son tarama: %s)', null === $s['score'] ? '-' : (string) $s['score'], null === $s['suggest'] ? '-' : (string) $s['suggest'], (string) ( $s['finished'] ?? '-' ) ) );
-		\WP_CLI::log( sprintf( 'Kritik %d · Uyarı %d · Bilgi %d', $s['severity'][ Rule::CRITICAL ], $s['severity'][ Rule::WARNING ], $s['severity'][ Rule::INFO ] ) );
+		\WP_CLI::log( sprintf( __( 'Error score: %s · Suggestion score: %s  (last scan: %s)', 'contenthealth' ), null === $s['score'] ? '-' : (string) $s['score'], null === $s['suggest'] ? '-' : (string) $s['suggest'], (string) ( $s['finished'] ?? '-' ) ) );
+		\WP_CLI::log( sprintf( __( 'Critical %d · Warning %d · Info %d', 'contenthealth' ), $s['severity'][ Rule::CRITICAL ], $s['severity'][ Rule::WARNING ], $s['severity'][ Rule::INFO ] ) );
 		\WP_CLI\Utils\format_items( 'table', $s['rules'], array( 'id', 'severity', 'open', 'fix' ) );
 	}
 
@@ -134,9 +134,9 @@ final class Cli {
 			\WP_CLI::error( $res->get_error_message() );
 		}
 		foreach ( array_slice( $res['items'], 0, 20 ) as $it ) {
-			\WP_CLI::log( '#' . $it['object_id'] . ' ' . ( isset( $it['error'] ) ? 'HATA: ' . $it['error'] : wp_json_encode( $it['changes'][0]['chars'] ?? $it['changes'][0]['field'] ?? '', JSON_UNESCAPED_UNICODE ) ) );
+			\WP_CLI::log( '#' . $it['object_id'] . ' ' . ( isset( $it['error'] ) ? __( 'ERROR: ', 'contenthealth' ) . $it['error'] : wp_json_encode( $it['changes'][0]['chars'] ?? $it['changes'][0]['field'] ?? '', JSON_UNESCAPED_UNICODE ) ) );
 		}
-		\WP_CLI::success( sprintf( '%s: değişen %d, atlanan %d, hata %d%s', $dry ? 'KURU KOŞU' : 'UYGULANDI', $res['changed'], $res['skipped'], $res['errors'], $dry ? '' : ' · geri alma: ' . $res['batch'] ) );
+		\WP_CLI::success( sprintf( __( '%s: changed %d, skipped %d, errors %d%s', 'contenthealth' ), $dry ? __( 'DRY RUN', 'contenthealth' ) : __( 'APPLIED', 'contenthealth' ), $res['changed'], $res['skipped'], $res['errors'], $dry ? '' : __( ' · undo: ', 'contenthealth' ) . $res['batch'] ) );
 	}
 
 	/**
@@ -158,7 +158,7 @@ final class Cli {
 		foreach ( $r['messages'] as $m ) {
 			\WP_CLI::warning( $m );
 		}
-		\WP_CLI::success( sprintf( 'Geri alınan %d, atlanan %d', $r['reverted'], $r['skipped'] ) );
+		\WP_CLI::success( sprintf( __( 'Reverted %d, skipped %d', 'contenthealth' ), $r['reverted'], $r['skipped'] ) );
 	}
 
 	/**
@@ -181,7 +181,7 @@ final class Cli {
 		}
 		fclose( $fh ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 		if ( isset( $args[0] ) ) {
-			\WP_CLI::success( count( $rows ) . ' bulgu yazıldı.' );
+			\WP_CLI::success( sprintf( __( '%d findings written.', 'contenthealth' ), count( $rows ) ) );
 		}
 	}
 

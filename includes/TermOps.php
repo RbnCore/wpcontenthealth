@@ -56,10 +56,10 @@ final class TermOps {
 	public static function delete_empty( int $term_id, bool $dry ) {
 		$snap = self::snapshot( $term_id );
 		if ( ! $snap ) {
-			return new \WP_Error( 'gone', __( 'Terim zaten yok.', 'contenthealth' ) );
+			return new \WP_Error( 'gone', __( 'The term no longer exists.', 'contenthealth' ) );
 		}
 		if ( self::real_count( $term_id ) > 0 ) {
-			return new \WP_Error( 'not_empty', __( 'Terim artık boş değil; silinmedi.', 'contenthealth' ) );
+			return new \WP_Error( 'not_empty', __( 'The term is no longer empty; it was not deleted.', 'contenthealth' ) );
 		}
 		if ( ! $dry ) {
 			self::purge( $term_id );
@@ -80,7 +80,7 @@ final class TermOps {
 		$a = self::snapshot( $from );
 		$b = self::snapshot( $to );
 		if ( ! $a || ! $b || $from === $to ) {
-			return new \WP_Error( 'gone', __( 'Birleştirilecek terimlerden biri yok.', 'contenthealth' ) );
+			return new \WP_Error( 'gone', __( 'One of the terms to merge does not exist.', 'contenthealth' ) );
 		}
 		$tt_from = (int) ( $a['tt'][0]['term_taxonomy_id'] ?? 0 );
 		$tax     = (string) ( $a['tt'][0]['taxonomy'] ?? '' );
@@ -91,7 +91,7 @@ final class TermOps {
 			}
 		}
 		if ( ! $tt_from || ! $tt_to ) {
-			return new \WP_Error( 'tax', __( 'Terimler aynı sınıflandırmada değil.', 'contenthealth' ) );
+			return new \WP_Error( 'tax', __( 'The terms are not in the same taxonomy.', 'contenthealth' ) );
 		}
 		$objs   = array_map( 'intval', (array) $wpdb->get_col( $wpdb->prepare( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", $tt_from ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		$have   = $objs ? array_map( 'intval', (array) $wpdb->get_col( $wpdb->prepare( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $objs ), '%d' ) ) . ')', array_merge( array( $tt_to ), $objs ) ) ) ) : array(); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -132,10 +132,10 @@ final class TermOps {
 		$id   = (int) $row->object_id;
 		$data = json_decode( (string) $row->before_value, true );
 		if ( ! is_array( $data ) ) {
-			return __( 'kayıt bozuk', 'contenthealth' );
+			return __( 'broken record', 'contenthealth' );
 		}
 		if ( null !== $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE term_id = %d", $id ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			return __( 'terim zaten var', 'contenthealth' );
+			return __( 'term already exists', 'contenthealth' );
 		}
 		if ( $dry ) {
 			return true;

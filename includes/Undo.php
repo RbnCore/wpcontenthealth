@@ -104,10 +104,10 @@ final class Undo {
 		if ( in_array( $field, array( 'post_content', 'post_excerpt', 'post_title' ), true ) ) {
 			$cur = $wpdb->get_var( $wpdb->prepare( "SELECT {$field} FROM {$wpdb->posts} WHERE ID = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- alan adı beyaz listeden.
 			if ( null === $cur ) {
-				return __( 'yazı yok', 'contenthealth' );
+				return __( 'post is gone', 'contenthealth' );
 			}
 			if ( Text::hash( (string) $cur ) !== $row->after_hash ) {
-				return __( 'içerik sonradan değişmiş', 'contenthealth' );
+				return __( 'content changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
 				$wpdb->update( $wpdb->posts, array( $field => $row->before_value ), array( 'ID' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -119,10 +119,10 @@ final class Undo {
 			$mid = (int) substr( $field, 9 );
 			$cur = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->postmeta} WHERE meta_id = %d", $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			if ( null === $cur ) {
-				return __( 'meta satırı yok', 'contenthealth' );
+				return __( 'meta row is gone', 'contenthealth' );
 			}
 			if ( Text::hash( (string) $cur ) !== $row->after_hash ) {
-				return __( 'meta sonradan değişmiş', 'contenthealth' );
+				return __( 'meta changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
 				$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $row->before_value ), array( 'meta_id' => $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -133,7 +133,7 @@ final class Undo {
 		if ( 'attachment_alt_new' === $field ) {
 			$cur = (string) get_post_meta( $id, '_wp_attachment_image_alt', true );
 			if ( Text::hash( $cur ) !== $row->after_hash ) {
-				return __( 'alt metin sonradan değişmiş', 'contenthealth' );
+				return __( 'alt text changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
 				delete_post_meta( $id, '_wp_attachment_image_alt' );
@@ -143,10 +143,10 @@ final class Undo {
 		if ( 'term_name' === $field ) {
 			$cur = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM {$wpdb->terms} WHERE term_id = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			if ( null === $cur ) {
-				return __( 'terim yok', 'contenthealth' );
+				return __( 'term is gone', 'contenthealth' );
 			}
 			if ( Text::hash( (string) $cur ) !== $row->after_hash ) {
-				return __( 'terim sonradan değişmiş', 'contenthealth' );
+				return __( 'term changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
 				$wpdb->update( $wpdb->terms, array( 'name' => $row->before_value ), array( 'term_id' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -160,13 +160,13 @@ final class Undo {
 		if ( 'noindex_terms' === $field ) {
 			$cur = (string) wp_json_encode( array_values( (array) get_option( 'contenthealth_noindex_terms', array() ) ) );
 			if ( Text::hash( $cur ) !== $row->after_hash ) {
-				return __( 'liste sonradan değişmiş', 'contenthealth' );
+				return __( 'list changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
 				update_option( 'contenthealth_noindex_terms', json_decode( (string) $row->before_value, true ) ?: array(), false );
 			}
 			return true;
 		}
-		return __( 'bilinmeyen alan', 'contenthealth' );
+		return __( 'unknown field', 'contenthealth' );
 	}
 }

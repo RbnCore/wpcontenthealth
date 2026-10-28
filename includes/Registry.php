@@ -52,20 +52,20 @@ final class Registry {
 	/** @return array<string,string> */
 	public static function groups(): array {
 		return array(
-			'content'  => __( 'İçerik temizliği', 'contenthealth' ),
-			'seo'      => __( 'Meta ve SEO', 'contenthealth' ),
-			'media'    => __( 'Medya', 'contenthealth' ),
-			'links'    => __( 'Bağlantılar', 'contenthealth' ),
-			'taxonomy' => __( 'Etiket ve kategori', 'contenthealth' ),
+			'content'  => __( 'Content cleanup', 'contenthealth' ),
+			'seo'      => __( 'Meta and SEO', 'contenthealth' ),
+			'media'    => __( 'Media', 'contenthealth' ),
+			'links'    => __( 'Links', 'contenthealth' ),
+			'taxonomy' => __( 'Tag and category', 'contenthealth' ),
 		);
 	}
 
 	/** @return array<string,string> */
 	public static function severities(): array {
 		return array(
-			Rule::CRITICAL => __( 'Kritik', 'contenthealth' ),
-			Rule::WARNING  => __( 'Uyarı', 'contenthealth' ),
-			Rule::INFO     => __( 'Bilgi', 'contenthealth' ),
+			Rule::CRITICAL => __( 'Critical', 'contenthealth' ),
+			Rule::WARNING  => __( 'Warning', 'contenthealth' ),
+			Rule::INFO     => __( 'Info', 'contenthealth' ),
 		);
 	}
 }

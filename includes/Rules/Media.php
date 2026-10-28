@@ -27,10 +27,10 @@ final class ImagesMissingAlt extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Görselde alt metin yok', 'contenthealth' );
+		return __( 'Image has no alt text', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'İçerikteki <img> etiketlerinde alt özniteliği yok ya da boş. Süs görseli (role="presentation") sayılmaz.', 'contenthealth' );
+		return __( '<img> tags in the content have no alt attribute or an empty one. Decorative images (role="presentation") are not counted.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_alt_from_title';
@@ -61,10 +61,10 @@ final class BrokenImageHost extends Rule {
 		return Rule::CRITICAL;
 	}
 	public function label(): string {
-		return __( 'Görsel hatalı sunucudan', 'contenthealth' );
+		return __( 'Image from a wrong server', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Görsel adresi geliştirme/staging sunucusuna (.test, localhost), tekrarlı uzantıya ya da bozuk biçime işaret ediyor.', 'contenthealth' );
+		return __( 'The image address points to a development/staging server (.test, localhost), a repeated extension or a broken format.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_bad_host_url';

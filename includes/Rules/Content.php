@@ -30,10 +30,10 @@ final class AiChatResidue extends Rule {
 		return Rule::CRITICAL;
 	}
 	public function label(): string {
-		return __( 'Yapay zekâ sohbet kalıntısı', 'contenthealth' );
+		return __( 'AI chat leftover', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Yazının ilk ya da son bloğunda kalan sohbet cümleleri ("İşte … :", "Umarım yardımcı olur"). Yalnız ilk/son kısa blok sayılır; gövdedeki "Elbette…" gibi editoryal ifadelere dokunulmaz.', 'contenthealth' );
+		return __( 'Chat sentences left in the first or last block of a post ("Here is …:", "I hope this helps"). Only the first/last short block counts; editorial phrases in the body such as "Of course…" are left alone.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_ai_chat_residue';
@@ -145,10 +145,10 @@ final class AiUiArtifacts extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Yapay zekâ arayüz kalıntısı', 'contenthealth' );
+		return __( 'AI interface leftover', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Sohbet arayüzünden yapıştırılan sarmalayıcı sınıflar ve veri öznitelikleri (data-path-to-node, model-response-message-content, math-inline …). Düzeltme sarmalayıcıyı açar, içeriği korur.', 'contenthealth' );
+		return __( 'Wrapper classes and data attributes pasted from a chat interface (data-path-to-node, model-response-message-content, math-inline …). The fix unwraps the wrapper and keeps the content.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_ai_ui_artifacts';
@@ -198,10 +198,10 @@ final class MarkdownLeftovers extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Markdown kalıntısı', 'contenthealth' );
+		return __( 'Markdown leftover', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'HTML\'e dönüşmemiş **kalın**, ### başlık, kod çiti, [metin](adres) bağlantısı ve "* madde" satırları. Kod blokları sayılmaz.', 'contenthealth' );
+		return __( '**Bold**, ### headings, code fences, [text](url) links and "* item" lines that were not converted to HTML. Code blocks are not counted.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_markdown_links';
@@ -284,10 +284,10 @@ final class PlaceholderLeftovers extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Yer tutucu kalıntısı', 'contenthealth' );
+		return __( 'Placeholder leftover', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( '[Karakter 1], {{alan}}, Lorem ipsum ve "…eklenecektir" gibi doldurulmamış şablon metinleri. Otomatik düzeltilmez: neyle doldurulacağı editörün kararıdır.', 'contenthealth' );
+		return __( 'Unfilled template text such as [Character 1], {{field}}, Lorem ipsum and "…to be added". Not fixed automatically: what to fill in is the editor\'s decision.', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -338,10 +338,10 @@ final class EncodingGarbage extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Bozuk karakter kodlaması', 'contenthealth' );
+		return __( 'Broken character encoding', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'â€™, Ã¼, ÅŸ, � gibi UTF-8 metnin yanlış çözülmesiyle oluşan karakterler. Otomatik düzeltilmez.', 'contenthealth' );
+		return __( 'Characters such as â€™, Ã¼, ÅŸ, � caused by UTF-8 text being decoded wrongly. Not fixed automatically.', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -376,10 +376,10 @@ final class LatexLeftovers extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'LaTeX kalıntısı', 'contenthealth' );
+		return __( 'LaTeX leftover', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( '$5.3/10$ gibi dolar ayraçlı sayı/puan ve \\frac, \\times komutları.', 'contenthealth' );
+		return __( 'Numbers/scores in dollar delimiters like $5.3/10$ and the \\frac, \\times commands.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_latex_score';
@@ -420,10 +420,10 @@ final class DuplicateParagraphs extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Yinelenen paragraf', 'contenthealth' );
+		return __( 'Duplicate paragraph', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Aynı yazıda birebir tekrar eden uzun paragraflar (kopyala-yapıştır hatası).', 'contenthealth' );
+		return __( 'Long paragraphs repeated exactly within the same post (copy-paste mistake).', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -463,10 +463,10 @@ final class EmptyHeadings extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Boş başlık', 'contenthealth' );
+		return __( 'Empty heading', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'İçinde metin olmayan <h1>–<h6> etiketleri.', 'contenthealth' );
+		return __( '<h1>–<h6> tags with no text inside.', 'contenthealth' );
 	}
 
 	public function check( object $obj, Ctx $ctx ): ?array {

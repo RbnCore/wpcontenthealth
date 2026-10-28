@@ -36,10 +36,10 @@ final class MissingMetaDescription extends SeoRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Meta açıklaması yok', 'contenthealth' );
+		return __( 'No meta description', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'SEO eklentisinin (Yoast, Rank Math, AIOSEO) açıklama alanı ve özet boş. Eklenti yoksa özet okunur.', 'contenthealth' );
+		return __( 'The description field of the SEO plugin (Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read.', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -65,10 +65,10 @@ final class MetaDescriptionLength extends SeoRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Meta açıklaması uzunluğu', 'contenthealth' );
+		return __( 'Meta description length', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Dolu açıklama alt ya da üst sınırın dışında (varsayılan 70–160 karakter).', 'contenthealth' );
+		return __( 'A filled description is outside the lower or upper limit (default 70–160 characters).', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -109,10 +109,10 @@ final class DuplicateTitle extends SeoRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Yinelenen başlık', 'contenthealth' );
+		return __( 'Duplicate title', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Aynı yazı türünde, büyük/küçük harf farkı hariç birebir aynı başlık.', 'contenthealth' );
+		return __( 'An identical title within the same post type, ignoring case differences.', 'contenthealth' );
 	}
 	public function scopes(): array {
 		return array( 'global' );
@@ -161,10 +161,10 @@ final class TitleTooLong extends SeoRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Başlık çok uzun', 'contenthealth' );
+		return __( 'Title too long', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Yazı başlığı ayarlı karakter sınırını aşıyor (varsayılan 70).', 'contenthealth' );
+		return __( 'The post title exceeds the set character limit (default 70).', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -190,10 +190,10 @@ final class MissingFeaturedImage extends SeoRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Öne çıkan görsel yok', 'contenthealth' );
+		return __( 'No featured image', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Öne çıkan görseli desteklenen türde (varsayılan: yazı) görsel atanmamış.', 'contenthealth' );
+		return __( 'No featured image is assigned to a post of a supported type (default: post).', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -217,10 +217,10 @@ final class ThinContent extends SeoRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'İnce içerik', 'contenthealth' );
+		return __( 'Thin content', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Metin kelime sayısı eşiğin altında (varsayılan 200).', 'contenthealth' );
+		return __( 'The word count of the text is below the threshold (default 200).', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -249,10 +249,10 @@ final class MultipleH1 extends SeoRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Birden çok H1', 'contenthealth' );
+		return __( 'Multiple H1', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'İçerikte birden fazla <h1> var (tema başlığı ayrıca sayılmaz).', 'contenthealth' );
+		return __( 'The content has more than one <h1> (the theme title is not counted separately).', 'contenthealth' );
 	}
 	public function check( object $obj, Ctx $ctx ): ?array {
 		$n = 0;
@@ -273,10 +273,10 @@ final class HeadingHierarchy extends SeoRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Başlık hiyerarşisi', 'contenthealth' );
+		return __( 'Heading hierarchy', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Başlık düzeyi atlıyor (ör. H2’den sonra doğrudan H4).', 'contenthealth' );
+		return __( 'A heading level is skipped (e.g. H4 directly after H2).', 'contenthealth' );
 	}
 	public function check( object $obj, Ctx $ctx ): ?array {
 		$prev  = 0;

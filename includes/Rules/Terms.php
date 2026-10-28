@@ -35,10 +35,10 @@ final class TermEmpty extends TermRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Boş terim', 'contenthealth' );
+		return __( 'Empty term', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Hiçbir içeriğe bağlı olmayan etiket ya da kategori.', 'contenthealth' );
+		return __( 'A tag or category not attached to any content.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_term_delete_empty';
@@ -56,10 +56,10 @@ final class TermTooLong extends TermRule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Çok uzun terim', 'contenthealth' );
+		return __( 'Very long term', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Etiket adı karakter ya da kelime sınırını aşıyor; çoğunlukla cümle ya da paragraf etiket olarak girilmiştir.', 'contenthealth' );
+		return __( 'The tag name exceeds the character or word limit; usually a sentence or paragraph was entered as a tag.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_term_rename';
@@ -94,10 +94,10 @@ final class TermSingleUse extends TermRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Tek kullanımlık terim', 'contenthealth' );
+		return __( 'Single-use term', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Yalnız bir içeriğe bağlı etiket; arşiv sayfası ince içerik üretir. Yalnız bilgi amaçlıdır.', 'contenthealth' );
+		return __( 'A tag attached to only one post; its archive page creates thin content. Informational only.', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_term_noindex';
@@ -121,10 +121,10 @@ final class TermAiResidue extends TermRule {
 		return Rule::CRITICAL;
 	}
 	public function label(): string {
-		return __( 'Terimde yapay zekâ kalıntısı', 'contenthealth' );
+		return __( 'AI leftover in a term', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Terim adında sohbet cümlesi, markdown işareti ya da satır sonu bulunuyor ("İşte etiketler:", "**film**").', 'contenthealth' );
+		return __( 'The term name contains a chat sentence, a markdown mark or a line break ("Here are the tags:", "**movie**").', 'contenthealth' );
 	}
 	public function fix_action(): ?string {
 		return 'fix_term_rename';
@@ -158,10 +158,10 @@ final class TermNumericOnly extends TermRule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Yalnız rakamdan oluşan terim', 'contenthealth' );
+		return __( 'Term made only of digits', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Terim adı yalnız sayı (ör. "2019"). Yıl etiketleri bilinçliyse kuralı kapatın.', 'contenthealth' );
+		return __( 'The term name is only a number (e.g. "2019"). Turn the rule off if year tags are intentional.', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(
@@ -193,10 +193,10 @@ final class TermDuplicate extends Rule {
 		return Rule::WARNING;
 	}
 	public function label(): string {
-		return __( 'Yinelenen terim', 'contenthealth' );
+		return __( 'Duplicate term', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Büyük/küçük harf, aksan ve noktalama farkıyla ya da tek harf farkıyla (uzun adlarda) aynı olan terimler. Birleştirme önerilir.', 'contenthealth' );
+		return __( 'Terms that are the same apart from case, accents and punctuation, or a single-letter difference (in long names). Merging is recommended.', 'contenthealth' );
 	}
 	public function scopes(): array {
 		return array( 'global' );
@@ -301,10 +301,10 @@ final class TermsPerPostHigh extends Rule {
 		return Rule::INFO;
 	}
 	public function label(): string {
-		return __( 'Yazı başına çok terim', 'contenthealth' );
+		return __( 'Too many terms per post', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'Bir yazıya eşikten fazla etiket bağlanmış (varsayılan 15).', 'contenthealth' );
+		return __( 'More tags than the threshold are attached to one post (default 15).', 'contenthealth' );
 	}
 	public function scopes(): array {
 		return array( 'global' );

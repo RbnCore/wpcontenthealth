@@ -41,7 +41,7 @@ final class Fixer {
 	public static function run_rule( string $rule_id, array $object_ids, bool $dry_run, array $opts = array() ) {
 		$rule = Registry::get( $rule_id );
 		if ( ! $rule || ! $rule->fix_action() ) {
-			return new \WP_Error( 'no_fix', __( 'Bu kural için otomatik düzeltme yok.', 'contenthealth' ), array( 'status' => 400 ) );
+			return new \WP_Error( 'no_fix', __( 'There is no automatic fix for this rule.', 'contenthealth' ), array( 'status' => 400 ) );
 		}
 		$opts['batch'] = $opts['batch'] ?? ( $dry_run ? '' : Undo::new_batch() );
 		$res           = array(
@@ -87,7 +87,7 @@ final class Fixer {
 	 */
 	public static function run( string $action, object $issue, bool $dry, array $opts ) {
 		if ( ! in_array( $action, self::ACTIONS, true ) ) {
-			return new \WP_Error( 'bad_action', __( 'Bilinmeyen düzeltme eylemi.', 'contenthealth' ) );
+			return new \WP_Error( 'bad_action', __( 'Unknown fix action.', 'contenthealth' ) );
 		}
 		$batch = (string) ( $opts['batch'] ?? '' );
 		if ( ! $dry && '' === $batch ) {
@@ -117,7 +117,7 @@ final class Fixer {
 			case 'fix_bad_host_url':
 				return self::bad_host( $issue, $dry, $batch, $ctx );
 			case 'fix_alt_from_title':
-				$tpl  = (string) ( $opts['alt_template'] ?? Settings::get( 'alt_template' ) ?: '{başlık}' );
+				$tpl  = (string) ( $opts['alt_template'] ?? Settings::get( 'alt_template' ) ?: __( '{title}', 'contenthealth' ) );
 				$site = (string) get_bloginfo( 'name' );
 				$post = get_post( $issue->object_id );
 				$t    = $post ? $post->post_title : '';
@@ -139,7 +139,7 @@ final class Fixer {
 		global $wpdb;
 		$row = $wpdb->get_row( $wpdb->prepare( "SELECT ID, post_content, post_excerpt, post_title FROM {$wpdb->posts} WHERE ID = %d", $issue->object_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( ! $row ) {
-			return new \WP_Error( 'gone', __( 'Yazı bulunamadı.', 'contenthealth' ) );
+			return new \WP_Error( 'gone', __( 'Post not found.', 'contenthealth' ) );
 		}
 		$changes = array();
 		$update  = array();
@@ -174,7 +174,7 @@ final class Fixer {
 		}
 		$ok = $wpdb->update( $wpdb->posts, $data, array( 'ID' => $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( false === $ok ) {
-			return new \WP_Error( 'db', __( 'Yazı güncellenemedi.', 'contenthealth' ) );
+			return new \WP_Error( 'db', __( 'Could not update the post.', 'contenthealth' ) );
 		}
 		clean_post_cache( $issue->object_id );
 		foreach ( $update as $f => $pair ) {
@@ -294,7 +294,7 @@ final class Fixer {
 				array(
 					'field'   => 'term_merge',
 					'removed' => array( (string) ( $issue->details_arr['name'] ?? $issue->object_id ) ),
-					'added'   => array( sprintf( '→ %s (%d ilişki taşınır)', $to && ! is_wp_error( $to ) ? $to->name : $canon, $r['moved'] ) ),
+					'added'   => array( sprintf( __( '→ %s (%d relations will be moved)', 'contenthealth' ), $to && ! is_wp_error( $to ) ? $to->name : $canon, $r['moved'] ) ),
 				),
 			),
 		);
@@ -307,7 +307,7 @@ final class Fixer {
 				'seo_plugin',
 				sprintf(
 					/* translators: %s: SEO plugin id */
-					__( 'Etkin SEO eklentisi (%s) var; noindex ayarını orada yapın. ContentHealth çakışmamak için dokunmadı.', 'contenthealth' ),
+					__( 'An active SEO plugin (%s) is present; set noindex there. Content Health left it alone to avoid a conflict.', 'contenthealth' ),
 					$seo
 				)
 			);
@@ -336,13 +336,13 @@ final class Fixer {
 		global $wpdb;
 		$cur = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM {$wpdb->terms} WHERE term_id = %d", $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( null === $cur ) {
-			return new \WP_Error( 'gone', __( 'Terim bulunamadı.', 'contenthealth' ) );
+			return new \WP_Error( 'gone', __( 'Term not found.', 'contenthealth' ) );
 		}
 		$new = isset( $opts['new_name'] ) && '' !== trim( (string) $opts['new_name'] )
 			? sanitize_text_field( (string) $opts['new_name'] )
 			: ( 'term_ai_residue' === $issue->rule_id ? Transform::clean_term_name( (string) $cur ) : null );
 		if ( null === $new || '' === $new ) {
-			return new \WP_Error( 'need_name', __( 'Bu terim için otomatik ad üretilemedi; yeni adı elle girin.', 'contenthealth' ) );
+			return new \WP_Error( 'need_name', __( 'Could not generate a name for this term automatically; enter a new name by hand.', 'contenthealth' ) );
 		}
 		if ( $new === $cur ) {
 			return array( 'changes' => array() );

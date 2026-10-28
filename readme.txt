@@ -1,4 +1,4 @@
-=== ContentHealth — İçerik Sağlığı ===
+=== ContentHealth — Content Health ===
 Contributors: rbnbilisim
 Tags: content health, seo, cleanup, taxonomy, wp-cli
 Requires at least: 6.4
@@ -8,64 +8,64 @@ Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Bağlantı: https://github.com/RbnCore
+Link: https://github.com/RbnCore
 
-WordPress "Site Sağlığı" gibi İÇERİK sağlığı paneli: yapay zekâ/arayüz kalıntısı, markdown, bozuk adres, boş ve yinelenen etiket, eksik alt metin. Kuru koşu, onay ve geri alma ile güvenli düzeltme.
+A content-health panel in the spirit of WordPress Site Health: finds AI and interface leftovers, markdown, broken URLs, empty and duplicate tags, and missing alt text. Safe fixes with dry run, confirmation and undo.
 
 == Description ==
 
-* 30 kural: içerik temizliği, SEO, medya, bağlantı, etiket/kategori. Her biri Ayarlar'dan açılıp kapatılır.
-* Hata puanı ve Öneri puanı (0–100, bulgu durumuna göre canlı), kritik/uyarı/bilgi sayıları, süzülebilir ve aranabilir bulgu listesi, CSV dışa aktarma.
-* Parti parti, kalıcı imleçli tarama: büyük sitede de sunucuyu yormaz (AJAX, WP-Cron, WP-CLI).
-* Düzeltmeler önce kuru koşu ile fark gösterir, onayla uygulanır, geri alma günlüğüne yazılır. "Son değiştirilme" tarihi ve revizyonlar değişmez.
-* Etiket Doktoru: boş etiketi silme, yinelenenleri birleştirme, uzun adı kısaltma, tek kullanımlıkları noindex.
-* Alt Metin: eksik alt metni şablondan doldurma.
-* Yoast, Rank Math ve AIOSEO meta açıklama alanlarıyla uyumlu.
-* Ön yüzde sıfır yük: betik, stil, sorgu ve çıktı eklemez. Dış servis çağırmaz.
+* 30 rules: content cleanup, SEO, media, links, tags and categories. Each one can be turned on or off in Settings.
+* Error score and Suggestion score (0–100, live from the status of the findings), critical/warning/info counts, a filterable and searchable findings list, CSV export.
+* Batched scan with a persistent cursor: it does not strain the server, even on a large site (AJAX, WP-Cron, WP-CLI).
+* Fixes first show a diff as a dry run, are applied on confirmation and are written to the undo log. The "last modified" date and the revisions do not change.
+* Tag Doctor: delete empty tags, merge duplicates, shorten long names, noindex single-use tags.
+* Alt Text: fill in missing alt text from a template.
+* Works with the meta description fields of Yoast, Rank Math and AIOSEO.
+* Zero front-end load: it adds no script, style, query or output. It calls no external service.
 * WP-CLI: `wp contenthealth scan|status|list|fix|undo|export`.
 
 == Installation ==
 
-1. Klasörü `wp-content/plugins/` altına yükleyin ve etkinleştirin.
-2. RBN Kit → İçerik Sağlığı → "Şimdi tara".
+1. Upload the folder to `wp-content/plugins/` and activate it.
+2. RBN Kit → Content Health → "Scan now".
 
 == Frequently Asked Questions ==
 
-= Ön yüzü yavaşlatır mı? =
-Hayır. Ön yüzde yalnızca (varsa) noindex listesi için bir `wp_robots` süzgeci çalışır.
+= Does it slow down the front end? =
+No. On the front end only a `wp_robots` filter runs, and only if there is a noindex list.
 
-= Düzeltme geri alınabilir mi? =
-Evet. Her uygulama önceki değeri ve SHA-256 özetini günlüğe yazar; elle değiştirilmiş içerik atlanır.
+= Can a fix be undone? =
+Yes. Every run writes the previous value and its SHA-256 digest to the log; content that was changed by hand is skipped.
 
-= Kaldırınca veri silinir mi? =
-Varsayılan olarak silinmez. Ayarlardan "Kaldırırken sil" seçilirse tablolar ve ayarlar silinir.
+= Is the data deleted on uninstall? =
+Not by default. If you choose "Delete on uninstall" in Settings, the tables and settings are deleted.
 
 == Changelog ==
 
 = 0.1.5 =
-* Menü: ekran artık ortak "RBN Kit" üst menüsünün altında (RBN Kit → İçerik Sağlığı); eski Araçlar adresi yeni adrese yönlenir.
-* Yeni: Puan canlı. Yazı kaydedilince, bulgu düzeltilince, geri alınınca ya da yok sayılınca Pano'daki puan hemen yeniden hesaplanır (tarama beklenmez; 60 sn önbellek, değişiklikte silinir).
-* Yeni: İki puan. "Hata puanı" yalnız kritik + uyarı kurallarıyla (sitedeki hatalar), "Öneri puanı" yalnız bilgi kurallarıyla (iyileştirme önerileri) hesaplanır; Pano'da ayrı, her zaman açık bir "Puan nasıl hesaplanır?" kartı var (ağırlık/tavan tablosu ve şu an en çok puan götüren 3 kural). Tarama kaydındaki puan artık Hata puanıdır; Öneri puanı tarama ayrıntısında (`suggest_score`) saklanır, eski kayıtlarda "—" görünür.
-* Yeni: Yönetim CSS/JS sürüm parametresi dosya içerik özetidir; sürüm sabit kalsa da değişen dosya yeniden indirilir.
-* Yeni: Yazı kaydedilince yalnız o yazının tek-yazılık kuralları yeniden çalışır. Elle düzeltilen bulgu kendiliğinden "düzeltildi" olur ("Elle düzeltildi" etiketi); hâlâ eşleşen açık kalır; yeni çıkan açılır. Genel (küme) kurallar kayıtta çalışmaz, taramayı bekler.
-* Yeni: Ayarlar → Güvenlik → "Kaydedince yeniden denetle" anahtarı (varsayılan açık; kapalıyken eski davranış).
-* Yeni: Bulgular listesinde "Son denetim" satırı ve açık bulguda "Yazı sonradan değişti" rozeti.
-* Revizyon, otomatik kayıt, içe aktarma ve yetkisiz bağlam denetlenmez; denetim hata verirse kayıt engellenmez.
+* Menu: the screen now sits under the shared "RBN Kit" top-level menu (RBN Kit → Content Health); the old Tools address redirects to the new one.
+* New: Live score. When a post is saved, a finding is fixed, undone or ignored, the score on the Dashboard is recalculated at once (no need to wait for a scan; 60 s cache, cleared on change).
+* New: Two scores. The "Error score" uses only critical + warning rules (errors on the site); the "Suggestion score" uses only info rules (improvement suggestions). The Dashboard has a separate, always-open "How is the score calculated?" card (a weight/cap table and the 3 rules that take the most points right now). The score in the scan record is now the Error score; the Suggestion score is stored in the scan details (`suggest_score`), and old records show "—".
+* New: The admin CSS/JS version parameter is the file content digest; a changed file is downloaded again even when the version stays the same.
+* New: When a post is saved, only the single-post rules for that post run again. A finding fixed by hand is marked "fixed" on its own (the "Fixed by hand" label); one that still matches stays open; a new one opens. General (cluster) rules do not run on save and wait for a scan.
+* New: Settings → Safety → "Re-check on save" switch (on by default; when off, the old behaviour applies).
+* New: A "Last check" line in the findings list and a "Post changed afterwards" badge on an open finding.
+* Revisions, autosaves, imports and unauthorised contexts are not checked; if the check fails, saving is not blocked.
 
 = 0.1.4 =
-* Düzeltme: "Yapay zekâ arayüz kalıntısı" bulgusu `attachment-container` (arama sonucu / medya kabı) için "değişecek bir şey yok" diyordu; düzeltici artık bu kabı da temizler. Başlık metni `<p>` içinde korunur, boş kap kalkar, görsel/bağlantı içeren kapta medya silinmez.
-* Düzeltme: sohbet sarmalayıcısı `id` ile işaretliyse (model-response-message-content…), `source-inline-chip-container` gibi ek ekli sınıflar ve iç içe sarmalayıcılar bulunduktan sonra düzeltilmeden kalıyordu; artık temizleniyor.
-* Düzeltme: LaTeX kalıntısı kuralı, yapay zekâ arayüz kalıntısıyla aynı `math-inline` izini ikinci kez bildiriyordu ve düzeltemiyordu; yinelenen bulgu kaldırıldı.
-* Yeni: `attachment-container youtube` (boş kap) varsayılan desene eklendi. Ayarlardan desen listesini daha önce kaydettiyseniz yeni desen için listeyi varsayılana döndürün.
+* Fix: the "AI interface leftover" finding said "nothing to change" for `attachment-container` (search result / media container); the fixer now cleans this container too. The heading text is kept inside `<p>` and the empty container is removed; media is not deleted from a container that holds an image or a link.
+* Fix: when the chat wrapper was marked with an `id` (model-response-message-content…), extra classes such as `source-inline-chip-container` and nested wrappers were left unfixed after they were found; they are now cleaned.
+* Fix: the LaTeX leftover rule reported the same `math-inline` trace a second time as the AI interface leftover and could not fix it; the duplicate finding was removed.
+* New: `attachment-container youtube` (empty container) was added to the default pattern. If you saved the pattern list in Settings earlier, reset the list to the default to get the new pattern.
 
 = 0.1.3 =
-* Dokümantasyon `docs/` klasörüne taşındı ve kurulum paketinden çıkarıldı.
+* The documentation moved to the `docs/` folder and was removed from the install package.
 
 = 0.1.2 =
-* Yönetim arayüzü yenilendi: Pano, Bulgular, Etiket Doktoru, Alt Metin, Ayarlar ve Geri alma günlüğü; ilk açılış (3 adım), çekmece ayrıntısı, toplu düzeltme sihirbazı (kuru koşu → onay → uygula → geri al), duraklat/iptal/yeniden dene.
-* WordPress yönetici renk düzenine uyar; açık ve koyu (Gece yarısı) tema, 375 px'e kadar duyarlı, klavye ve ekran okuyucu erişimi.
-* Çevirilere hazır: `languages/` altında .pot ve tr_TR (.po/.mo).
-* Çekirdek davranış değişmedi: tarama motoru, 30 kural, geri alma, REST ve WP-CLI aynı; ön yüze etkisi yok.
+* The admin interface was renewed: Dashboard, Findings, Tag Doctor, Alt Text, Settings and the Undo log; first run (3 steps), drawer details, bulk-fix wizard (dry run → confirm → apply → undo), pause/cancel/retry.
+* It follows the WordPress admin colour scheme; light and dark (Midnight) theme, responsive down to 375 px, keyboard and screen-reader access.
+* Ready for translation: a .pot and tr_TR (.po/.mo) are under `languages/`.
+* The core behaviour did not change: the scan engine, the 30 rules, undo, REST and WP-CLI are the same; no effect on the front end.
 
 = 0.1.1 =
-* İlk sürüm: tarayıcı, 30 kural, düzeltme + geri alma, Etiket Doktoru, Alt Metin, REST, WP-CLI.
+* First release: scanner, 30 rules, fix + undo, Tag Doctor, Alt Text, REST, WP-CLI.

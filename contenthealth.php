@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       ContentHealth — İçerik Sağlığı
+ * Plugin Name:       ContentHealth — Content Health
  * Plugin URI:        https://github.com/RbnCore
- * Description:       WordPress "Site Sağlığı" gibi İÇERİK sağlığı paneli: yapay zekâ/arayüz kalıntısı, bozuk adres, meta, alt metin ve etiket denetimi; kuru koşu ve geri alma ile düzeltme. Dış servis çağırmaz.
+ * Description:       A content-health panel in the spirit of WordPress Site Health: checks for AI and interface leftovers, broken URLs, meta, alt text and tags, and fixes them with dry run and undo. Calls no external service.
  * Version:           0.1.5
  * Requires at least: 6.4
  * Requires PHP:      8.1
@@ -51,7 +51,7 @@ add_filter(
 	static function ( array $schedules ): array {
 		$schedules['contenthealth_weekly'] = array(
 			'interval' => 7 * DAY_IN_SECONDS,
-			'display'  => 'ContentHealth haftalık',
+			'display'  => __( 'ContentHealth weekly', 'contenthealth' ),
 		);
 		return $schedules;
 	}

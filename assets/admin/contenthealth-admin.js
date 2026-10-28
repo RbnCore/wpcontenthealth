@@ -13,10 +13,12 @@
 	/* REST */
 	function api(path, opt) {
 		opt = opt || {};
-		var init = { method: opt.method || 'GET', credentials: 'same-origin', headers: { 'X-WP-Nonce': cfg.nonce } };
+		var init = { method: opt.method || 'GET', credentials: 'same-origin', headers: { 'X-WP-Nonce': cfg.nonce, 'Accept': 'application/json' } };
 		if (opt.body) { init.method = 'POST'; init.headers['Content-Type'] = 'application/json'; init.body = JSON.stringify(opt.body); }
 		var url = cfg.root + path;
 		if (cfg.root.indexOf('?') > -1) { url = cfg.root + path.replace('?', '&'); }
+		// REST answers in the site language unless asked otherwise; _locale=user makes it use the language of the signed-in user.
+		url += (url.indexOf('?') > -1 ? '&' : '?') + '_locale=user';
 		return fetch(url, init).then(function (r) {
 			return r.json().catch(function () { return {}; }).then(function (j) {
 				if (!r.ok) { var e = new Error(j && j.message ? j.message : String(r.status)); e.status = r.status; throw e; }
@@ -420,7 +422,7 @@
 		var site = tpl.getAttribute('data-site') || '';
 		var render = function () {
 			$$('[data-prev-i]').forEach(function (s) {
-				s.textContent = (tpl.value || '').replace(/\{başlık\}/g, s.getAttribute('data-title')).replace(/\{dosya_adı\}/g, s.getAttribute('data-file')).replace(/\{site_adı\}/g, site).replace(/\s+/g, ' ').trim() || '—';
+				s.textContent = (tpl.value || '').replace(/\{(?:title|başlık)\}/g, s.getAttribute('data-title')).replace(/\{(?:file_name|dosya_adı)\}/g, s.getAttribute('data-file')).replace(/\{(?:site_name|site_adı)\}/g, site).replace(/\s+/g, ' ').trim() || '—';
 			});
 		};
 		tpl.addEventListener('input', render);

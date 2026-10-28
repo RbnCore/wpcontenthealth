@@ -88,7 +88,7 @@ abstract class Rule {
 	public function fix( object $issue, bool $dry_run, array $opts = array() ) {
 		$action = (string) ( $opts['fix'] ?? $this->fix_action() );
 		if ( '' === $action ) {
-			return new \WP_Error( 'no_fix', __( 'Bu kural için otomatik düzeltme yok.', 'contenthealth' ) );
+			return new \WP_Error( 'no_fix', __( 'There is no automatic fix for this rule.', 'contenthealth' ) );
 		}
 		return Fixer::run( $action, $issue, $dry_run, $opts );
 	}

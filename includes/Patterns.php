@@ -30,22 +30,22 @@ final class Patterns {
 	public static function compile( string $pattern ) {
 		$pattern = trim( $pattern );
 		if ( '' === $pattern ) {
-			return new \WP_Error( 'empty', __( 'Boş desen.', 'contenthealth' ) );
+			return new \WP_Error( 'empty', __( 'Empty pattern.', 'contenthealth' ) );
 		}
 		if ( mb_strlen( $pattern ) > self::MAX_LEN ) {
-			return new \WP_Error( 'long', __( 'Desen çok uzun.', 'contenthealth' ) );
+			return new \WP_Error( 'long', __( 'Pattern is too long.', 'contenthealth' ) );
 		}
 		// İç içe niceleyici: (…+)+, (…*)*, (…+){n,} gibi felaket geri izleme kalıpları.
 		if ( preg_match( '/\((?:[^()\\\\]|\\\\.)*[+*](?:[^()\\\\]|\\\\.)*\)\s*(?:[+*]|\{\d+,\d*\})/', $pattern ) ) {
-			return new \WP_Error( 'nested', __( 'İç içe niceleyici (ReDoS riski) kabul edilmez.', 'contenthealth' ) );
+			return new \WP_Error( 'nested', __( 'Nested quantifiers (ReDoS risk) are not accepted.', 'contenthealth' ) );
 		}
 		$re = '~' . str_replace( '~', '\\~', $pattern ) . '~iu';
 		if ( isset( self::$compiled[ $re ] ) ) {
-			return self::$compiled[ $re ] ?? new \WP_Error( 'bad', __( 'Geçersiz desen.', 'contenthealth' ) );
+			return self::$compiled[ $re ] ?? new \WP_Error( 'bad', __( 'Invalid pattern.', 'contenthealth' ) );
 		}
 		$ok = self::probe( $re );
 		self::$compiled[ $re ] = $ok ? $re : null;
-		return $ok ? $re : new \WP_Error( 'bad', __( 'Geçersiz ya da çok yavaş desen.', 'contenthealth' ) );
+		return $ok ? $re : new \WP_Error( 'bad', __( 'Invalid or too slow pattern.', 'contenthealth' ) );
 	}
 
 	private static function probe( string $re ): bool {

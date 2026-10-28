@@ -28,7 +28,7 @@ final class Taxonomy implements Module {
 	public function admin_pages(): array {
 		return array(
 			'tags' => array(
-				'label'   => __( 'Etiket Doktoru', 'contenthealth' ),
+				'label'   => __( 'Tag Doctor', 'contenthealth' ),
 				'render'  => array( \ContentHealth\Screens\Tags::class, 'render' ),
 				'count'   => array( \ContentHealth\Screens\Tags::class, 'count' ),
 				'dialogs' => array( \ContentHealth\Screens\Tags::class, 'dialogs' ),

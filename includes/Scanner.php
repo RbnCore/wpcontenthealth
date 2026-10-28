@@ -99,10 +99,10 @@ final class Scanner {
 
 	private static function label( array $stage ): string {
 		if ( 'post' === $stage['t'] ) {
-			return __( 'Yazılar', 'contenthealth' );
+			return __( 'Posts', 'contenthealth' );
 		}
 		if ( 'term' === $stage['t'] ) {
-			return __( 'Etiketler ve kategoriler', 'contenthealth' );
+			return __( 'Tags and categories', 'contenthealth' );
 		}
 		$rule = Registry::get( (string) $stage['rule'] );
 		return $rule ? $rule->label() : (string) $stage['rule'];
@@ -135,7 +135,7 @@ final class Scanner {
 		global $wpdb;
 		$run = Runs::get( $run_id );
 		if ( ! $run ) {
-			return new \WP_Error( 'no_run', __( 'Koşu bulunamadı.', 'contenthealth' ), array( 'status' => 404 ) );
+			return new \WP_Error( 'no_run', __( 'Run not found.', 'contenthealth' ), array( 'status' => 404 ) );
 		}
 		if ( 'running' !== $run->status ) {
 			return $run;

@@ -251,6 +251,10 @@ final class Transform {
 		$alt = strtr(
 			$tpl,
 			array(
+				'{title}'     => $title,
+				'{file_name}' => self::humanize_filename( $src ),
+				'{site_name}' => $site,
+				// Eski (Türkçe) belirteçler kayıtlı şablonlarda çalışmaya devam eder.
 				'{başlık}'    => $title,
 				'{dosya_adı}' => self::humanize_filename( $src ),
 				'{site_adı}'  => $site,

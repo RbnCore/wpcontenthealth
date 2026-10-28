@@ -56,12 +56,12 @@ final class Ui {
 	/** 0–100 puanı bandına çevirir. @return array{key:string,label:string,icon:string} */
 	public static function band( int $score ): array {
 		if ( $score >= 80 ) {
-			return array( 'key' => 'ok', 'label' => __( 'İyi', 'contenthealth' ), 'icon' => 'check' );
+			return array( 'key' => 'ok', 'label' => __( 'Good', 'contenthealth' ), 'icon' => 'check' );
 		}
 		if ( $score >= 50 ) {
-			return array( 'key' => 'warn', 'label' => __( 'Orta', 'contenthealth' ), 'icon' => 'alert' );
+			return array( 'key' => 'warn', 'label' => __( 'Fair', 'contenthealth' ), 'icon' => 'alert' );
 		}
-		return array( 'key' => 'err', 'label' => __( 'Zayıf', 'contenthealth' ), 'icon' => 'octo' );
+		return array( 'key' => 'err', 'label' => __( 'Poor', 'contenthealth' ), 'icon' => 'octo' );
 	}
 
 	/** Ciddiyet → kit sınıfı/ikonu. @return array{cls:string,icon:string,label:string} */
@@ -135,12 +135,12 @@ final class Ui {
 	public static function object_sub( object $issue ): string {
 		if ( 'term' === $issue->object_type ) {
 			/* translators: %d: term id */
-			return sprintf( __( 'Etiket #%d', 'contenthealth' ), $issue->object_id );
+			return sprintf( __( 'Tag #%d', 'contenthealth' ), $issue->object_id );
 		}
 		$type = get_post_type( $issue->object_id );
 		$obj  = $type ? get_post_type_object( $type ) : null;
 		/* translators: 1: content type label, 2: id */
-		return sprintf( __( '%1$s #%2$d', 'contenthealth' ), $obj ? $obj->labels->singular_name : __( 'Yazı', 'contenthealth' ), $issue->object_id );
+		return sprintf( __( '%1$s #%2$d', 'contenthealth' ), $obj ? $obj->labels->singular_name : __( 'Post', 'contenthealth' ), $issue->object_id );
 	}
 
 	public static function object_title( object $issue ): string {
@@ -185,8 +185,8 @@ final class Ui {
 			return esc_url( self::url( array_merge( $args, array( 'sayfa' => $p ) ) ) );
 		};
 		$li   = '<li>' . ( $page > 1
-			? '<a href="' . $link( $page - 1 ) . '">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Önceki sayfa', 'contenthealth' ) . '</span></a>'
-			: '<span class="rbn-pg" aria-disabled="true">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Önceki sayfa', 'contenthealth' ) . '</span></span>' ) . '</li>';
+			? '<a href="' . $link( $page - 1 ) . '">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Previous page', 'contenthealth' ) . '</span></a>'
+			: '<span class="rbn-pg" aria-disabled="true">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Previous page', 'contenthealth' ) . '</span></span>' ) . '</li>';
 		$show = array_unique( array_filter( array( 1, $page - 1, $page, $page + 1, $pages ), static fn( $p ) => $p >= 1 && $p <= $pages ) );
 		sort( $show );
 		$prev = 0;
@@ -194,30 +194,30 @@ final class Ui {
 			if ( $p - $prev > 1 ) {
 				$li .= '<li><span class="rbn-pg" aria-hidden="true">…</span></li>';
 			}
-			$li  .= '<li><a href="' . $link( $p ) . '"' . ( $p === $page ? ' aria-current="page"' : '' ) . '><span class="rbn-sr">' . esc_html__( 'Sayfa', 'contenthealth' ) . ' </span>' . (int) $p . '</a></li>';
+			$li  .= '<li><a href="' . $link( $p ) . '"' . ( $p === $page ? ' aria-current="page"' : '' ) . '><span class="rbn-sr">' . esc_html__( 'Page', 'contenthealth' ) . ' </span>' . (int) $p . '</a></li>';
 			$prev = $p;
 		}
 		$li .= '<li>' . ( $page < $pages
-			? '<a href="' . $link( $page + 1 ) . '">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Sonraki sayfa', 'contenthealth' ) . '</span></a>'
-			: '<span class="rbn-pg" aria-disabled="true">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Sonraki sayfa', 'contenthealth' ) . '</span></span>' ) . '</li>';
-		return '<nav class="rbn-pager" aria-label="' . esc_attr__( 'Sayfalama', 'contenthealth' ) . '"><p>' . (int) $from . '–' . (int) $to . ' / ' . (int) $total . '</p><ul>' . $li . '</ul></nav>';
+			? '<a href="' . $link( $page + 1 ) . '">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Next page', 'contenthealth' ) . '</span></a>'
+			: '<span class="rbn-pg" aria-disabled="true">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Next page', 'contenthealth' ) . '</span></span>' ) . '</li>';
+		return '<nav class="rbn-pager" aria-label="' . esc_attr__( 'Pagination', 'contenthealth' ) . '"><p>' . (int) $from . '–' . (int) $to . ' / ' . (int) $total . '</p><ul>' . $li . '</ul></nav>';
 	}
 
 	/** Otomatik düzeltme eyleminin kullanıcıya gösterilen tek cümlelik açıklaması. */
 	public static function fix_text( ?string $action ): string {
 		$map = array(
-			'fix_ai_chat_residue'   => __( 'Yalnız sohbet girişini ve çıkışını siler; yazının geri kalanına dokunulmaz.', 'contenthealth' ),
-			'fix_ai_ui_artifacts'   => __( 'Arayüz kalıntısı öznitelik ve sarmalayıcıları temizler, içerik kalır.', 'contenthealth' ),
-			'fix_markdown_links'    => __( 'Markdown işaretlerini HTML karşılıklarına çevirir.', 'contenthealth' ),
-			'fix_latex_score'       => __( 'LaTeX puan kalıntılarını düz metne çevirir.', 'contenthealth' ),
-			'fix_bad_host_url'      => __( 'Hatalı / geliştirme adreslerini sitenin gerçek adresiyle değiştirir.', 'contenthealth' ),
-			'fix_alt_from_title'    => __( 'Boş alt metinleri şablondan doldurur; dolu olanlara dokunmaz.', 'contenthealth' ),
-			'fix_term_delete_empty' => __( 'Hiçbir içeriğe bağlı olmayan etiketleri siler.', 'contenthealth' ),
-			'fix_term_merge'        => __( 'Yinelenen etiketleri seçilen kanonik etikette birleştirir.', 'contenthealth' ),
-			'fix_term_noindex'      => __( 'Tek içerikli etiketi arama motoru dizininden çıkarır.', 'contenthealth' ),
-			'fix_term_rename'       => __( 'Etiket adını temizler.', 'contenthealth' ),
+			'fix_ai_chat_residue'   => __( 'Removes only the chat intro and outro; the rest of the post is not touched.', 'contenthealth' ),
+			'fix_ai_ui_artifacts'   => __( 'Cleans interface-leftover attributes and wrappers; the content stays.', 'contenthealth' ),
+			'fix_markdown_links'    => __( 'Converts markdown marks to their HTML equivalents.', 'contenthealth' ),
+			'fix_latex_score'       => __( 'Converts LaTeX score leftovers to plain text.', 'contenthealth' ),
+			'fix_bad_host_url'      => __( 'Replaces wrong / development addresses with the site\'s real address.', 'contenthealth' ),
+			'fix_alt_from_title'    => __( 'Fills empty alt texts from the template; existing ones are not touched.', 'contenthealth' ),
+			'fix_term_delete_empty' => __( 'Deletes tags that are attached to no content.', 'contenthealth' ),
+			'fix_term_merge'        => __( 'Merges duplicate tags into the chosen canonical tag.', 'contenthealth' ),
+			'fix_term_noindex'      => __( 'Removes the single-item tag from the search engine index.', 'contenthealth' ),
+			'fix_term_rename'       => __( 'Cleans up the tag name.', 'contenthealth' ),
 		);
-		return $action && isset( $map[ $action ] ) ? $map[ $action ] : __( 'Otomatik düzeltme yok; yazıyı açıp elle düzeltin.', 'contenthealth' );
+		return $action && isset( $map[ $action ] ) ? $map[ $action ] : __( 'No automatic fix; open the post and fix it by hand.', 'contenthealth' );
 	}
 
 	/**
@@ -226,9 +226,9 @@ final class Ui {
 	 * @param array<int,array<string,mixed>> $changes Fixer değişiklik listesi (field, removed[], added[]).
 	 */
 	public static function diff( array $changes, string $id, string $label = '' ): string {
-		$label = '' !== $label ? $label : __( 'Önizleme: önce / sonra', 'contenthealth' );
+		$label = '' !== $label ? $label : __( 'Preview: before / after', 'contenthealth' );
 		$row   = static function ( string $kind, string $text ): string {
-			$sr  = 'del' === $kind ? __( 'Silinen satır: ', 'contenthealth' ) : __( 'Eklenen satır: ', 'contenthealth' );
+			$sr  = 'del' === $kind ? __( 'Deleted line: ', 'contenthealth' ) : __( 'Added line: ', 'contenthealth' );
 			$sym = 'del' === $kind ? '−' : '+';
 			return '<div class="rbn-diff__r rbn-diff__r--' . $kind . '"><span class="rbn-diff__n" aria-hidden="true"></span><span class="rbn-diff__s" aria-hidden="true">' . $sym . '</span><span class="rbn-diff__c"><span class="rbn-sr">' . esc_html( $sr ) . '</span><' . ( 'del' === $kind ? 'del' : 'ins' ) . '>' . esc_html( $text ) . '</' . ( 'del' === $kind ? 'del' : 'ins' ) . '></span></div>';
 		};
@@ -257,7 +257,7 @@ final class Ui {
 		}
 		$names = implode( ', ', array_filter( array_keys( $fields ) ) );
 		/* translators: 1: removed line count, 2: added line count */
-		$sum = '<span>− ' . (int) count( $rem ) . ' ' . esc_html__( 'satır', 'contenthealth' ) . '</span><span>+ ' . (int) count( $add ) . ' ' . esc_html__( 'satır', 'contenthealth' ) . '</span>' . ( '' !== $names ? '<span>' . esc_html__( 'Değişen alan:', 'contenthealth' ) . ' ' . (int) count( $fields ) . ' (' . esc_html( $names ) . ')</span>' : '' );
-		return '<div class="rbn-diff" data-diff id="' . esc_attr( $id ) . '" role="group" aria-label="' . esc_attr( $label ) . '"><div class="rbn-diff__hd"><b>' . esc_html( $label ) . '</b>' . ( '' !== $names ? '<span class="rbn-muted"><code>' . esc_html( $names ) . '</code></span>' : '' ) . '</div><div class="rbn-diff__pane" data-pane="inline">' . $inline . '</div><div class="rbn-diff__pane" data-pane="split" hidden><div><p class="rbn-diff__lab">' . esc_html__( 'Önce', 'contenthealth' ) . '</p>' . $left . '</div><div><p class="rbn-diff__lab">' . esc_html__( 'Sonra', 'contenthealth' ) . '</p>' . $right . '</div></div><p class="rbn-diff__sum">' . $sum . '</p></div>';
+		$sum = '<span>− ' . (int) count( $rem ) . ' ' . esc_html__( 'line', 'contenthealth' ) . '</span><span>+ ' . (int) count( $add ) . ' ' . esc_html__( 'line', 'contenthealth' ) . '</span>' . ( '' !== $names ? '<span>' . esc_html__( 'Changed field:', 'contenthealth' ) . ' ' . (int) count( $fields ) . ' (' . esc_html( $names ) . ')</span>' : '' );
+		return '<div class="rbn-diff" data-diff id="' . esc_attr( $id ) . '" role="group" aria-label="' . esc_attr( $label ) . '"><div class="rbn-diff__hd"><b>' . esc_html( $label ) . '</b>' . ( '' !== $names ? '<span class="rbn-muted"><code>' . esc_html( $names ) . '</code></span>' : '' ) . '</div><div class="rbn-diff__pane" data-pane="inline">' . $inline . '</div><div class="rbn-diff__pane" data-pane="split" hidden><div><p class="rbn-diff__lab">' . esc_html__( 'Before', 'contenthealth' ) . '</p>' . $left . '</div><div><p class="rbn-diff__lab">' . esc_html__( 'After', 'contenthealth' ) . '</p>' . $right . '</div></div><p class="rbn-diff__sum">' . $sum . '</p></div>';
 	}
 }

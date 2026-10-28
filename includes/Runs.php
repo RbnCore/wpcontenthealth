@@ -80,7 +80,7 @@ final class Runs {
 	public static function start( array $scope, string $trigger = 'manual' ) {
 		global $wpdb;
 		if ( self::active() ) {
-			return new \WP_Error( 'run_active', __( 'Zaten çalışan bir tarama var.', 'contenthealth' ), array( 'status' => 409 ) );
+			return new \WP_Error( 'run_active', __( 'A scan is already running.', 'contenthealth' ), array( 'status' => 409 ) );
 		}
 		$scope = array(
 			'rules'      => array_values( array_filter( array_map( 'sanitize_key', (array) ( $scope['rules'] ?? array() ) ) ) ),
@@ -102,7 +102,7 @@ final class Runs {
 			)
 		);
 		$id = (int) $wpdb->insert_id;
-		return $id ? Scanner::init( (object) array( 'id' => $id ) ) : new \WP_Error( 'db', __( 'Koşu kaydı yazılamadı.', 'contenthealth' ) );
+		return $id ? Scanner::init( (object) array( 'id' => $id ) ) : new \WP_Error( 'db', __( 'Could not write the run record.', 'contenthealth' ) );
 	}
 
 	/** @param array<string,mixed> $fields */

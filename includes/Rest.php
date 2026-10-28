@@ -180,7 +180,7 @@ final class Rest {
 	/** @return \WP_REST_Response|\WP_Error */
 	public static function issue_detail( \WP_REST_Request $req ) {
 		$d = Screens\Issues::detail( (int) $req['id'] );
-		return $d ? rest_ensure_response( $d ) : new \WP_Error( 'not_found', __( 'Bulgu bulunamadı.', 'contenthealth' ), array( 'status' => 404 ) );
+		return $d ? rest_ensure_response( $d ) : new \WP_Error( 'not_found', __( 'Finding not found.', 'contenthealth' ), array( 'status' => 404 ) );
 	}
 
 	/** Ayarlar ekranındaki desen sınaması: derleme hatası ya da eşleşme (ReDoS korumalı Patterns üzerinden). */

@@ -39,33 +39,33 @@ final class Url {
 	 */
 	public static function classify( string $url, string $home_host, array $extra_dev_hosts = array() ): ?array {
 		if ( preg_match( '~^https?\.~i', $url ) ) {
-			return array( 'bozuk_biçim', 'https. / http. ile başlıyor' );
+			return array( 'bozuk_biçim', 'starts with https. / http.' );
 		}
 		if ( ! preg_match( '~^https?:~i', $url ) ) {
 			return null;
 		}
 		if ( ! preg_match( '~^https?://[^/]~i', $url ) ) {
-			return array( 'bozuk_biçim', 'eksik ya da fazla eğik çizgi' );
+			return array( 'bozuk_biçim', 'missing or extra slash' );
 		}
 		$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
 		if ( '' === $host ) {
-			return array( 'bozuk_biçim', 'sunucu adı yok' );
+			return array( 'bozuk_biçim', 'no host name' );
 		}
 		$key = self::host_key( $host );
 		if ( preg_match( '~\.([a-z]{2,12})\.\1$~', $host ) ) {
-			return array( 'cift_uzanti', 'tekrarlı alan adı uzantısı' );
+			return array( 'cift_uzanti', 'repeated domain extension' );
 		}
 		if ( self::host_key( $home_host ) === $key ) {
 			return null;
 		}
 		if ( in_array( $key, $extra_dev_hosts, true ) ) {
-			return array( 'gelistirme_adresi', 'ayarlanmış geliştirme sunucusu' );
+			return array( 'gelistirme_adresi', 'configured development host' );
 		}
 		if ( preg_match( '~(^|\.)(test|local|localhost|invalid|internal|lan|localdomain)$~', $host )
 			|| preg_match( '~^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)\d+~', $host )
 			|| in_array( $host, array( 'localhost', '[::1]', '0.0.0.0' ), true )
 			|| preg_match( '~^(staging|stage|dev|develop|test|preview|uat|qa)\d*\.~', $host ) ) {
-			return array( 'gelistirme_adresi', 'geliştirme/yerel/staging sunucusu' );
+			return array( 'gelistirme_adresi', 'development/local/staging host' );
 		}
 		return null;
 	}

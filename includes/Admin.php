@@ -31,7 +31,7 @@ final class Admin {
 
 	/** @param array<int,string> $links */
 	public static function links( array $links ): array {
-		array_unshift( $links, '<a href="' . esc_url( Ui::url() ) . '">' . esc_html__( 'Aç', 'contenthealth' ) . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( Ui::url() ) . '">' . esc_html__( 'Launch', 'contenthealth' ) . '</a>' );
 		return $links;
 	}
 
@@ -40,8 +40,8 @@ final class Admin {
 		\RbnKitMenu::add(
 			array(
 				'slug'       => self::SLUG,
-				'title'      => __( 'İçerik Sağlığı', 'contenthealth' ),
-				'menu_title' => __( 'İçerik Sağlığı', 'contenthealth' ),
+				'title'      => __( 'Content Health', 'contenthealth' ),
+				'menu_title' => __( 'Content Health', 'contenthealth' ),
 				'cap'        => self::CAP,
 				'callback'   => array( self::class, 'render' ),
 				'version'    => CONTENTHEALTH_VERSION,
@@ -95,58 +95,58 @@ final class Admin {
 	/** @return array<string,string> JS'in kullandığı metinler (çeviri .po üzerinden gelir). */
 	private static function strings(): array {
 		return array(
-			'starting'     => __( 'Tarama başlıyor…', 'contenthealth' ),
-			'scanning'     => __( 'Taranıyor…', 'contenthealth' ),
-			'paused'       => __( 'Tarama duraklatıldı', 'contenthealth' ),
-			'pause'        => __( 'Duraklat', 'contenthealth' ),
-			'resume'       => __( 'Sürdür', 'contenthealth' ),
-			'cancelled'    => __( 'Tarama iptal edildi.', 'contenthealth' ),
-			'scanDone'     => __( 'Tarama bitti.', 'contenthealth' ),
-			'scanFail'     => __( 'Tarama durdu.', 'contenthealth' ),
-			'retry'        => __( 'Yeniden dene', 'contenthealth' ),
-			'resumeAt'     => __( 'Kaldığı yerden devam et', 'contenthealth' ),
-			'netError'     => __( 'Sunucuya ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.', 'contenthealth' ),
-			'loadFail'     => __( 'Ayrıntı yüklenemedi.', 'contenthealth' ),
-			'selected'     => __( 'bulgu seçili', 'contenthealth' ),
-			'images'       => __( 'görsel seçili', 'contenthealth' ),
-			'step1'        => __( 'Kuru koşuyu çalıştır', 'contenthealth' ),
-			'step2'        => __( 'Devam', 'contenthealth' ),
-			'step3'        => __( 'Düzeltmeleri uygula', 'contenthealth' ),
-			'close'        => __( 'Kapat', 'contenthealth' ),
-			'applying'     => __( 'Uygulanıyor…', 'contenthealth' ),
-			'dryRunning'   => __( 'Kuru koşu yapılıyor…', 'contenthealth' ),
-			'fixed'        => __( 'düzeltildi', 'contenthealth' ),
-			'skipped'      => __( 'atlandı', 'contenthealth' ),
-			'posts'        => __( 'yazı', 'contenthealth' ),
-			'sample'       => __( 'Örnek', 'contenthealth' ),
-			'dirty'        => __( 'Kaydedilmemiş değişiklik var.', 'contenthealth' ),
-			'clean'        => __( 'Kaydedilmemiş değişiklik yok.', 'contenthealth' ),
-			'patNone'      => __( 'Örnek metinde eşleşme yok.', 'contenthealth' ),
-			'patMatches'   => __( 'eşleşme', 'contenthealth' ),
-			'patBad'       => __( 'Desen geçersiz ya da çok yavaş.', 'contenthealth' ),
-			'patDel'       => __( 'Deseni sil', 'contenthealth' ),
-			'undone'       => __( 'geri alındı', 'contenthealth' ),
-			'undoFail'     => __( 'Geri alınamadı', 'contenthealth' ),
-			'merged'       => __( 'Birleştirildi', 'contenthealth' ),
-			'deleted'      => __( 'silindi', 'contenthealth' ),
-			'filled'       => __( 'Alt metin dolduruldu', 'contenthealth' ),
-			'undoAction'   => __( 'Geri al', 'contenthealth' ),
-			'undoRecord'   => __( 'Geri alma kaydı', 'contenthealth' ),
-			'noChange'     => __( 'Değişecek bir şey yok.', 'contenthealth' ),
-			'errors'       => __( 'hata', 'contenthealth' ),
-			'before'       => __( 'Önce', 'contenthealth' ),
-			'after'        => __( 'Sonra', 'contenthealth' ),
-			'wizOk'        => __( 'Devam edebilmek için onay kutusunu işaretleyin.', 'contenthealth' ),
-			'etaLeft'      => __( 'yaklaşık', 'contenthealth' ),
-			'batch'        => __( 'Parti', 'contenthealth' ),
-			'items'        => __( 'içerik', 'contenthealth' ),
-			'sec'          => __( 'sn', 'contenthealth' ),
-			'willFix'      => __( 'Değişecek', 'contenthealth' ),
-			'willSkip'     => __( 'Atlanacak', 'contenthealth' ),
-			'errorsK'      => __( 'Hata', 'contenthealth' ),
-			'next'         => __( 'Devam', 'contenthealth' ),
-			'startScan'    => __( 'İlk taramayı başlat', 'contenthealth' ),
-			'openIssues'   => __( 'açık bulgu bulundu.', 'contenthealth' ),
+			'starting'     => __( 'Starting scan…', 'contenthealth' ),
+			'scanning'     => __( 'Scanning…', 'contenthealth' ),
+			'paused'       => __( 'Scan paused', 'contenthealth' ),
+			'pause'        => __( 'Pause', 'contenthealth' ),
+			'resume'       => __( 'Resume', 'contenthealth' ),
+			'cancelled'    => __( 'Scan cancelled.', 'contenthealth' ),
+			'scanDone'     => __( 'Scan finished.', 'contenthealth' ),
+			'scanFail'     => __( 'Scan stopped.', 'contenthealth' ),
+			'retry'        => __( 'Try again', 'contenthealth' ),
+			'resumeAt'     => __( 'Continue where it left off', 'contenthealth' ),
+			'netError'     => __( 'Could not reach the server. Check your connection and try again.', 'contenthealth' ),
+			'loadFail'     => __( 'Could not load the details.', 'contenthealth' ),
+			'selected'     => __( 'findings selected', 'contenthealth' ),
+			'images'       => __( 'images selected', 'contenthealth' ),
+			'step1'        => __( 'Run dry run', 'contenthealth' ),
+			'step2'        => __( 'Continue', 'contenthealth' ),
+			'step3'        => __( 'Apply fixes', 'contenthealth' ),
+			'close'        => __( 'Close', 'contenthealth' ),
+			'applying'     => __( 'Applying…', 'contenthealth' ),
+			'dryRunning'   => __( 'Running dry run…', 'contenthealth' ),
+			'fixed'        => __( 'fixed', 'contenthealth' ),
+			'skipped'      => __( 'skipped', 'contenthealth' ),
+			'posts'        => __( 'posts', 'contenthealth' ),
+			'sample'       => __( 'Sample', 'contenthealth' ),
+			'dirty'        => __( 'There are unsaved changes.', 'contenthealth' ),
+			'clean'        => __( 'There are no unsaved changes.', 'contenthealth' ),
+			'patNone'      => __( 'No match in the sample text.', 'contenthealth' ),
+			'patMatches'   => __( 'matches', 'contenthealth' ),
+			'patBad'       => __( 'The pattern is invalid or too slow.', 'contenthealth' ),
+			'patDel'       => __( 'Delete pattern', 'contenthealth' ),
+			'undone'       => __( 'undone', 'contenthealth' ),
+			'undoFail'     => __( 'Could not undo', 'contenthealth' ),
+			'merged'       => __( 'Merged', 'contenthealth' ),
+			'deleted'      => __( 'deleted', 'contenthealth' ),
+			'filled'       => __( 'Alt text filled in', 'contenthealth' ),
+			'undoAction'   => __( 'Undo', 'contenthealth' ),
+			'undoRecord'   => __( 'Undo record', 'contenthealth' ),
+			'noChange'     => __( 'Nothing to change.', 'contenthealth' ),
+			'errors'       => __( 'errors', 'contenthealth' ),
+			'before'       => __( 'Before', 'contenthealth' ),
+			'after'        => __( 'After', 'contenthealth' ),
+			'wizOk'        => __( 'Tick the confirmation box to continue.', 'contenthealth' ),
+			'etaLeft'      => __( 'about', 'contenthealth' ),
+			'batch'        => __( 'Batch', 'contenthealth' ),
+			'items'        => __( 'items', 'contenthealth' ),
+			'sec'          => __( 's', 'contenthealth' ),
+			'willFix'      => __( 'Will change', 'contenthealth' ),
+			'willSkip'     => __( 'Will be skipped', 'contenthealth' ),
+			'errorsK'      => __( 'Error', 'contenthealth' ),
+			'next'         => __( 'Continue', 'contenthealth' ),
+			'startScan'    => __( 'Start the first scan', 'contenthealth' ),
+			'openIssues'   => __( 'open findings found.', 'contenthealth' ),
 		);
 	}
 
@@ -158,12 +158,12 @@ final class Admin {
 	private static function tabs(): array {
 		$tabs = array(
 			'overview' => array(
-				'label'   => __( 'Pano', 'contenthealth' ),
+				'label'   => __( 'Dashboard', 'contenthealth' ),
 				'render'  => array( Screens\Overview::class, 'render' ),
 				'dialogs' => array( Screens\Overview::class, 'dialogs' ),
 			),
 			'issues'   => array(
-				'label'   => __( 'Bulgular', 'contenthealth' ),
+				'label'   => __( 'Findings', 'contenthealth' ),
 				'render'  => array( Screens\Issues::class, 'render' ),
 				'count'   => array( Screens\Issues::class, 'count' ),
 				'dialogs' => array( Screens\Issues::class, 'dialogs' ),
@@ -175,12 +175,12 @@ final class Admin {
 			}
 		}
 		$tabs['undo']     = array(
-			'label'   => __( 'Geri alma günlüğü', 'contenthealth' ),
+			'label'   => __( 'Undo log', 'contenthealth' ),
 			'render'  => array( Screens\UndoLog::class, 'render' ),
 			'dialogs' => array( Screens\UndoLog::class, 'dialogs' ),
 		);
 		$tabs['settings'] = array(
-			'label'  => __( 'Ayarlar', 'contenthealth' ),
+			'label'  => __( 'Settings', 'contenthealth' ),
 			'render' => array( Screens\Prefs::class, 'render' ),
 		);
 		return $tabs;
@@ -190,7 +190,7 @@ final class Admin {
 		Ui::sprite();
 		echo '<div class="wrap"><hr class="wp-header-end" />';
 		if ( ! current_user_can( self::CAP ) ) {
-			echo '<main class="rbn-wrap" id="ch" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'lock', __( 'Bu sayfaya erişim yetkiniz yok', 'contenthealth' ), __( 'İçerik Sağlığı’nı yalnız yönetici rolü kullanabilir. Erişim için site yöneticisine başvurun.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Panoya dön', 'contenthealth' ) . '</a>' ) . '</div></section></main></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
+			echo '<main class="rbn-wrap" id="ch" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'lock', __( 'You do not have access to this page', 'contenthealth' ), __( 'Only the administrator role can use Content Health. Ask your site administrator for access.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Back to the dashboard', 'contenthealth' ) . '</a>' ) . '</div></section></main></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
 			return;
 		}
 		$tabs = self::tabs();
@@ -222,18 +222,18 @@ final class Admin {
 	}
 
 	private static function head( bool $scan_button, bool $on_overview ): void {
-		echo '<header class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'İçerik Sağlığı', 'contenthealth' ) . '</h1><span class="rbn-chip">v' . esc_html( CONTENTHEALTH_VERSION ) . '</span><span class="rbn-chip rbn-chip--ok"><span class="rbn-dot"></span>' . esc_html__( 'Etkin', 'contenthealth' ) . '</span></div><div class="rbn-head__act">';
+		echo '<header class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'Content Health', 'contenthealth' ) . '</h1><span class="rbn-chip">v' . esc_html( CONTENTHEALTH_VERSION ) . '</span><span class="rbn-chip rbn-chip--ok"><span class="rbn-dot"></span>' . esc_html__( 'Active', 'contenthealth' ) . '</span></div><div class="rbn-head__act">';
 		if ( $scan_button ) {
-			echo '<button type="button" class="rbn-btn rbn-btn--pri" data-scan>' . Ui::icon( 'scan' ) . esc_html__( 'Şimdi tara', 'contenthealth' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<button type="button" class="rbn-btn rbn-btn--pri" data-scan>' . Ui::icon( 'scan' ) . esc_html__( 'Scan now', 'contenthealth' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} elseif ( ! $on_overview ) {
-			echo '<a class="rbn-btn rbn-btn--pri" href="' . esc_url( Ui::url( array( 'tara' => 1 ) ) ) . '">' . Ui::icon( 'scan' ) . esc_html__( 'Şimdi tara', 'contenthealth' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<a class="rbn-btn rbn-btn--pri" href="' . esc_url( Ui::url( array( 'tara' => 1 ) ) ) . '">' . Ui::icon( 'scan' ) . esc_html__( 'Scan now', 'contenthealth' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</div></header>';
 	}
 
 	/** @param array<string,array<string,mixed>> $tabs */
 	private static function nav( array $tabs, string $cur ): void {
-		echo '<nav aria-label="' . esc_attr__( 'İçerik Sağlığı bölümleri', 'contenthealth' ) . '"><ul class="rbn-tabs">';
+		echo '<nav aria-label="' . esc_attr__( 'Content Health sections', 'contenthealth' ) . '"><ul class="rbn-tabs">';
 		foreach ( $tabs as $slug => $tab ) {
 			$count = isset( $tab['count'] ) ? (int) call_user_func( $tab['count'] ) : 0;
 			printf(
@@ -260,7 +260,7 @@ final class Admin {
 
 	private static function guard( string $nonce, string $field = '_wpnonce' ): void {
 		if ( ! current_user_can( self::CAP ) ) {
-			wp_die( esc_html__( 'Bu işlem için yetkiniz yok.', 'contenthealth' ), 403 );
+			wp_die( esc_html__( 'You do not have permission for this action.', 'contenthealth' ), 403 );
 		}
 		check_admin_referer( $nonce, $field );
 	}
@@ -290,9 +290,9 @@ final class Admin {
 		$in = Screens\Prefs::normalize( $in );
 		$res = Settings::save( $in );
 		if ( $res['errors'] ) {
-			self::back( 'settings', __( 'Kaydedildi; bazı desenler geçersiz olduğu için atlandı: ', 'contenthealth' ) . implode( ' | ', array_slice( $res['errors'], 0, 3 ) ), true );
+			self::back( 'settings', __( 'Saved; some patterns were skipped because they are invalid: ', 'contenthealth' ) . implode( ' | ', array_slice( $res['errors'], 0, 3 ) ), true );
 		}
-		self::back( 'settings', __( 'Ayarlar kaydedildi.', 'contenthealth' ) );
+		self::back( 'settings', __( 'Settings saved.', 'contenthealth' ) );
 	}
 
 	/** Bulgu listesi formu (JS yokken de çalışır): seçilenleri / tek bulguyu yok say ya da yeniden aç. */
@@ -315,11 +315,11 @@ final class Admin {
 			'reopen' => 'open',
 		);
 		if ( ! isset( $map[ $act ] ) || ! $ids ) {
-			self::back( 'issues', __( 'Eylem ya da seçim yok.', 'contenthealth' ), true );
+			self::back( 'issues', __( 'No action or selection.', 'contenthealth' ), true );
 		}
 		$n = Issues::set_status( $ids, $map[ $act ] );
 		/* translators: %d: number of rows */
-		self::back( 'issues', sprintf( 'ignored' === $map[ $act ] ? __( '%d bulgu yok sayıldı.', 'contenthealth' ) : __( '%d bulgu yeniden açıldı.', 'contenthealth' ), $n ) );
+		self::back( 'issues', sprintf( 'ignored' === $map[ $act ] ? __( '%d findings ignored.', 'contenthealth' ) : __( '%d findings reopened.', 'contenthealth' ), $n ) );
 	}
 
 	public static function export(): void {
@@ -327,10 +327,10 @@ final class Admin {
 		$f = Screens\Issues::filters_from( $_GET ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- guard() nonce'u doğruladı.
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename="contenthealth-bulgular.csv"' );
+		header( 'Content-Disposition: attachment; filename="' . __( 'contenthealth-findings', 'contenthealth' ) . '.csv"' );
 		$out = fopen( 'php://output', 'w' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen
 		fputs( $out, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fputs
-		fputcsv( $out, array( 'id', 'kural', 'ciddiyet', 'tür', 'nesne', 'durum', 'özet' ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fputcsv
+		fputcsv( $out, array( 'id', _x( 'rule', 'CSV column header', 'contenthealth' ), _x( 'severity', 'CSV column header', 'contenthealth' ), _x( 'type', 'CSV column header', 'contenthealth' ), _x( 'object', 'CSV column header', 'contenthealth' ), _x( 'status', 'CSV column header', 'contenthealth' ), _x( 'summary', 'CSV column header', 'contenthealth' ) ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fputcsv
 		$page = 1;
 		do {
 			$res = Issues::query( array_merge( $f, array( 'per_page' => 500, 'page' => $page, 'order' => 'asc' ) ) );
