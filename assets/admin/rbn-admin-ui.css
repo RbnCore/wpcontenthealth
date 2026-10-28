@@ -173,7 +173,18 @@
 .rbn-grid{display:grid;gap:var(--rbn-s4);margin:0 0 var(--rbn-s4)}
 .rbn-grid>*{min-width:0}
 .rbn-grid>.rbn-card{margin:0}
-.rbn-grid--score{grid-template-columns:minmax(15rem,.8fr) minmax(0,1.3fr) minmax(0,1.3fr)}
+.rbn-grid--score{grid-template-columns:minmax(15rem,.8fr) minmax(0,1.3fr) minmax(0,1.3fr);grid-template-areas:"puan tarama grafik" "puan nasil nasil"}
+.rbn-card--puan{grid-area:puan;display:flex;flex-direction:column}.rbn-card--tarama{grid-area:tarama}.rbn-card--grafik{grid-area:grafik}.rbn-card--nasil{grid-area:nasil}
+.rbn-card--puan>.rbn-card__b{flex:1;display:flex;flex-direction:column;justify-content:center}
+.rbn-how{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--rbn-s5);align-items:start}
+.rbn-how>*{min-width:0}
+.rbn-how .rbn-tw{border:1px solid var(--rbn-line);border-radius:var(--rbn-r)}
+.rbn-how .rbn-table th,.rbn-how .rbn-table td{padding:var(--rbn-s2) var(--rbn-s3)}.rbn-how .rbn-table thead th{white-space:normal}
+.rbn-how .rbn-help{margin-top:var(--rbn-s2)}
+.rbn-how__top{margin:0;padding:0;list-style:none}
+.rbn-how__top li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:var(--rbn-s3);align-items:baseline;padding:var(--rbn-s2) 0;border-bottom:1px solid var(--rbn-line)}
+.rbn-how__top li:last-child{border-bottom:0}
+.rbn-how__n{font-weight:600;overflow-wrap:anywhere}.rbn-how__c{color:var(--rbn-muted);font-size:.8125rem;white-space:nowrap}.rbn-how__p{font-variant-numeric:tabular-nums;white-space:nowrap}
 .rbn-grid--5{grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--rbn-s3)}
 .rbn-grid--2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .rbn-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--rbn-s2) var(--rbn-s3)}
@@ -409,8 +420,7 @@
 
 /* ── Kırılımlar (içerik alanı + WP admin 782 px eşiği) ── */
 @media (max-width:1180px){
-	.rbn-grid--score{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}
-	.rbn-grid--score>:last-child{grid-column:1/-1}
+	.rbn-grid--score{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);grid-template-areas:"puan tarama" "puan grafik" "nasil nasil"}
 	.rbn-grid--5{grid-template-columns:repeat(3,minmax(0,1fr))}
 	.rbn-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
 	.rbn-filter{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -438,7 +448,8 @@
 	.rbn-bar__act{width:100%}.rbn-bar__act .rbn-btn{flex:1}
 	.rbn-dl{grid-template-columns:1fr}
 	.rbn-wiz__f .rbn-btn{flex:1}
-	.rbn-grid--score{grid-template-columns:1fr}
+	.rbn-grid--score{grid-template-columns:1fr;grid-template-areas:"puan" "tarama" "grafik" "nasil"}
+	.rbn-how{grid-template-columns:1fr}
 	.rbn-grid--5{grid-template-columns:repeat(2,minmax(0,1fr))}
 	.rbn-filter,.rbn-chips,.rbn-bulk,.rbn-pager,.rbn-rule,.rbn-grp{padding-left:var(--rbn-s4);padding-right:var(--rbn-s4)}
 	.rbn-bulk{top:46px}.rbn-bulk__act{margin-left:0;width:100%}.rbn-bulk__act .rbn-btn{flex:1 1 40%}

@@ -78,6 +78,7 @@ final class Overview {
 		self::score_card( $done, $live );
 		self::scan_card( $done, $active );
 		self::spark_card( $hist, $live );
+		self::how_card( $live, $open );
 		echo '</div>';
 
 		if ( ! $done && ! $active ) {
@@ -112,7 +113,7 @@ final class Overview {
 
 	/** @param array{error:int,suggest:int}|null $live */
 	private static function score_card( ?object $done, ?array $live ): void {
-		echo '<section class="rbn-card" aria-labelledby="h-score"><div class="rbn-card__h"><h2 id="h-score">' . esc_html__( 'Hata puanı', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Sitedeki hatalar, 0–100.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card rbn-card--puan" aria-labelledby="h-score"><div class="rbn-card__h"><h2 id="h-score">' . esc_html__( 'Hata puanı', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Sitedeki hatalar, 0–100.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		if ( ! $done || ! $live ) {
 			echo Ui::empty_state( 'chart', __( 'Puan yok', 'contenthealth' ), __( 'İlk tarama bittiğinde hesaplanır.', 'contenthealth' ) ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
@@ -149,18 +150,52 @@ final class Overview {
 			/* translators: 1: error score at last scan, 2: suggestion score at last scan or a dash */
 			esc_html( sprintf( __( 'Son taramada: hata puanı %1$d · öneri puanı %2$s', 'contenthealth' ), (int) $done->score, $last ) )
 		);
-		echo '<details class="rbn-help" style="margin-top:14px"><summary>' . esc_html__( 'Nasıl hesaplanır?', 'contenthealth' ) . '</summary><p>'
-			. esc_html__( 'Ceza = ağırlık × etkilenen içerik yüzdesi; kritik/uyarı/bilgi tavanı 15/8/3.', 'contenthealth' ) . '<br>'
-			. esc_html__( 'Hata puanı = 100 − kritik ve uyarı cezaları. Öneri puanı = 100 − bilgi cezaları.', 'contenthealth' ) . '<br>'
-			. esc_html__( 'Puan bulgu durumuna göre canlı hesaplanır; yazıyı kaydedince ya da düzeltince hemen değişir.', 'contenthealth' )
-			. '</p></details>';
 		echo '</div></section>';
+	}
+
+	/** Sabit ağırlık/tavan değeri: 15 → "15", 1.5 → "1,5" (site diline göre). */
+	private static function num( float $v ): string {
+		return number_format_i18n( $v, floor( $v ) === $v ? 0 : 1 );
+	}
+
+	/**
+	 * "Puan nasıl hesaplanır?": her zaman açık, yatay kart. Tablo Score::WEIGHT/CAP'ten, "en çok puan götüren 3 kural" Score::live()['penalties']'ten.
+	 *
+	 * @param array{error:int,suggest:int,penalties?:array<string,float>}|null $live
+	 * @param array<string,array<string,int>>                                 $open rule_id → [tür → açık bulgu].
+	 */
+	private static function how_card( ?array $live, array $open ): void {
+		echo '<section class="rbn-card rbn-card--nasil" aria-labelledby="h-how"><div class="rbn-card__h"><h2 id="h-how">' . esc_html__( 'Puan nasıl hesaplanır?', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Puan = 100 − Σ ceza. Ceza = ağırlık × etkilenen içerik yüzdesi; her kuralın cezası tavanı aşamaz.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad"><div class="rbn-how">';
+		echo '<div><div class="rbn-tw"><table class="rbn-table rbn-table--fit"><caption class="rbn-sr">' . esc_html__( 'Önem derecesine göre ağırlık ve tavan', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Önem', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Yüzde başına ağırlık', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Kural başına en çok ceza', 'contenthealth' ) . '</th></tr></thead><tbody>';
+		foreach ( array( Rule::CRITICAL, Rule::WARNING, Rule::INFO ) as $sev ) {
+			echo '<tr><th scope="row">' . esc_html( Ui::sev( $sev )['label'] ) . '</th><td class="rbn-num">' . esc_html( self::num( Score::WEIGHT[ $sev ] ) ) . '</td><td class="rbn-num">' . esc_html( self::num( Score::CAP[ $sev ] ) ) . '</td></tr>';
+		}
+		echo '</tbody></table></div><p class="rbn-help">' . esc_html__( 'Hata puanı = yalnız Kritik + Uyarı; Öneri puanı = yalnız Bilgi.', 'contenthealth' ) . '</p></div>';
+
+		$pen = array_filter( $live['penalties'] ?? array(), static fn( $p ) => $p > 0 );
+		arsort( $pen );
+		echo '<div><h3 class="rbn-h3" id="h-how-top">' . esc_html__( 'Şu an en çok puan götüren 3 kural', 'contenthealth' ) . '</h3>';
+		if ( ! $pen ) {
+			echo '<p class="rbn-muted">' . esc_html__( 'Puan kaybettiren kural yok', 'contenthealth' ) . '</p>';
+		} else {
+			echo '<ol class="rbn-how__top" aria-labelledby="h-how-top">';
+			foreach ( array_slice( $pen, 0, 3, true ) as $rid => $p ) {
+				$rule = Registry::get( (string) $rid );
+				echo '<li><span class="rbn-how__n">' . esc_html( $rule ? $rule->label() : (string) $rid ) . '</span><span class="rbn-how__c">'
+					/* translators: %d: open issue count */
+					. esc_html( sprintf( __( '%d açık', 'contenthealth' ), array_sum( $open[ $rid ] ?? array() ) ) ) . '</span><b class="rbn-how__p">'
+					/* translators: %s: penalty points */
+					. esc_html( sprintf( __( '−%s puan', 'contenthealth' ), number_format_i18n( $p, 1 ) ) ) . '</b></li>';
+			}
+			echo '</ol>';
+		}
+		echo '</div></div></div></section>';
 	}
 
 	private static function scan_card( ?object $done, ?object $active ): void {
 		$p      = $active ? Runs::progress( $active ) : array( 'percent' => 0, 'done' => 0, 'total' => 0 );
 		$paused = $active && 'paused' === $active->status;
-		echo '<section class="rbn-card" aria-labelledby="h-scan"><div class="rbn-card__h"><h2 id="h-scan">' . esc_html__( 'Tarama', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Yazı, sayfa, ürün, medya ve etiketler partiler halinde taranır.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card rbn-card--tarama" aria-labelledby="h-scan"><div class="rbn-card__h"><h2 id="h-scan">' . esc_html__( 'Tarama', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Yazı, sayfa, ürün, medya ve etiketler partiler halinde taranır.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		printf(
 			'<div id="scanbox"%1$s><div class="rbn-progress__l"><span id="scan-msg">%2$s</span><b id="scan-pct">%3$d%%</b></div><div class="rbn-progress" role="progressbar" id="scan-bar" aria-label="%4$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%3$d" style="--w:%3$d%%"><i></i></div><p class="rbn-help" id="scan-sub" style="margin:8px 0 12px">%5$s</p><div class="rbn-row"><button type="button" class="rbn-btn rbn-btn--sm" data-scan-pause>%6$s<span>%7$s</span></button><button type="button" class="rbn-btn rbn-btn--sm rbn-btn--danger" data-scan-cancel>%8$s</button></div></div>',
 			$active ? '' : ' hidden',
@@ -206,7 +241,7 @@ final class Overview {
 		}
 		/* translators: %d: scan count */
 		$sub = sprintf( __( 'Son %d tarama + şimdi', 'contenthealth' ), max( 1, count( $hist ) ) );
-		echo '<section class="rbn-card" aria-labelledby="h-spark"><div class="rbn-card__h"><h2 id="h-spark">' . esc_html__( 'Zamanla hata puanı', 'contenthealth' ) . '</h2><p>' . esc_html( $sub ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card rbn-card--grafik" aria-labelledby="h-spark"><div class="rbn-card__h"><h2 id="h-spark">' . esc_html__( 'Zamanla hata puanı', 'contenthealth' ) . '</h2><p>' . esc_html( $sub ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		if ( count( $pts ) < 2 ) {
 			echo '<p class="rbn-muted">' . esc_html__( 'Grafik için en az bir bitmiş tarama gerekir.', 'contenthealth' ) . '</p></div></section>';
 			return;

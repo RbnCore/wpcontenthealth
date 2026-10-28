@@ -45,7 +45,7 @@ Varsayılan olarak silinmez. Ayarlardan "Kaldırırken sil" seçilirse tablolar 
 = 0.1.5 =
 * Menü: ekran artık ortak "RBN Kit" üst menüsünün altında (RBN Kit → İçerik Sağlığı); eski Araçlar adresi yeni adrese yönlenir.
 * Yeni: Puan canlı. Yazı kaydedilince, bulgu düzeltilince, geri alınınca ya da yok sayılınca Pano'daki puan hemen yeniden hesaplanır (tarama beklenmez; 60 sn önbellek, değişiklikte silinir).
-* Yeni: İki puan. "Hata puanı" yalnız kritik + uyarı kurallarıyla (sitedeki hatalar), "Öneri puanı" yalnız bilgi kurallarıyla (iyileştirme önerileri) hesaplanır; Pano'da "Nasıl hesaplanır?" açıklaması var. Tarama kaydındaki puan artık Hata puanıdır; Öneri puanı tarama ayrıntısında (`suggest_score`) saklanır, eski kayıtlarda "—" görünür.
+* Yeni: İki puan. "Hata puanı" yalnız kritik + uyarı kurallarıyla (sitedeki hatalar), "Öneri puanı" yalnız bilgi kurallarıyla (iyileştirme önerileri) hesaplanır; Pano'da ayrı, her zaman açık bir "Puan nasıl hesaplanır?" kartı var (ağırlık/tavan tablosu ve şu an en çok puan götüren 3 kural). Tarama kaydındaki puan artık Hata puanıdır; Öneri puanı tarama ayrıntısında (`suggest_score`) saklanır, eski kayıtlarda "—" görünür.
 * Yeni: Yönetim CSS/JS sürüm parametresi dosya içerik özetidir; sürüm sabit kalsa da değişen dosya yeniden indirilir.
 * Yeni: Yazı kaydedilince yalnız o yazının tek-yazılık kuralları yeniden çalışır. Elle düzeltilen bulgu kendiliğinden "düzeltildi" olur ("Elle düzeltildi" etiketi); hâlâ eşleşen açık kalır; yeni çıkan açılır. Genel (küme) kurallar kayıtta çalışmaz, taramayı bekler.
 * Yeni: Ayarlar → Güvenlik → "Kaydedince yeniden denetle" anahtarı (varsayılan açık; kapalıyken eski davranış).
