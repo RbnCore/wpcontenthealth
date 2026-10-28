@@ -44,7 +44,6 @@ final class Admin {
 				'menu_title' => __( 'İçerik Sağlığı', 'contenthealth' ),
 				'cap'        => self::CAP,
 				'callback'   => array( self::class, 'render' ),
-				'order'      => 20,
 				'version'    => CONTENTHEALTH_VERSION,
 			)
 		);
