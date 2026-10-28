@@ -27,7 +27,7 @@ WordPress "Site Sağlığı" gibi İÇERİK sağlığı paneli: yapay zekâ/aray
 == Installation ==
 
 1. Klasörü `wp-content/plugins/` altına yükleyin ve etkinleştirin.
-2. Araçlar → ContentHealth → "Şimdi tara".
+2. RBN Kit → İçerik Sağlığı → "Şimdi tara".
 
 == Frequently Asked Questions ==
 
@@ -43,6 +43,7 @@ Varsayılan olarak silinmez. Ayarlardan "Kaldırırken sil" seçilirse tablolar 
 == Changelog ==
 
 = 0.1.5 =
+* Menü: ekran artık ortak "RBN Kit" üst menüsünün altında (RBN Kit → İçerik Sağlığı); eski Araçlar adresi yeni adrese yönlenir.
 * Yeni: Puan canlı. Yazı kaydedilince, bulgu düzeltilince, geri alınınca ya da yok sayılınca Pano'daki puan hemen yeniden hesaplanır (tarama beklenmez; 60 sn önbellek, değişiklikte silinir).
 * Yeni: İki puan. "Hata puanı" yalnız kritik + uyarı kurallarıyla (sitedeki hatalar), "Öneri puanı" yalnız bilgi kurallarıyla (iyileştirme önerileri) hesaplanır; Pano'da "Nasıl hesaplanır?" açıklaması var. Tarama kaydındaki puan artık Hata puanıdır; Öneri puanı tarama ayrıntısında (`suggest_score`) saklanır, eski kayıtlarda "—" görünür.
 * Yeni: Yönetim CSS/JS sürüm parametresi dosya içerik özetidir; sürüm sabit kalsa da değişen dosya yeniden indirilir.

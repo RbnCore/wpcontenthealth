@@ -25,6 +25,8 @@ define( 'CONTENTHEALTH_FILE', __FILE__ );
 define( 'CONTENTHEALTH_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CONTENTHEALTH_URL', plugin_dir_url( __FILE__ ) );
 
+require_once CONTENTHEALTH_DIR . 'includes/RbnKitMenu.php';
+
 spl_autoload_register(
 	static function ( string $class_name ): void {
 		if ( 0 !== strpos( $class_name, 'ContentHealth\\' ) ) {

@@ -233,7 +233,7 @@ final class Issues {
 			$rules[ $r->id() ] = $r->label();
 		}
 		$rev = array_flip( array_filter( self::STATUS, static fn( $v ) => '' !== $v ) );
-		echo '<form class="rbn-filter" role="search" method="get" action="' . esc_url( admin_url( 'tools.php' ) ) . '" aria-label="' . esc_attr__( 'Bulguları süz', 'contenthealth' ) . '"><input type="hidden" name="page" value="' . esc_attr( \ContentHealth\Admin::SLUG ) . '"><input type="hidden" name="tab" value="issues">';
+		echo '<form class="rbn-filter" role="search" method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" aria-label="' . esc_attr__( 'Bulguları süz', 'contenthealth' ) . '"><input type="hidden" name="page" value="' . esc_attr( \ContentHealth\Admin::SLUG ) . '"><input type="hidden" name="tab" value="issues">';
 		$sel( 'f-grup', __( 'Grup', 'contenthealth' ), array( '' => __( 'Tümü', 'contenthealth' ) ) + Registry::groups(), (string) ( $f['group'] ?? '' ) );
 		$sel( 'f-kural', __( 'Kural', 'contenthealth' ), $rules, (string) ( $f['rule'] ?? '' ) );
 		$sel( 'f-ciddiyet', __( 'Ciddiyet', 'contenthealth' ), array( '' => __( 'Tümü', 'contenthealth' ) ) + Registry::severities(), (string) ( $f['severity'] ?? '' ) );

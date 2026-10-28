@@ -50,7 +50,7 @@ final class Ui {
 	}
 
 	public static function url( array $args = array() ): string {
-		return add_query_arg( array_merge( array( 'page' => Admin::SLUG ), $args ), admin_url( 'tools.php' ) );
+		return add_query_arg( array_merge( array( 'page' => Admin::SLUG ), $args ), admin_url( 'admin.php' ) );
 	}
 
 	/** 0–100 puanı bandına çevirir. @return array{key:string,label:string,icon:string} */

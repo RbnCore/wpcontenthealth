@@ -1,6 +1,6 @@
 <?php
 /**
- * Yönetim ekranı: Araçlar → ContentHealth. Kabuk (başlık, sekmeler, canlı bölge) ve admin-post işleyicileri.
+ * Yönetim ekranı: RBN Kit → İçerik Sağlığı. Kabuk (başlık, sekmeler, canlı bölge) ve admin-post işleyicileri.
  * CSS/JS yalnız bu sayfada yüklenir; ekranların kendisi Screens\ altındadır.
  *
  * @package ContentHealth
@@ -20,7 +20,9 @@ final class Admin {
 	private static string $hook = '';
 
 	public static function init(): void {
-		add_action( 'admin_menu', array( self::class, 'menu' ) );
+		// Başlıklar çeviri kullanır; `init` öncesi okunursa WP 6.7+ "çok erken yüklendi" uyarısı verir. Yardımcı menüyü öncelik 9'da kurar, kayıt ondan önce.
+		add_action( 'admin_menu', array( self::class, 'menu' ), 5 );
+		add_action( 'admin_menu', array( self::class, 'late' ), 99 );
 		add_action( 'admin_enqueue_scripts', array( self::class, 'assets' ) );
 		add_action( 'admin_post_contenthealth_save', array( self::class, 'save' ) );
 		add_action( 'admin_post_contenthealth_export', array( self::class, 'export' ) );
@@ -33,15 +35,38 @@ final class Admin {
 		return $links;
 	}
 
+	/** Yan menüde RBN Kit altına kaydolur; `RbnKitMenu` kendi `admin_menu` (öncelik 9) kancasıyla menüyü kurar. */
 	public static function menu(): void {
-		self::$hook = (string) add_management_page(
-			__( 'ContentHealth — İçerik Sağlığı', 'contenthealth' ),
-			__( 'ContentHealth', 'contenthealth' ),
-			self::CAP,
-			self::SLUG,
-			array( self::class, 'render' )
+		\RbnKitMenu::add(
+			array(
+				'slug'       => self::SLUG,
+				'title'      => __( 'İçerik Sağlığı', 'contenthealth' ),
+				'menu_title' => __( 'İçerik Sağlığı', 'contenthealth' ),
+				'cap'        => self::CAP,
+				'callback'   => array( self::class, 'render' ),
+				'order'      => 20,
+				'version'    => CONTENTHEALTH_VERSION,
+			)
 		);
-		add_action( 'load-' . self::$hook, array( self::class, 'bulk' ) );
+	}
+
+	/** `admin_menu` bittikten sonra: ekran kimliği (rbn-kit_page_contenthealth) ve toplu işlem kancası. */
+	public static function late(): void {
+		self::legacy_redirect();
+		self::$hook = \RbnKitMenu::hook( self::SLUG );
+		if ( '' !== self::$hook ) {
+			add_action( 'load-' . self::$hook, array( self::class, 'bulk' ) );
+		}
+	}
+
+	/** Eski adres (Araçlar → ContentHealth) yer imi kolaylığı için yeni adrese yönlenir; `admin_init` sayfa yetki denetiminden (403) sonra çalıştığından `admin_menu` içinden çağrılır. */
+	private static function legacy_redirect(): void {
+		global $pagenow;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- yalnız yönlendirme.
+		if ( 'tools.php' === $pagenow && isset( $_GET['page'] ) && self::SLUG === sanitize_key( wp_unslash( $_GET['page'] ) ) ) {
+			wp_safe_redirect( Ui::url( array_diff_key( map_deep( wp_unslash( $_GET ), 'sanitize_text_field' ), array( 'page' => 1 ) ) ), 301 ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			exit;
+		}
 	}
 
 	/** Sürüm sabit kalsa da değişen dosya yeniden insin diye sürüm parametresi dosya içerik özetidir. */
