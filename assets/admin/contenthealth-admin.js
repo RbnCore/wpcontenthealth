@@ -207,7 +207,6 @@
 	if (fixBtn) {
 		fixBtn.addEventListener('click', function () {
 			if (!detData) { return; }
-			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
 			var title = T.applyOneTitle || 'This fix will change 1 item';
 			var msg = (detData.title ? (detData.title + '\n\n') : '') + (T.applyOneConfirm || 'A dry run was done; the change will be applied and written to the undo log.');
 			var applyFix = function () {
@@ -224,14 +223,12 @@
 					} else { flash(T.noChange); }
 				}).catch(function (e) { fixBtn.disabled = false; err(e); });
 			};
-			if (!uConfirm) {
-				if (window.confirm(title + '\n' + msg)) { applyFix(); }
-				return;
-			}
-			uConfirm({
+			window.RbnUi.confirm({
 				title: title,
 				message: msg,
+				confirmLabel: T.apply || 'Apply the fix',
 				confirmText: T.apply || 'Apply the fix',
+				cancelLabel: T.cancel || 'Cancel',
 				cancelText: T.cancel || 'Cancel',
 				tone: 'primary'
 			}).then(function (ok) {
@@ -363,7 +360,6 @@
 			var no = b.getAttribute('data-undo-no'), n = b.getAttribute('data-undo-n'), u = b.getAttribute('data-undo-unit');
 			var title = (T.undoAction || 'Undo: operation') + ' #' + no + ' (' + n + ' ' + u + ')';
 			var msg = T.undoConfirm || 'The affected items return to their state before the fix. Manual changes made in between are not overwritten; changed items are skipped.';
-			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
 			var doUndo = function () {
 				b.disabled = true;
 				api('undo', { body: { key: undoKey, dry_run: false } }).then(function (r) {
@@ -372,14 +368,12 @@
 					setTimeout(function () { location.reload(); }, 900);
 				}).catch(function (errObj) { b.disabled = false; err(errObj); });
 			};
-			if (!uConfirm) {
-				if (window.confirm(title + '\n' + msg)) { doUndo(); }
-				return;
-			}
-			uConfirm({
+			window.RbnUi.confirm({
 				title: title,
 				message: msg,
+				confirmLabel: T.undo || 'Undo',
 				confirmText: T.undo || 'Undo',
+				cancelLabel: T.cancel || 'Cancel',
 				cancelText: T.cancel || 'Cancel',
 				tone: 'danger'
 			}).then(function (ok) {
@@ -418,7 +412,6 @@
 			var title = x.terms.length + ' → “' + x.name + '”';
 			var msg = (T.dryDone || 'Dry run: nothing has changed yet.') + '\n' +
 				otherNames.map(function (name) { return '→ ' + name; }).join(', ');
-			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
 			var doMerge = function () {
 				var btn = $('[data-merge-from]', c);
 				if (btn) { btn.disabled = true; }
@@ -428,14 +421,12 @@
 					setTimeout(function () { location.reload(); }, 900);
 				}).catch(function (errObj) { if (btn) { btn.disabled = false; } err(errObj); });
 			};
-			if (!uConfirm) {
-				if (window.confirm(title + '\n' + msg)) { doMerge(); }
-				return;
-			}
-			uConfirm({
+			window.RbnUi.confirm({
 				title: title,
 				message: msg,
+				confirmLabel: T.merge || 'Merge',
 				confirmText: T.merge || 'Merge',
+				cancelLabel: T.cancel || 'Cancel',
 				cancelText: T.cancel || 'Cancel',
 				tone: 'primary'
 			}).then(function (ok) {
@@ -468,7 +459,6 @@
 			var title = dry.changed + ' ' + (T.fixed || 'fixed');
 			var msg = (dry.skipped ? (dry.skipped + ' ' + T.skipped + '\n\n') : '') +
 				(T.undoNotice || 'Changes are written to the undo log; they can be undone.');
-			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
 			var doFix = function () {
 				b.disabled = true;
 				api('fix', { body: { rule: ruleId, ids: ids, dry_run: false } }).then(function (r) {
@@ -477,14 +467,12 @@
 					setTimeout(function () { location.reload(); }, 900);
 				}).catch(function (errObj) { b.disabled = false; err(errObj); });
 			};
-			if (!uConfirm) {
-				if (window.confirm(title + '\n' + msg)) { doFix(); }
-				return;
-			}
-			uConfirm({
+			window.RbnUi.confirm({
 				title: title,
 				message: msg,
+				confirmLabel: T.apply || 'Apply',
 				confirmText: T.apply || 'Apply',
+				cancelLabel: T.cancel || 'Cancel',
 				cancelText: T.cancel || 'Cancel',
 				tone: 'danger'
 			}).then(function (ok) {
