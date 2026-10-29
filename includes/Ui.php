@@ -186,21 +186,21 @@ final class Ui {
 		};
 		$li   = '<li>' . ( $page > 1
 			? '<a href="' . $link( $page - 1 ) . '">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Previous page', 'contenthealth' ) . '</span></a>'
-			: '<span class="rbn-pg" aria-disabled="true">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Previous page', 'contenthealth' ) . '</span></span>' ) . '</li>';
+			: '<span class="ch-pg" aria-disabled="true">' . self::icon( 'chevl' ) . '<span class="rbn-sr">' . esc_html__( 'Previous page', 'contenthealth' ) . '</span></span>' ) . '</li>';
 		$show = array_unique( array_filter( array( 1, $page - 1, $page, $page + 1, $pages ), static fn( $p ) => $p >= 1 && $p <= $pages ) );
 		sort( $show );
 		$prev = 0;
 		foreach ( $show as $p ) {
 			if ( $p - $prev > 1 ) {
-				$li .= '<li><span class="rbn-pg" aria-hidden="true">…</span></li>';
+				$li .= '<li><span class="ch-pg" aria-hidden="true">…</span></li>';
 			}
 			$li  .= '<li><a href="' . $link( $p ) . '"' . ( $p === $page ? ' aria-current="page"' : '' ) . '><span class="rbn-sr">' . esc_html__( 'Page', 'contenthealth' ) . ' </span>' . (int) $p . '</a></li>';
 			$prev = $p;
 		}
 		$li .= '<li>' . ( $page < $pages
 			? '<a href="' . $link( $page + 1 ) . '">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Next page', 'contenthealth' ) . '</span></a>'
-			: '<span class="rbn-pg" aria-disabled="true">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Next page', 'contenthealth' ) . '</span></span>' ) . '</li>';
-		return '<nav class="rbn-pager" aria-label="' . esc_attr__( 'Pagination', 'contenthealth' ) . '"><p>' . (int) $from . '–' . (int) $to . ' / ' . (int) $total . '</p><ul>' . $li . '</ul></nav>';
+			: '<span class="ch-pg" aria-disabled="true">' . self::icon( 'chevr' ) . '<span class="rbn-sr">' . esc_html__( 'Next page', 'contenthealth' ) . '</span></span>' ) . '</li>';
+		return '<nav class="rbn-pager" aria-label="' . esc_attr__( 'Pagination', 'contenthealth' ) . '"><p class="rbn-pager__n">' . (int) $from . '–' . (int) $to . ' / ' . (int) $total . '</p><ul>' . $li . '</ul></nav>';
 	}
 
 	/** Otomatik düzeltme eyleminin kullanıcıya gösterilen tek cümlelik açıklaması. */

@@ -36,9 +36,9 @@ final class UndoLog {
 		$batches = Undo::batches( self::PER_PAGE, ( $page - 1 ) * self::PER_PAGE );
 
 		echo '<section class="rbn-card" aria-labelledby="h-gl"><div class="rbn-card__h"><h2 id="h-gl">' . esc_html__( 'Undo log', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Every automatic fix is stored with its previous values; you can undo it at any time.', 'contenthealth' ) . '</p></div>';
-		echo '<div class="rbn-note rbn-note--ok" role="status" id="flash" hidden style="margin:0 16px 16px"></div>';
+		echo '<div class="rbn-note rbn-note--ok" role="status" id="flash" hidden style="margin:0 var(--rbn-s4) var(--rbn-s4)"></div>';
 		if ( ! $batches ) {
-			echo '<div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'undo', __( 'No undoable operation yet', 'contenthealth' ), __( 'It appears here when you apply a fix.', 'contenthealth' ) ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<div class="rbn-card__b">' . Ui::empty_state( 'undo', __( 'No undoable operation yet', 'contenthealth' ), __( 'It appears here when you apply a fix.', 'contenthealth' ) ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
 		echo '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Applied fixes', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'No.', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Time', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Operation', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Scope', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Status', 'contenthealth' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Actions', 'contenthealth' ) . '</span></th></tr></thead><tbody>';
@@ -93,7 +93,7 @@ final class UndoLog {
 			$name = 'term' === $r->object_type ? ( ( $t = get_term( (int) $r->object_id ) ) && ! is_wp_error( $t ) ? $t->name : '#' . (int) $r->object_id ) : ( get_the_title( (int) $r->object_id ) ?: '#' . (int) $r->object_id );
 			$li  .= '<li>' . Ui::icon( 'check' ) . '<span><strong>' . esc_html( Text::snippet( (string) $name, 80 ) ) . '</strong> · <code>' . esc_html( (string) $r->field ) . '</code>' . ( null !== $r->undone_at ? ' · ' . esc_html__( 'undone', 'contenthealth' ) : '' ) . '</span></li>';
 		}
-		return '<ul class="rbn-sum" style="color:var(--rbn-text)">' . $li . '</ul>';
+		return '<ul class="ch-sum" style="color:var(--rbn-text)">' . $li . '</ul>';
 	}
 
 	public static function dialogs(): void {

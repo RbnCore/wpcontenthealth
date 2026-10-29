@@ -192,7 +192,7 @@ final class Admin {
 		Ui::sprite();
 		echo '<div class="wrap"><hr class="wp-header-end" />';
 		if ( ! current_user_can( self::CAP ) ) {
-			echo '<main class="rbn-wrap" id="ch" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'lock', __( 'You do not have access to this page', 'contenthealth' ), __( 'Only the administrator role can use Content Health. Ask your site administrator for access.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Back to the dashboard', 'contenthealth' ) . '</a>' ) . '</div></section></main></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
+			echo '<main class="rbn-wrap" id="ch" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b">' . Ui::empty_state( 'lock', __( 'You do not have access to this page', 'contenthealth' ), __( 'Only the administrator role can use Content Health. Ask your site administrator for access.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Back to the dashboard', 'contenthealth' ) . '</a>' ) . '</div></section></main></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
 			return;
 		}
 		$tabs = self::tabs();
