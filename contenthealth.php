@@ -49,7 +49,7 @@ register_deactivation_hook( __FILE__, array( \ContentHealth\Cron::class, 'unsche
 add_action(
 	'plugins_loaded',
 	static function (): void {
-		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 1 ) {
+		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 1 || ! class_exists( 'AdminKit\Core\Core' ) ) {
 			add_action(
 				'admin_notices',
 				static function (): void {
