@@ -12,6 +12,7 @@ namespace ContentHealth\Modules;
 use ContentHealth\Admin;
 use ContentHealth\Module;
 use ContentHealth\Rules;
+use ContentHealth\Seo;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -50,5 +51,25 @@ final class Taxonomy implements Module {
 			new Rules\TermNumericOnly(),
 			new Rules\TermsPerPostHigh(),
 		);
+	}
+	/**
+	 * `wp_robots` kancası: kullanıcının işaretlediği tek-yazılı etiket arşivlerine noindex.
+	 * Bir SEO eklentisi etkinken basılmaz (robots etiketini o üretir; çift etiket olmaz).
+	 *
+	 * @param array<string, string|bool> $robots Şimdiye kadarki yönergeler.
+	 * @return array<string, string|bool>
+	 */
+	public static function robots( $robots ) {
+		if ( ! is_array( $robots ) || '' !== Seo::active_plugin() || ! is_tax() && ! is_tag() && ! is_category() ) {
+			return $robots;
+		}
+		$term = get_queried_object();
+		$ids  = array_map( 'intval', (array) get_option( 'contenthealth_noindex_terms', array() ) );
+		if ( $term instanceof \WP_Term && in_array( (int) $term->term_id, $ids, true ) ) {
+			unset( $robots['index'] );
+			$robots['noindex'] = true;
+			$robots['follow']  = true;
+		}
+		return $robots;
 	}
 }

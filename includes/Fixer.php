@@ -302,6 +302,20 @@ final class Fixer {
 
 	private static function term_noindex( object $issue, bool $dry, string $batch ) {
 		$seo = Seo::active_plugin();
+		if ( 'wpseokit' === $seo ) {
+			// WPSeoKit robots etiketini kendisi basar: ayarda varsa çözülmüş, yoksa oraya yönlendir; kendi seçeneğimize yazılmaz.
+			if ( true === Seo::taxonomy_noindex( (string) ( $issue->details_arr['taxonomy'] ?? 'post_tag' ) ) ) {
+				return array( 'changes' => array() );
+			}
+			return new \WP_Error(
+				'seo_plugin',
+				sprintf(
+					/* translators: %s: WPSeoKit settings page address */
+					__( 'WPSeoKit controls the robots tag. Turn on noindex for this archive type in WPSeoKit › Titles & descriptions › Search results (%s). Content Health left it alone to avoid a double tag.', 'contenthealth' ),
+					Seo::settings_url( 'wpseokit' )
+				)
+			);
+		}
 		if ( '' !== $seo ) {
 			return new \WP_Error(
 				'seo_plugin',

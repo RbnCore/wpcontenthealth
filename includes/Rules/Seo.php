@@ -39,7 +39,7 @@ final class MissingMetaDescription extends SeoRule {
 		return __( 'No meta description', 'contenthealth' );
 	}
 	public function description(): string {
-		return __( 'The description field of the SEO plugin (Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read.', 'contenthealth' );
+		return __( 'The description field of the SEO plugin (WPSeoKit, Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read.', 'contenthealth' );
 	}
 	public function defaults(): array {
 		return array(

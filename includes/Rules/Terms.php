@@ -14,6 +14,7 @@ namespace ContentHealth\Rules;
 use ContentHealth\Ctx;
 use ContentHealth\Patterns;
 use ContentHealth\Rule;
+use ContentHealth\Seo;
 use ContentHealth\Text;
 
 defined( 'ABSPATH' ) || exit;
@@ -109,7 +110,14 @@ final class TermSingleUse extends TermRule {
 		);
 	}
 	public function check( object $obj, Ctx $ctx ): ?array {
-		return ( 1 === (int) $obj->count && in_array( $obj->taxonomy, (array) $this->config()['taxonomies'], true ) ) ? array( 'count' => 1 ) : null;
+		if ( 1 !== (int) $obj->count || ! in_array( $obj->taxonomy, (array) $this->config()['taxonomies'], true ) ) {
+			return null;
+		}
+		// WPSeoKit bu taksonomi arşivini zaten noindex yapıyor: bulgu yok.
+		return true === Seo::taxonomy_noindex( $obj->taxonomy ) ? null : array(
+			'count'    => 1,
+			'taxonomy' => $obj->taxonomy,
+		);
 	}
 }
 
