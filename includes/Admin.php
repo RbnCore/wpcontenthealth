@@ -291,10 +291,12 @@ final class Admin {
 		}
 		$in = Screens\Prefs::normalize( $in );
 		$res = Settings::save( $in );
+		$sub = Screens\Prefs::clean_sub( isset( $_POST['ch_sub'] ) ? sanitize_key( wp_unslash( $_POST['ch_sub'] ) ) : '' );
+		$ex  = '' === $sub ? array() : array( 'sub' => $sub );
 		if ( $res['errors'] ) {
-			self::back( 'settings', __( 'Saved; some patterns were skipped because they are invalid: ', 'contenthealth' ) . implode( ' | ', array_slice( $res['errors'], 0, 3 ) ), true );
+			self::back( 'settings', __( 'Saved; some patterns were skipped because they are invalid: ', 'contenthealth' ) . implode( ' | ', array_slice( $res['errors'], 0, 3 ) ), true, $ex );
 		}
-		self::back( 'settings', __( 'Settings saved.', 'contenthealth' ) );
+		self::back( 'settings', __( 'Settings saved.', 'contenthealth' ), false, $ex );
 	}
 
 	/** Bulgu listesi formu (JS yokken de çalışır): seçilenleri / tek bulguyu yok say ya da yeniden aç. */

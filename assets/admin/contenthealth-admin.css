@@ -939,12 +939,12 @@
    7. AYARLAR (PREFS) VE KALIPLAR
    ========================================================================== */
 
+/* Ayar satırı: solda anahtar + ad + açıklama, sağda seçenekler (dar ekranda altta). Tek kalıp: kural, tarama, desen satırları. */
 .ch-rule {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--rbn-s4) var(--rbn-s5);
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  align-items: start;
+  gap: var(--rbn-s3) var(--rbn-s6);
   padding: var(--rbn-s4) var(--rbn-s5);
   border-bottom: var(--rbn-bw) solid var(--rbn-line);
 }
@@ -953,71 +953,102 @@
   border-bottom: none;
 }
 
-.ch-rule > * {
+.ch-rule__m {
   min-width: 0;
 }
 
-.ch-rule > :first-child {
-  flex: 1 1 22rem;
+.ch-rule__m:only-child {
+  grid-column: 1 / -1;
 }
 
-.ch-rule > .ch-rule__t {
-  flex: 0 1 auto;
+.ch-rule__m > label,
+.ch-rule__m > .rbn-label {
+  display: block;
+  font-weight: var(--rbn-fw-m);
 }
 
-.ch-rule > .ch-rule__t[style*="flex-basis:100%"] {
-  flex: 1 1 100%;
+.ch-rule__m .rbn-switch {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
 }
 
-.ch-rule textarea,
-.ch-rule select,
-.ch-rule input:not([type="checkbox"]):not([type="radio"]) {
+.ch-rule__m .rbn-switch__x {
+  margin-top: var(--rbn-s1);
+}
+
+.ch-switch__t {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-s1);
+  min-width: 0;
+}
+
+.ch-switch__t b {
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-text);
+}
+
+.ch-switch__t .rbn-help {
+  margin-top: 0;
+  font-weight: var(--rbn-fw);
+}
+
+.ch-rule__o {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  align-content: start;
+  gap: var(--rbn-s3) var(--rbn-s4);
+  min-width: 0;
+}
+
+.ch-opt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-s1);
+  min-width: 0;
+}
+
+.ch-opt--wide {
+  grid-column: 1 / -1;
+}
+
+.ch-opt > label:not(.rbn-check) {
+  font-weight: var(--rbn-fw-m);
+}
+
+.ch-opt > .rbn-check {
+  min-height: var(--rbn-ctl);
+}
+
+.ch-opt .rbn-input:not(.rbn-input--s),
+.ch-opt .rbn-select,
+.ch-opt .rbn-textarea {
+  width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
+}
+
+.ch-opt .rbn-textarea {
+  min-height: 5.5rem;
+  resize: vertical;
 }
 
 @media (max-width: 48.875rem) {
   .ch-rule {
-    flex-direction: column;
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--rbn-s4);
   }
-  .ch-rule > :first-child,
-  .ch-rule > .ch-rule__t,
-  .ch-rule > .ch-rule__t[style*="flex-basis:100%"] {
-    flex: 0 0 auto;
-  }
-  .ch-rule textarea,
-  .ch-rule label,
-  .ch-rule .rbn-textarea {
-    width: 100%;
-    box-sizing: border-box;
+  .ch-rule__o {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-.ch-rule__t {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--rbn-s1);
-}
-
-.ch-rule__t b {
-  font-size: var(--rbn-fs);
-  color: var(--rbn-text);
-}
-
-.ch-rule__t p {
+/* Kart içi alt başlık (desen listeleri) kural adıyla aynı ağırlıkta. */
+.ch-rule--pats .ch-h3 {
   margin: 0;
-  font-size: var(--rbn-fs-sm);
-  color: var(--rbn-muted);
-}
-
-.rbn-wrap .ch-grp {
-  padding-inline: var(--rbn-s5);
-  font-size: var(--rbn-fs-h3);
-  font-weight: var(--rbn-fw-m);
-  color: var(--rbn-text);
-  margin-top: var(--rbn-s4);
-  margin-bottom: var(--rbn-s2);
+  font-size: var(--rbn-fs);
+  line-height: var(--rbn-lh);
 }
 
 .ch-pats {
@@ -1062,11 +1093,13 @@
   font-size: var(--rbn-fs-mono);
 }
 
-.ch-test {
-  background: var(--rbn-surface-2);
-  border-radius: var(--rbn-r);
-  padding: var(--rbn-s3);
-  margin-top: var(--rbn-s3);
+.ch-test .ch-row {
+  margin: 0 0 var(--rbn-s3);
+}
+
+.ch-test .rbn-textarea {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .ch-snippet {
@@ -1333,4 +1366,56 @@
 .rbn-dlg h3,
 .rbn-dlg strong {
   color: var(--rbn-text);
+}
+
+/* Desen listesi: her desen kendi satırında, uzun desen sarılır; ekleme satırı tek hizada. */
+.ch-pats {
+  margin: 0 0 var(--rbn-s3);
+  padding: 0;
+  list-style: none;
+}
+
+.ch-pat code {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--rbn-s2) var(--rbn-s3);
+  border: var(--rbn-bw) solid var(--rbn-line);
+  border-radius: var(--rbn-r);
+  background: var(--rbn-surface-2);
+  font-family: var(--rbn-font-mono);
+  font-size: var(--rbn-fs-mono);
+  overflow-wrap: anywhere;
+}
+
+.ch-addrow {
+  display: flex;
+  gap: var(--rbn-s2);
+  margin-top: 0;
+}
+
+.ch-addrow .rbn-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Satır açıklaması her yerde 15 px (p.rbn-help de span.rbn-help de aynı); güvenlik anahtarları nefes alır. */
+.ch-rule__m .rbn-help {
+  margin: var(--rbn-s1) 0 0;
+  font-size: var(--rbn-fs-sm);
+  line-height: var(--rbn-lh-sm);
+  color: var(--rbn-muted);
+}
+
+.rbn-card__b > .ch-stack {
+  gap: var(--rbn-s4);
+}
+
+/* Desen satırı: sağ sütun tek yığın (liste, ekleme satırı); ızgara sütunlara bölmez. */
+.ch-rule--pats .ch-rule__o {
+  display: block;
+}
+
+.ch-addrow .rbn-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }

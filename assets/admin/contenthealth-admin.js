@@ -452,11 +452,10 @@
 	/* Ayarlar: kirli izleme, desen listesi ve deseni dene */
 	var form = d.getElementById('ayar');
 	if (form) {
-		var sb = d.getElementById('savebar'), st = d.getElementById('savebar-t'), sv = $('[data-save]', sb), rv = $('[data-revert]', sb);
-		var dirty = function (on) { sb.classList.toggle('is-dirty', on); sv.disabled = !on; rv.disabled = !on; if (st) { st.textContent = on ? T.dirty : T.clean; } };
-		var inTest = function (t) { return t.closest('.ch-test') || t.hasAttribute('data-pat-new'); };
-		form.addEventListener('input', function (e) { if (!inTest(e.target)) { dirty(true); } });
-		form.addEventListener('change', function (e) { if (!inTest(e.target)) { dirty(true); } });
+		/* Kaydet çubuğunu AdminKit yapışkan çubuğu verir (uzun sayfada altta sabit; kirli izleme + sayfadan ayrılma uyarısı kitte). Burada yalnız programatik değişiklikler forma bildirilir. */
+		var rv = $('[data-revert]', form), subNow = $('[data-sub-now]', form);
+		var dirty = function () { form.dispatchEvent(new Event('change', { bubbles: true })); };
+		form.addEventListener('submit', function () { var u = new URL(location.href).searchParams.get('sub'); if (u && subNow) { subNow.value = u; } });
 		rv.addEventListener('click', function () { location.reload(); });
 		function store(box) { $('[data-pats-store]', box).value = $$('.ch-pats code', box).map(function (c) { return c.textContent; }).join('\n'); }
 		$$('[data-pats]').forEach(function (box) {
@@ -468,12 +467,12 @@
 					inp.setCustomValidity('');
 					var li = el('li', 'ch-pat'), c = el('code', '', v), b = el('button'); b.type = 'button'; b.setAttribute('data-pat-del', ''); b.setAttribute('aria-label', T.patDel + ': ' + v.slice(0, 40));
 					b.innerHTML = '<svg class="rbn-ico" aria-hidden="true"><use href="#i-trash"/></svg>';
-					li.appendChild(c); li.appendChild(b); $('.ch-pats', box).appendChild(li); inp.value = ''; store(box); dirty(true);
+					li.appendChild(c); li.appendChild(b); $('.ch-pats', box).appendChild(li); inp.value = ''; store(box); dirty();
 				}).catch(function () { say(T.netError); });
 			}
 			$('[data-pat-add]', box).addEventListener('click', add);
 			inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); add(); } });
-			box.addEventListener('click', function (e) { var b = e.target.closest('[data-pat-del]'); if (b) { b.closest('li').remove(); store(box); dirty(true); } });
+			box.addEventListener('click', function (e) { var b = e.target.closest('[data-pat-del]'); if (b) { b.closest('li').remove(); store(box); dirty(); } });
 		});
 		var pt = $('[data-pat-test]');
 		if (pt) {
