@@ -25,19 +25,12 @@ final class Ui {
 
 	/** Koyu ton: WP "Gece yarısı" şeması ya da koyu mod eklentisi; süzgeçle ezilebilir. */
 	public static function tone(): string {
-		$dark = false;
-		if ( function_exists( 'get_user_option' ) ) {
-			$dark = 'midnight' === (string) get_user_option( 'admin_color' );
-		}
-		if ( defined( 'WP_DARK_MODE_VERSION' ) || defined( 'WP_DARK_MODE_PLUGIN_FILE' ) ) {
-			$dark = true;
-		}
-		$tone = (string) apply_filters( 'contenthealth_tone', $dark ? 'koyu' : 'acik' );
+		$tone = (string) apply_filters( 'contenthealth_tone', \AdminKit\Helpers\Icons::tone() );
 		return 'koyu' === $tone ? 'koyu' : 'acik';
 	}
 
 	public static function tone_attr(): string {
-		return 'koyu' === self::tone() ? ' data-tone="koyu"' : '';
+		return \AdminKit\Helpers\Icons::tone_attr();
 	}
 
 	public static function url( array $args = array() ): string {
