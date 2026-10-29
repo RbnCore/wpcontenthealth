@@ -21,6 +21,8 @@ foreach ( array( 'runs', 'issues', 'undo' ) as $contenthealth_t ) {
 foreach ( array( 'contenthealth_settings', 'contenthealth_db_version', 'contenthealth_noindex_terms', 'contenthealth_term_redirects', 'contenthealth_onboarded' ) as $contenthealth_o ) {
 	delete_option( $contenthealth_o );
 }
-delete_transient( 'contenthealth_live_score' );
+if ( class_exists( '\AdminKit\Core\Cache' ) ) {
+	\AdminKit\Core\Cache::purge_plugin( 'contenthealth' );
+}
 wp_clear_scheduled_hook( 'contenthealth_cron_scan' );
 wp_clear_scheduled_hook( 'contenthealth_cron_continue' );

@@ -222,7 +222,7 @@ final class Fixer {
 			);
 			if ( ! $dry ) {
 				$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $out ), array( 'meta_id' => (int) $m->meta_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-				wp_cache_delete( $issue->object_id, 'post_meta' );
+				clean_post_cache( $issue->object_id );
 				Undo::record( $batch, 'fix_bad_host_url', 'post', $issue->object_id, 'postmeta:' . (int) $m->meta_id, $raw, $out, $issue->id );
 			}
 		}

@@ -1737,6 +1737,20 @@ msgstr "Otomatik tarama arka planda WP-Cron ile çalışır."
 msgid "The automatic scan runs in the background with WP-Cron; you can change it later in Settings."
 msgstr "Otomatik tarama arka planda WP-Cron ile çalışır; sonradan Ayarlar’dan değiştirebilirsiniz."
 
+#: contenthealth.php:73
+msgid "activate AdminKit"
+msgstr "AdminKit eklentisini etkinleştirin"
+
+#: contenthealth.php:77
+#: contenthealth.php:87
+#, php-format
+msgid "ContentHealth requires the AdminKit plugin. Please %s to continue."
+msgstr "ContentHealth, AdminKit eklentisini gerektirir. Devam etmek için lütfen %s."
+
+#: contenthealth.php:83
+msgid "download and install AdminKit"
+msgstr "AdminKit eklentisini indirin ve kurun"
+
 #: includes/Screens/Prefs.php:156
 msgid "The chat-leftover rule looks for these patterns. Add your own pattern and test it without saving."
 msgstr "Sohbet kalıntısı kuralı bu desenleri arar. Kendi deseninizi ekleyip kaydetmeden test edin."

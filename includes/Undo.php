@@ -126,7 +126,7 @@ final class Undo {
 			}
 			if ( ! $dry ) {
 				$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $row->before_value ), array( 'meta_id' => $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-				wp_cache_delete( $id, 'post_meta' );
+				clean_post_cache( $id );
 			}
 			return true;
 		}

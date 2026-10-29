@@ -222,7 +222,7 @@ final class Scanner {
 					$d = $rule->check( $view, $ctx );
 				} catch ( \Throwable $e ) {
 					$d = null; // Tek kuralın hatası taramayı durdurmaz.
-					Log::error( $id, $e );
+					\AdminKit\Core\Log::log( 'contenthealth.errors', 'error', (string) $id, $e->getMessage(), array( 'file' => basename( $e->getFile() ), 'line' => $e->getLine() ) );
 				}
 				if ( null !== $d ) {
 					Issues::upsert( $run->id, 'post', $view->id, $rule, $d );
@@ -267,7 +267,7 @@ final class Scanner {
 					$d = $rule->check( $obj, $ctx );
 				} catch ( \Throwable $e ) {
 					$d = null;
-					Log::error( $id, $e );
+					\AdminKit\Core\Log::log( 'contenthealth.errors', 'error', (string) $id, $e->getMessage(), array( 'file' => basename( $e->getFile() ), 'line' => $e->getLine() ) );
 				}
 				if ( null !== $d ) {
 					$d['name']     = $d['name'] ?? Text::snippet( $obj->name, 100 );
@@ -293,7 +293,7 @@ final class Scanner {
 		try {
 			$res = $rule->scan_batch( $cursor, $limit, $ctx );
 		} catch ( \Throwable $e ) {
-			Log::error( $rule->id(), $e );
+			\AdminKit\Core\Log::log( 'contenthealth.errors', 'error', $rule->id(), $e->getMessage(), array( 'file' => basename( $e->getFile() ), 'line' => $e->getLine() ) );
 			return array( 'cursor' => $cursor, 'units' => 1, 'done' => true );
 		}
 		foreach ( $res['findings'] as $f ) {

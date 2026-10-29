@@ -27,8 +27,9 @@ final class Score {
 		Rule::INFO     => 0.3,
 	);
 
-	public const TRANSIENT = 'contenthealth_live_score';
-	public const TTL       = 60;
+	public const GROUP = 'contenthealth.scores';
+	public const KEY   = 'live';
+	public const TTL   = 60;
 
 	/**
 	 * @param array<string,array<string,int>> $open   rule_id → [tür → açık bulgu sayısı].
@@ -75,24 +76,31 @@ final class Score {
 	 * @return array{error:int,suggest:int,all:int,penalties:array<string,float>}
 	 */
 	public static function live(): array {
-		$hit = get_transient( self::TRANSIENT );
-		if ( is_array( $hit ) && isset( $hit['error'], $hit['suggest'] ) ) {
-			return $hit;
-		}
-		$done = Runs::latest_finished();
-		$sc   = self::compute(
-			Issues::open_counts(),
-			array(
-				'post' => (int) ( $done->stats['posts'] ?? 0 ),
-				'term' => (int) ( $done->stats['terms'] ?? 0 ),
-			)
+		$v = \AdminKit\Core\Cache::remember(
+			self::GROUP,
+			self::KEY,
+			self::TTL,
+			static function (): array {
+				$done = Runs::latest_finished();
+				return self::compute(
+					Issues::open_counts(),
+					array(
+						'post' => (int) ( $done->stats['posts'] ?? 0 ),
+						'term' => (int) ( $done->stats['terms'] ?? 0 ),
+					)
+				);
+			}
 		);
-		set_transient( self::TRANSIENT, $sc, self::TTL );
-		return $sc;
+		return is_array( $v ) ? $v : array(
+			'error'     => 100,
+			'suggest'   => 100,
+			'all'       => 100,
+			'penalties' => array(),
+		);
 	}
 
 	/** Bulgu durumu değişince çağrılır: bir sonraki okuma yeniden hesaplar. */
 	public static function forget(): void {
-		delete_transient( self::TRANSIENT );
+		\AdminKit\Core\Cache::flush_group( self::GROUP );
 	}
 }

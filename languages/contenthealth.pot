@@ -1737,6 +1737,20 @@ msgstr ""
 msgid "The automatic scan runs in the background with WP-Cron; you can change it later in Settings."
 msgstr ""
 
+#: contenthealth.php:73
+msgid "activate AdminKit"
+msgstr ""
+
+#: contenthealth.php:77
+#: contenthealth.php:87
+#, php-format
+msgid "ContentHealth requires the AdminKit plugin. Please %s to continue."
+msgstr ""
+
+#: contenthealth.php:83
+msgid "download and install AdminKit"
+msgstr ""
+
 #: includes/Screens/Prefs.php:156
 msgid "The chat-leftover rule looks for these patterns. Add your own pattern and test it without saving."
 msgstr ""

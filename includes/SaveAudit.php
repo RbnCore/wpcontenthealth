@@ -33,7 +33,7 @@ final class SaveAudit {
 		try {
 			self::audit( $post );
 		} catch ( \Throwable $e ) {
-			Log::error( 'save_audit', $e );
+			\AdminKit\Core\Log::log( 'contenthealth.errors', 'error', 'save_audit', $e->getMessage(), array( 'file' => basename( $e->getFile() ), 'line' => $e->getLine() ) );
 		} finally {
 			self::$busy = false;
 		}
@@ -93,7 +93,7 @@ final class SaveAudit {
 			try {
 				$d = $rule->check( $view, $ctx );
 			} catch ( \Throwable $e ) {
-				Log::error( $id, $e );
+				\AdminKit\Core\Log::log( 'contenthealth.errors', 'error', (string) $id, $e->getMessage(), array( 'file' => basename( $e->getFile() ), 'line' => $e->getLine() ) );
 				continue; // Kuralın hatası bulguyu kapatmaz.
 			}
 			if ( null !== $d ) {
