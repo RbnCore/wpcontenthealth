@@ -50,7 +50,6 @@ final class Admin {
 
 	/** `admin_menu` bittikten sonra: ekran kimliği (rbn-kit_page_contenthealth) ve toplu işlem kancası. */
 	public static function late(): void {
-		\AdminKit\Helpers\Menu::legacy_redirect( self::SLUG, 'tools.php' );
 		self::$hook = \AdminKit\Helpers\Menu::hook( self::SLUG );
 		if ( '' !== self::$hook ) {
 			add_action( 'load-' . self::$hook, array( self::class, 'bulk' ) );

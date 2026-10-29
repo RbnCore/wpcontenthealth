@@ -96,18 +96,4 @@ final class Db {
 			false
 		);
 	}
-
-	/** Kaldırma: tüm tablolar ve seçenekler. */
-	public static function drop_all(): void {
-		\AdminKit\Helpers\Db::drop_tables(
-			array(
-				self::table( 'runs' ),
-				self::table( 'issues' ),
-				self::table( 'undo' ),
-			)
-		);
-		foreach ( array( 'contenthealth_settings', 'contenthealth_db_version', 'contenthealth_noindex_terms', 'contenthealth_term_redirects', 'contenthealth_onboarded' ) as $o ) {
-			delete_option( $o );
-		}
-	}
 }
