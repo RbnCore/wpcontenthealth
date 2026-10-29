@@ -114,7 +114,7 @@ final class Ui {
 
 	/** @param string $actions Hazır HTML. */
 	public static function empty_state( string $icon, string $title, string $text, string $actions = '' ): string {
-		return '<div class="rbn-empty"><span class="rbn-empty__i">' . self::icon( $icon ) . '</span><h3>' . esc_html( $title ) . '</h3><p>' . esc_html( $text ) . '</p>' . $actions . '</div>';
+		return '<div class="rbn-empty"><span class="rbn-empty__i">' . self::icon( $icon ) . '</span><h2>' . esc_html( $title ) . '</h2><p>' . esc_html( $text ) . '</p>' . $actions . '</div>';
 	}
 
 	public static function date( ?string $gmt ): string {

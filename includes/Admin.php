@@ -192,7 +192,7 @@ final class Admin {
 		Ui::sprite();
 		echo '<div class="wrap"><hr class="wp-header-end" />';
 		if ( ! current_user_can( self::CAP ) ) {
-			echo '<main class="rbn-wrap" id="ch" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b">' . Ui::empty_state( 'lock', __( 'You do not have access to this page', 'contenthealth' ), __( 'Only the administrator role can use Content Health. Ask your site administrator for access.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Back to the dashboard', 'contenthealth' ) . '</a>' ) . '</div></section></main></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
+			echo '<div class="rbn-wrap" id="ch" role="region" aria-label="' . esc_attr__( 'Content Health', 'contenthealth' ) . '" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b">' . Ui::empty_state( 'lock', __( 'You do not have access to this page', 'contenthealth' ), __( 'Only the administrator role can use Content Health. Ask your site administrator for access.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Back to the dashboard', 'contenthealth' ) . '</a>' ) . '</div></section></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
 			return;
 		}
 		$tabs = self::tabs();
@@ -201,7 +201,8 @@ final class Admin {
 		$onb  = 'overview' === $cur && Screens\Onboarding::needed();
 
 		printf(
-			'<main class="rbn-wrap" id="ch" data-screen="%s"%s>',
+			'<div class="rbn-wrap" id="ch" role="region" aria-label="%s" data-screen="%s"%s>',
+			esc_attr__( 'Content Health', 'contenthealth' ),
 			esc_attr( $onb ? 'ilk' : $cur ),
 			Ui::tone_attr() // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sabit öznitelik.
 		);
@@ -216,7 +217,7 @@ final class Admin {
 		} else {
 			call_user_func( $tabs[ $cur ]['render'] );
 		}
-		echo '</main>';
+		echo '</div>';
 		if ( ! $onb && isset( $tabs[ $cur ]['dialogs'] ) ) {
 			call_user_func( $tabs[ $cur ]['dialogs'] );
 		}
