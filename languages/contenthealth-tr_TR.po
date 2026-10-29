@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ContentHealth 0.1.5\n"
 "Report-Msgid-Bugs-To: https://github.com/RbnCore\n"
-"POT-Creation-Date: 2026-10-28 12:00+0000\n"
+"POT-Creation-Date: 2026-10-29 07:58+0300\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2262,3 +2262,64 @@ msgstr "→ %s (%d ilişki taşınır)"
 #, php-format
 msgid "−%s points"
 msgstr "−%s puan"
+
+#: includes/Screens/Prefs.php:68
+msgid "Allow four-digit years"
+msgstr "Dört haneli yıllara izin ver"
+
+#: includes/Screens/Prefs.php:201
+msgid "Checked in every block of the post."
+msgstr "Yazının her bloğunda denetlenir."
+
+#: includes/Screens/Prefs.php:199
+msgid "Checked in the first short block of the post."
+msgstr "Yazının ilk kısa bloğunda denetlenir."
+
+#: includes/Screens/Prefs.php:200
+msgid "Checked in the last short block of the post."
+msgstr "Yazının son kısa bloğunda denetlenir."
+
+#: includes/Screens/Prefs.php:200
+msgid "End of the post"
+msgstr "Yazının sonu"
+
+#: includes/Screens/Prefs.php:201
+msgid "Match anywhere in the text"
+msgstr "Metnin her yerinde eşleşsin"
+
+#: includes/Screens/Prefs.php:83
+msgid "Patterns"
+msgstr "Kalıplar"
+
+#: includes/Screens/Prefs.php:66
+msgid "Patterns (one per line)"
+msgstr "Kalıplar (her satıra bir tane)"
+
+#: includes/Screens/Prefs.php:177
+msgid "Scan step"
+msgstr "Tarama adımı"
+
+#: includes/Screens/Prefs.php:100
+msgid "Settings sections"
+msgstr "Ayar bölümleri"
+
+#: includes/Screens/Prefs.php:199
+msgid "Start of the post"
+msgstr "Yazının başı"
+
+#: includes/Seo.php:64
+msgid "Tag archives are managed in WPSeoKit's “Titles & descriptions” › “Categories & tags” settings (Search results: noindex taxonomies); Content Health does not write to that setting."
+msgstr "Etiket arşivleri WPSeoKit'in “Başlıklar ve açıklamalar” › “Kategoriler ve etiketler” ayarlarından yönetilir (Arama sonuçları: sınıflandırmalarda noindex); İçerik Sağlığı bu ayara yazmaz."
+
+#: includes/Screens/Prefs.php:67
+msgid "Taxonomies (one per line)"
+msgstr "Sınıflandırmalar (her satıra bir tane)"
+
+#: includes/Rules/Seo.php:42
+msgid "The description field of the SEO plugin (WPSeoKit, Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read."
+msgstr "SEO eklentisinin (WPSeoKit, Yoast, Rank Math, AIOSEO) açıklama alanı ile özet de boş. Eklenti yoksa özet okunur."
+
+#: includes/Fixer.php:314
+#, php-format
+msgid "WPSeoKit controls the robots tag. Turn on noindex for this archive type in WPSeoKit › Titles & descriptions › Search results (%s). Content Health left it alone to avoid a double tag."
+msgstr "robots etiketini WPSeoKit yönetiyor. Bu arşiv türü için noindex'i WPSeoKit › Başlıklar ve açıklamalar › Arama sonuçları (%s) bölümünden açın. İçerik Sağlığı, çift etiket olmasın diye buraya dokunmadı."

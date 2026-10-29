@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ContentHealth 0.1.5\n"
 "Report-Msgid-Bugs-To: https://github.com/RbnCore\n"
-"POT-Creation-Date: 2026-10-28 12:00+0000\n"
+"POT-Creation-Date: 2026-10-29 07:58+0300\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,12 +26,12 @@ msgid_plural "%d clusters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Admin.php:322
+#: includes/Admin.php:326
 #, php-format
 msgid "%d findings ignored."
 msgstr ""
 
-#: includes/Admin.php:322
+#: includes/Admin.php:326
 #, php-format
 msgid "%d findings reopened."
 msgstr ""
@@ -63,8 +63,7 @@ msgid_plural "%d results"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/Screens/Prefs.php:179
-#: includes/Screens/Tags.php:172
+#: includes/Screens/Tags.php:168
 #, php-format
 msgid "%s detected."
 msgstr ""
@@ -128,11 +127,6 @@ msgstr ""
 msgid "<img> tags in the content have no alt attribute or an empty one. Decorative images (role=\"presentation\") are not counted."
 msgstr ""
 
-#: contenthealth.php:5
-msgctxt "Description of the plugin"
-msgid "A content-health panel in the spirit of WordPress Site Health: checks for AI and interface leftovers, broken URLs, meta, alt text and tags, and fixes them with dry run and undo. Calls no external service."
-msgstr ""
-
 #: includes/Rules/Links.php:45
 msgid "A development/staging address (.test, .local, localhost), a repeated extension (.test.test) or a broken format (https.domain) leaked into the content. The site's own address is excluded."
 msgstr ""
@@ -153,7 +147,7 @@ msgstr ""
 msgid "A post that receives no link from the content of any other post. Menus, widgets and related-post boxes do not count; only in-content links."
 msgstr ""
 
-#: includes/Screens/Prefs.php:83
+#: includes/Screens/Prefs.php:127
 msgid "A rule you turn off does not run in the scan; it does not delete existing findings."
 msgstr ""
 
@@ -161,12 +155,60 @@ msgstr ""
 msgid "A scan is already running."
 msgstr ""
 
-#: includes/Rules/Terms.php:100
+#: includes/Rules/Terms.php:101
 msgid "A tag attached to only one post; its archive page creates thin content. Informational only."
 msgstr ""
 
-#: includes/Rules/Terms.php:41
+#: includes/Rules/Terms.php:42
 msgid "A tag or category not attached to any content."
+msgstr ""
+
+#: includes/Admin.php:142
+msgid "about"
+msgstr ""
+
+#: includes/Screens/Overview.php:280
+msgid "Action"
+msgstr ""
+
+#: includes/Screens/UndoLog.php:44
+msgid "Actions"
+msgstr ""
+
+#: contenthealth.php:69
+msgid "activate AdminKit"
+msgstr ""
+
+#: includes/Admin.php:227
+msgid "Active"
+msgstr ""
+
+#: includes/Screens/Issues.php:275
+msgid "Active filter:"
+msgstr ""
+
+#: includes/Screens/Issues.php:275
+msgid "Active filters"
+msgstr ""
+
+#: includes/Screens/Prefs.php:210
+msgid "Add"
+msgstr ""
+
+#: includes/Screens/Alt.php:42
+msgid "Add tokens by clicking them. The template is used only for this fill; the permanent default is in Settings."
+msgstr ""
+
+#: includes/Ui.php:231
+msgid "Added line: "
+msgstr ""
+
+#: includes/Ui.php:261
+msgid "After"
+msgstr ""
+
+#: includes/Screens/UndoLog.php:105
+msgid "After the undo, the findings reopen in the next scan."
 msgstr ""
 
 #: includes/Rules/Content.php:33
@@ -181,62 +223,16 @@ msgstr ""
 msgid "AI leftover"
 msgstr ""
 
-#: includes/Rules/Terms.php:124
+#: includes/Rules/Terms.php:132
 msgid "AI leftover in a term"
 msgstr ""
 
-#: includes/Cli.php:139
-msgid "APPLIED"
-msgstr ""
-
-#: includes/Screens/Overview.php:280
-msgid "Action"
-msgstr ""
-
-#: includes/Screens/Issues.php:129
-#: includes/Screens/UndoLog.php:44
-msgid "Actions"
-msgstr ""
-
-#: includes/Admin.php:225
-msgid "Active"
-msgstr ""
-
-#: includes/Screens/Issues.php:275
-msgid "Active filter:"
-msgstr ""
-
-#: includes/Screens/Issues.php:275
-msgid "Active filters"
-msgstr ""
-
-#: includes/Screens/Prefs.php:163
-msgid "Add"
-msgstr ""
-
-#: includes/Screens/Alt.php:42
-msgid "Add tokens by clicking them. The template is used only for this fill; the permanent default is in Settings."
-msgstr ""
-
-#: includes/Ui.php:231
-msgid "Added line: "
-msgstr ""
-
-#: includes/Admin.php:138
-#: includes/Ui.php:261
-msgid "After"
-msgstr ""
-
-#: includes/Screens/UndoLog.php:105
-msgid "After the undo, the findings reopen in the next scan."
-msgstr ""
-
-#: includes/Screens/Issues.php:231
-#: includes/Screens/Issues.php:237
-#: includes/Screens/Issues.php:239
-#: includes/Screens/Issues.php:247
 #: includes/Screens/Issues.php:271
 msgid "All"
+msgstr ""
+
+#: includes/Screens/Prefs.php:68
+msgid "Allow four-digit years"
 msgstr ""
 
 #: includes/Screens/Prefs.php:62
@@ -247,22 +243,29 @@ msgstr ""
 msgid "Alt Text"
 msgstr ""
 
-#: includes/Admin.php:132
+#: includes/Undo.php:136
+msgid "alt text changed afterwards"
+msgstr ""
+
+#: includes/Admin.php:134
 msgid "Alt text filled in"
 msgstr ""
 
-#: includes/Screens/Alt.php:41
-#: includes/Screens/Prefs.php:141
+#: includes/Screens/Prefs.php:182
 msgid "Alt text template"
 msgstr ""
 
-#: includes/Fixer.php:310
+#: includes/Fixer.php:324
 #, php-format
 msgid "An active SEO plugin (%s) is present; set noindex there. Content Health left it alone to avoid a conflict."
 msgstr ""
 
 #: includes/Rules/Seo.php:115
 msgid "An identical title within the same post type, ignoring case differences."
+msgstr ""
+
+#: includes/Cli.php:139
+msgid "APPLIED"
 msgstr ""
 
 #: includes/Screens/UndoLog.php:56
@@ -273,11 +276,11 @@ msgstr ""
 msgid "Applied fixes"
 msgstr ""
 
-#: includes/Screens/Tags.php:183
+#: includes/Screens/Tags.php:179
 msgid "Apply"
 msgstr ""
 
-#: includes/Admin.php:114
+#: includes/Admin.php:116
 msgid "Apply fixes"
 msgstr ""
 
@@ -285,7 +288,6 @@ msgstr ""
 msgid "Apply the fix"
 msgstr ""
 
-#: includes/Admin.php:116
 #: includes/Screens/Issues.php:373
 msgid "Applying…"
 msgstr ""
@@ -294,16 +296,15 @@ msgstr ""
 msgid "At least one finished scan is needed for the chart."
 msgstr ""
 
-#: includes/Screens/Prefs.php:141
+#: includes/Screens/Prefs.php:182
 msgid "Available tokens: {title}, {file_name}, {site_name}."
 msgstr ""
 
-#: includes/Screens/Issues.php:375
 #: includes/Screens/Onboarding.php:68
 msgid "Back"
 msgstr ""
 
-#: includes/Admin.php:193
+#: includes/Admin.php:195
 msgid "Back to the dashboard"
 msgstr ""
 
@@ -311,11 +312,10 @@ msgstr ""
 msgid "Based on the last scan"
 msgstr ""
 
-#: includes/Admin.php:141
+#: includes/Admin.php:143
 msgid "Batch"
 msgstr ""
 
-#: includes/Admin.php:137
 #: includes/Ui.php:261
 msgid "Before"
 msgstr ""
@@ -328,7 +328,10 @@ msgstr ""
 msgid "Broken internal link (slow mode)"
 msgstr ""
 
-#: includes/Screens/Alt.php:50
+#: includes/TermOps.php:135
+msgid "broken record"
+msgstr ""
+
 #: includes/Screens/Issues.php:119
 msgid "Bulk actions"
 msgstr ""
@@ -341,12 +344,7 @@ msgstr ""
 msgid "Calculated when the first scan finishes."
 msgstr ""
 
-#: includes/Screens/Alt.php:71
-#: includes/Screens/Issues.php:367
-#: includes/Screens/Issues.php:375
-#: includes/Screens/Prefs.php:78
-#: includes/Screens/Tags.php:182
-#: includes/Screens/Tags.php:183
+#: includes/Screens/UndoLog.php:105
 msgid "Cancel"
 msgstr ""
 
@@ -363,7 +361,7 @@ msgstr ""
 msgid "Changed field:"
 msgstr ""
 
-#: includes/Screens/Tags.php:183
+#: includes/Screens/Tags.php:179
 msgid "Changes are written to the undo log; they can be undone."
 msgstr ""
 
@@ -373,6 +371,18 @@ msgstr ""
 
 #: includes/Rules/Content.php:36
 msgid "Chat sentences left in the first or last block of a post (\"Here is …:\", \"I hope this helps\"). Only the first/last short block counts; editorial phrases in the body such as \"Of course…\" are left alone."
+msgstr ""
+
+#: includes/Screens/Prefs.php:201
+msgid "Checked in every block of the post."
+msgstr ""
+
+#: includes/Screens/Prefs.php:199
+msgid "Checked in the first short block of the post."
+msgstr ""
+
+#: includes/Screens/Prefs.php:200
+msgid "Checked in the last short block of the post."
 msgstr ""
 
 #: includes/Ui.php:210
@@ -395,7 +405,6 @@ msgstr ""
 msgid "Clear selection"
 msgstr ""
 
-#: includes/Admin.php:115
 #: includes/Screens/Issues.php:362
 msgid "Close"
 msgstr ""
@@ -409,44 +418,48 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: includes/Admin.php:225
-#: includes/Admin.php:43
-#: includes/Admin.php:44
-msgid "Content Health"
-msgstr ""
-
-#: includes/Screens/Tags.php:174
-msgid "Content Health can add noindex to single-post tag archives: open the “Single post” class and fix it. The change can be undone."
-msgstr ""
-
-#: includes/Admin.php:236
-msgid "Content Health sections"
+#: includes/Undo.php:110
+msgid "content changed afterwards"
 msgstr ""
 
 #: includes/Registry.php:55
 msgid "Content cleanup"
 msgstr ""
 
+#: includes/Admin.php:227
+msgid "Content Health"
+msgstr ""
+
+#: includes/Screens/Tags.php:170
+msgid "Content Health can add noindex to single-post tag archives: open the “Single post” class and fix it. The change can be undone."
+msgstr ""
+
+#: includes/Admin.php:238
+msgid "Content Health sections"
+msgstr ""
+
 #: includes/Screens/Issues.php:101
 msgid "Content problems found by the scan. Open a row to see the evidence and the suggested fix."
 msgstr ""
 
-#: contenthealth.php:54
+#: contenthealth.php:85
+#, php-format
+msgid "ContentHealth requires the AdminKit plugin. Please %s to continue."
+msgstr ""
+
+#: contenthealth.php:120
 msgid "ContentHealth weekly"
 msgstr ""
 
-#: contenthealth.php:3
-msgctxt "Plugin Name of the plugin"
-msgid "ContentHealth — Content Health"
+#: includes/Admin.php:334
+msgid "contenthealth-findings"
 msgstr ""
 
-#: includes/Admin.php:113
-#: includes/Admin.php:147
 #: includes/Screens/Onboarding.php:68
 msgid "Continue"
 msgstr ""
 
-#: includes/Admin.php:107
+#: includes/Admin.php:109
 msgid "Continue where it left off"
 msgstr ""
 
@@ -458,19 +471,19 @@ msgstr ""
 msgid "Converts markdown marks to their HTML equivalents."
 msgstr ""
 
-#: includes/Fixer.php:345
+#: includes/Fixer.php:359
 msgid "Could not generate a name for this term automatically; enter a new name by hand."
 msgstr ""
 
-#: includes/Admin.php:109
+#: includes/Admin.php:111
 msgid "Could not load the details."
 msgstr ""
 
-#: includes/Admin.php:108
+#: includes/Admin.php:110
 msgid "Could not reach the server. Check your connection and try again."
 msgstr ""
 
-#: includes/Admin.php:129
+#: includes/Admin.php:131
 msgid "Could not undo"
 msgstr ""
 
@@ -499,29 +512,23 @@ msgstr ""
 msgid "Critical problems visible directly to visitors."
 msgstr ""
 
-#: includes/Cli.php:139
-msgid "DRY RUN"
-msgstr ""
-
-#: includes/Screens/Onboarding.php:60
-#: includes/Screens/Prefs.php:126
+#: includes/Screens/Prefs.php:167
 msgid "Daily"
 msgstr ""
 
-#: includes/Admin.php:161
+#: includes/Screens/Overview.php:216
+msgid "daily"
+msgstr ""
+
+#: includes/Admin.php:163
 msgid "Dashboard"
 msgstr ""
 
-#: includes/Screens/Issues.php:129
 #: includes/Screens/Issues.php:152
 msgid "Date"
 msgstr ""
 
-#: includes/Screens/Prefs.php:153
-msgid "Default patterns"
-msgstr ""
-
-#: includes/Screens/Prefs.php:145
+#: includes/Screens/Prefs.php:191
 msgid "Delete data when the plugin is deleted"
 msgstr ""
 
@@ -529,13 +536,17 @@ msgstr ""
 msgid "Delete empty tags…"
 msgstr ""
 
-#: includes/Admin.php:127
+#: includes/Admin.php:129
 msgid "Delete pattern"
 msgstr ""
 
-#: includes/Screens/Prefs.php:161
+#: includes/Screens/Prefs.php:208
 #, php-format
 msgid "Delete pattern: %s"
+msgstr ""
+
+#: includes/Admin.php:133
+msgid "deleted"
 msgstr ""
 
 #: includes/Ui.php:231
@@ -546,8 +557,6 @@ msgstr ""
 msgid "Deletes tags that are attached to no content."
 msgstr ""
 
-#: includes/Screens/Issues.php:153
-#: includes/Screens/Issues.php:365
 #: includes/Screens/UndoLog.php:81
 msgid "Details"
 msgstr ""
@@ -570,15 +579,23 @@ msgstr ""
 msgid "Digits only"
 msgstr ""
 
+#: contenthealth.php:81
+msgid "download and install AdminKit"
+msgstr ""
+
 #: includes/Screens/Issues.php:122
 msgid "Download CSV"
+msgstr ""
+
+#: includes/Cli.php:139
+msgid "DRY RUN"
 msgstr ""
 
 #: includes/Screens/Issues.php:370
 msgid "Dry run"
 msgstr ""
 
-#: includes/Screens/Tags.php:182
+#: includes/Screens/Tags.php:178
 msgid "Dry run: nothing has changed yet."
 msgstr ""
 
@@ -590,7 +607,7 @@ msgstr ""
 msgid "Duplicate paragraph"
 msgstr ""
 
-#: includes/Rules/Terms.php:196
+#: includes/Rules/Terms.php:204
 msgid "Duplicate term"
 msgstr ""
 
@@ -602,16 +619,16 @@ msgstr ""
 msgid "Duration"
 msgstr ""
 
-#: includes/Screens/Prefs.php:163
+#: includes/Screens/Prefs.php:210
 msgid "E.g. Sure,? here is .{0,40}:"
 msgstr ""
 
-#: includes/Cli.php:137
-msgid "ERROR: "
+#: includes/Screens/Prefs.php:216
+msgid "Email marketing is a way of staying in touch with subscribers."
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
-msgid "Email marketing is a way of staying in touch with subscribers."
+#: includes/Screens/Alt.php:63
+msgid "empty"
 msgstr ""
 
 #: includes/Rules/Content.php:466
@@ -626,15 +643,15 @@ msgstr ""
 msgid "Empty tag"
 msgstr ""
 
-#: includes/Rules/Terms.php:38
+#: includes/Rules/Terms.php:39
 msgid "Empty term"
 msgstr ""
 
-#: includes/Screens/Prefs.php:154
-msgid "End patterns"
+#: includes/Screens/Prefs.php:200
+msgid "End of the post"
 msgstr ""
 
-#: includes/Admin.php:146
+#: includes/Admin.php:148
 msgid "Error"
 msgstr ""
 
@@ -665,6 +682,14 @@ msgstr ""
 msgid "Error score: %s · Suggestion score: %s  (last scan: %s)"
 msgstr ""
 
+#: includes/Cli.php:137
+msgid "ERROR: "
+msgstr ""
+
+#: includes/Admin.php:138
+msgid "errors"
+msgstr ""
+
 #: includes/Screens/Overview.php:116
 msgid "Errors on the site, 0–100."
 msgstr ""
@@ -673,16 +698,11 @@ msgstr ""
 msgid "Every automatic fix is stored with its previous values; you can undo it at any time."
 msgstr ""
 
-#: includes/Screens/Issues.php:129
-#: includes/Screens/Issues.php:150
-#: includes/Screens/Issues.php:311
-#: includes/Screens/Overview.php:280
-#: includes/Screens/Overview.php:287
-#: includes/Screens/Tags.php:155
+#: includes/Screens/Tags.php:158
 msgid "Evidence"
 msgstr ""
 
-#: includes/Screens/Prefs.php:138
+#: includes/Screens/Prefs.php:179
 msgid "Excluded post types"
 msgstr ""
 
@@ -730,7 +750,6 @@ msgstr ""
 msgid "Finding not found."
 msgstr ""
 
-#: includes/Admin.php:166
 #: includes/Screens/Issues.php:101
 msgid "Findings"
 msgstr ""
@@ -738,6 +757,10 @@ msgstr ""
 #: includes/Screens/Issues.php:127
 #, php-format
 msgid "Findings list, page %1$d / %2$d"
+msgstr ""
+
+#: includes/Screens/Issues.php:119
+msgid "findings selected"
 msgstr ""
 
 #: includes/Screens/Onboarding.php:56
@@ -769,7 +792,10 @@ msgstr ""
 msgid "Fix selected…"
 msgstr ""
 
-#: includes/Screens/Issues.php:246
+#: includes/Admin.php:120
+msgid "fixed"
+msgstr ""
+
 #: includes/Screens/Issues.php:270
 msgid "Fixed"
 msgstr ""
@@ -782,13 +808,16 @@ msgstr ""
 msgid "Fixed findings are marked “Fixed” in the list; they are verified again in the next scan."
 msgstr ""
 
-#: includes/Screens/Issues.php:365
 #: includes/Screens/Tags.php:148
 msgid "Fix…"
 msgstr ""
 
 #: includes/Screens/Overview.php:275
 msgid "Full list of findings"
+msgstr ""
+
+#: includes/Screens/Issues.php:175
+msgid "full scan"
 msgstr ""
 
 #: includes/Screens/Onboarding.php:67
@@ -799,7 +828,6 @@ msgstr ""
 msgid "Good"
 msgstr ""
 
-#: includes/Screens/Issues.php:237
 #: includes/Screens/Issues.php:261
 msgid "Group"
 msgstr ""
@@ -808,11 +836,15 @@ msgstr ""
 msgid "Heading hierarchy"
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
+#: includes/Screens/Prefs.php:216
 msgid "Here is the article that matches your requirements:"
 msgstr ""
 
-#: includes/Screens/Prefs.php:125
+#: includes/Screens/Overview.php:215
+msgid "hourly"
+msgstr ""
+
+#: includes/Screens/Prefs.php:166
 msgid "Hourly"
 msgstr ""
 
@@ -828,9 +860,6 @@ msgstr ""
 msgid "I understand the change and that the operation can be undone"
 msgstr ""
 
-#: includes/Screens/Issues.php:121
-#: includes/Screens/Issues.php:155
-#: includes/Screens/Issues.php:365
 #: includes/Screens/Tags.php:136
 msgid "Ignore"
 msgstr ""
@@ -840,7 +869,6 @@ msgstr ""
 msgid "Ignore: %s"
 msgstr ""
 
-#: includes/Screens/Issues.php:245
 #: includes/Screens/Issues.php:269
 msgid "Ignored"
 msgstr ""
@@ -859,6 +887,10 @@ msgstr ""
 
 #: includes/Screens/Alt.php:51
 msgid "Images missing alt text, preview"
+msgstr ""
+
+#: includes/Admin.php:113
+msgid "images selected"
 msgstr ""
 
 #: includes/Screens/Overview.php:147
@@ -894,22 +926,20 @@ msgstr ""
 msgid "It takes a few seconds to a few minutes depending on the site size. You can leave this page while the scan runs."
 msgstr ""
 
-#: includes/Screens/Alt.php:71
-#: includes/Screens/Issues.php:337
+#: includes/Screens/Overview.php:223
+msgid "items"
+msgstr ""
+
 #: includes/Screens/Issues.php:373
 msgid "Keep the last modified date unchanged"
 msgstr ""
 
-#: includes/Screens/Prefs.php:143
+#: includes/Screens/Prefs.php:189
 msgid "Keep the last modified date when fixing"
 msgstr ""
 
-#: includes/Screens/Tags.php:170
+#: includes/Screens/Tags.php:166
 msgid "Keep weak tag archives out of search results."
-msgstr ""
-
-#: includes/Rules/Content.php:379
-msgid "LaTeX leftover"
 msgstr ""
 
 #: includes/Screens/Overview.php:243
@@ -926,6 +956,10 @@ msgstr ""
 msgid "Last scan"
 msgstr ""
 
+#: includes/Rules/Content.php:379
+msgid "LaTeX leftover"
+msgstr ""
+
 #: includes/Admin.php:34
 msgid "Launch"
 msgstr ""
@@ -934,11 +968,19 @@ msgstr ""
 msgid "Level"
 msgstr ""
 
+#: includes/Ui.php:260
+msgid "line"
+msgstr ""
+
 #: includes/Registry.php:58
 msgid "Links"
 msgstr ""
 
-#: includes/Screens/Prefs.php:140
+#: includes/Undo.php:163
+msgid "list changed afterwards"
+msgstr ""
+
+#: includes/Screens/Prefs.php:181
 msgid "Live domain"
 msgstr ""
 
@@ -966,13 +1008,20 @@ msgstr ""
 msgid "Loosen or clear the filters."
 msgstr ""
 
-#: includes/Screens/Onboarding.php:60
-#: includes/Screens/Prefs.php:124
+#: includes/Screens/Prefs.php:165
 msgid "Manual only"
 msgstr ""
 
 #: includes/Rules/Content.php:201
 msgid "Markdown leftover"
+msgstr ""
+
+#: includes/Screens/Prefs.php:201
+msgid "Match anywhere in the text"
+msgstr ""
+
+#: includes/Admin.php:127
+msgid "matches"
 msgstr ""
 
 #: includes/Screens/Prefs.php:55
@@ -983,7 +1032,7 @@ msgstr ""
 msgid "Maximum characters"
 msgstr ""
 
-#: includes/Screens/Prefs.php:136
+#: includes/Screens/Prefs.php:177
 msgid "Maximum duration of each scan step (1–20) and number of records per step (10–500)."
 msgstr ""
 
@@ -991,7 +1040,7 @@ msgstr ""
 msgid "Maximum length (characters)"
 msgstr ""
 
-#: includes/Screens/Overview.php:169
+#: includes/Screens/Overview.php:171
 msgid "Maximum penalty per rule"
 msgstr ""
 
@@ -1011,11 +1060,11 @@ msgstr ""
 msgid "Media library"
 msgstr ""
 
-#: includes/Screens/Tags.php:182
+#: includes/Screens/Tags.php:178
 msgid "Merge"
 msgstr ""
 
-#: includes/Admin.php:130
+#: includes/Admin.php:132
 msgid "Merged"
 msgstr ""
 
@@ -1031,8 +1080,16 @@ msgstr ""
 msgid "Meta and SEO"
 msgstr ""
 
+#: includes/Undo.php:125
+msgid "meta changed afterwards"
+msgstr ""
+
 #: includes/Rules/Seo.php:68
 msgid "Meta description length"
+msgstr ""
+
+#: includes/Undo.php:122
+msgid "meta row is gone"
 msgstr ""
 
 #: includes/Screens/Prefs.php:54
@@ -1059,7 +1116,7 @@ msgstr ""
 msgid "Mixed content (http)"
 msgstr ""
 
-#: includes/Rules/Terms.php:307
+#: includes/Rules/Terms.php:315
 msgid "More tags than the threshold are attached to one post (default 15)."
 msgstr ""
 
@@ -1075,11 +1132,10 @@ msgstr ""
 msgid "Nested quantifiers (ReDoS risk) are not accepted."
 msgstr ""
 
-#: includes/Screens/Prefs.php:163
+#: includes/Screens/Prefs.php:210
 msgid "New pattern"
 msgstr ""
 
-#: includes/Ui.php:201
 #: includes/Ui.php:202
 msgid "Next page"
 msgstr ""
@@ -1088,17 +1144,16 @@ msgstr ""
 msgid "Next scan"
 msgstr ""
 
-#: includes/Screens/Prefs.php:181
-#: includes/Screens/Tags.php:174
-msgid "No SEO plugin found."
-msgstr ""
-
-#: includes/Admin.php:318
+#: includes/Admin.php:322
 msgid "No action or selection."
 msgstr ""
 
 #: includes/Ui.php:220
 msgid "No automatic fix; open the post and fix it by hand."
+msgstr ""
+
+#: includes/Screens/Onboarding.php:57
+msgid "no content changes unless you approve."
 msgstr ""
 
 #: includes/Screens/Overview.php:277
@@ -1133,7 +1188,7 @@ msgstr ""
 msgid "No internal links"
 msgstr ""
 
-#: includes/Admin.php:124
+#: includes/Admin.php:126
 msgid "No match in the sample text."
 msgstr ""
 
@@ -1169,6 +1224,10 @@ msgstr ""
 msgid "No score"
 msgstr ""
 
+#: includes/Screens/Tags.php:170
+msgid "No SEO plugin found."
+msgstr ""
+
 #: includes/Screens/UndoLog.php:41
 msgid "No undoable operation yet"
 msgstr ""
@@ -1177,7 +1236,7 @@ msgstr ""
 msgid "No."
 msgstr ""
 
-#: includes/Screens/Tags.php:170
+#: includes/Screens/Tags.php:166
 msgid "Noindex for tags"
 msgstr ""
 
@@ -1189,11 +1248,10 @@ msgstr ""
 msgid "Not scheduled (scanned manually)"
 msgstr ""
 
-#: includes/Admin.php:135
+#: includes/Admin.php:137
 msgid "Nothing to change."
 msgstr ""
 
-#: includes/Screens/Alt.php:51
 #: includes/Screens/Alt.php:63
 msgid "Now"
 msgstr ""
@@ -1207,7 +1265,6 @@ msgstr ""
 msgid "Numbers/scores in dollar delimiters like $5.3/10$ and the \\frac, \\times commands."
 msgstr ""
 
-#: includes/Screens/Issues.php:129
 #: includes/Screens/Overview.php:280
 msgid "Object"
 msgstr ""
@@ -1216,11 +1273,11 @@ msgstr ""
 msgid "One of the terms to merge does not exist."
 msgstr ""
 
-#: includes/Screens/Prefs.php:138
+#: includes/Screens/Prefs.php:179
 msgid "One post type name per line."
 msgstr ""
 
-#: includes/Screens/Prefs.php:137
+#: includes/Screens/Prefs.php:178
 msgid "One status per line (publish, draft…)."
 msgstr ""
 
@@ -1228,20 +1285,26 @@ msgstr ""
 msgid "Only empty alt texts are filled; existing ones are not touched."
 msgstr ""
 
-#: includes/Admin.php:193
+#: includes/Screens/Onboarding.php:57
+msgid "only read"
+msgstr ""
+
+#: includes/Admin.php:195
 msgid "Only the administrator role can use Content Health. Ask your site administrator for access."
 msgstr ""
 
-#: includes/Screens/Issues.php:244
 #: includes/Screens/Issues.php:268
 msgid "Open"
+msgstr ""
+
+#: includes/Admin.php:151
+msgid "open findings found."
 msgstr ""
 
 #: includes/Screens/Issues.php:365
 msgid "Open post"
 msgstr ""
 
-#: includes/Screens/UndoLog.php:44
 #: includes/Screens/UndoLog.php:60
 msgid "Operation"
 msgstr ""
@@ -1262,11 +1325,11 @@ msgstr ""
 msgid "Partly undone"
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
+#: includes/Screens/Prefs.php:216
 msgid "Pattern"
 msgstr ""
 
-#: includes/Screens/Prefs.php:156
+#: includes/Screens/Prefs.php:203
 msgid "Pattern editor"
 msgstr ""
 
@@ -1274,7 +1337,14 @@ msgstr ""
 msgid "Pattern is too long."
 msgstr ""
 
-#: includes/Admin.php:101
+#: includes/Screens/Prefs.php:83
+msgid "Patterns"
+msgstr ""
+
+#: includes/Screens/Prefs.php:66
+msgid "Patterns (one per line)"
+msgstr ""
+
 #: includes/Screens/Overview.php:207
 msgid "Pause"
 msgstr ""
@@ -1287,8 +1357,6 @@ msgstr ""
 msgid "Poor"
 msgstr ""
 
-#: includes/Screens/Tags.php:155
-#: includes/Screens/Tags.php:158
 #: includes/Ui.php:143
 msgid "Post"
 msgstr ""
@@ -1297,16 +1365,24 @@ msgstr ""
 msgid "Post changed afterwards"
 msgstr ""
 
+#: includes/Undo.php:107
+msgid "post is gone"
+msgstr ""
+
 #: includes/Fixer.php:142
 msgid "Post not found."
 msgstr ""
 
-#: includes/Screens/Prefs.php:137
+#: includes/Screens/Prefs.php:178
 msgid "Post statuses scanned"
 msgstr ""
 
 #: includes/Screens/Prefs.php:59
 msgid "Post types (one per line)"
+msgstr ""
+
+#: includes/Screens/UndoLog.php:50
+msgid "posts"
 msgstr ""
 
 #: includes/Scanner.php:102
@@ -1317,6 +1393,10 @@ msgstr ""
 msgid "Posts and pages"
 msgstr ""
 
+#: includes/Screens/Alt.php:50
+msgid "posts selected"
+msgstr ""
+
 #: includes/Screens/Overview.php:198
 msgid "Posts, pages, products, media and tags are scanned in batches."
 msgstr ""
@@ -1325,12 +1405,10 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: includes/Screens/Issues.php:336
 #: includes/Ui.php:229
 msgid "Preview: before / after"
 msgstr ""
 
-#: includes/Ui.php:188
 #: includes/Ui.php:189
 msgid "Previous page"
 msgstr ""
@@ -1339,7 +1417,6 @@ msgstr ""
 msgid "Priority problems"
 msgstr ""
 
-#: includes/Screens/Overview.php:280
 #: includes/Screens/Overview.php:286
 msgid "Problem"
 msgstr ""
@@ -1348,7 +1425,7 @@ msgstr ""
 msgid "Problem classes"
 msgstr ""
 
-#: includes/Screens/Prefs.php:144
+#: includes/Screens/Prefs.php:190
 msgid "Re-check on save"
 msgstr ""
 
@@ -1356,11 +1433,11 @@ msgstr ""
 msgid "Recommended. Items do not show as “updated” and the ordering is not disturbed."
 msgstr ""
 
-#: includes/Screens/Prefs.php:136
+#: includes/Screens/Prefs.php:177
 msgid "Records per step"
 msgstr ""
 
-#: includes/Screens/Prefs.php:165
+#: includes/Screens/Prefs.php:212
 msgid "Regular expression (PCRE). Invalid or extremely slow patterns are rejected on save."
 msgstr ""
 
@@ -1393,7 +1470,6 @@ msgstr ""
 msgid "Result"
 msgstr ""
 
-#: includes/Admin.php:102
 #: includes/Screens/Overview.php:207
 msgid "Resume"
 msgstr ""
@@ -1407,19 +1483,10 @@ msgstr ""
 msgid "Review"
 msgstr ""
 
-#: includes/Screens/Issues.php:129
-#: includes/Screens/Issues.php:149
-#: includes/Screens/Issues.php:238
-#: includes/Screens/Issues.php:262
 #: includes/Screens/Issues.php:371
 msgid "Rule"
 msgstr ""
 
-#: includes/Screens/Prefs.php:83
-msgid "Rules"
-msgstr ""
-
-#: includes/Admin.php:112
 #: includes/Screens/Issues.php:375
 msgid "Run dry run"
 msgstr ""
@@ -1428,19 +1495,19 @@ msgstr ""
 msgid "Run not found."
 msgstr ""
 
-#: includes/Admin.php:117
+#: includes/Admin.php:119
 msgid "Running dry run…"
 msgstr ""
 
-#: includes/Screens/Prefs.php:177
-msgid "SEO plugin"
+#: includes/Screens/Overview.php:221
+msgid "s"
 msgstr ""
 
-#: includes/Screens/Prefs.php:142
+#: includes/Screens/Prefs.php:188
 msgid "Safety"
 msgstr ""
 
-#: includes/Admin.php:121
+#: includes/Admin.php:123
 msgid "Sample"
 msgstr ""
 
@@ -1448,24 +1515,19 @@ msgstr ""
 msgid "Sample changes"
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
+#: includes/Screens/Prefs.php:216
 msgid "Sample text"
 msgstr ""
 
-#: includes/Screens/Prefs.php:78
-msgid "Save bar"
-msgstr ""
-
-#: includes/Screens/Prefs.php:78
+#: includes/Screens/Prefs.php:122
 msgid "Save changes"
 msgstr ""
 
-#: includes/Admin.php:293
+#: includes/Admin.php:297
 msgid "Saved; some patterns were skipped because they are invalid: "
 msgstr ""
 
-#: includes/Screens/Overview.php:198
-#: includes/Screens/Prefs.php:130
+#: includes/Screens/Prefs.php:171
 msgid "Scan"
 msgstr ""
 
@@ -1474,43 +1536,42 @@ msgstr ""
 msgid "Scan %s: error score %s, time %.2f s, peak memory %.1f MB"
 msgstr ""
 
-#: includes/Admin.php:103
+#: includes/Admin.php:105
 msgid "Scan cancelled."
 msgstr ""
 
-#: includes/Admin.php:104
+#: includes/Admin.php:106
 msgid "Scan finished."
 msgstr ""
 
-#: includes/Screens/Onboarding.php:59
-#: includes/Screens/Prefs.php:131
+#: includes/Screens/Prefs.php:172
 msgid "Scan frequency"
 msgstr ""
 
-#: includes/Admin.php:227
-#: includes/Admin.php:229
-#: includes/Screens/Alt.php:37
-#: includes/Screens/Issues.php:104
-#: includes/Screens/Overview.php:85
 #: includes/Screens/Tags.php:56
 msgid "Scan now"
 msgstr ""
 
-#: includes/Admin.php:100
 #: includes/Screens/Overview.php:202
 msgid "Scan paused"
 msgstr ""
 
-#: includes/Screens/Onboarding.php:66
 #: includes/Screens/Overview.php:204
 msgid "Scan progress"
 msgstr ""
 
-#: includes/Admin.php:105
+#: includes/Screens/Prefs.php:177
+msgid "Scan step"
+msgstr ""
+
+#: includes/Admin.php:107
 msgid "Scan stopped."
 msgstr ""
 
-#: includes/Admin.php:99
+#: includes/Screens/Issues.php:310
+msgid "scanned"
+msgstr ""
+
 #: includes/Screens/Overview.php:202
 msgid "Scanning…"
 msgstr ""
@@ -1519,8 +1580,6 @@ msgstr ""
 msgid "Scans"
 msgstr ""
 
-#: includes/Screens/Overview.php:223
-#: includes/Screens/UndoLog.php:44
 #: includes/Screens/UndoLog.php:61
 msgid "Scope"
 msgstr ""
@@ -1545,7 +1604,6 @@ msgstr ""
 msgid "Select all findings on this page"
 msgstr ""
 
-#: includes/Screens/Alt.php:59
 #: includes/Screens/Issues.php:146
 #, php-format
 msgid "Select: %s"
@@ -1563,23 +1621,26 @@ msgstr ""
 msgid "Sends a rate-limited (at most 2 per second) HEAD request to internal links; finds 404/410 and connection errors. Off by default so it does not load the server."
 msgstr ""
 
-#: includes/Admin.php:183
+#: includes/Screens/Prefs.php:222
+msgid "SEO plugin"
+msgstr ""
+
+#: includes/Admin.php:185
 msgid "Settings"
 msgstr ""
 
-#: includes/Admin.php:295
+#: includes/Admin.php:299
 msgid "Settings saved."
+msgstr ""
+
+#: includes/Screens/Prefs.php:100
+msgid "Settings sections"
 msgstr ""
 
 #: includes/Screens/Onboarding.php:48
 msgid "Setup steps"
 msgstr ""
 
-#: includes/Screens/Issues.php:129
-#: includes/Screens/Issues.php:151
-#: includes/Screens/Issues.php:239
-#: includes/Screens/Issues.php:263
-#: includes/Screens/Overview.php:280
 #: includes/Screens/Overview.php:284
 msgid "Severity"
 msgstr ""
@@ -1596,11 +1657,19 @@ msgstr ""
 msgid "Single post"
 msgstr ""
 
-#: includes/Rules/Terms.php:97
+#: includes/Rules/Terms.php:98
 msgid "Single-use term"
 msgstr ""
 
-#: includes/Admin.php:148
+#: includes/Admin.php:121
+msgid "skipped"
+msgstr ""
+
+#: includes/Screens/Prefs.php:199
+msgid "Start of the post"
+msgstr ""
+
+#: includes/Admin.php:150
 msgid "Start the first scan"
 msgstr ""
 
@@ -1608,14 +1677,10 @@ msgstr ""
 msgid "Start the first scan; the results appear here as a score and groups."
 msgstr ""
 
-#: includes/Admin.php:98
 #: includes/Screens/Onboarding.php:66
 msgid "Starting scan…"
 msgstr ""
 
-#: includes/Screens/Issues.php:242
-#: includes/Screens/Issues.php:266
-#: includes/Screens/UndoLog.php:44
 #: includes/Screens/UndoLog.php:62
 msgid "Status"
 msgstr ""
@@ -1624,7 +1689,7 @@ msgstr ""
 msgid "Status by group"
 msgstr ""
 
-#: includes/Screens/Prefs.php:136
+#: includes/Screens/Prefs.php:177
 msgid "Step duration (s)"
 msgstr ""
 
@@ -1657,28 +1722,36 @@ msgstr ""
 msgid "Tag #%d"
 msgstr ""
 
-#: includes/Modules/Taxonomy.php:31
-msgid "Tag Doctor"
-msgstr ""
-
-#: includes/Screens/Prefs.php:139
-msgid "Tag Doctor looks at these taxonomies. One name per line."
-msgstr ""
-
 #: includes/Registry.php:59
 msgid "Tag and category"
 msgstr ""
 
-#: includes/Screens/Tags.php:168
+#: includes/Seo.php:70
 msgid "Tag archives are managed in All in One SEO's search appearance settings."
 msgstr ""
 
-#: includes/Screens/Tags.php:167
+#: includes/Seo.php:68
 msgid "Tag archives are managed in Rank Math's “Titles & Meta” section."
 msgstr ""
 
-#: includes/Screens/Tags.php:166
+#: includes/Seo.php:64
+msgid "Tag archives are managed in WPSeoKit's “Titles & descriptions” › “Categories & tags” settings (Search results: noindex taxonomies); Content Health does not write to that setting."
+msgstr ""
+
+#: includes/Seo.php:66
 msgid "Tag archives are managed in Yoast's “Taxonomies” setting; Content Health does not write to that setting."
+msgstr ""
+
+#: includes/Modules/Taxonomy.php:32
+msgid "Tag Doctor"
+msgstr ""
+
+#: includes/Screens/Prefs.php:180
+msgid "Tag Doctor looks at these taxonomies. One name per line."
+msgstr ""
+
+#: includes/Screens/UndoLog.php:50
+msgid "tags"
 msgstr ""
 
 #: includes/Screens/Onboarding.php:56
@@ -1693,7 +1766,11 @@ msgstr ""
 msgid "Tags that are spelled differently but describe the same topic. In each cluster, choose the canonical tag to keep."
 msgstr ""
 
-#: includes/Screens/Prefs.php:139
+#: includes/Screens/Prefs.php:67
+msgid "Taxonomies (one per line)"
+msgstr ""
+
+#: includes/Screens/Prefs.php:180
 msgid "Taxonomies scanned"
 msgstr ""
 
@@ -1701,23 +1778,35 @@ msgstr ""
 msgid "Template"
 msgstr ""
 
-#: includes/Rules/Terms.php:161
+#: includes/TermOps.php:138
+msgid "term already exists"
+msgstr ""
+
+#: includes/Undo.php:149
+msgid "term changed afterwards"
+msgstr ""
+
+#: includes/Undo.php:146
+msgid "term is gone"
+msgstr ""
+
+#: includes/Rules/Terms.php:169
 msgid "Term made only of digits"
 msgstr ""
 
-#: includes/Fixer.php:339
+#: includes/Fixer.php:353
 msgid "Term not found."
 msgstr ""
 
-#: includes/Rules/Terms.php:199
+#: includes/Rules/Terms.php:207
 msgid "Terms that are the same apart from case, accents and punctuation, or a single-letter difference (in long names). Merging is recommended."
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
+#: includes/Screens/Prefs.php:216
 msgid "Test"
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
+#: includes/Screens/Prefs.php:216
 msgid "Test the pattern"
 msgstr ""
 
@@ -1729,7 +1818,7 @@ msgstr ""
 msgid "The affected items return to their state before the fix. Manual changes made in between are not overwritten; changed items are skipped."
 msgstr ""
 
-#: includes/Screens/Prefs.php:131
+#: includes/Screens/Prefs.php:172
 msgid "The automatic scan runs in the background with WP-Cron."
 msgstr ""
 
@@ -1737,21 +1826,7 @@ msgstr ""
 msgid "The automatic scan runs in the background with WP-Cron; you can change it later in Settings."
 msgstr ""
 
-#: contenthealth.php:73
-msgid "activate AdminKit"
-msgstr ""
-
-#: contenthealth.php:77
-#: contenthealth.php:87
-#, php-format
-msgid "ContentHealth requires the AdminKit plugin. Please %s to continue."
-msgstr ""
-
-#: contenthealth.php:83
-msgid "download and install AdminKit"
-msgstr ""
-
-#: includes/Screens/Prefs.php:156
+#: includes/Screens/Prefs.php:203
 msgid "The chat-leftover rule looks for these patterns. Add your own pattern and test it without saving."
 msgstr ""
 
@@ -1760,7 +1835,7 @@ msgid "The content has more than one <h1> (the theme title is not counted separa
 msgstr ""
 
 #: includes/Rules/Seo.php:42
-msgid "The description field of the SEO plugin (Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read."
+msgid "The description field of the SEO plugin (WPSeoKit, Yoast, Rank Math, AIOSEO) and the excerpt are both empty. If there is no plugin, the excerpt is read."
 msgstr ""
 
 #: includes/Screens/Onboarding.php:67
@@ -1771,15 +1846,15 @@ msgstr ""
 msgid "The image address points to a development/staging server (.test, localhost), a repeated extension or a broken format."
 msgstr ""
 
-#: includes/Screens/Prefs.php:181
+#: includes/Screens/Prefs.php:226
 msgid "The meta description rule looks only at the post excerpt."
 msgstr ""
 
-#: includes/Screens/Prefs.php:179
+#: includes/Screens/Prefs.php:224
 msgid "The meta description rule reads this plugin's field."
 msgstr ""
 
-#: includes/Admin.php:126
+#: includes/Admin.php:128
 msgid "The pattern is invalid or too slow."
 msgstr ""
 
@@ -1791,7 +1866,7 @@ msgstr ""
 msgid "The post title exceeds the set character limit (default 70)."
 msgstr ""
 
-#: includes/Screens/Prefs.php:166
+#: includes/Screens/Prefs.php:216
 msgid "The result appears here."
 msgstr ""
 
@@ -1799,11 +1874,11 @@ msgstr ""
 msgid "The scan results contain no tag problems. They appear here after a new scan."
 msgstr ""
 
-#: includes/Rules/Terms.php:62
+#: includes/Rules/Terms.php:63
 msgid "The tag name exceeds the character or word limit; usually a sentence or paragraph was entered as a tag."
 msgstr ""
 
-#: includes/Screens/Prefs.php:140
+#: includes/Screens/Prefs.php:181
 msgid "The target of the wrong-address fix. If empty, the site address is used."
 msgstr ""
 
@@ -1811,11 +1886,11 @@ msgstr ""
 msgid "The term is no longer empty; it was not deleted."
 msgstr ""
 
-#: includes/Rules/Terms.php:127
+#: includes/Rules/Terms.php:135
 msgid "The term name contains a chat sentence, a markdown mark or a line break (\"Here are the tags:\", \"**movie**\")."
 msgstr ""
 
-#: includes/Rules/Terms.php:164
+#: includes/Rules/Terms.php:172
 msgid "The term name is only a number (e.g. \"2019\"). Turn the rule off if year tags are intentional."
 msgstr ""
 
@@ -1839,16 +1914,14 @@ msgstr ""
 msgid "There are no open duplicate-tag findings."
 msgstr ""
 
-#: includes/Admin.php:123
-#: includes/Screens/Prefs.php:78
+#: includes/Admin.php:125
 msgid "There are no unsaved changes."
 msgstr ""
 
-#: includes/Admin.php:122
+#: includes/Admin.php:124
 msgid "There are unsaved changes."
 msgstr ""
 
-#: includes/Fixer.php:44
 #: includes/Rule.php:91
 msgid "There is no automatic fix for this rule."
 msgstr ""
@@ -1882,11 +1955,10 @@ msgstr ""
 msgid "Thumbnail of %s"
 msgstr ""
 
-#: includes/Admin.php:139
+#: includes/Admin.php:141
 msgid "Tick the confirmation box to continue."
 msgstr ""
 
-#: includes/Screens/UndoLog.php:44
 #: includes/Screens/UndoLog.php:59
 msgid "Time"
 msgstr ""
@@ -1910,7 +1982,7 @@ msgstr[1] ""
 msgid "Tokens"
 msgstr ""
 
-#: includes/Rules/Terms.php:304
+#: includes/Rules/Terms.php:312
 msgid "Too many terms per post"
 msgstr ""
 
@@ -1919,22 +1991,19 @@ msgstr ""
 msgid "Total found: %d"
 msgstr ""
 
-#: includes/Admin.php:106
+#: includes/Admin.php:108
 msgid "Try again"
 msgstr ""
 
-#: includes/Admin.php:133
 #: includes/Screens/UndoLog.php:105
-#: includes/Screens/UndoLog.php:73
 msgid "Undo"
 msgstr ""
 
-#: includes/Admin.php:178
 #: includes/Screens/UndoLog.php:38
 msgid "Undo log"
 msgstr ""
 
-#: includes/Admin.php:134
+#: includes/Admin.php:136
 msgid "Undo record"
 msgstr ""
 
@@ -1942,13 +2011,17 @@ msgstr ""
 msgid "Undo this operation?"
 msgstr ""
 
+#: includes/Screens/UndoLog.php:71
+#, php-format
+msgid "Undo: operation #%d"
+msgstr ""
+
 #: includes/Screens/Issues.php:373
 msgid "Undo: Undo log → this operation → Undo. No revision is created; the log keeps the previous value."
 msgstr ""
 
-#: includes/Screens/UndoLog.php:71
-#, php-format
-msgid "Undo: operation #%d"
+#: includes/Screens/UndoLog.php:94
+msgid "undone"
 msgstr ""
 
 #: includes/Screens/UndoLog.php:52
@@ -1959,11 +2032,14 @@ msgstr ""
 msgid "Unfilled template text such as [Character 1], {{field}}, Lorem ipsum and \"…to be added\". Not fixed automatically: what to fill in is the editor's decision."
 msgstr ""
 
+#: includes/Undo.php:170
+msgid "unknown field"
+msgstr ""
+
 #: includes/Fixer.php:90
 msgid "Unknown fix action."
 msgstr ""
 
-#: includes/Screens/Alt.php:51
 #: includes/Screens/Alt.php:62
 msgid "Used in"
 msgstr ""
@@ -1972,7 +2048,7 @@ msgstr ""
 msgid "Very long name"
 msgstr ""
 
-#: includes/Rules/Terms.php:59
+#: includes/Rules/Terms.php:60
 msgid "Very long term"
 msgstr ""
 
@@ -1984,16 +2060,19 @@ msgstr ""
 msgid "Warning"
 msgstr ""
 
-#: includes/Screens/Onboarding.php:60
-#: includes/Screens/Prefs.php:127
+#: includes/Screens/Prefs.php:168
 msgid "Weekly"
+msgstr ""
+
+#: includes/Screens/Overview.php:217
+msgid "weekly"
 msgstr ""
 
 #: includes/Screens/Overview.php:169
 msgid "Weight and cap by severity"
 msgstr ""
 
-#: includes/Screens/Overview.php:169
+#: includes/Screens/Overview.php:171
 msgid "Weight per percent"
 msgstr ""
 
@@ -2005,15 +2084,19 @@ msgstr ""
 msgid "What should we scan?"
 msgstr ""
 
-#: includes/Screens/Prefs.php:145
+#: includes/Screens/Issues.php:175
+msgid "when a post is saved"
+msgstr ""
+
+#: includes/Screens/Prefs.php:191
 msgid "When off, findings, settings and the undo log remain even if the plugin is deleted."
 msgstr ""
 
-#: includes/Screens/Prefs.php:143
+#: includes/Screens/Prefs.php:189
 msgid "When on, fixed posts do not show as “updated”."
 msgstr ""
 
-#: includes/Screens/Prefs.php:144
+#: includes/Screens/Prefs.php:190
 msgid "When you save a post, only that post's findings are checked again; a finding you fixed by hand becomes “fixed” on its own. Rules that look at the whole site, such as duplicate title and orphan content, wait for the scan."
 msgstr ""
 
@@ -2029,12 +2112,17 @@ msgstr ""
 msgid "Why does it matter?"
 msgstr ""
 
-#: includes/Admin.php:145
+#: includes/Admin.php:147
 msgid "Will be skipped"
 msgstr ""
 
-#: includes/Admin.php:144
+#: includes/Admin.php:146
 msgid "Will change"
+msgstr ""
+
+#: includes/Fixer.php:314
+#, php-format
+msgid "WPSeoKit controls the robots tag. Turn on noindex for this archive type in WPSeoKit › Titles & descriptions › Search results (%s). Content Health left it alone to avoid a double tag."
 msgstr ""
 
 #: includes/Rules/Content.php:151
@@ -2045,197 +2133,12 @@ msgstr ""
 msgid "Wrong server address"
 msgstr ""
 
-#: includes/Admin.php:193
+#: includes/Admin.php:195
 msgid "You do not have access to this page"
 msgstr ""
 
-#: includes/Admin.php:263
+#: includes/Admin.php:265
 msgid "You do not have permission for this action."
-msgstr ""
-
-#: includes/Admin.php:140
-msgid "about"
-msgstr ""
-
-#: includes/Undo.php:136
-msgid "alt text changed afterwards"
-msgstr ""
-
-#: includes/TermOps.php:135
-msgid "broken record"
-msgstr ""
-
-#: includes/Undo.php:110
-msgid "content changed afterwards"
-msgstr ""
-
-#: includes/Admin.php:330
-msgid "contenthealth-findings"
-msgstr ""
-
-#: includes/Screens/Overview.php:216
-msgid "daily"
-msgstr ""
-
-#: includes/Admin.php:131
-msgid "deleted"
-msgstr ""
-
-#: includes/Screens/Alt.php:63
-msgid "empty"
-msgstr ""
-
-#: includes/Admin.php:136
-msgid "errors"
-msgstr ""
-
-#: includes/Admin.php:110
-#: includes/Screens/Issues.php:119
-msgid "findings selected"
-msgstr ""
-
-#: includes/Admin.php:118
-msgid "fixed"
-msgstr ""
-
-#: includes/Screens/Issues.php:175
-msgid "full scan"
-msgstr ""
-
-#: includes/Screens/Overview.php:215
-msgid "hourly"
-msgstr ""
-
-#: includes/Admin.php:111
-msgid "images selected"
-msgstr ""
-
-#: includes/Admin.php:142
-#: includes/Screens/Overview.php:205
-#: includes/Screens/Overview.php:223
-msgid "items"
-msgstr ""
-
-#: includes/Ui.php:260
-msgid "line"
-msgstr ""
-
-#: includes/Undo.php:163
-msgid "list changed afterwards"
-msgstr ""
-
-#: includes/Admin.php:125
-msgid "matches"
-msgstr ""
-
-#: includes/Undo.php:125
-msgid "meta changed afterwards"
-msgstr ""
-
-#: includes/Undo.php:122
-msgid "meta row is gone"
-msgstr ""
-
-#: includes/Screens/Onboarding.php:57
-msgid "no content changes unless you approve."
-msgstr ""
-
-#: includes/Admin.php:333
-msgctxt "CSV column header"
-msgid "object"
-msgstr ""
-
-#: includes/Screens/Onboarding.php:57
-msgid "only read"
-msgstr ""
-
-#: includes/Admin.php:149
-msgid "open findings found."
-msgstr ""
-
-#: includes/Undo.php:107
-msgid "post is gone"
-msgstr ""
-
-#: includes/Admin.php:120
-#: includes/Screens/UndoLog.php:50
-msgid "posts"
-msgstr ""
-
-#: includes/Screens/Alt.php:50
-msgid "posts selected"
-msgstr ""
-
-#: includes/Admin.php:333
-msgctxt "CSV column header"
-msgid "rule"
-msgstr ""
-
-#: includes/Admin.php:143
-#: includes/Screens/Overview.php:221
-msgid "s"
-msgstr ""
-
-#: includes/Screens/Issues.php:310
-msgid "scanned"
-msgstr ""
-
-#: includes/Admin.php:333
-msgctxt "CSV column header"
-msgid "severity"
-msgstr ""
-
-#: includes/Admin.php:119
-msgid "skipped"
-msgstr ""
-
-#: includes/Admin.php:333
-msgctxt "CSV column header"
-msgid "status"
-msgstr ""
-
-#: includes/Admin.php:333
-msgctxt "CSV column header"
-msgid "summary"
-msgstr ""
-
-#: includes/Screens/Overview.php:223
-#: includes/Screens/UndoLog.php:50
-msgid "tags"
-msgstr ""
-
-#: includes/TermOps.php:138
-msgid "term already exists"
-msgstr ""
-
-#: includes/Undo.php:149
-msgid "term changed afterwards"
-msgstr ""
-
-#: includes/Undo.php:146
-msgid "term is gone"
-msgstr ""
-
-#: includes/Admin.php:333
-msgctxt "CSV column header"
-msgid "type"
-msgstr ""
-
-#: includes/Admin.php:128
-#: includes/Screens/UndoLog.php:94
-msgid "undone"
-msgstr ""
-
-#: includes/Undo.php:170
-msgid "unknown field"
-msgstr ""
-
-#: includes/Screens/Overview.php:217
-msgid "weekly"
-msgstr ""
-
-#: includes/Screens/Issues.php:175
-msgid "when a post is saved"
 msgstr ""
 
 #: includes/Screens/Alt.php:43
@@ -2246,9 +2149,6 @@ msgstr ""
 msgid "{site_name}"
 msgstr ""
 
-#: includes/Fixer.php:120
-#: includes/Modules/Media.php:25
-#: includes/Screens/Alt.php:32
 #: includes/Screens/Alt.php:43
 msgid "{title}"
 msgstr ""
@@ -2261,4 +2161,34 @@ msgstr ""
 #: includes/Screens/Overview.php:188
 #, php-format
 msgid "−%s points"
+msgstr ""
+
+#: includes/Admin.php:337
+msgctxt "CSV column header"
+msgid "object"
+msgstr ""
+
+#: includes/Admin.php:337
+msgctxt "CSV column header"
+msgid "rule"
+msgstr ""
+
+#: includes/Admin.php:337
+msgctxt "CSV column header"
+msgid "severity"
+msgstr ""
+
+#: includes/Admin.php:337
+msgctxt "CSV column header"
+msgid "status"
+msgstr ""
+
+#: includes/Admin.php:337
+msgctxt "CSV column header"
+msgid "summary"
+msgstr ""
+
+#: includes/Admin.php:337
+msgctxt "CSV column header"
+msgid "type"
 msgstr ""
