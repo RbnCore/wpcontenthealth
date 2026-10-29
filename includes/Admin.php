@@ -135,8 +135,14 @@ final class Admin {
 			'willSkip'     => __( 'Will be skipped', 'contenthealth' ),
 			'errorsK'      => __( 'Error', 'contenthealth' ),
 			'next'         => __( 'Continue', 'contenthealth' ),
-			'startScan'    => __( 'Start the first scan', 'contenthealth' ),
-			'openIssues'   => __( 'open findings found.', 'contenthealth' ),
+			'startScan'       => __( 'Start the first scan', 'contenthealth' ),
+			'openIssues'      => __( 'open findings found.', 'contenthealth' ),
+			'undoConfirm'     => __( 'The affected items return to their state before the fix. Manual changes made in between are not overwritten; changed items are skipped.', 'contenthealth' ),
+			'merge'           => __( 'Merge', 'contenthealth' ),
+			'apply'           => __( 'Apply', 'contenthealth' ),
+			'dryDone'         => __( 'Dry run: nothing has changed yet.', 'contenthealth' ),
+			'applyOneTitle'   => __( 'This fix will change 1 item', 'contenthealth' ),
+			'applyOneConfirm' => __( 'Apply the fix', 'contenthealth' ),
 		);
 	}
 

@@ -62,7 +62,7 @@ final class UndoLog {
 			echo '<td data-label="' . esc_attr__( 'Status', 'contenthealth' ) . '">' . $badge . '</td><td><div class="rbn-acts">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( $pending > 0 ) {
 				printf(
-					'<button type="button" class="rbn-btn rbn-btn--sm" data-open="dlg-geri" data-undo="%1$s" data-undo-no="%2$d" data-undo-n="%3$d" data-undo-unit="%4$s" aria-label="%5$s">%6$s%7$s</button>',
+					'<button type="button" class="rbn-btn rbn-btn--sm" data-undo="%1$s" data-undo-no="%2$d" data-undo-n="%3$d" data-undo-unit="%4$s" aria-label="%5$s">%6$s%7$s</button>',
 					esc_attr( (string) $b->batch_id ),
 					$no,
 					(int) $b->objects,
@@ -97,11 +97,10 @@ final class UndoLog {
 	}
 
 	public static function dialogs(): void {
-		self::undo_dialog( Ui::tone_attr() );
 	}
 
-	/** Geri alma onayı (Bulgular sihirbazı ile ortak). */
+	/** Geri alma onayı (RbnUi.confirm'e taşındı; geriye uyum için boş). */
 	public static function undo_dialog( string $tone_attr ): void {
-		echo '<dialog class="rbn-dlg" id="dlg-geri"' . $tone_attr . ' aria-labelledby="dlg-geri-t" aria-describedby="dlg-geri-d"><div class="rbn-dlg__b"><h2 id="dlg-geri-t" data-undo-title>' . esc_html__( 'Undo this operation?', 'contenthealth' ) . '</h2><p id="dlg-geri-d" data-undo-text>' . esc_html__( 'The affected items return to their state before the fix. Manual changes made in between are not overwritten; changed items are skipped.', 'contenthealth' ) . '</p><div class="rbn-note rbn-note--warn">' . Ui::icon( 'alert' ) . '<div><p>' . esc_html__( 'After the undo, the findings reopen in the next scan.', 'contenthealth' ) . '</p></div></div></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-close>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--danger" data-confirm-undo>' . esc_html__( 'Undo', 'contenthealth' ) . '</button></div></dialog>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		unset( $tone_attr );
 	}
 }

@@ -69,6 +69,5 @@ final class Alt {
 	public static function dialogs(): void {
 		$t = Ui::tone_attr();
 		echo '<dialog class="rbn-dlg" id="dlg-doldur"' . $t . ' aria-labelledby="dlg-doldur-t" aria-describedby="dlg-doldur-d"><div class="rbn-dlg__b"><h2 id="dlg-doldur-t" data-fill-title>' . esc_html__( 'Fill in the alt texts?', 'contenthealth' ) . '</h2><p id="dlg-doldur-d">' . esc_html__( 'Only empty alt texts are filled; existing ones are not touched.', 'contenthealth' ) . '</p><ul class="ch-sum" style="color:var(--rbn-text)" data-fill-list></ul><label class="rbn-check" style="margin-top:var(--rbn-s3)"><input type="checkbox" data-fill-keep' . checked( (bool) Settings::get( 'keep_modified' ), true, false ) . '><span><b>' . esc_html__( 'Keep the last modified date unchanged', 'contenthealth' ) . '</b></span></label></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-close>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri" data-confirm-fill>' . esc_html__( 'Fill in alt texts', 'contenthealth' ) . '</button></div></dialog>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		UndoLog::undo_dialog( $t );
 	}
 }

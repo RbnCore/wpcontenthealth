@@ -27,18 +27,34 @@
 			});
 		});
 	}
-	function flash(msg, undoKey) {
+	function flash(msg, undoKey, tone) {
+		say(msg);
+		if (window.RbnUi && window.RbnUi.toast) {
+			var opts = { tone: tone || 'success' };
+			if (undoKey) {
+				opts.action = {
+					label: T.undo || 'Undo',
+					onClick: function () {
+						location.href = cfg.home + '&tab=undo';
+					}
+				};
+			}
+			window.RbnUi.toast(msg, opts);
+			return;
+		}
 		var f = d.getElementById('flash');
-		if (!f) { say(msg); return; }
+		if (!f) { return; }
 		f.textContent = msg; f.hidden = false;
 		if (undoKey) {
 			f.appendChild(d.createTextNode(' '));
 			var a = el('a', '', T.undoRecord + ' ' + undoKey.slice(0, 8));
 			a.href = cfg.home + '&tab=undo'; f.appendChild(a);
 		}
-		say(msg);
 	}
-	function err(e) { flash(e && e.status ? (T.undoFail + ' (' + e.message + ')') : T.netError); }
+	function err(e) {
+		var msg = e && e.status ? (T.undoFail + ' (' + e.message + ')') : T.netError;
+		flash(msg, null, 'danger');
+	}
 
 	/* Dialog: showModal, Esc ve odak dönüşü tarayıcıda yerleşik; odağı açana geri veririz */
 	function openDlg(id, from) {
@@ -191,24 +207,36 @@
 	if (fixBtn) {
 		fixBtn.addEventListener('click', function () {
 			if (!detData) { return; }
-			var dl = d.getElementById('dlg-onay'), ul = $('[data-onay-list]', dl); ul.textContent = '';
-			var li = el('li'); li.textContent = detData.title; ul.appendChild(li);
-		});
-	}
-	var one = $('[data-apply-one]');
-	if (one) {
-		one.addEventListener('click', function () {
-			if (!detData) { return; }
-			one.disabled = true;
-			var keep = $('[data-keep-mod]', d.getElementById('dlg-detay'));
-			api('fix', { body: { rule: detData.rule, ids: [detData.object], dry_run: false, keep_modified: keep ? keep.checked : undefined } }).then(function (r) {
-				one.disabled = false; d.getElementById('dlg-onay').close(); d.getElementById('dlg-detay').close();
-				if (r.changed) {
-					flash(r.changed + ' ' + T.fixed + '.', r.batch);
-					var tr = $('tr[data-id="' + detId + '"]');
-					if (tr) { tr.style.opacity = '.55'; }
-				} else { flash(T.noChange); }
-			}).catch(function (e) { one.disabled = false; err(e); });
+			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
+			var title = T.applyOneTitle || 'This fix will change 1 item';
+			var msg = (detData.title ? (detData.title + '\n\n') : '') + (T.applyOneConfirm || 'A dry run was done; the change will be applied and written to the undo log.');
+			var applyFix = function () {
+				fixBtn.disabled = true;
+				var keep = $('[data-keep-mod]', d.getElementById('dlg-detay'));
+				api('fix', { body: { rule: detData.rule, ids: [detData.object], dry_run: false, keep_modified: keep ? keep.checked : undefined } }).then(function (r) {
+					fixBtn.disabled = false;
+					var dlDetay = d.getElementById('dlg-detay');
+					if (dlDetay && dlDetay.close) { dlDetay.close(); }
+					if (r.changed) {
+						flash(r.changed + ' ' + T.fixed + '.', r.batch);
+						var tr = $('tr[data-id="' + detId + '"]');
+						if (tr) { tr.style.opacity = '.55'; }
+					} else { flash(T.noChange); }
+				}).catch(function (e) { fixBtn.disabled = false; err(e); });
+			};
+			if (!uConfirm) {
+				if (window.confirm(title + '\n' + msg)) { applyFix(); }
+				return;
+			}
+			uConfirm({
+				title: title,
+				message: msg,
+				confirmText: T.apply || 'Apply the fix',
+				cancelText: T.cancel || 'Cancel',
+				tone: 'primary'
+			}).then(function (ok) {
+				if (ok) { applyFix(); }
+			});
 		});
 	}
 
@@ -328,13 +356,35 @@
 	}
 
 	/* Geri alma günlüğü */
-	var undoKey = '';
 	d.addEventListener('click', function (e) {
 		var b = e.target.closest('[data-undo]');
 		if (b) {
-			undoKey = b.getAttribute('data-undo');
+			var undoKey = b.getAttribute('data-undo');
 			var no = b.getAttribute('data-undo-no'), n = b.getAttribute('data-undo-n'), u = b.getAttribute('data-undo-unit');
-			var t = $('[data-undo-title]'); if (t) { t.textContent = T.undoAction + ': #' + no + ' (' + n + ' ' + u + ')'; }
+			var title = (T.undoAction || 'Undo: operation') + ' #' + no + ' (' + n + ' ' + u + ')';
+			var msg = T.undoConfirm || 'The affected items return to their state before the fix. Manual changes made in between are not overwritten; changed items are skipped.';
+			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
+			var doUndo = function () {
+				b.disabled = true;
+				api('undo', { body: { key: undoKey, dry_run: false } }).then(function (r) {
+					b.disabled = false;
+					flash(r.reverted + ' ' + T.undone + (r.skipped ? ' · ' + r.skipped + ' ' + T.skipped : ''));
+					setTimeout(function () { location.reload(); }, 900);
+				}).catch(function (errObj) { b.disabled = false; err(errObj); });
+			};
+			if (!uConfirm) {
+				if (window.confirm(title + '\n' + msg)) { doUndo(); }
+				return;
+			}
+			uConfirm({
+				title: title,
+				message: msg,
+				confirmText: T.undo || 'Undo',
+				cancelText: T.cancel || 'Cancel',
+				tone: 'danger'
+			}).then(function (ok) {
+				if (ok) { doUndo(); }
+			});
 		}
 		var dt = e.target.closest('[data-undo-detail]');
 		if (dt) {
@@ -342,18 +392,6 @@
 			dt.setAttribute('aria-expanded', String(open)); if (row) { row.hidden = !open; }
 		}
 	});
-	var cu = $('[data-confirm-undo]');
-	if (cu) {
-		cu.addEventListener('click', function () {
-			if (!undoKey) { return; }
-			cu.disabled = true;
-			api('undo', { body: { key: undoKey, dry_run: false } }).then(function (r) {
-				cu.disabled = false; $$('dialog[open]').forEach(function (x) { x.close(); });
-				flash(r.reverted + ' ' + T.undone + (r.skipped ? ' · ' + r.skipped + ' ' + T.skipped : ''));
-				setTimeout(function () { location.reload(); }, 900);
-			}).catch(function (e) { cu.disabled = false; err(e); });
-		});
-	}
 
 	/* Etiket Doktoru */
 	var mergeCluster = null;
@@ -367,55 +405,93 @@
 		function upd() { var x = info(); s.textContent = x.tot + ' ' + T.posts + ' “' + x.name + '” · ' + (x.terms.length - 1) + ' ' + T.deleted; }
 		c.addEventListener('change', upd); upd();
 		$('[data-merge-from]', c).addEventListener('click', function () {
-			mergeCluster = c; var x = info();
-			$('[data-merge-title]').textContent = x.terms.length + ' → “' + x.name + '”';
-			var ul = $('[data-merge-list]'); ul.textContent = '';
-			x.terms.forEach(function (t) { var i = $('input', t), li = el('li', '', (i.checked ? '✓ ' : '→ ') + i.getAttribute('data-name') + ' (#' + i.value + ')'); ul.appendChild(li); });
+			var x = info();
+			var rs = $$('.ch-term input', c), canon = 0, others = [], otherNames = [];
+			rs.forEach(function (i) {
+				if (i.checked) {
+					canon = parseInt(i.value, 10);
+				} else {
+					others.push(parseInt(i.value, 10));
+					otherNames.push(i.getAttribute('data-name'));
+				}
+			});
+			var title = x.terms.length + ' → “' + x.name + '”';
+			var msg = (T.dryDone || 'Dry run: nothing has changed yet.') + '\n' +
+				otherNames.map(function (name) { return '→ ' + name; }).join(', ');
+			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
+			var doMerge = function () {
+				var btn = $('[data-merge-from]', c);
+				if (btn) { btn.disabled = true; }
+				api('fix', { body: { rule: 'term_duplicate', ids: others, canonical: canon, dry_run: false } }).then(function (r) {
+					if (btn) { btn.disabled = false; }
+					flash(T.merged + ': ' + r.changed + ' ' + T.deleted, r.batch);
+					setTimeout(function () { location.reload(); }, 900);
+				}).catch(function (errObj) { if (btn) { btn.disabled = false; } err(errObj); });
+			};
+			if (!uConfirm) {
+				if (window.confirm(title + '\n' + msg)) { doMerge(); }
+				return;
+			}
+			uConfirm({
+				title: title,
+				message: msg,
+				confirmText: T.merge || 'Merge',
+				cancelText: T.cancel || 'Cancel',
+				tone: 'primary'
+			}).then(function (ok) {
+				if (ok) { doMerge(); }
+			});
 		});
 		$('[data-cluster-ignore]', c).addEventListener('click', function () {
 			var ids = (c.getAttribute('data-issues') || '').split(',').filter(Boolean).map(Number);
 			api('issues/status', { body: { ids: ids, status: 'ignored' } }).then(function () { c.style.opacity = '.55'; $$('button, input', c).forEach(function (x) { x.disabled = true; }); say(T.skipped); }).catch(err);
 		});
 	});
-	var cm = $('[data-confirm-merge]');
-	if (cm) {
-		cm.addEventListener('click', function () {
-			if (!mergeCluster) { return; }
-			var rs = $$('.ch-term input', mergeCluster), canon = 0, others = [];
-			rs.forEach(function (i) { if (i.checked) { canon = parseInt(i.value, 10); } else { others.push(parseInt(i.value, 10)); } });
-			cm.disabled = true;
-			api('fix', { body: { rule: 'term_duplicate', ids: others, canonical: canon, dry_run: false } }).then(function (r) {
-				cm.disabled = false; cm.closest('dialog').close();
-				flash(T.merged + ': ' + r.changed + ' ' + T.deleted, r.batch);
-				setTimeout(function () { location.reload(); }, 900);
-			}).catch(function (e) { cm.disabled = false; err(e); });
-		});
-	}
-	var emptyRule = '';
 	d.addEventListener('click', function (e) {
 		var b = e.target.closest('[data-terms-fix]'); if (!b) { return; }
-		emptyRule = b.getAttribute('data-terms-fix');
-		var t = $('[data-terms-title]'), x = $('[data-terms-text]'), k = $('[data-terms-toks]'); k.textContent = '';
-		t.textContent = '…'; x.textContent = '';
-		api('issues?rule=' + encodeURIComponent(emptyRule) + '&status=open&per_page=500').then(function (r) {
+		var ruleId = b.getAttribute('data-terms-fix');
+		b.disabled = true;
+		api('issues?rule=' + encodeURIComponent(ruleId) + '&status=open&per_page=500').then(function (r) {
 			var ids = (r.rows || r.issues || r.items || []).map(function (i) { return i.object; });
-			emptyRule = { rule: emptyRule, ids: ids };
-			return api('fix', { body: { rule: emptyRule.rule, ids: ids, dry_run: true } });
-		}).then(function (r) {
-			t.textContent = r.changed + ' ' + T.fixed; x.textContent = r.skipped ? r.skipped + ' ' + T.skipped : '';
-			r.items.slice(0, 20).forEach(function (it) { var c = it.changes && it.changes[0]; k.appendChild(el('span', 'ch-tok', c && c.removed && c.removed[0] ? c.removed[0] : '#' + it.object_id)); });
-		}).catch(function () { t.textContent = T.loadFail; });
+			if (!ids.length) {
+				b.disabled = false;
+				flash(T.noChange || 'No changes to make');
+				return null;
+			}
+			return api('fix', { body: { rule: ruleId, ids: ids, dry_run: true } }).then(function (dry) {
+				return { ids: ids, dry: dry };
+			});
+		}).then(function (res) {
+			b.disabled = false;
+			if (!res) { return; }
+			var ids = res.ids, dry = res.dry;
+			var title = dry.changed + ' ' + (T.fixed || 'fixed');
+			var msg = (dry.skipped ? (dry.skipped + ' ' + T.skipped + '\n\n') : '') +
+				(T.undoNotice || 'Changes are written to the undo log; they can be undone.');
+			var uConfirm = (window.RbnUi && window.RbnUi.confirm) ? window.RbnUi.confirm : null;
+			var doFix = function () {
+				b.disabled = true;
+				api('fix', { body: { rule: ruleId, ids: ids, dry_run: false } }).then(function (r) {
+					b.disabled = false;
+					flash(r.changed + ' ' + (T.fixed || 'fixed'), r.batch);
+					setTimeout(function () { location.reload(); }, 900);
+				}).catch(function (errObj) { b.disabled = false; err(errObj); });
+			};
+			if (!uConfirm) {
+				if (window.confirm(title + '\n' + msg)) { doFix(); }
+				return;
+			}
+			uConfirm({
+				title: title,
+				message: msg,
+				confirmText: T.apply || 'Apply',
+				cancelText: T.cancel || 'Cancel',
+				tone: 'danger'
+			}).then(function (ok) {
+				if (ok) { doFix(); }
+			});
+		}).catch(function (errObj) { b.disabled = false; err(errObj); });
 	});
-	var ce = $('[data-confirm-empty]');
-	if (ce) {
-		ce.addEventListener('click', function () {
-			if (!emptyRule || !emptyRule.ids) { return; }
-			ce.disabled = true;
-			api('fix', { body: { rule: emptyRule.rule, ids: emptyRule.ids, dry_run: false } }).then(function (r) {
-				ce.disabled = false; ce.closest('dialog').close(); flash(r.changed + ' ' + T.fixed, r.batch); setTimeout(function () { location.reload(); }, 900);
-			}).catch(function (e) { ce.disabled = false; err(e); });
-		});
-	}
 
 	/* Alt Metin: şablon önizleme + doldurma */
 	var tpl = $('[data-tpl]');
