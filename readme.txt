@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
 Requires Plugins: adminkit
-Stable tag: 0.1.5
+Stable tag: 0.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,7 @@ A content-health panel in the spirit of WordPress Site Health: finds AI and inte
 * Tag Doctor: delete empty tags, merge duplicates, shorten long names, noindex single-use tags.
 * Alt Text: fill in missing alt text from a template.
 * Works with the meta description fields of Yoast, Rank Math and AIOSEO.
-* Zero front-end load: it adds no script, style, query or output. It calls no external service.
+* Zero front-end load: it adds no script, style, query or output. It calls no external service of its own (update checks are done by AdminKit).
 * WP-CLI: `wp contenthealth scan|status|list|fix|undo|export`.
 
 == Installation ==
@@ -44,6 +44,10 @@ Yes. Every run writes the previous value and its SHA-256 digest to the log; cont
 Not by default. If you choose "Delete on uninstall" in Settings, the tables and settings are deleted.
 
 == Changelog ==
+
+= 0.1.6 =
+* Updates: the plugin is now updated by the AdminKit core (one central updater, AdminKit 0.1.1 or newer; "Update URI" header added). The package is checked with its SHA-256 digest and Ed25519 signature before installation. The plugin itself still calls no external service; the check goes through AdminKit and follows the RBN Kit network setting.
+* The runtime gate now needs AdminKit core API level 3.
 
 = 0.1.5 =
 * Menu: the screen now sits under the shared "RBN Kit" top-level menu (RBN Kit → Content Health); the old Tools address redirects to the new one.

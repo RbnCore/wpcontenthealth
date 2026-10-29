@@ -44,7 +44,7 @@ Site owners and editors with a growing archive: content pasted from chat assista
 ## Installation
 
 1. Install and activate **AdminKit** first; ContentHealth cannot be activated without it.
-2. Download `contenthealth-0.1.5.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
+2. Download `contenthealth-0.1.6.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
 3. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
 4. Open **RBN Kit → Content Health** and press **Scan now**. A three-step welcome screen offers to set scan frequency, scope and the first scan; you can skip it.
 
@@ -52,13 +52,13 @@ You can also copy the `contenthealth` folder into `wp-content/plugins/`.
 
 ## Updating
 
-Version 0.1.5 has no automatic updater and does not contact GitHub.
+Updates are done by the **AdminKit** core (0.1.1 or newer), which has one central updater for all RBN plugins: it looks for a new release only inside WordPress' own update check, and installs a package only after its SHA-256 digest and Ed25519 signature match. The check follows the RBN Kit network setting (RBN Kit → AdminKit → Network); when GitHub access is off, nothing is contacted. The plugin itself never contacts GitHub.
 
-To update, upload the new `contenthealth-<version>.zip` over the installed copy (Plugins → Add New → Upload Plugin → *Replace current*). Settings, findings and the undo log are kept: the database schema is additive and versioned, and an update only touches files.
+You can still update by hand: upload the new `contenthealth-<version>.zip` over the installed copy (Plugins → Add New → Upload Plugin → *Replace current*). Settings, findings and the undo log are kept: the database schema is additive and versioned, and an update only touches files.
 
 ## Privacy and external requests
 
-- The plugin calls no external service and sends no telemetry.
+- The plugin calls no external service and sends no telemetry. Update checks are made by AdminKit (see Updating).
 - The only outgoing request it can make is part of the **"Broken internal links"** rule, which is off by default: it sends rate-limited HEAD requests (at most two per second) to links on your own site to look for 404/410 answers. No other host is contacted.
 - Log lines are written only when `WP_DEBUG_LOG` is enabled, and they are short.
 - On uninstall the data is kept by default. If you tick **"Delete on uninstall"** in Settings first, the plugin's tables and options are removed; deactivating the plugin only clears its scheduled events.
@@ -73,7 +73,7 @@ The screen lives under the shared **RBN Kit** top-level menu, just below Dashboa
 
 ## Version and license
 
-- Version 0.1.5
+- Version 0.1.6
 - License: GPL-2.0-or-later (see [LICENSE](LICENSE))
 - Text domain: `contenthealth`
 

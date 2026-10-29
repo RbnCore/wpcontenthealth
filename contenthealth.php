@@ -3,12 +3,13 @@
  * Plugin Name:       ContentHealth — Content Health
  * Plugin URI:        https://github.com/RbnCore/wpcontenthealth
  * Description:       A content-health panel in the spirit of WordPress Site Health: checks for AI and interface leftovers, broken URLs, meta, alt text and tags, and fixes them with dry run and undo. Calls no external service.
- * Version:           0.1.5
+ * Version:           0.1.6
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Requires Plugins:  adminkit
  * Author:            RBN Bilişim
  * Author URI:        https://github.com/RbnCore
+ * Update URI:        https://github.com/RbnCore/wpcontenthealth
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       contenthealth
@@ -21,7 +22,7 @@ declare(strict_types=1);
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CONTENTHEALTH_VERSION', '0.1.5' );
+define( 'CONTENTHEALTH_VERSION', '0.1.6' );
 define( 'CONTENTHEALTH_FILE', __FILE__ );
 define( 'CONTENTHEALTH_DIR', plugin_dir_path( __FILE__ ) );
 define( 'CONTENTHEALTH_URL', plugin_dir_url( __FILE__ ) );
@@ -43,13 +44,13 @@ register_deactivation_hook( __FILE__, array( \ContentHealth\Cron::class, 'unsche
 
 /**
  * Çalışma zamanı kapısı (cekirdek.md §6):
- * AdminKit API >= 1 zorunludur. Karşılanmazsa eklenti kancalarını eklemeden güvenle kapanır
+ * AdminKit API >= 3 zorunludur (merkezi güncelleyici). Karşılanmazsa eklenti kancalarını eklemeden güvenle kapanır
  * ve yönetimde uyarı gösterir.
  */
 add_action(
 	'plugins_loaded',
 	static function (): void {
-		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 1 || ! class_exists( 'AdminKit\Core\Core' ) ) {
+		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 3 || ! class_exists( 'AdminKit\Core\Core' ) ) {
 			add_action(
 				'admin_notices',
 				static function (): void {
@@ -111,6 +112,9 @@ function contenthealth_boot(): void {
 	} else {
 		add_action( 'rbnkit_core_ready', $register_core );
 	}
+
+	// Güncellemeyi AdminKit çekirdeği yapar (tek merkezi Updater); burada yalnız kayıt vardır.
+	\AdminKit\Core\Updater::register( 'contenthealth', CONTENTHEALTH_FILE, CONTENTHEALTH_VERSION );
 
 	add_filter(
 		'cron_schedules',
