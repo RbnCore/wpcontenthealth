@@ -2,6 +2,16 @@
 
 ContentHealth is a content-health panel for WordPress, in the spirit of Site Health: it scans posts, tags and images for leftovers and common problems, and fixes them safely with a dry run, a confirmation step and an undo log.
 
+## AdminKit is required
+
+ContentHealth does not work without the **AdminKit** plugin. Its header declares `Requires Plugins: adminkit`.
+
+- On WordPress 6.5 and later, WordPress refuses to activate ContentHealth while AdminKit is missing or inactive.
+- A second check runs on every request: without AdminKit, or with an AdminKit older than core API level 1, ContentHealth adds no hook, prints nothing and shows one admin notice with a link to activate AdminKit (when it is installed) or to download and install it.
+- Install and activate **AdminKit first**, then ContentHealth.
+
+AdminKit supplies what this plugin shares with the other RBN plugins: the RBN Kit menu, the admin interface kit, the cache group `contenthealth.scores` and the log channel `contenthealth.errors`.
+
 ## Who it is for
 
 Site owners and editors with a growing archive: content pasted from chat assistants or word processors, articles migrated between sites, empty or duplicate tags, images without alt text, and links that point at a development server.
@@ -26,15 +36,17 @@ Site owners and editors with a growing archive: content pasted from chat assista
 
 ## Requirements
 
-- WordPress 6.4 or later
+- WordPress 6.5 or later
 - PHP 8.1 or later
+- The AdminKit plugin (`Requires Plugins: adminkit`)
 - A standard WordPress database; the plugin creates its own `{prefix}contenthealth_*` tables
 
 ## Installation
 
-1. Download `contenthealth-0.1.5.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
-2. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
-3. Open **RBN Kit → Content Health** and press **Scan now**. A three-step welcome screen offers to set scan frequency, scope and the first scan; you can skip it.
+1. Install and activate **AdminKit** first; ContentHealth cannot be activated without it.
+2. Download `contenthealth-0.1.5.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
+3. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
+4. Open **RBN Kit → Content Health** and press **Scan now**. A three-step welcome screen offers to set scan frequency, scope and the first scan; you can skip it.
 
 You can also copy the `contenthealth` folder into `wp-content/plugins/`.
 
@@ -57,7 +69,7 @@ English is the source language. A Turkish (`tr_TR`) translation ships in `langua
 
 ## RBN Kit menu
 
-The screen lives under the shared **RBN Kit** top-level menu, just below Dashboard, as **RBN Kit → Content Health**. The old Tools address redirects to the new one. All RBN plugins share this menu and a fixed item order (Overview → AdminKit → Cookies and Consent → Content Health).
+The screen lives under the shared **RBN Kit** top-level menu, just below Dashboard, as **RBN Kit → Content Health**. The old Tools address redirects to the new one. The menu itself comes from AdminKit, and all RBN plugins share it with a fixed item order (Overview → AdminKit → Cookies and Consent → Content Health → SEO Toolkit).
 
 ## Version and license
 

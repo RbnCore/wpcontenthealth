@@ -1,9 +1,10 @@
 === ContentHealth — Content Health ===
 Contributors: rbnbilisim
 Tags: content health, seo, cleanup, taxonomy, wp-cli
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
+Requires Plugins: adminkit
 Stable tag: 0.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -15,6 +16,7 @@ A content-health panel in the spirit of WordPress Site Health: finds AI and inte
 == Description ==
 
 * 30 rules: content cleanup, SEO, media, links, tags and categories. Each one can be turned on or off in Settings.
+* Needs the AdminKit plugin (shared cache, logs and the RBN Kit menu): without it ContentHealth switches itself off and says so in the admin.
 * Error score and Suggestion score (0–100, live from the status of the findings), critical/warning/info counts, a filterable and searchable findings list, CSV export.
 * Batched scan with a persistent cursor: it does not strain the server, even on a large site (AJAX, WP-Cron, WP-CLI).
 * Fixes first show a diff as a dry run, are applied on confirmation and are written to the undo log. The "last modified" date and the revisions do not change.
@@ -26,8 +28,9 @@ A content-health panel in the spirit of WordPress Site Health: finds AI and inte
 
 == Installation ==
 
-1. Upload the folder to `wp-content/plugins/` and activate it.
-2. RBN Kit → Content Health → "Scan now".
+1. Install and activate AdminKit first; ContentHealth cannot be activated without it.
+2. Upload the folder to `wp-content/plugins/` and activate it.
+3. RBN Kit → Content Health → "Scan now".
 
 == Frequently Asked Questions ==
 
