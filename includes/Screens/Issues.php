@@ -116,7 +116,7 @@ final class Issues {
 		$export = wp_nonce_url( add_query_arg( array_merge( $args, array( 'action' => 'contenthealth_export' ) ), admin_url( 'admin-post.php' ) ), 'contenthealth_export' );
 		echo '<form method="post" id="bulkform" action="' . esc_url( Ui::url( $args ) ) . '">';
 		wp_nonce_field( 'contenthealth_bulk', 'ch_bulk_nonce' );
-		echo '<div class="rbn-bulk" id="bulk" role="region" aria-label="' . esc_attr__( 'Bulk actions', 'contenthealth' ) . '"><p id="bulk-n"><span data-n>0</span> ' . esc_html__( 'findings selected', 'contenthealth' ) . '</p><div class="rbn-bulk__act">';
+		echo '<div class="ch-bulk" id="bulk" role="region" aria-label="' . esc_attr__( 'Bulk actions', 'contenthealth' ) . '"><p id="bulk-n"><span data-n>0</span> ' . esc_html__( 'findings selected', 'contenthealth' ) . '</p><div class="ch-bulk__act">';
 		echo '<button type="button" class="rbn-btn rbn-btn--pri rbn-btn--sm" data-open="dlg-wiz" data-wiz-open>' . Ui::icon( 'wand' ) . esc_html__( 'Fix selected…', 'contenthealth' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<button type="submit" class="rbn-btn rbn-btn--sm" name="ch_act" value="ignore" data-bulk-ignore>' . esc_html__( 'Ignore', 'contenthealth' ) . '</button>';
 		echo '<a class="rbn-btn rbn-btn--sm" href="' . esc_url( $export ) . '">' . Ui::icon( 'down' ) . esc_html__( 'Download CSV', 'contenthealth' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -126,7 +126,7 @@ final class Issues {
 		/* translators: 1: current page, 2: page count */
 		$cap = sprintf( __( 'Findings list, page %1$d / %2$d', 'contenthealth' ), $page, $pages );
 		echo '<div class="rbn-tw"><table class="rbn-table rbn-table--stack rbn-table--sel" id="tbl"' . ( $open ? ' data-autoopen="' . (int) $open . '"' : '' ) . '><caption class="rbn-sr">' . esc_html( $cap ) . '</caption>';
-		echo '<thead><tr><th scope="col" class="rbn-ck"><label class="rbn-chk"><input type="checkbox" data-select-all aria-label="' . esc_attr__( 'Select all findings on this page', 'contenthealth' ) . '"></label></th><th scope="col">' . esc_html__( 'Object', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Rule', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Evidence', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Severity', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Date', 'contenthealth' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Actions', 'contenthealth' ) . '</span></th></tr></thead><tbody>';
+		echo '<thead><tr><th scope="col" class="rbn-ck"><label class="ch-chk"><input type="checkbox" data-select-all aria-label="' . esc_attr__( 'Select all findings on this page', 'contenthealth' ) . '"></label></th><th scope="col">' . esc_html__( 'Object', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Rule', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Evidence', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Severity', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Date', 'contenthealth' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Actions', 'contenthealth' ) . '</span></th></tr></thead><tbody>';
 		$groups   = Registry::groups();
 		$modified = self::modified_map( $res['rows'] );
 		foreach ( $res['rows'] as $r ) {
@@ -134,7 +134,7 @@ final class Issues {
 			$title = Ui::object_title( $r );
 			$s     = Ui::sev( $r->severity );
 			printf(
-				'<tr data-id="%d" data-obj="%d" data-rule="%s" data-fix="%s" data-sev="%s" data-title="%s"><td class="rbn-ck"><label class="rbn-chk"><input type="checkbox" name="ids[]" value="%d" aria-label="%s"></label></td>',
+				'<tr data-id="%d" data-obj="%d" data-rule="%s" data-fix="%s" data-sev="%s" data-title="%s"><td class="rbn-ck"><label class="ch-chk"><input type="checkbox" name="ids[]" value="%d" aria-label="%s"></label></td>',
 				(int) $r->id,
 				(int) $r->object_id,
 				esc_attr( $r->rule_id ),
@@ -145,11 +145,11 @@ final class Issues {
 				/* translators: %s: object title */
 				esc_attr( sprintf( __( 'Select: %s', 'contenthealth' ), $title ) )
 			);
-			echo '<th scope="row"><span class="rbn-obj">' . esc_html( $title ) . '</span><span class="rbn-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th>';
-			echo '<td data-l="' . esc_attr__( 'Rule', 'contenthealth' ) . '">' . esc_html( $rule ? $rule->label() : $r->rule_id ) . '<span class="rbn-sub">' . esc_html( (string) ( $groups[ $r->group_id ] ?? $r->group_id ) ) . '</span></td>';
-			echo '<td data-l="' . esc_attr__( 'Evidence', 'contenthealth' ) . '"><span class="rbn-ev"><mark>' . esc_html( Ui::evidence( $r ) ) . '</mark></span>' . self::state_badge( $r, $modified ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '<td data-l="' . esc_attr__( 'Severity', 'contenthealth' ) . '">' . Ui::sev_badge( $r->severity ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '<td data-l="' . esc_attr__( 'Date', 'contenthealth' ) . '" class="rbn-nowrap">' . Ui::date( $r->last_seen ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<th scope="row"><span class="ch-obj">' . esc_html( $title ) . '</span><span class="ch-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th>';
+			echo '<td data-label="' . esc_attr__( 'Rule', 'contenthealth' ) . '">' . esc_html( $rule ? $rule->label() : $r->rule_id ) . '<span class="ch-sub">' . esc_html( (string) ( $groups[ $r->group_id ] ?? $r->group_id ) ) . '</span></td>';
+			echo '<td data-label="' . esc_attr__( 'Evidence', 'contenthealth' ) . '"><span class="ch-ev"><mark>' . esc_html( Ui::evidence( $r ) ) . '</mark></span>' . self::state_badge( $r, $modified ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<td data-label="' . esc_attr__( 'Severity', 'contenthealth' ) . '">' . Ui::sev_badge( $r->severity ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<td data-label="' . esc_attr__( 'Date', 'contenthealth' ) . '" class="rbn-nowrap">' . Ui::date( $r->last_seen ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '<td><div class="rbn-acts"><button type="button" class="rbn-btn rbn-btn--sm" data-open="dlg-detay" data-detail="' . (int) $r->id . '" aria-label="' . esc_attr( sprintf( /* translators: %s: object title */ __( 'Details: %s', 'contenthealth' ), $title ) ) . '">' . esc_html__( 'Details', 'contenthealth' ) . '</button>';
 			if ( 'open' === $r->status ) {
 				echo '<button type="submit" class="rbn-btn rbn-btn--sm rbn-btn--link" name="one" value="' . (int) $r->id . '" data-ignore aria-label="' . esc_attr( sprintf( /* translators: %s: object title */ __( 'Ignore: %s', 'contenthealth' ), $title ) ) . '">' . esc_html__( 'Ignore', 'contenthealth' ) . '</button>';
@@ -233,7 +233,7 @@ final class Issues {
 			$rules[ $r->id() ] = $r->label();
 		}
 		$rev = array_flip( array_filter( self::STATUS, static fn( $v ) => '' !== $v ) );
-		echo '<form class="rbn-filter" role="search" method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" aria-label="' . esc_attr__( 'Filter findings', 'contenthealth' ) . '"><input type="hidden" name="page" value="' . esc_attr( \ContentHealth\Admin::SLUG ) . '"><input type="hidden" name="tab" value="issues">';
+		echo '<form class="ch-filter" role="search" method="get" action="' . esc_url( admin_url( 'admin.php' ) ) . '" aria-label="' . esc_attr__( 'Filter findings', 'contenthealth' ) . '"><input type="hidden" name="page" value="' . esc_attr( \ContentHealth\Admin::SLUG ) . '"><input type="hidden" name="tab" value="issues">';
 		$sel( 'f-grup', __( 'Group', 'contenthealth' ), array( '' => __( 'All', 'contenthealth' ) ) + Registry::groups(), (string) ( $f['group'] ?? '' ) );
 		$sel( 'f-kural', __( 'Rule', 'contenthealth' ), $rules, (string) ( $f['rule'] ?? '' ) );
 		$sel( 'f-ciddiyet', __( 'Severity', 'contenthealth' ), array( '' => __( 'All', 'contenthealth' ) ) + Registry::severities(), (string) ( $f['severity'] ?? '' ) );
@@ -248,8 +248,8 @@ final class Issues {
 			),
 			'' === $f['status'] ? 'tum' : ( $rev[ $f['status'] ] ?? 'acik' )
 		);
-		echo '<div class="rbn-search"><label for="f-ara">' . esc_html__( 'Search', 'contenthealth' ) . '</label>' . Ui::icon( 'search' ) . '<input class="rbn-input" type="search" id="f-ara" name="ara" value="' . esc_attr( (string) ( $f['search'] ?? '' ) ) . '" placeholder="' . esc_attr__( 'Title or evidence', 'contenthealth' ) . '"></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<div class="rbn-filter__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . esc_html__( 'Filter', 'contenthealth' ) . '</button><a class="rbn-btn" href="' . esc_url( Ui::url( array( 'tab' => 'issues' ) ) ) . '">' . esc_html__( 'Clear', 'contenthealth' ) . '</a></div></form>';
+		echo '<div class="ch-search"><label for="f-ara">' . esc_html__( 'Search', 'contenthealth' ) . '</label>' . Ui::icon( 'search' ) . '<input class="rbn-input" type="search" id="f-ara" name="ara" value="' . esc_attr( (string) ( $f['search'] ?? '' ) ) . '" placeholder="' . esc_attr__( 'Title or evidence', 'contenthealth' ) . '"></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ch-filter__act"><button type="submit" class="rbn-btn rbn-btn--pri">' . esc_html__( 'Filter', 'contenthealth' ) . '</button><a class="rbn-btn" href="' . esc_url( Ui::url( array( 'tab' => 'issues' ) ) ) . '">' . esc_html__( 'Clear', 'contenthealth' ) . '</a></div></form>';
 	}
 
 	/**
@@ -272,7 +272,7 @@ final class Issues {
 				)[ $f['status'] ] ?? '',
 			),
 		);
-		echo '<div class="rbn-chips" aria-label="' . esc_attr__( 'Active filters', 'contenthealth' ) . '"><span class="rbn-muted">' . esc_html__( 'Active filter:', 'contenthealth' ) . '</span>';
+		echo '<div class="ch-chips" aria-label="' . esc_attr__( 'Active filters', 'contenthealth' ) . '"><span class="rbn-muted">' . esc_html__( 'Active filter:', 'contenthealth' ) . '</span>';
 		foreach ( $labels as $key => $pair ) {
 			if ( '' === (string) $pair[1] ) {
 				continue;
@@ -286,7 +286,7 @@ final class Issues {
 				}
 			}
 			$txt = $pair[0] . ': ' . $pair[1];
-			echo '<span class="rbn-fchip">' . esc_html( $txt ) . '<a href="' . esc_url( Ui::url( $rest ) ) . '" aria-label="' . esc_attr( sprintf( /* translators: %s: filter text */ __( 'Remove filter: %s', 'contenthealth' ), $txt ) ) . '">' . Ui::icon( 'x' ) . '</a></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<span class="ch-fchip">' . esc_html( $txt ) . '<a href="' . esc_url( Ui::url( $rest ) ) . '" aria-label="' . esc_attr( sprintf( /* translators: %s: filter text */ __( 'Remove filter: %s', 'contenthealth' ), $txt ) ) . '">' . Ui::icon( 'x' ) . '</a></span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		/* translators: %d: result count */
 		echo '<span class="rbn-muted" style="margin-left:auto">' . esc_html( sprintf( _n( '%d result', '%d results', $total, 'contenthealth' ), $total ) ) . '</span></div>';
@@ -367,7 +367,7 @@ final class Issues {
 		echo '<dialog class="rbn-dlg" id="dlg-onay"' . $t . ' aria-labelledby="dlg-onay-t" aria-describedby="dlg-onay-d"><div class="rbn-dlg__b"><h2 id="dlg-onay-t">' . esc_html__( 'This fix will change 1 item', 'contenthealth' ) . '</h2><p id="dlg-onay-d">' . esc_html__( 'A dry run was done; the change will be applied and written to the undo log.', 'contenthealth' ) . '</p><ul class="rbn-sum" style="color:var(--rbn-text)" data-onay-list></ul></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-close>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri" data-apply-one>' . esc_html__( 'Apply the fix', 'contenthealth' ) . '</button></div></dialog>';
 
 		echo '<dialog class="rbn-dlg rbn-dlg--wide" id="dlg-wiz"' . $t . ' aria-labelledby="dlg-wiz-t" data-wiz><div class="rbn-dlg__h"><div><h2 id="dlg-wiz-t">' . esc_html__( 'Bulk fix', 'contenthealth' ) . '</h2></div>' . $x . '</div><div class="rbn-dlg__b">';
-		echo '<ol class="rbn-stepper" style="--n:4" aria-label="' . esc_attr__( 'Steps', 'contenthealth' ) . '"><li aria-current="step"><b>1</b><span>' . esc_html__( 'Selection', 'contenthealth' ) . '</span></li><li><b>2</b><span>' . esc_html__( 'Dry run', 'contenthealth' ) . '</span></li><li><b>3</b><span>' . esc_html__( 'Confirm', 'contenthealth' ) . '</span></li><li><b>4</b><span>' . esc_html__( 'Result', 'contenthealth' ) . '</span></li></ol><p class="rbn-sr" id="wiz-live" aria-live="polite"></p>';
+		echo '<ol class="ch-stepper" style="--n:4" aria-label="' . esc_attr__( 'Steps', 'contenthealth' ) . '"><li aria-current="step"><b>1</b><span>' . esc_html__( 'Selection', 'contenthealth' ) . '</span></li><li><b>2</b><span>' . esc_html__( 'Dry run', 'contenthealth' ) . '</span></li><li><b>3</b><span>' . esc_html__( 'Confirm', 'contenthealth' ) . '</span></li><li><b>4</b><span>' . esc_html__( 'Result', 'contenthealth' ) . '</span></li></ol><p class="rbn-sr" id="wiz-live" aria-live="polite"></p>';
 		echo '<section data-step="1" tabindex="-1" aria-labelledby="ws1"><h3 class="rbn-h3" id="ws1">' . esc_html__( '1 / 4 · Findings to fix', 'contenthealth' ) . '</h3><p class="rbn-p rbn-muted" data-wiz-intro></p><div class="rbn-tw"><table class="rbn-table rbn-table--fit"><caption class="rbn-sr">' . esc_html__( 'Selected rules', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Rule', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Finding', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Fix', 'contenthealth' ) . '</th></tr></thead><tbody data-wiz-rules></tbody></table></div><div style="margin-top:12px" data-wiz-skipnote></div></section>';
 		echo '<section data-step="2" tabindex="-1" aria-labelledby="ws2" hidden><h3 class="rbn-h3" id="ws2">' . esc_html__( '2 / 4 · Dry run: nothing was changed', 'contenthealth' ) . '</h3><ul class="rbn-stats" style="margin-bottom:12px" data-wiz-stats></ul><h4 class="rbn-h3">' . esc_html__( 'Sample changes', 'contenthealth' ) . '</h4><div class="rbn-stack" data-wiz-samples></div></section>';
 		echo '<section data-step="3" tabindex="-1" aria-labelledby="ws3" hidden><h3 class="rbn-h3" id="ws3">' . esc_html__( '3 / 4 · Confirm', 'contenthealth' ) . '</h3><div class="rbn-stack" id="wiz-confirm"><label class="rbn-check"><input type="checkbox" data-wiz-keep' . checked( (bool) Settings::get( 'keep_modified' ), true, false ) . '><span><b>' . esc_html__( 'Keep the last modified date unchanged', 'contenthealth' ) . '</b><span class="rbn-help">' . esc_html__( 'Recommended. Items do not show as “updated” and the ordering is not disturbed.', 'contenthealth' ) . '</span></span></label><label class="rbn-check"><input type="checkbox" id="wiz-ok"><span><b data-wiz-oktext>' . esc_html__( 'I understand the change and that the operation can be undone', 'contenthealth' ) . '</b><span class="rbn-help">' . esc_html__( 'Undo: Undo log → this operation → Undo. No revision is created; the log keeps the previous value.', 'contenthealth' ) . '</span></span></label></div><div id="wiz-run" hidden style="margin-top:16px"><div class="rbn-progress__l"><span id="wiz-msg">' . esc_html__( 'Applying…', 'contenthealth' ) . '</span><b id="wiz-pct">0%</b></div><div class="rbn-progress" role="progressbar" id="wiz-bar" aria-label="' . esc_attr__( 'Fix progress', 'contenthealth' ) . '" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" style="--w:0%"><i></i></div></div></section>';

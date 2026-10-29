@@ -74,7 +74,7 @@ final class Overview {
 		$hist   = array_values( array_filter( array_reverse( Runs::history( 30 ) ), static fn( $r ) => 'finished' === $r->status && null !== $r->score ) );
 		$live   = $done ? Score::live() : null;
 
-		echo '<div class="rbn-grid rbn-grid--score">';
+		echo '<div class="ch-grid ch-grid--score">';
 		self::score_card( $done, $live );
 		self::scan_card( $done, $active );
 		self::spark_card( $hist, $live );
@@ -86,13 +86,13 @@ final class Overview {
 			return;
 		}
 
-		echo '<h2 class="rbn-h3" id="h-grp">' . esc_html__( 'Status by group', 'contenthealth' ) . '</h2><ul class="rbn-grid rbn-grid--5" style="list-style:none;padding:0" aria-labelledby="h-grp">';
+		echo '<h2 class="rbn-h3" id="h-grp">' . esc_html__( 'Status by group', 'contenthealth' ) . '</h2><ul class="ch-grid ch-grid--5" style="list-style:none;padding:0" aria-labelledby="h-grp">';
 		foreach ( Registry::groups() as $gid => $glabel ) {
 			$g    = self::group_stats( (string) $gid, $open );
 			$band = Ui::band( $g['score'] );
-			echo '<li class="rbn-gcard"><h3 class="rbn-gcard__h"><span class="rbn-gcard__i">' . Ui::icon( self::GROUP_ICONS[ $gid ] ?? 'doc' ) . '</span>' . esc_html( (string) $glabel ) . '</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<li class="ch-gcard"><h3 class="ch-gcard__h"><span class="ch-gcard__i">' . Ui::icon( self::GROUP_ICONS[ $gid ] ?? 'doc' ) . '</span>' . esc_html( (string) $glabel ) . '</h3>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			printf(
-				'<p class="rbn-gcard__sc">%1$d<small>/ 100 · %2$s</small></p><div class="rbn-progress rbn-progress--%3$s" role="progressbar" aria-label="%4$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%1$d" style="--w:%1$d%%"><i></i></div>',
+				'<p class="ch-gcard__sc">%1$d<small>/ 100 · %2$s</small></p><div class="ch-progress rbn-progress--%3$s" role="progressbar" aria-label="%4$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%1$d" style="--w:%1$d%%"><i></i></div>',
 				(int) $g['score'],
 				esc_html( $band['label'] ),
 				esc_attr( $band['key'] ),
@@ -102,7 +102,7 @@ final class Overview {
 			echo '<ul>';
 			foreach ( array( Rule::CRITICAL, Rule::WARNING, Rule::INFO ) as $sev ) {
 				$s = Ui::sev( $sev );
-				echo '<li><span class="rbn-sevico rbn-sevico--' . esc_attr( $s['cls'] ) . '">' . Ui::icon( $s['icon'] ) . '</span>' . esc_html( $s['label'] ) . '<b>' . (int) $g['counts'][ $sev ] . '</b></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<li><span class="ch-sevico ch-sevico--' . esc_attr( $s['cls'] ) . '">' . Ui::icon( $s['icon'] ) . '</span>' . esc_html( $s['label'] ) . '<b>' . (int) $g['counts'][ $sev ] . '</b></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			echo '</ul><a class="rbn-btn rbn-btn--sm" href="' . esc_url( Ui::url( array( 'tab' => 'issues', 'grup' => $gid ) ) ) . '">' . esc_html__( 'View findings', 'contenthealth' ) . '<span class="rbn-sr">: ' . esc_html( (string) $glabel ) . '</span></a></li>';
 		}
@@ -113,7 +113,7 @@ final class Overview {
 
 	/** @param array{error:int,suggest:int}|null $live */
 	private static function score_card( ?object $done, ?array $live ): void {
-		echo '<section class="rbn-card rbn-card--puan" aria-labelledby="h-score"><div class="rbn-card__h"><h2 id="h-score">' . esc_html__( 'Error score', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Errors on the site, 0–100.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card ch-card--puan" aria-labelledby="h-score"><div class="rbn-card__h"><h2 id="h-score">' . esc_html__( 'Error score', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Errors on the site, 0–100.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		if ( ! $done || ! $live ) {
 			echo Ui::empty_state( 'chart', __( 'No score', 'contenthealth' ), __( 'Calculated when the first scan finishes.', 'contenthealth' ) ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
@@ -121,7 +121,7 @@ final class Overview {
 		$score = $live['error'];
 		$band  = Ui::band( $score );
 		printf(
-			'<div class="rbn-ring rbn-ring--%1$s"><div class="rbn-ring__svg" role="img" aria-label="%2$s"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rbn-ring__track" cx="60" cy="60" r="52"/><circle class="rbn-ring__val" cx="60" cy="60" r="52" style="--p:%3$d"/></svg><div class="rbn-ring__n" aria-hidden="true"><b data-score-error>%3$d</b><span>/ 100</span></div></div>%4$s</div>',
+			'<div class="ch-ring rbn-ring--%1$s"><div class="ch-ring__svg" role="img" aria-label="%2$s"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="ch-ring__track" cx="60" cy="60" r="52"/><circle class="ch-ring__val" cx="60" cy="60" r="52" style="--p:%3$d"/></svg><div class="ch-ring__n" aria-hidden="true"><b data-score-error>%3$d</b><span>/ 100</span></div></div>%4$s</div>',
 			esc_attr( $band['key'] ),
 			/* translators: 1: score, 2: band label */
 			esc_attr( sprintf( __( 'Error score: %1$d / 100, %2$s', 'contenthealth' ), $score, $band['label'] ) ),
@@ -142,7 +142,7 @@ final class Overview {
 		$sb   = Ui::band( $sg );
 		$last = isset( $done->stats['suggest_score'] ) ? (string) (int) $done->stats['suggest_score'] : '—';
 		printf(
-			'<div class="rbn-suggest" style="margin-top:18px"><div class="rbn-progress__l"><span>%1$s</span><b style="white-space:nowrap" data-score-suggest>%3$d / 100</b></div><div class="rbn-progress rbn-progress--%4$s" role="progressbar" aria-label="%1$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%3$d" style="--w:%3$d%%"><i></i></div><p class="rbn-help" style="margin:6px 0 0">%2$s. %5$s</p></div>',
+			'<div class="ch-suggest" style="margin-top:18px"><div class="ch-progress__l"><span>%1$s</span><b style="white-space:nowrap" data-score-suggest>%3$d / 100</b></div><div class="ch-progress rbn-progress--%4$s" role="progressbar" aria-label="%1$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%3$d" style="--w:%3$d%%"><i></i></div><p class="rbn-help" style="margin:6px 0 0">%2$s. %5$s</p></div>',
 			esc_html__( 'Suggestion score', 'contenthealth' ),
 			esc_html__( 'Improvement suggestions', 'contenthealth' ),
 			$sg,
@@ -165,8 +165,8 @@ final class Overview {
 	 * @param array<string,array<string,int>>                                 $open rule_id → [tür → açık bulgu].
 	 */
 	private static function how_card( ?array $live, array $open ): void {
-		echo '<section class="rbn-card rbn-card--nasil" aria-labelledby="h-how"><div class="rbn-card__h"><h2 id="h-how">' . esc_html__( 'How is the score calculated?', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Score = 100 − Σ penalty. Penalty = weight × percentage of affected content; the penalty of each rule cannot exceed its cap.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad"><div class="rbn-how">';
-		echo '<div><div class="rbn-tw"><table class="rbn-table rbn-table--fit"><caption class="rbn-sr">' . esc_html__( 'Weight and cap by severity', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Level', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Weight per percent', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Maximum penalty per rule', 'contenthealth' ) . '</th></tr></thead><tbody>';
+		echo '<section class="rbn-card ch-card--nasil" aria-labelledby="h-how"><div class="rbn-card__h"><h2 id="h-how">' . esc_html__( 'How is the score calculated?', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Score = 100 − Σ penalty. Penalty = weight × percentage of affected content; the penalty of each rule cannot exceed its cap.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad"><div class="ch-how">';
+		echo '<div><div class="rbn-tw" tabindex="0" role="region" aria-label="' . esc_attr__( 'Weight and cap by severity', 'contenthealth' ) . '"><table class="rbn-table rbn-table--fit"><caption class="rbn-sr">' . esc_html__( 'Weight and cap by severity', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Level', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Weight per percent', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Maximum penalty per rule', 'contenthealth' ) . '</th></tr></thead><tbody>';
 		foreach ( array( Rule::CRITICAL, Rule::WARNING, Rule::INFO ) as $sev ) {
 			echo '<tr><th scope="row">' . esc_html( Ui::sev( $sev )['label'] ) . '</th><td class="rbn-num">' . esc_html( self::num( Score::WEIGHT[ $sev ] ) ) . '</td><td class="rbn-num">' . esc_html( self::num( Score::CAP[ $sev ] ) ) . '</td></tr>';
 		}
@@ -178,12 +178,12 @@ final class Overview {
 		if ( ! $pen ) {
 			echo '<p class="rbn-muted">' . esc_html__( 'No rule is losing points', 'contenthealth' ) . '</p>';
 		} else {
-			echo '<ol class="rbn-how__top" aria-labelledby="h-how-top">';
+			echo '<ol class="ch-how__top" aria-labelledby="h-how-top">';
 			foreach ( array_slice( $pen, 0, 3, true ) as $rid => $p ) {
 				$rule = Registry::get( (string) $rid );
-				echo '<li><span class="rbn-how__n">' . esc_html( $rule ? $rule->label() : (string) $rid ) . '</span><span class="rbn-how__c">'
+				echo '<li><span class="ch-how__n">' . esc_html( $rule ? $rule->label() : (string) $rid ) . '</span><span class="ch-how__c">'
 					/* translators: %d: open issue count */
-					. esc_html( sprintf( __( '%d open', 'contenthealth' ), array_sum( $open[ $rid ] ?? array() ) ) ) . '</span><b class="rbn-how__p">'
+					. esc_html( sprintf( __( '%d open', 'contenthealth' ), array_sum( $open[ $rid ] ?? array() ) ) ) . '</span><b class="ch-how__p">'
 					/* translators: %s: penalty points */
 					. esc_html( sprintf( __( '−%s points', 'contenthealth' ), number_format_i18n( $p, 1 ) ) ) . '</b></li>';
 			}
@@ -195,9 +195,9 @@ final class Overview {
 	private static function scan_card( ?object $done, ?object $active ): void {
 		$p      = $active ? Runs::progress( $active ) : array( 'percent' => 0, 'done' => 0, 'total' => 0 );
 		$paused = $active && 'paused' === $active->status;
-		echo '<section class="rbn-card rbn-card--tarama" aria-labelledby="h-scan"><div class="rbn-card__h"><h2 id="h-scan">' . esc_html__( 'Scan', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Posts, pages, products, media and tags are scanned in batches.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card ch-card--tarama" aria-labelledby="h-scan"><div class="rbn-card__h"><h2 id="h-scan">' . esc_html__( 'Scan', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Posts, pages, products, media and tags are scanned in batches.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		printf(
-			'<div id="scanbox"%1$s><div class="rbn-progress__l"><span id="scan-msg">%2$s</span><b id="scan-pct">%3$d%%</b></div><div class="rbn-progress" role="progressbar" id="scan-bar" aria-label="%4$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%3$d" style="--w:%3$d%%"><i></i></div><p class="rbn-help" id="scan-sub" style="margin:8px 0 12px">%5$s</p><div class="rbn-row"><button type="button" class="rbn-btn rbn-btn--sm" data-scan-pause>%6$s<span>%7$s</span></button><button type="button" class="rbn-btn rbn-btn--sm rbn-btn--danger" data-scan-cancel>%8$s</button></div></div>',
+			'<div id="scanbox"%1$s><div class="ch-progress__l"><span id="scan-msg">%2$s</span><b id="scan-pct">%3$d%%</b></div><div class="ch-progress" role="progressbar" id="scan-bar" aria-label="%4$s" aria-valuemin="0" aria-valuemax="100" aria-valuenow="%3$d" style="--w:%3$d%%"><i></i></div><p class="rbn-help" id="scan-sub" style="margin:8px 0 12px">%5$s</p><div class="rbn-row"><button type="button" class="rbn-btn rbn-btn--sm" data-scan-pause>%6$s<span>%7$s</span></button><button type="button" class="rbn-btn rbn-btn--sm rbn-btn--danger" data-scan-cancel>%8$s</button></div></div>',
 			$active ? '' : ' hidden',
 			esc_html( $paused ? __( 'Scan paused', 'contenthealth' ) : __( 'Scanning…', 'contenthealth' ) ),
 			(int) $p['percent'],
@@ -241,7 +241,7 @@ final class Overview {
 		}
 		/* translators: %d: scan count */
 		$sub = sprintf( __( 'Last %d scans + now', 'contenthealth' ), max( 1, count( $hist ) ) );
-		echo '<section class="rbn-card rbn-card--grafik" aria-labelledby="h-spark"><div class="rbn-card__h"><h2 id="h-spark">' . esc_html__( 'Error score over time', 'contenthealth' ) . '</h2><p>' . esc_html( $sub ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
+		echo '<section class="rbn-card ch-card--grafik" aria-labelledby="h-spark"><div class="rbn-card__h"><h2 id="h-spark">' . esc_html__( 'Error score over time', 'contenthealth' ) . '</h2><p>' . esc_html( $sub ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		if ( count( $pts ) < 2 ) {
 			echo '<p class="rbn-muted">' . esc_html__( 'At least one finished scan is needed for the chart.', 'contenthealth' ) . '</p></div></section>';
 			return;
@@ -262,12 +262,12 @@ final class Overview {
 			$last,
 			( $delta > 0 ? '+' : ( $delta < 0 ? '−' : '±' ) ) . abs( $delta )
 		);
-		echo '<svg class="rbn-spark" viewBox="0 0 300 60" preserveAspectRatio="none" role="img" aria-label="' . esc_attr( $label ) . '"><path class="rbn-spark__area" d="' . esc_attr( $line . 'L300 60L0 60Z' ) . '"/><path class="rbn-spark__line" d="' . esc_attr( $line ) . '"/></svg>';
+		echo '<svg class="ch-spark" viewBox="0 0 300 60" preserveAspectRatio="none" role="img" aria-label="' . esc_attr( $label ) . '"><path class="ch-spark__area" d="' . esc_attr( $line . 'L300 60L0 60Z' ) . '"/><path class="ch-spark__line" d="' . esc_attr( $line ) . '"/></svg>';
 		/* translators: %d: score */
 		$a = sprintf( __( 'First: %d', 'contenthealth' ), $first );
 		/* translators: %d: score */
 		$b = sprintf( __( 'Now: %d', 'contenthealth' ), $last );
-		echo '<div class="rbn-spark__ax"><span>' . esc_html( $a ) . '</span><span>' . esc_html( $b ) . '</span></div></div></section>';
+		echo '<div class="ch-spark__ax"><span>' . esc_html( $a ) . '</span><span>' . esc_html( $b ) . '</span></div></div></section>';
 	}
 
 	private static function top_card(): void {
@@ -277,14 +277,14 @@ final class Overview {
 			echo '<div class="rbn-card__b rbn-card__b--pad">' . Ui::empty_state( 'shield', __( 'No critical problems', 'contenthealth' ), __( 'There are no open critical findings.', 'contenthealth' ) ) . '</div></section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
-		echo '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Priority problems', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Severity', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Object', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Problem', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Evidence', 'contenthealth' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'contenthealth' ) . '</span></th></tr></thead><tbody>';
+		echo '<div class="rbn-tw" tabindex="0" role="region" aria-label="' . esc_attr__( 'Priority problems', 'contenthealth' ) . '"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html__( 'Priority problems', 'contenthealth' ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Severity', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Object', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Problem', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Evidence', 'contenthealth' ) . '</th><th scope="col"><span class="rbn-sr">' . esc_html__( 'Action', 'contenthealth' ) . '</span></th></tr></thead><tbody>';
 		foreach ( $res['rows'] as $r ) {
 			$rule  = Registry::get( $r->rule_id );
 			$title = Ui::object_title( $r );
-			echo '<tr><td data-l="' . esc_attr__( 'Severity', 'contenthealth' ) . '">' . Ui::sev_badge( $r->severity ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '<th scope="row"><span class="rbn-obj">' . esc_html( $title ) . '</span><span class="rbn-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th>';
-			echo '<td data-l="' . esc_attr__( 'Problem', 'contenthealth' ) . '">' . esc_html( $rule ? $rule->label() : $r->rule_id ) . '</td>';
-			echo '<td data-l="' . esc_attr__( 'Evidence', 'contenthealth' ) . '"><code>' . esc_html( Ui::evidence( $r ) ) . '</code></td>';
+			echo '<tr><td data-label="' . esc_attr__( 'Severity', 'contenthealth' ) . '">' . Ui::sev_badge( $r->severity ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<th scope="row"><span class="ch-obj">' . esc_html( $title ) . '</span><span class="ch-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th>';
+			echo '<td data-label="' . esc_attr__( 'Problem', 'contenthealth' ) . '">' . esc_html( $rule ? $rule->label() : $r->rule_id ) . '</td>';
+			echo '<td data-label="' . esc_attr__( 'Evidence', 'contenthealth' ) . '"><code>' . esc_html( Ui::evidence( $r ) ) . '</code></td>';
 			echo '<td><div class="rbn-acts"><a class="rbn-btn rbn-btn--sm" href="' . esc_url( Ui::url( array( 'tab' => 'issues', 'ac' => $r->id ) ) ) . '">' . esc_html__( 'Review', 'contenthealth' ) . '<span class="rbn-sr">: ' . esc_html( $title ) . '</span></a></div></td></tr>';
 		}
 		echo '</tbody></table></div></section>';

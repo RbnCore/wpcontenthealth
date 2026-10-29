@@ -78,8 +78,10 @@ final class Admin {
 		if ( $hook !== self::$hook ) {
 			return;
 		}
-		wp_enqueue_style( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/rbn-admin-ui.css', array(), self::asset_ver( 'assets/admin/rbn-admin-ui.css' ) );
-		wp_enqueue_script( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/contenthealth-admin.js', array(), self::asset_ver( 'assets/admin/contenthealth-admin.js' ), true );
+		wp_enqueue_style( 'rbn-admin-ui' );
+		wp_enqueue_script( 'rbn-admin-ui' );
+		wp_enqueue_style( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/contenthealth-admin.css', array( 'rbn-admin-ui' ), self::asset_ver( 'assets/admin/contenthealth-admin.css' ) );
+		wp_enqueue_script( 'contenthealth-admin', CONTENTHEALTH_URL . 'assets/admin/contenthealth-admin.js', array( 'rbn-admin-ui' ), self::asset_ver( 'assets/admin/contenthealth-admin.js' ), true );
 		wp_localize_script(
 			'contenthealth-admin',
 			'ContentHealthCfg',
@@ -237,7 +239,7 @@ final class Admin {
 		foreach ( $tabs as $slug => $tab ) {
 			$count = isset( $tab['count'] ) ? (int) call_user_func( $tab['count'] ) : 0;
 			printf(
-				'<li><a href="%s"%s>%s%s</a></li>',
+				'<li><a href="%s"%s class="rbn-tabs__tab">%s%s</a></li>',
 				esc_url( Ui::url( 'overview' === $slug ? array() : array( 'tab' => $slug ) ) ),
 				$slug === $cur ? ' aria-current="page"' : '',
 				esc_html( (string) $tab['label'] ),

@@ -56,9 +56,9 @@ final class Tags {
 			echo Ui::empty_state( 'tag', __( 'No problems seen in tags', 'contenthealth' ), __( 'The scan results contain no tag problems. They appear here after a new scan.', 'contenthealth' ), '<button type="button" class="rbn-btn rbn-btn--pri" data-scan>' . Ui::icon( 'scan' ) . esc_html__( 'Scan now', 'contenthealth' ) . '</button>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			return;
 		}
-		echo '<ul class="rbn-tiles" aria-label="' . esc_attr__( 'Problem classes', 'contenthealth' ) . '">';
+		echo '<ul class="ch-tiles" aria-label="' . esc_attr__( 'Problem classes', 'contenthealth' ) . '">';
 		foreach ( $classes as $id => $label ) {
-			echo '<li><a class="rbn-tile" href="' . esc_url( Ui::url( array( 'tab' => 'tags', 'sinif' => $id ) ) ) . '"' . ( $id === $cur ? ' aria-current="true"' : '' ) . '><b>' . (int) $counts[ $id ] . '</b><span>' . esc_html( $label ) . '</span></a></li>';
+			echo '<li><a class="ch-tile" href="' . esc_url( Ui::url( array( 'tab' => 'tags', 'sinif' => $id ) ) ) . '"' . ( $id === $cur ? ' aria-current="true"' : '' ) . '><b>' . (int) $counts[ $id ] . '</b><span>' . esc_html( $label ) . '</span></a></li>';
 		}
 		echo '</ul>';
 		if ( 'term_duplicate' === $cur ) {
@@ -118,11 +118,11 @@ final class Tags {
 			$name = '' !== $name ? $name : $terms[0]->name;
 			/* translators: 1: cluster number, 2: canonical name */
 			$legend = sprintf( __( 'Cluster %1$d · %2$s', 'contenthealth' ), $n, $name );
-			echo '<fieldset class="rbn-cluster" data-cluster="' . (int) $n . '" data-issues="' . esc_attr( implode( ',', $c['issues'] ) ) . '"><legend>' . esc_html( $legend ) . '</legend>';
+			echo '<fieldset class="ch-cluster" data-cluster="' . (int) $n . '" data-issues="' . esc_attr( implode( ',', $c['issues'] ) ) . '"><legend>' . esc_html( $legend ) . '</legend>';
 			echo '<div role="radiogroup" aria-label="' . esc_attr( sprintf( /* translators: %s: cluster legend */ __( 'Canonical tag: %s', 'contenthealth' ), $legend ) ) . '">';
 			foreach ( $terms as $t ) {
 				printf(
-					'<label class="rbn-term"><input type="radio" name="kanon-%1$d" value="%2$d" data-name="%3$s" data-count="%4$d"%5$s><span><span class="rbn-term__n">%3$s</span><span class="rbn-term__m"><span>%6$s <code>%7$s</code></span><span>#%2$d</span></span></span><span class="rbn-term__u">%8$s</span></label>',
+					'<label class="ch-term"><input type="radio" name="kanon-%1$d" value="%2$d" data-name="%3$s" data-count="%4$d"%5$s><span><span class="ch-term__n">%3$s</span><span class="ch-term__m"><span>%6$s <code>%7$s</code></span><span>#%2$d</span></span></span><span class="ch-term__u">%8$s</span></label>',
 					(int) $n,
 					(int) $t->term_id,
 					esc_attr( $t->name ),
@@ -133,7 +133,7 @@ final class Tags {
 					esc_html( sprintf( /* translators: %d: post count */ __( '%d posts', 'contenthealth' ), (int) $t->count ) )
 				);
 			}
-			echo '</div><div class="rbn-cluster__f"><p data-merge-sum></p><div class="rbn-row"><button type="button" class="rbn-btn rbn-btn--link rbn-btn--sm" data-cluster-ignore>' . esc_html__( 'Ignore', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri rbn-btn--sm" data-open="dlg-merge" data-merge-from="' . (int) $n . '">' . Ui::icon( 'merge' ) . esc_html__( 'Merge…', 'contenthealth' ) . '</button></div></div></fieldset>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '</div><div class="ch-cluster__f"><p data-merge-sum></p><div class="rbn-row"><button type="button" class="rbn-btn rbn-btn--link rbn-btn--sm" data-cluster-ignore>' . esc_html__( 'Ignore', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri rbn-btn--sm" data-open="dlg-merge" data-merge-from="' . (int) $n . '">' . Ui::icon( 'merge' ) . esc_html__( 'Merge…', 'contenthealth' ) . '</button></div></div></fieldset>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '</div></section>';
 	}
@@ -155,7 +155,7 @@ final class Tags {
 		echo '<div class="rbn-tw"><table class="rbn-table rbn-table--stack"><caption class="rbn-sr">' . esc_html( $label ) . '</caption><thead><tr><th scope="col">' . esc_html__( 'Tag', 'contenthealth' ) . '</th><th scope="col">' . esc_html__( 'Evidence', 'contenthealth' ) . '</th><th scope="col" class="rbn-num">' . esc_html__( 'Post', 'contenthealth' ) . '</th></tr></thead><tbody>';
 		foreach ( $res['rows'] as $r ) {
 			$t = get_term( (int) $r->object_id );
-			echo '<tr><th scope="row"><span class="rbn-obj">' . esc_html( Ui::object_title( $r ) ) . '</span><span class="rbn-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th><td data-l="' . esc_attr__( 'Evidence', 'contenthealth' ) . '"><span class="rbn-ev"><mark>' . esc_html( Ui::evidence( $r ) ) . '</mark></span></td><td data-l="' . esc_attr__( 'Post', 'contenthealth' ) . '" class="rbn-num">' . (int) ( $t && ! is_wp_error( $t ) ? $t->count : 0 ) . '</td></tr>';
+			echo '<tr><th scope="row"><span class="ch-obj">' . esc_html( Ui::object_title( $r ) ) . '</span><span class="ch-sub">' . esc_html( Ui::object_sub( $r ) ) . '</span></th><td data-label="' . esc_attr__( 'Evidence', 'contenthealth' ) . '"><span class="ch-ev"><mark>' . esc_html( Ui::evidence( $r ) ) . '</mark></span></td><td data-label="' . esc_attr__( 'Post', 'contenthealth' ) . '" class="rbn-num">' . (int) ( $t && ! is_wp_error( $t ) ? $t->count : 0 ) . '</td></tr>';
 		}
 		echo '</tbody></table></div>' . Ui::pager( (int) $res['total'], 20, $page, array( 'tab' => 'tags', 'sinif' => $rule_id ) ) . '</section>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -180,7 +180,7 @@ final class Tags {
 		$t = Ui::tone_attr();
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui/esc_* ile kaçışlı.
 		echo '<dialog class="rbn-dlg" id="dlg-merge"' . $t . ' aria-labelledby="dlg-merge-t" aria-describedby="dlg-merge-d"><div class="rbn-dlg__b"><h2 id="dlg-merge-t" data-merge-title></h2><p id="dlg-merge-d">' . esc_html__( 'Dry run: nothing has changed yet.', 'contenthealth' ) . '</p><ul class="rbn-sum" style="color:var(--rbn-text)" data-merge-list></ul></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-close>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--pri" data-confirm-merge>' . esc_html__( 'Merge', 'contenthealth' ) . '</button></div></dialog>';
-		echo '<dialog class="rbn-dlg" id="dlg-empty"' . $t . ' aria-labelledby="dlg-empty-t" aria-describedby="dlg-empty-d"><div class="rbn-dlg__b"><h2 id="dlg-empty-t" data-terms-title></h2><p id="dlg-empty-d" data-terms-text></p><div class="rbn-toks" style="margin:0 0 16px" data-terms-toks></div><div class="rbn-note rbn-note--warn">' . Ui::icon( 'alert' ) . '<div><p>' . esc_html__( 'Changes are written to the undo log; they can be undone.', 'contenthealth' ) . '</p></div></div></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-close>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--danger" data-confirm-empty>' . esc_html__( 'Apply', 'contenthealth' ) . '</button></div></dialog>';
+		echo '<dialog class="rbn-dlg" id="dlg-empty"' . $t . ' aria-labelledby="dlg-empty-t" aria-describedby="dlg-empty-d"><div class="rbn-dlg__b"><h2 id="dlg-empty-t" data-terms-title></h2><p id="dlg-empty-d" data-terms-text></p><div class="ch-toks" style="margin:0 0 16px" data-terms-toks></div><div class="rbn-note rbn-note--warn">' . Ui::icon( 'alert' ) . '<div><p>' . esc_html__( 'Changes are written to the undo log; they can be undone.', 'contenthealth' ) . '</p></div></div></div><div class="rbn-dlg__f"><button type="button" class="rbn-btn" data-close>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button><button type="button" class="rbn-btn rbn-btn--danger" data-confirm-empty>' . esc_html__( 'Apply', 'contenthealth' ) . '</button></div></dialog>';
 		UndoLog::undo_dialog( $t );
 		// phpcs:enable
 	}

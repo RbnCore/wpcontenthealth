@@ -1,0 +1,918 @@
+/**
+ * ContentHealth Yönetim Arayüzü Düzen Stilleri
+ * rbn-admin-ui tasarım kiti üzerine binen eklentiye özgü yerleşimler.
+ * Sabit renk ve piksel boyutu yoktur; tüm stiller --rbn-* token'larını kullanır.
+ *
+ * @package ContentHealth
+ */
+
+/* ==========================================================================
+   1. GENEL DÜZEN VE IZGARALAR
+   ========================================================================== */
+
+.ch-grid {
+  display: grid;
+  gap: var(--rbn-gap);
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-grid--score {
+  grid-template-columns: minmax(16rem, 20rem) 1fr 1fr;
+  align-items: stretch;
+}
+
+.ch-grid--5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.ch-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 64rem) {
+  .ch-grid--score {
+    grid-template-columns: 1fr;
+  }
+  .ch-grid--5 {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+  .ch-grid--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48.875rem) {
+  .ch-grid--score,
+  .ch-grid--5,
+  .ch-grid--2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   2. PANO (OVERVIEW) KARTLARI VE GÖRSELLERİ
+   ========================================================================== */
+
+.ch-card--puan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--rbn-pad);
+}
+
+.ch-card--tarama,
+.ch-card--grafik,
+.ch-card--nasil {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Skor Halkası (SVG) */
+.ch-ring {
+  position: relative;
+  width: 9rem;
+  height: 9rem;
+  margin: var(--rbn-space-3) auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ch-ring__svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ch-ring__track {
+  fill: none;
+  stroke: var(--rbn-line);
+  stroke-width: 10;
+}
+
+.ch-ring__val {
+  fill: none;
+  stroke: var(--rbn-ac);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.ch-ring[data-band="ok"] .ch-ring__val { stroke: var(--rbn-ok); }
+.ch-ring[data-band="warn"] .ch-ring__val { stroke: var(--rbn-warn); }
+.ch-ring[data-band="err"] .ch-ring__val { stroke: var(--rbn-err); }
+
+.ch-ring__n {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--rbn-fs-stat);
+  font-weight: var(--rbn-fw-b);
+  line-height: 1;
+  color: var(--rbn-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Grup Kartı */
+.ch-gcard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--rbn-space-2);
+}
+
+.ch-gcard__h {
+  display: flex;
+  align-items: center;
+  gap: var(--rbn-space-2);
+  font-size: var(--rbn-fs);
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-text);
+}
+
+.ch-gcard__i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rbn-ctl);
+  height: var(--rbn-ctl);
+  border-radius: var(--rbn-r-sm);
+  background: var(--rbn-surface-2);
+  color: var(--rbn-muted);
+  flex-shrink: 0;
+}
+
+.ch-gcard__sc {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--rbn-space-2);
+  margin-top: var(--rbn-space-2);
+}
+
+.ch-gcard__sc b {
+  font-size: var(--rbn-fs-h2);
+  font-weight: var(--rbn-fw-b);
+  color: var(--rbn-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-gcard__sc small {
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+}
+
+.rbn-wrap h2.rbn-h3,
+.rbn-wrap h3.rbn-h3,
+.rbn-wrap .rbn-h3 {
+  font-size: var(--rbn-fs-h3);
+}
+
+/* Tarama İlerleme Çubuğu */
+.ch-progress {
+  width: 100%;
+  height: 0.625rem;
+  background: var(--rbn-surface-2);
+  border-radius: var(--rbn-r-full);
+  overflow: hidden;
+  margin: var(--rbn-space-3) 0;
+}
+
+.ch-progress > div {
+  height: 100%;
+  background: var(--rbn-ac);
+  border-radius: var(--rbn-r-full);
+  transition: width 0.3s ease;
+}
+
+/* Kıvılcım Çizgisi (Sparkline) */
+.ch-spark {
+  width: 100%;
+  height: 6rem;
+  margin: var(--rbn-space-2) 0;
+  overflow: visible;
+}
+
+.ch-spark__area {
+  fill: var(--rbn-ac-soft);
+  opacity: 0.4;
+}
+
+.ch-spark__line {
+  fill: none;
+  stroke: var(--rbn-ac);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ch-spark__dot {
+  fill: var(--rbn-surface);
+  stroke: var(--rbn-ac);
+  stroke-width: 2.5;
+}
+
+.ch-spark__ax {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+  margin-top: var(--rbn-space-1);
+}
+
+/* Puan Nasıl Hesaplanır Listesi */
+.ch-how {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-space-3);
+}
+
+.ch-how li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-space-1);
+}
+
+.ch-how__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--rbn-fs);
+}
+
+.ch-how__n {
+  color: var(--rbn-text);
+  font-weight: var(--rbn-fw-m);
+}
+
+.ch-how__c {
+  color: var(--rbn-muted);
+  font-size: var(--rbn-fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.ch-how__p {
+  color: var(--rbn-muted);
+  font-size: var(--rbn-fs-sm);
+  line-height: var(--rbn-lh-rel);
+}
+
+/* Ciddiyet İkonu */
+.ch-sevico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: -0.25rem;
+}
+
+.ch-sevico--crit { color: var(--rbn-err); }
+.ch-sevico--warn { color: var(--rbn-warn); }
+.ch-sevico--info { color: var(--rbn-info); }
+
+/* Öneri Çubuğu */
+.ch-suggest {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rbn-space-3);
+  padding: var(--rbn-space-3) var(--rbn-space-4);
+  background: var(--rbn-surface-2);
+  border-radius: var(--rbn-r-sm);
+  margin-top: var(--rbn-space-3);
+}
+
+@media (max-width: 48.875rem) {
+  .ch-suggest {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   3. BULGULAR (ISSUES) EKRANI VE SÜZGEÇ
+   ========================================================================== */
+
+.ch-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rbn-space-3);
+  margin-bottom: var(--rbn-gap);
+  padding: var(--rbn-pad-sm) var(--rbn-pad);
+  background: var(--rbn-surface);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r);
+}
+
+.ch-filter form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--rbn-space-3);
+}
+
+.ch-filter__act {
+  display: flex;
+  align-items: center;
+  gap: var(--rbn-space-2);
+}
+
+.ch-search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.ch-search .rbn-ico {
+  position: absolute;
+  left: var(--rbn-space-3);
+  color: var(--rbn-muted);
+  pointer-events: none;
+}
+
+.ch-search input[type="search"] {
+  padding-left: 2.5rem;
+  min-height: var(--rbn-ctl);
+  font-size: var(--rbn-fs);
+}
+
+/* Çip Listesi */
+.ch-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rbn-space-2);
+  align-items: center;
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-fchip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rbn-space-1);
+  padding: var(--rbn-space-1) var(--rbn-space-3);
+  background: var(--rbn-surface);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r-full);
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-text);
+  min-height: var(--rbn-ctl);
+}
+
+.ch-fchip button {
+  background: transparent;
+  border: none;
+  color: var(--rbn-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rbn-ctl);
+  height: var(--rbn-ctl);
+  padding: 0;
+  border-radius: var(--rbn-r-full);
+}
+
+.ch-fchip button:hover,
+.ch-fchip button:focus-visible {
+  color: var(--rbn-text);
+  background: var(--rbn-surface-2);
+}
+
+/* Toplu Eylemler */
+.ch-bulk {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rbn-space-3);
+  padding: var(--rbn-space-2) var(--rbn-space-4);
+  background: var(--rbn-ac-soft);
+  border: 1px solid var(--rbn-line-strong);
+  border-radius: var(--rbn-r);
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-bulk__act {
+  display: flex;
+  align-items: center;
+  gap: var(--rbn-space-2);
+}
+
+/* Tablo Hücre Düzenleri */
+.ch-chk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--rbn-ctl);
+  min-height: var(--rbn-ctl);
+}
+
+.ch-chk input[type="checkbox"] {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+.ch-obj {
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-text);
+}
+
+.ch-sub {
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+}
+
+.ch-ev {
+  font-family: var(--rbn-font-mono);
+  font-size: var(--rbn-fs-mono);
+  color: var(--rbn-muted);
+  word-break: break-all;
+}
+
+/* ==========================================================================
+   4. ÖNCE / SONRA FARKI (DIFF)
+   ========================================================================== */
+
+.ch-diff {
+  background: var(--rbn-surface);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r);
+  overflow: hidden;
+  margin: var(--rbn-space-3) 0;
+  font-family: var(--rbn-font-mono);
+  font-size: var(--rbn-fs-mono);
+  line-height: var(--rbn-lh-snug);
+}
+
+.ch-diff__hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--rbn-space-2) var(--rbn-space-3);
+  background: var(--rbn-surface-2);
+  border-bottom: 1px solid var(--rbn-line);
+  font-family: var(--rbn-font);
+  font-size: var(--rbn-fs-sm);
+}
+
+.ch-diff__pane {
+  display: flex;
+  flex-direction: column;
+}
+
+.ch-diff__r {
+  display: flex;
+  align-items: baseline;
+  padding: var(--rbn-space-1) var(--rbn-space-3);
+  border-bottom: 1px solid var(--rbn-line);
+}
+
+.ch-diff__r:last-child {
+  border-bottom: none;
+}
+
+.ch-diff__r--del {
+  background: var(--rbn-err-bg);
+  color: var(--rbn-err);
+}
+
+.ch-diff__r--add {
+  background: var(--rbn-ok-bg);
+  color: var(--rbn-ok);
+}
+
+.ch-diff__n {
+  width: 2rem;
+  flex-shrink: 0;
+  color: var(--rbn-muted);
+  user-select: none;
+  font-size: var(--rbn-fs-sm);
+}
+
+.ch-diff__s {
+  width: 1.5rem;
+  flex-shrink: 0;
+  font-weight: var(--rbn-fw-b);
+  user-select: none;
+}
+
+.ch-diff__c {
+  flex-grow: 1;
+  word-break: break-all;
+}
+
+.ch-diff__c del,
+.ch-diff__c ins {
+  text-decoration: none;
+}
+
+.ch-diff__pane[data-pane="split"] {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.ch-diff__pane[data-pane="split"] > div:first-child {
+  border-right: 1px solid var(--rbn-line);
+}
+
+.ch-diff__lab {
+  padding: var(--rbn-space-1) var(--rbn-space-3);
+  background: var(--rbn-surface-2);
+  border-bottom: 1px solid var(--rbn-line);
+  font-family: var(--rbn-font);
+  font-size: var(--rbn-fs-sm);
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-muted);
+  margin: 0;
+}
+
+.ch-diff__sum {
+  display: flex;
+  gap: var(--rbn-space-3);
+  padding: var(--rbn-space-2) var(--rbn-space-3);
+  background: var(--rbn-surface-2);
+  border-top: 1px solid var(--rbn-line);
+  font-family: var(--rbn-font);
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   5. ETİKET DOKTORU (TAGS)
+   ========================================================================== */
+
+.ch-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--rbn-gap);
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--rbn-pad);
+  background: var(--rbn-surface);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r);
+  text-decoration: none;
+  color: var(--rbn-text);
+  min-height: 5.5rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ch-tile:hover {
+  border-color: var(--rbn-ac);
+  box-shadow: var(--rbn-sh-sm);
+  color: var(--rbn-text);
+}
+
+.ch-tile[aria-current="true"] {
+  border-color: var(--rbn-ac);
+  background: var(--rbn-surface-2);
+  box-shadow: inset 0 0 0 1px var(--rbn-ac);
+}
+
+.ch-tile h4 {
+  margin: 0 0 var(--rbn-space-1) 0;
+  font-size: var(--rbn-fs);
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-text);
+}
+
+.ch-tile p {
+  margin: 0;
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+}
+
+.ch-tile b {
+  font-size: var(--rbn-fs-h2);
+  font-weight: var(--rbn-fw-b);
+  color: var(--rbn-text);
+  margin-top: var(--rbn-space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Küme (Cluster) Kartları */
+.ch-cluster {
+  background: var(--rbn-surface);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r);
+  padding: var(--rbn-pad);
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-cluster__why {
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+  margin-bottom: var(--rbn-space-3);
+}
+
+.ch-cluster__f {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-space-2);
+}
+
+/* Terim Etiketleri */
+.ch-term {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--rbn-space-2);
+  padding: var(--rbn-space-2) var(--rbn-space-3);
+  background: var(--rbn-surface-2);
+  border-radius: var(--rbn-r-sm);
+  font-size: var(--rbn-fs);
+  min-height: var(--rbn-ctl);
+}
+
+.ch-term__n {
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-text);
+}
+
+.ch-term__m {
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+}
+
+.ch-term__u {
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   6. ALT METİN (ALT) EKRANI
+   ========================================================================== */
+
+.ch-toks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--rbn-space-2);
+  margin-top: var(--rbn-space-2);
+}
+
+.ch-tok {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--rbn-space-1) var(--rbn-space-3);
+  background: var(--rbn-surface-2);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r-sm);
+  font-family: var(--rbn-font-mono);
+  font-size: var(--rbn-fs-mono);
+  color: var(--rbn-text);
+  cursor: pointer;
+  min-height: var(--rbn-ctl);
+}
+
+.ch-tok:hover {
+  border-color: var(--rbn-ac);
+  background: var(--rbn-surface);
+}
+
+.ch-thumb {
+  width: 3.5rem;
+  height: 3.5rem;
+  object-fit: cover;
+  border-radius: var(--rbn-r-sm);
+  border: 1px solid var(--rbn-line);
+  background: var(--rbn-surface-2);
+}
+
+.ch-empty-v {
+  color: var(--rbn-muted);
+  font-style: italic;
+  font-size: var(--rbn-fs-sm);
+}
+
+.ch-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rbn-muted);
+  margin: 0 var(--rbn-space-2);
+}
+
+/* ==========================================================================
+   7. AYARLAR (PREFS) VE KALIPLAR
+   ========================================================================== */
+
+.ch-rule {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--rbn-space-4);
+  padding: var(--rbn-space-3) 0;
+  border-bottom: 1px solid var(--rbn-line);
+}
+
+.ch-rule:last-child {
+  border-bottom: none;
+}
+
+.ch-rule__t {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-space-1);
+}
+
+.ch-rule__t b {
+  font-size: var(--rbn-fs);
+  color: var(--rbn-text);
+}
+
+.ch-rule__t p {
+  margin: 0;
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+}
+
+.ch-grp {
+  font-size: var(--rbn-fs-h3);
+  font-weight: var(--rbn-fw-b);
+  color: var(--rbn-text);
+  margin-top: var(--rbn-space-4);
+  margin-bottom: var(--rbn-space-2);
+}
+
+.ch-pats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-space-2);
+  margin-top: var(--rbn-space-2);
+}
+
+.ch-pat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rbn-space-2);
+}
+
+.ch-pat button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rbn-ctl);
+  height: var(--rbn-ctl);
+  min-width: var(--rbn-ctl);
+  min-height: var(--rbn-ctl);
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--rbn-muted);
+  border-radius: var(--rbn-r-sm);
+  flex-shrink: 0;
+}
+
+.ch-pat button:hover,
+.ch-pat button:focus-visible {
+  color: var(--rbn-err);
+  background: var(--rbn-err-bg);
+}
+
+.ch-pat input[type="text"] {
+  font-family: var(--rbn-font-mono);
+  font-size: var(--rbn-fs-mono);
+}
+
+.ch-test {
+  background: var(--rbn-surface-2);
+  border-radius: var(--rbn-r-sm);
+  padding: var(--rbn-space-3);
+  margin-top: var(--rbn-space-3);
+}
+
+.ch-snippet {
+  font-family: var(--rbn-font-mono);
+  font-size: var(--rbn-fs-mono);
+  background: var(--rbn-surface);
+  border: 1px solid var(--rbn-line);
+  border-radius: var(--rbn-r-sm);
+  padding: var(--rbn-space-3);
+  margin-top: var(--rbn-space-2);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.ch-addrow {
+  margin-top: var(--rbn-space-3);
+}
+
+.ch-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--rbn-space-2);
+  font-size: var(--rbn-fs-sm);
+  color: var(--rbn-muted);
+  margin-top: var(--rbn-space-2);
+}
+
+.ch-tip__b {
+  font-weight: var(--rbn-fw-b);
+  color: var(--rbn-text);
+}
+
+.ch-tip__t {
+  color: var(--rbn-muted);
+}
+
+/* ==========================================================================
+   8. İLK AÇILIŞ (ONBOARDING) SİHİRBAZI
+   ========================================================================== */
+
+.ch-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--rbn-space-4);
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-stepper__step {
+  display: flex;
+  align-items: center;
+  gap: var(--rbn-space-2);
+  font-size: var(--rbn-fs);
+  color: var(--rbn-muted);
+}
+
+.ch-stepper__step[aria-current="step"] {
+  color: var(--rbn-text);
+  font-weight: var(--rbn-fw-b);
+}
+
+.ch-stepper__step[aria-current="step"] .ch-stepper__num {
+  background: var(--rbn-ac);
+  color: var(--rbn-ac-fg);
+}
+
+.ch-stepper__num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--rbn-ctl);
+  height: var(--rbn-ctl);
+  border-radius: var(--rbn-r-full);
+  background: var(--rbn-surface-2);
+  color: var(--rbn-muted);
+  font-weight: var(--rbn-fw-b);
+}
+
+.ch-wiz {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.ch-wiz__top {
+  text-align: center;
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-wiz__f {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rbn-space-4);
+}
+
+.ch-sum {
+  background: var(--rbn-surface-2);
+  border-radius: var(--rbn-r-sm);
+  padding: var(--rbn-pad);
+  margin-bottom: var(--rbn-gap);
+}
+
+.ch-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--rbn-space-2) var(--rbn-space-4);
+  margin: 0;
+  font-size: var(--rbn-fs);
+}
+
+.ch-dl dt {
+  font-weight: var(--rbn-fw-m);
+  color: var(--rbn-muted);
+}
+
+.ch-dl dd {
+  margin: 0;
+  color: var(--rbn-text);
+}

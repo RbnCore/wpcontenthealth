@@ -82,7 +82,7 @@ final class Prefs {
 	private static function rules_card( array $s ): void {
 		echo '<section class="rbn-card" aria-labelledby="h-k"><div class="rbn-card__h"><h2 id="h-k">' . esc_html__( 'Rules', 'contenthealth' ) . '</h2><p>' . esc_html__( 'A rule you turn off does not run in the scan; it does not delete existing findings.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--flush">';
 		foreach ( Registry::groups() as $gid => $glabel ) {
-			echo '<h3 class="rbn-grp">' . esc_html( (string) $glabel ) . '</h3>';
+			echo '<h3 class="ch-grp">' . esc_html( (string) $glabel ) . '</h3>';
 			foreach ( Registry::rules() as $rule ) {
 				if ( $rule->group() === $gid ) {
 					self::rule_row( $rule, $s['rules'][ $rule->id() ] ?? $rule->defaults() );
@@ -97,7 +97,7 @@ final class Prefs {
 		$id   = $rule->id();
 		$name = 's[rules][' . $id . ']';
 		$dom  = 'r-' . $id;
-		echo '<div class="rbn-rule"><div><label class="rbn-switch"><input type="checkbox" role="switch" id="' . esc_attr( $dom ) . '" name="' . esc_attr( $name ) . '[enabled]" value="1"' . checked( ! empty( $cfg['enabled'] ), true, false ) . ' aria-describedby="' . esc_attr( $dom ) . '-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html( $rule->label() ) . '</b><span class="rbn-help" id="' . esc_attr( $dom ) . '-h">' . esc_html( $rule->description() ) . '</span></span></label></div>';
+		echo '<div class="ch-rule"><div><label class="rbn-switch"><input type="checkbox" role="switch" id="' . esc_attr( $dom ) . '" name="' . esc_attr( $name ) . '[enabled]" value="1"' . checked( ! empty( $cfg['enabled'] ), true, false ) . ' aria-describedby="' . esc_attr( $dom ) . '-h"><span class="rbn-switch__t" aria-hidden="true"></span><span class="rbn-switch__x"><b>' . esc_html( $rule->label() ) . '</b><span class="rbn-help" id="' . esc_attr( $dom ) . '-h">' . esc_html( $rule->description() ) . '</span></span></label></div>';
 		$fields = '';
 		foreach ( $rule->defaults() as $k => $dv ) {
 			if ( 'enabled' === $k || ( self::EDITOR_RULE === $id && in_array( $k, self::EDITOR_FIELDS, true ) ) ) {
@@ -106,13 +106,13 @@ final class Prefs {
 			$fid = $dom . '-' . $k;
 			$val = $cfg[ $k ] ?? $dv;
 			if ( is_bool( $dv ) ) {
-				$fields .= '<div class="rbn-rule__t"><input type="hidden" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="0"><label class="rbn-check"><input type="checkbox" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="1"' . checked( (bool) $val, true, false ) . '><span>' . esc_html( self::label( $k ) ) . '</span></label></div>';
+				$fields .= '<div class="ch-rule__t"><input type="hidden" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="0"><label class="rbn-check"><input type="checkbox" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="1"' . checked( (bool) $val, true, false ) . '><span>' . esc_html( self::label( $k ) ) . '</span></label></div>';
 			} elseif ( is_int( $dv ) ) {
-				$fields .= '<div class="rbn-rule__t"><label for="' . esc_attr( $fid ) . '">' . esc_html( self::label( $k ) ) . '</label><input class="rbn-input rbn-input--s" type="number" min="0" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="' . (int) $val . '"></div>';
+				$fields .= '<div class="ch-rule__t"><label for="' . esc_attr( $fid ) . '">' . esc_html( self::label( $k ) ) . '</label><input class="rbn-input rbn-input--s" type="number" min="0" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="' . (int) $val . '"></div>';
 			} elseif ( is_array( $dv ) ) {
-				$fields .= '<div class="rbn-rule__t" style="flex-basis:100%"><label for="' . esc_attr( $fid ) . '">' . esc_html( self::label( $k ) ) . '</label><textarea class="rbn-textarea rbn-input--mono" rows="3" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '">' . esc_textarea( implode( "\n", array_map( 'strval', (array) $val ) ) ) . '</textarea></div>';
+				$fields .= '<div class="ch-rule__t" style="flex-basis:100%"><label for="' . esc_attr( $fid ) . '">' . esc_html( self::label( $k ) ) . '</label><textarea class="rbn-textarea rbn-input--mono" rows="3" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '">' . esc_textarea( implode( "\n", array_map( 'strval', (array) $val ) ) ) . '</textarea></div>';
 			} else {
-				$fields .= '<div class="rbn-rule__t"><label for="' . esc_attr( $fid ) . '">' . esc_html( self::label( $k ) ) . '</label><input class="rbn-input" type="text" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="' . esc_attr( (string) $val ) . '"></div>';
+				$fields .= '<div class="ch-rule__t"><label for="' . esc_attr( $fid ) . '">' . esc_html( self::label( $k ) ) . '</label><input class="rbn-input" type="text" id="' . esc_attr( $fid ) . '" name="' . esc_attr( $name . '[' . $k . ']' ) . '" value="' . esc_attr( (string) $val ) . '"></div>';
 			}
 		}
 		echo $fields . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parçalar kaçışlı.
@@ -156,14 +156,14 @@ final class Prefs {
 		echo '<section class="rbn-card" aria-labelledby="h-d"><div class="rbn-card__h"><h2 id="h-d">' . esc_html__( 'Pattern editor', 'contenthealth' ) . '</h2><p>' . esc_html__( 'The chat-leftover rule looks for these patterns. Add your own pattern and test it without saving.', 'contenthealth' ) . '</p></div><div class="rbn-card__b rbn-card__b--pad">';
 		foreach ( self::EDITOR_FIELDS as $f ) {
 			$list = array_values( array_map( 'strval', (array) ( $cfg[ $f ] ?? array() ) ) );
-			echo '<h3 class="rbn-h3">' . esc_html( $name[ $f ] ) . '</h3><div data-pats="' . esc_attr( $f ) . '"><textarea hidden name="s[rules][' . esc_attr( self::EDITOR_RULE ) . '][' . esc_attr( $f ) . ']" data-pats-store>' . esc_textarea( implode( "\n", $list ) ) . '</textarea><ul class="rbn-pats" aria-label="' . esc_attr( $name[ $f ] ) . '">';
+			echo '<h3 class="rbn-h3">' . esc_html( $name[ $f ] ) . '</h3><div data-pats="' . esc_attr( $f ) . '"><textarea hidden name="s[rules][' . esc_attr( self::EDITOR_RULE ) . '][' . esc_attr( $f ) . ']" data-pats-store>' . esc_textarea( implode( "\n", $list ) ) . '</textarea><ul class="ch-pats" aria-label="' . esc_attr( $name[ $f ] ) . '">';
 			foreach ( $list as $p ) {
-				echo '<li class="rbn-pat"><code>' . esc_html( $p ) . '</code><button type="button" data-pat-del aria-label="' . esc_attr( sprintf( /* translators: %s: pattern */ __( 'Delete pattern: %s', 'contenthealth' ), mb_substr( $p, 0, 40 ) ) ) . '">' . Ui::icon( 'trash' ) . '</button></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo '<li class="ch-pat"><code>' . esc_html( $p ) . '</code><button type="button" data-pat-del aria-label="' . esc_attr( sprintf( /* translators: %s: pattern */ __( 'Delete pattern: %s', 'contenthealth' ), mb_substr( $p, 0, 40 ) ) ) . '">' . Ui::icon( 'trash' ) . '</button></li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
-			echo '</ul><div class="rbn-addrow"><label class="rbn-sr" for="pat-' . esc_attr( $f ) . '">' . esc_html__( 'New pattern', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pat-' . esc_attr( $f ) . '" data-pat-new placeholder="' . esc_attr__( 'E.g. Sure,? here is .{0,40}:', 'contenthealth' ) . '"><button type="button" class="rbn-btn" data-pat-add>' . Ui::icon( 'plus' ) . esc_html__( 'Add', 'contenthealth' ) . '</button></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '</ul><div class="ch-addrow"><label class="rbn-sr" for="pat-' . esc_attr( $f ) . '">' . esc_html__( 'New pattern', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pat-' . esc_attr( $f ) . '" data-pat-new placeholder="' . esc_attr__( 'E.g. Sure,? here is .{0,40}:', 'contenthealth' ) . '"><button type="button" class="rbn-btn" data-pat-add>' . Ui::icon( 'plus' ) . esc_html__( 'Add', 'contenthealth' ) . '</button></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		echo '<p class="rbn-help" id="pat-h">' . esc_html__( 'Regular expression (PCRE). Invalid or extremely slow patterns are rejected on save.', 'contenthealth' ) . '</p>';
-		echo '<div class="rbn-test" aria-labelledby="pt-h"><h3 class="rbn-h3" id="pt-h">' . esc_html__( 'Test the pattern', 'contenthealth' ) . '</h3><label for="pt-pat" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Pattern', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pt-pat" style="margin-bottom:8px"><label for="pt-in" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Sample text', 'contenthealth' ) . '</label><textarea class="rbn-textarea" id="pt-in" rows="3">' . esc_textarea( __( 'Here is the article that matches your requirements:', 'contenthealth' ) . "\n" . __( 'Email marketing is a way of staying in touch with subscribers.', 'contenthealth' ) ) . '</textarea><div class="rbn-row" style="margin:8px 0"><button type="button" class="rbn-btn rbn-btn--sm" data-pat-test>' . Ui::icon( 'play' ) . esc_html__( 'Test', 'contenthealth' ) . '</button></div><div id="pt-out" role="status" aria-live="polite"><p class="rbn-muted">' . esc_html__( 'The result appears here.', 'contenthealth' ) . '</p></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div class="ch-test" aria-labelledby="pt-h"><h3 class="rbn-h3" id="pt-h">' . esc_html__( 'Test the pattern', 'contenthealth' ) . '</h3><label for="pt-pat" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Pattern', 'contenthealth' ) . '</label><input class="rbn-input rbn-input--mono" id="pt-pat" style="margin-bottom:8px"><label for="pt-in" class="rbn-help" style="display:block;margin:0 0 6px">' . esc_html__( 'Sample text', 'contenthealth' ) . '</label><textarea class="rbn-textarea" id="pt-in" rows="3">' . esc_textarea( __( 'Here is the article that matches your requirements:', 'contenthealth' ) . "\n" . __( 'Email marketing is a way of staying in touch with subscribers.', 'contenthealth' ) ) . '</textarea><div class="rbn-row" style="margin:8px 0"><button type="button" class="rbn-btn rbn-btn--sm" data-pat-test>' . Ui::icon( 'play' ) . esc_html__( 'Test', 'contenthealth' ) . '</button></div><div id="pt-out" role="status" aria-live="polite"><p class="rbn-muted">' . esc_html__( 'The result appears here.', 'contenthealth' ) . '</p></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '</div></section>';
 	}
 

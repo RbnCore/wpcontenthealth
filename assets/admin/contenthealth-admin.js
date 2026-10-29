@@ -82,7 +82,7 @@
 		if (!e.target.matches('input[name=diffmode]')) { return; }
 		var sp = e.target.value === 'split';
 		$$('[data-diff]').forEach(function (df) {
-			df.classList.toggle('rbn-diff--split', sp);
+			df.classList.toggle('ch-diff--split', sp);
 			var a = $('[data-pane=inline]', df), b = $('[data-pane=split]', df);
 			if (a) { a.hidden = sp; } if (b) { b.hidden = !sp; }
 		});
@@ -221,7 +221,7 @@
 		function show(n) {
 			wStep = n;
 			$$('[data-step]', wz).forEach(function (s) { s.hidden = s.getAttribute('data-step') != n; });
-			$$('.rbn-stepper li', wz).forEach(function (li, i) { li.classList.toggle('is-done', i < n - 1); if (i === n - 1) { li.setAttribute('aria-current', 'step'); } else { li.removeAttribute('aria-current'); } });
+			$$('.ch-stepper li', wz).forEach(function (li, i) { li.classList.toggle('is-done', i < n - 1); if (i === n - 1) { li.setAttribute('aria-current', 'step'); } else { li.removeAttribute('aria-current'); } });
 			pv.hidden = n === 1 || n === 4; nx.textContent = labels[n - 1]; nx.disabled = n === 3 && !ok.checked; nx.hidden = false;
 			cancel.hidden = n === 4;
 			var h = $('[data-step="' + n + '"] h3', wz), s = $('[data-step="' + n + '"]', wz);
@@ -270,14 +270,14 @@
 					li.appendChild(v); st.appendChild(li);
 				});
 				var row = function (kind, text) {
-					var r = el('div', 'rbn-diff__r rbn-diff__r--' + kind);
-					r.appendChild(el('span', 'rbn-diff__n')); r.appendChild(el('span', 'rbn-diff__s', kind === 'del' ? '−' : '+'));
-					var c = el('span', 'rbn-diff__c'); c.appendChild(el(kind === 'del' ? 'del' : 'ins', '', text)); r.appendChild(c); return r;
+					var r = el('div', 'ch-diff__r ch-diff__r--' + kind);
+					r.appendChild(el('span', 'ch-diff__n')); r.appendChild(el('span', 'ch-diff__s', kind === 'del' ? '−' : '+'));
+					var c = el('span', 'ch-diff__c'); c.appendChild(el(kind === 'del' ? 'del' : 'ins', '', text)); r.appendChild(c); return r;
 				};
 				rs.forEach(function (r) {
 					r.items.slice(0, 3).forEach(function (it) {
 						if (!it.changes || !it.changes[0]) { return; }
-						var c = it.changes[0], box = el('div', 'rbn-diff'), hd = el('div', 'rbn-diff__hd'), pane = el('div', 'rbn-diff__pane');
+						var c = it.changes[0], box = el('div', 'ch-diff'), hd = el('div', 'ch-diff__hd'), pane = el('div', 'ch-diff__pane');
 						hd.appendChild(el('b', '', T.sample + ' · #' + it.object_id)); hd.appendChild(el('code', 'rbn-muted', c.field)); box.appendChild(hd);
 						(c.removed || []).slice(0, 2).forEach(function (t) { pane.appendChild(row('del', t)); });
 						(c.added || []).slice(0, 2).forEach(function (t) { pane.appendChild(row('add', t)); });
@@ -359,7 +359,7 @@
 	$$('[data-cluster]').forEach(function (c) {
 		var s = $('[data-merge-sum]', c);
 		function info() {
-			var terms = $$('.rbn-term', c), tot = 0, name = '', id = 0;
+			var terms = $$('.ch-term', c), tot = 0, name = '', id = 0;
 			terms.forEach(function (t) { var i = $('input', t); tot += parseInt(i.getAttribute('data-count'), 10) || 0; if (i.checked) { name = i.getAttribute('data-name'); id = parseInt(i.value, 10); } });
 			return { terms: terms, tot: tot, name: name, id: id };
 		}
@@ -380,7 +380,7 @@
 	if (cm) {
 		cm.addEventListener('click', function () {
 			if (!mergeCluster) { return; }
-			var rs = $$('.rbn-term input', mergeCluster), canon = 0, others = [];
+			var rs = $$('.ch-term input', mergeCluster), canon = 0, others = [];
 			rs.forEach(function (i) { if (i.checked) { canon = parseInt(i.value, 10); } else { others.push(parseInt(i.value, 10)); } });
 			cm.disabled = true;
 			api('fix', { body: { rule: 'term_duplicate', ids: others, canonical: canon, dry_run: false } }).then(function (r) {
@@ -402,7 +402,7 @@
 			return api('fix', { body: { rule: emptyRule.rule, ids: ids, dry_run: true } });
 		}).then(function (r) {
 			t.textContent = r.changed + ' ' + T.fixed; x.textContent = r.skipped ? r.skipped + ' ' + T.skipped : '';
-			r.items.slice(0, 20).forEach(function (it) { var c = it.changes && it.changes[0]; k.appendChild(el('span', 'rbn-tok', c && c.removed && c.removed[0] ? c.removed[0] : '#' + it.object_id)); });
+			r.items.slice(0, 20).forEach(function (it) { var c = it.changes && it.changes[0]; k.appendChild(el('span', 'ch-tok', c && c.removed && c.removed[0] ? c.removed[0] : '#' + it.object_id)); });
 		}).catch(function () { t.textContent = T.loadFail; });
 	});
 	var ce = $('[data-confirm-empty]');
@@ -454,11 +454,11 @@
 	if (form) {
 		var sb = d.getElementById('savebar'), st = d.getElementById('savebar-t'), sv = $('[data-save]', sb), rv = $('[data-revert]', sb);
 		var dirty = function (on) { sb.classList.toggle('is-dirty', on); sv.disabled = !on; rv.disabled = !on; if (st) { st.textContent = on ? T.dirty : T.clean; } };
-		var inTest = function (t) { return t.closest('.rbn-test') || t.hasAttribute('data-pat-new'); };
+		var inTest = function (t) { return t.closest('.ch-test') || t.hasAttribute('data-pat-new'); };
 		form.addEventListener('input', function (e) { if (!inTest(e.target)) { dirty(true); } });
 		form.addEventListener('change', function (e) { if (!inTest(e.target)) { dirty(true); } });
 		rv.addEventListener('click', function () { location.reload(); });
-		function store(box) { $('[data-pats-store]', box).value = $$('.rbn-pats code', box).map(function (c) { return c.textContent; }).join('\n'); }
+		function store(box) { $('[data-pats-store]', box).value = $$('.ch-pats code', box).map(function (c) { return c.textContent; }).join('\n'); }
 		$$('[data-pats]').forEach(function (box) {
 			var inp = $('[data-pat-new]', box);
 			function add() {
@@ -466,9 +466,9 @@
 				api('pattern-test', { body: { pattern: v, sample: '' } }).then(function (r) {
 					if (!r.ok) { inp.setCustomValidity(T.patBad); inp.reportValidity(); say(T.patBad + ' ' + (r.error || '')); return; }
 					inp.setCustomValidity('');
-					var li = el('li', 'rbn-pat'), c = el('code', '', v), b = el('button'); b.type = 'button'; b.setAttribute('data-pat-del', ''); b.setAttribute('aria-label', T.patDel + ': ' + v.slice(0, 40));
+					var li = el('li', 'ch-pat'), c = el('code', '', v), b = el('button'); b.type = 'button'; b.setAttribute('data-pat-del', ''); b.setAttribute('aria-label', T.patDel + ': ' + v.slice(0, 40));
 					b.innerHTML = '<svg class="rbn-ico" aria-hidden="true"><use href="#i-trash"/></svg>';
-					li.appendChild(c); li.appendChild(b); $('.rbn-pats', box).appendChild(li); inp.value = ''; store(box); dirty(true);
+					li.appendChild(c); li.appendChild(b); $('.ch-pats', box).appendChild(li); inp.value = ''; store(box); dirty(true);
 				}).catch(function () { say(T.netError); });
 			}
 			$('[data-pat-add]', box).addEventListener('click', add);
@@ -484,7 +484,7 @@
 					out.textContent = '';
 					if (!hits.length) { out.appendChild(el('p', '', T.patNone)); say(T.patNone); return; }
 					out.appendChild(el('p', '', hits.length + ' ' + T.patMatches));
-					hits.forEach(function (h) { var p = el('p', 'rbn-snippet'), m = el('mark', '', h[1]); p.appendChild(d.createTextNode(h[0] + ': ')); p.appendChild(m); out.appendChild(p); });
+					hits.forEach(function (h) { var p = el('p', 'ch-snippet'), m = el('mark', '', h[1]); p.appendChild(d.createTextNode(h[0] + ': ')); p.appendChild(m); out.appendChild(p); });
 					say(hits.length + ' ' + T.patMatches);
 				}).catch(function (e) { out.textContent = T.patBad + ' ' + (e.message || ''); say(T.patBad); });
 			});
@@ -498,7 +498,7 @@
 		var fshow = function (n, quiet) {
 			fs = n;
 			$$('[data-fstep]', fw).forEach(function (s) { s.hidden = s.getAttribute('data-fstep') != n; });
-			$$('.rbn-stepper li', fw).forEach(function (li, i) { li.classList.toggle('is-done', i < n - 1); if (i === n - 1) { li.setAttribute('aria-current', 'step'); } else { li.removeAttribute('aria-current'); } });
+			$$('.ch-stepper li', fw).forEach(function (li, i) { li.classList.toggle('is-done', i < n - 1); if (i === n - 1) { li.setAttribute('aria-current', 'step'); } else { li.removeAttribute('aria-current'); } });
 			fp.hidden = n === 1;
 			fn.textContent = n < 3 ? T.next : T.startScan;
 			var h = $('[data-fstep="' + n + '"] h3', fw), s = $('[data-fstep="' + n + '"]', fw);

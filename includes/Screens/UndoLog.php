@@ -56,10 +56,10 @@ final class UndoLog {
 				$badge = Ui::badge( 'ok', 'check', __( 'Applied', 'contenthealth' ) );
 			}
 			echo '<tr><th scope="row">#' . $no . '</th>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- int.
-			echo '<td data-l="' . esc_attr__( 'Time', 'contenthealth' ) . '" class="rbn-nowrap">' . Ui::datetime( $b->created_at ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo '<td data-l="' . esc_attr__( 'Operation', 'contenthealth' ) . '">' . esc_html( $label ) . '</td>';
-			echo '<td data-l="' . esc_attr__( 'Scope', 'contenthealth' ) . '">' . esc_html( (int) $b->objects . ' ' . $unit ) . '</td>';
-			echo '<td data-l="' . esc_attr__( 'Status', 'contenthealth' ) . '">' . $badge . '</td><td><div class="rbn-acts">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<td data-label="' . esc_attr__( 'Time', 'contenthealth' ) . '" class="rbn-nowrap">' . Ui::datetime( $b->created_at ) . '</td>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<td data-label="' . esc_attr__( 'Operation', 'contenthealth' ) . '">' . esc_html( $label ) . '</td>';
+			echo '<td data-label="' . esc_attr__( 'Scope', 'contenthealth' ) . '">' . esc_html( (int) $b->objects . ' ' . $unit ) . '</td>';
+			echo '<td data-label="' . esc_attr__( 'Status', 'contenthealth' ) . '">' . $badge . '</td><td><div class="rbn-acts">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			if ( $pending > 0 ) {
 				printf(
 					'<button type="button" class="rbn-btn rbn-btn--sm" data-open="dlg-geri" data-undo="%1$s" data-undo-no="%2$d" data-undo-n="%3$d" data-undo-unit="%4$s" aria-label="%5$s">%6$s%7$s</button>',

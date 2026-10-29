@@ -221,7 +221,7 @@ final class Ui {
 	}
 
 	/**
-	 * Önce/sonra karşılaştırması (kit .rbn-diff). Satırlar Transform::diff çıktısıdır.
+	 * Önce/sonra karşılaştırması (kit .ch-diff). Satırlar Transform::diff çıktısıdır.
 	 *
 	 * @param array<int,array<string,mixed>> $changes Fixer değişiklik listesi (field, removed[], added[]).
 	 */
@@ -230,7 +230,7 @@ final class Ui {
 		$row   = static function ( string $kind, string $text ): string {
 			$sr  = 'del' === $kind ? __( 'Deleted line: ', 'contenthealth' ) : __( 'Added line: ', 'contenthealth' );
 			$sym = 'del' === $kind ? '−' : '+';
-			return '<div class="rbn-diff__r rbn-diff__r--' . $kind . '"><span class="rbn-diff__n" aria-hidden="true"></span><span class="rbn-diff__s" aria-hidden="true">' . $sym . '</span><span class="rbn-diff__c"><span class="rbn-sr">' . esc_html( $sr ) . '</span><' . ( 'del' === $kind ? 'del' : 'ins' ) . '>' . esc_html( $text ) . '</' . ( 'del' === $kind ? 'del' : 'ins' ) . '></span></div>';
+			return '<div class="ch-diff__r ch-diff__r--' . $kind . '"><span class="ch-diff__n" aria-hidden="true"></span><span class="ch-diff__s" aria-hidden="true">' . $sym . '</span><span class="ch-diff__c"><span class="rbn-sr">' . esc_html( $sr ) . '</span><' . ( 'del' === $kind ? 'del' : 'ins' ) . '>' . esc_html( $text ) . '</' . ( 'del' === $kind ? 'del' : 'ins' ) . '></span></div>';
 		};
 		$rem    = array();
 		$add    = array();
@@ -258,6 +258,6 @@ final class Ui {
 		$names = implode( ', ', array_filter( array_keys( $fields ) ) );
 		/* translators: 1: removed line count, 2: added line count */
 		$sum = '<span>− ' . (int) count( $rem ) . ' ' . esc_html__( 'line', 'contenthealth' ) . '</span><span>+ ' . (int) count( $add ) . ' ' . esc_html__( 'line', 'contenthealth' ) . '</span>' . ( '' !== $names ? '<span>' . esc_html__( 'Changed field:', 'contenthealth' ) . ' ' . (int) count( $fields ) . ' (' . esc_html( $names ) . ')</span>' : '' );
-		return '<div class="rbn-diff" data-diff id="' . esc_attr( $id ) . '" role="group" aria-label="' . esc_attr( $label ) . '"><div class="rbn-diff__hd"><b>' . esc_html( $label ) . '</b>' . ( '' !== $names ? '<span class="rbn-muted"><code>' . esc_html( $names ) . '</code></span>' : '' ) . '</div><div class="rbn-diff__pane" data-pane="inline">' . $inline . '</div><div class="rbn-diff__pane" data-pane="split" hidden><div><p class="rbn-diff__lab">' . esc_html__( 'Before', 'contenthealth' ) . '</p>' . $left . '</div><div><p class="rbn-diff__lab">' . esc_html__( 'After', 'contenthealth' ) . '</p>' . $right . '</div></div><p class="rbn-diff__sum">' . $sum . '</p></div>';
+		return '<div class="ch-diff" data-diff id="' . esc_attr( $id ) . '" role="group" aria-label="' . esc_attr( $label ) . '"><div class="ch-diff__hd"><b>' . esc_html( $label ) . '</b>' . ( '' !== $names ? '<span class="rbn-muted"><code>' . esc_html( $names ) . '</code></span>' : '' ) . '</div><div class="ch-diff__pane" data-pane="inline">' . $inline . '</div><div class="ch-diff__pane" data-pane="split" hidden><div><p class="ch-diff__lab">' . esc_html__( 'Before', 'contenthealth' ) . '</p>' . $left . '</div><div><p class="ch-diff__lab">' . esc_html__( 'After', 'contenthealth' ) . '</p>' . $right . '</div></div><p class="ch-diff__sum">' . $sum . '</p></div>';
 	}
 }
