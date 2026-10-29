@@ -157,7 +157,7 @@ function contenthealth_boot(): void {
 		\ContentHealth\Admin::init();
 	}
 
-	if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	if ( defined( 'WP_CLI' ) && class_exists( '\WP_CLI' ) ) {
 		\ContentHealth\Plugin::boot();
 		\WP_CLI::add_command( 'contenthealth', \ContentHealth\Cli::class );
 	}
