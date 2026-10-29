@@ -4,11 +4,12 @@
 	var d = document, cfg = window.ContentHealthCfg || {}, T = cfg.i18n || {};
 	var wrap = d.getElementById('ch');
 	if (!wrap) { return; }
-	var $ = function (s, r) { return (r || d).querySelector(s); };
-	var $$ = function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
+	var u = window.RbnUi || {};
+	var $ = u.$ || function (s, r) { return (r || d).querySelector(s); };
+	var $$ = u.$$ || function (s, r) { return Array.prototype.slice.call((r || d).querySelectorAll(s)); };
 	var live = d.getElementById('live');
 	var say = function (t) { if (live) { live.textContent = ''; setTimeout(function () { live.textContent = t; }, 30); } };
-	var el = function (tag, cls, txt) { var e = d.createElement(tag); if (cls) { e.className = cls; } if (txt != null) { e.textContent = txt; } return e; };
+	var el = u.el || function (tag, cls, txt) { var e = d.createElement(tag); if (cls) { e.className = cls; } if (txt != null) { e.textContent = txt; } return e; };
 
 	/* REST */
 	function api(path, opt) {

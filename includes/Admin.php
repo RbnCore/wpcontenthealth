@@ -31,13 +31,12 @@ final class Admin {
 
 	/** @param array<int,string> $links */
 	public static function links( array $links ): array {
-		array_unshift( $links, '<a href="' . esc_url( Ui::url() ) . '">' . esc_html__( 'Launch', 'contenthealth' ) . '</a>' );
-		return $links;
+		return \AdminKit\Helpers\Menu::action_link( $links, Ui::url(), __( 'Launch', 'contenthealth' ) );
 	}
 
-	/** Yan menüde RBN Kit altına kaydolur; `RbnKitMenu` kendi `admin_menu` (öncelik 9) kancasıyla menüyü kurar. */
+	/** Yan menüde RBN Kit altına kaydolur; `Menu` yardımcısı RbnKitMenu üzerinden menüyü kurar. */
 	public static function menu(): void {
-		\RbnKitMenu::add(
+		\AdminKit\Helpers\Menu::add(
 			array(
 				'slug'       => self::SLUG,
 				'title'      => __( 'Content Health', 'contenthealth' ),
@@ -51,20 +50,10 @@ final class Admin {
 
 	/** `admin_menu` bittikten sonra: ekran kimliği (rbn-kit_page_contenthealth) ve toplu işlem kancası. */
 	public static function late(): void {
-		self::legacy_redirect();
-		self::$hook = \RbnKitMenu::hook( self::SLUG );
+		\AdminKit\Helpers\Menu::legacy_redirect( self::SLUG, 'tools.php' );
+		self::$hook = \AdminKit\Helpers\Menu::hook( self::SLUG );
 		if ( '' !== self::$hook ) {
 			add_action( 'load-' . self::$hook, array( self::class, 'bulk' ) );
-		}
-	}
-
-	/** Eski adres (Araçlar → ContentHealth) yer imi kolaylığı için yeni adrese yönlenir; `admin_init` sayfa yetki denetiminden (403) sonra çalıştığından `admin_menu` içinden çağrılır. */
-	private static function legacy_redirect(): void {
-		global $pagenow;
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- yalnız yönlendirme.
-		if ( 'tools.php' === $pagenow && isset( $_GET['page'] ) && self::SLUG === sanitize_key( wp_unslash( $_GET['page'] ) ) ) {
-			wp_safe_redirect( Ui::url( array_diff_key( map_deep( wp_unslash( $_GET ), 'sanitize_text_field' ), array( 'page' => 1 ) ) ), 301 ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			exit;
 		}
 	}
 

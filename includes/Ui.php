@@ -14,22 +14,13 @@ defined( 'ABSPATH' ) || exit;
 
 final class Ui {
 
-	private static bool $sprite_done = false;
-
 	/** SVG sembol sayfasını bir kez basar (kitin ikonları `<use>` ile bu sembollere bakar). */
 	public static function sprite(): void {
-		if ( self::$sprite_done ) {
-			return;
-		}
-		self::$sprite_done = true;
-		$file              = CONTENTHEALTH_DIR . 'assets/admin/sprite.svg';
-		if ( is_readable( $file ) ) {
-			echo (string) file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents,WordPress.Security.EscapeOutput.OutputNotEscaped -- eklentinin kendi sabit dosyası.
-		}
+		\AdminKit\Helpers\Icons::sprite( CONTENTHEALTH_DIR . 'assets/admin/sprite.svg' );
 	}
 
 	public static function icon( string $name ): string {
-		return '<svg class="rbn-ico" aria-hidden="true"><use href="#i-' . esc_attr( $name ) . '"/></svg>';
+		return \AdminKit\Helpers\Icons::icon( $name );
 	}
 
 	/** Koyu ton: WP "Gece yarısı" şeması ya da koyu mod eklentisi; süzgeçle ezilebilir. */
@@ -50,7 +41,7 @@ final class Ui {
 	}
 
 	public static function url( array $args = array() ): string {
-		return add_query_arg( array_merge( array( 'page' => Admin::SLUG ), $args ), admin_url( 'admin.php' ) );
+		return \AdminKit\Helpers\Menu::page_url( Admin::SLUG, $args );
 	}
 
 	/** 0–100 puanı bandına çevirir. @return array{key:string,label:string,icon:string} */

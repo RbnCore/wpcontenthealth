@@ -16,8 +16,7 @@ final class Db {
 	public const VERSION = '1';
 
 	public static function table( string $name ): string {
-		global $wpdb;
-		return $wpdb->prefix . 'contenthealth_' . $name;
+		return \AdminKit\Helpers\Db::table( 'contenthealth', $name );
 	}
 
 	public static function activate(): void {
@@ -26,21 +25,17 @@ final class Db {
 	}
 
 	public static function maybe_upgrade(): void {
-		if ( get_option( 'contenthealth_db_version' ) !== self::VERSION ) {
-			self::install();
-		}
+		\AdminKit\Helpers\Db::maybe_upgrade( 'contenthealth_db_version', self::VERSION, array( self::class, 'install' ) );
 	}
 
 	public static function install(): void {
-		global $wpdb;
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		$charset = $wpdb->get_charset_collate();
-		$runs    = self::table( 'runs' );
-		$issues  = self::table( 'issues' );
-		$undo    = self::table( 'undo' );
+		$runs   = self::table( 'runs' );
+		$issues = self::table( 'issues' );
+		$undo   = self::table( 'undo' );
 
-		dbDelta(
-			"CREATE TABLE {$runs} (
+		\AdminKit\Helpers\Db::install(
+			array(
+				"CREATE TABLE {$runs} (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   status varchar(20) NOT NULL DEFAULT 'running',
   trigger_type varchar(20) NOT NULL DEFAULT 'manual',
@@ -57,10 +52,8 @@ final class Db {
   finished_at datetime DEFAULT NULL,
   PRIMARY KEY  (id),
   KEY status (status)
-) {$charset};"
-		);
-		dbDelta(
-			"CREATE TABLE {$issues} (
+) %s;",
+				"CREATE TABLE {$issues} (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   object_type varchar(20) NOT NULL,
   object_id bigint(20) unsigned NOT NULL,
@@ -77,10 +70,8 @@ final class Db {
   KEY status_sev (status,severity),
   KEY rule_status (rule_id,status),
   KEY run_id (run_id)
-) {$charset};"
-		);
-		dbDelta(
-			"CREATE TABLE {$undo} (
+) %s;",
+				"CREATE TABLE {$undo} (
   id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   batch_id varchar(32) NOT NULL,
   action varchar(40) NOT NULL,
@@ -98,17 +89,23 @@ final class Db {
   PRIMARY KEY  (id),
   KEY batch_id (batch_id),
   KEY object (object_type,object_id)
-) {$charset};"
+) %s;",
+			),
+			'contenthealth_db_version',
+			self::VERSION,
+			false
 		);
-		update_option( 'contenthealth_db_version', self::VERSION, false );
 	}
 
 	/** Kaldırma: tüm tablolar ve seçenekler. */
 	public static function drop_all(): void {
-		global $wpdb;
-		foreach ( array( 'runs', 'issues', 'undo' ) as $t ) {
-			$wpdb->query( 'DROP TABLE IF EXISTS ' . self::table( $t ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared -- tablo adı sabit.
-		}
+		\AdminKit\Helpers\Db::drop_tables(
+			array(
+				self::table( 'runs' ),
+				self::table( 'issues' ),
+				self::table( 'undo' ),
+			)
+		);
 		foreach ( array( 'contenthealth_settings', 'contenthealth_db_version', 'contenthealth_noindex_terms', 'contenthealth_term_redirects', 'contenthealth_onboarded' ) as $o ) {
 			delete_option( $o );
 		}
