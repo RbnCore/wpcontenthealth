@@ -162,14 +162,10 @@ final class Tags {
 
 	private static function seo_card(): void {
 		$seo = Seo::active_plugin();
-		$map = array(
-			'yoast'    => array( 'Yoast SEO', __( 'Tag archives are managed in Yoast\'s “Taxonomies” setting; Content Health does not write to that setting.', 'contenthealth' ) ),
-			'rankmath' => array( 'Rank Math', __( 'Tag archives are managed in Rank Math\'s “Titles & Meta” section.', 'contenthealth' ) ),
-			'aioseo'   => array( 'All in One SEO', __( 'Tag archives are managed in All in One SEO\'s search appearance settings.', 'contenthealth' ) ),
-		);
+		$name = Seo::label( $seo );
 		echo '<section class="rbn-card" aria-labelledby="h-ni"><div class="rbn-card__h"><h2 id="h-ni">' . esc_html__( 'Noindex for tags', 'contenthealth' ) . '</h2><p>' . esc_html__( 'Keep weak tag archives out of search results.', 'contenthealth' ) . '</p></div><div class="rbn-card__b" id="noindex">';
-		if ( isset( $map[ $seo ] ) ) {
-			echo Ui::note( 'ok', '<p><strong>' . esc_html( sprintf( /* translators: %s: plugin name */ __( '%s detected.', 'contenthealth' ), $map[ $seo ][0] ) ) . '</strong> ' . esc_html( $map[ $seo ][1] ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( '' !== $name ) {
+			echo Ui::note( 'ok', '<p><strong>' . esc_html( sprintf( /* translators: %s: plugin name */ __( '%s detected.', 'contenthealth' ), $name ) ) . '</strong> ' . esc_html( Seo::tag_hint( $seo ) ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
 			echo Ui::note( 'info', '<p><strong>' . esc_html__( 'No SEO plugin found.', 'contenthealth' ) . '</strong> ' . esc_html__( 'Content Health can add noindex to single-post tag archives: open the “Single post” class and fix it. The change can be undone.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}

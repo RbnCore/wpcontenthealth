@@ -169,14 +169,10 @@ final class Prefs {
 
 	private static function seo_card(): void {
 		$seo = Seo::active_plugin();
-		$map = array(
-			'yoast'    => 'Yoast SEO',
-			'rankmath' => 'Rank Math',
-			'aioseo'   => 'All in One SEO',
-		);
+		$name = Seo::label( $seo );
 		echo '<section class="rbn-card" aria-labelledby="h-s"><div class="rbn-card__h"><h2 id="h-s">' . esc_html__( 'SEO plugin', 'contenthealth' ) . '</h2></div><div class="rbn-card__b">';
-		if ( isset( $map[ $seo ] ) ) {
-			echo Ui::note( 'ok', '<p><strong>' . esc_html( sprintf( /* translators: %s: plugin name */ __( '%s detected.', 'contenthealth' ), $map[ $seo ] ) ) . '</strong> ' . esc_html__( 'The meta description rule reads this plugin\'s field.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		if ( '' !== $name ) {
+			echo Ui::note( 'ok', '<p><strong>' . esc_html( sprintf( /* translators: %s: plugin name */ __( '%s detected.', 'contenthealth' ), $name ) ) . '</strong> ' . esc_html__( 'The meta description rule reads this plugin\'s field.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
 			echo Ui::note( 'info', '<p><strong>' . esc_html__( 'No SEO plugin found.', 'contenthealth' ) . '</strong> ' . esc_html__( 'The meta description rule looks only at the post excerpt.', 'contenthealth' ) . '</p>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}

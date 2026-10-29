@@ -57,6 +57,21 @@ final class Seo {
 		return $names[ $id ] ?? '';
 	}
 
+	/** Etiket arşivlerinin etkin eklentide nereden yönetildiğini söyleyen cümle; bilinmeyen kimlik için ''. */
+	public static function tag_hint( string $id ): string {
+		switch ( $id ) {
+			case 'wpseokit':
+				return __( 'Tag archives are managed in WPSeoKit\'s “Titles & descriptions” › “Categories & tags” settings (Search results: noindex taxonomies); Content Health does not write to that setting.', 'contenthealth' );
+			case 'yoast':
+				return __( 'Tag archives are managed in Yoast\'s “Taxonomies” setting; Content Health does not write to that setting.', 'contenthealth' );
+			case 'rankmath':
+				return __( 'Tag archives are managed in Rank Math\'s “Titles & Meta” section.', 'contenthealth' );
+			case 'aioseo':
+				return __( 'Tag archives are managed in All in One SEO\'s search appearance settings.', 'contenthealth' );
+		}
+		return '';
+	}
+
 	/** WPSeoKit ayar sayfasının adresi (Admin::page_url + Shell::url: ?page=wpseokit&tool=templates). */
 	public static function settings_url( string $id ): string {
 		return 'wpseokit' === $id ? add_query_arg( array( 'page' => 'wpseokit', 'tool' => 'templates' ), admin_url( 'admin.php' ) ) : '';
