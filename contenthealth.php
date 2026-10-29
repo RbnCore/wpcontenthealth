@@ -117,7 +117,8 @@ function contenthealth_boot(): void {
 		static function ( array $schedules ): array {
 			$schedules['contenthealth_weekly'] = array(
 				'interval' => 7 * DAY_IN_SECONDS,
-				'display'  => __( 'ContentHealth weekly', 'contenthealth' ),
+				// wp_get_schedules() init'ten önce çağrılabilir (çeviri o zaman çok erken yüklenir); etiket yalnız arayüzde okunur.
+				'display'  => did_action( 'init' ) ? __( 'ContentHealth weekly', 'contenthealth' ) : 'ContentHealth weekly',
 			);
 			return $schedules;
 		}
