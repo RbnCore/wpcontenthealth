@@ -42,7 +42,7 @@ final class Issues {
 		}
 		$t  = Db::table( 'issues' );
 		$ph = implode( ',', array_fill( 0, count( $rule_ids ), '%s' ) );
-		\AdminKit\Helpers\Db::query( "UPDATE {$t} SET status = 'fixed' WHERE status = 'open' AND object_type = %s AND run_id < %d AND rule_id IN ({$ph})", array( array_merge( array( $type, $run_id ), $rule_ids ) ) );
+		\AdminKit\Helpers\Db::query( "UPDATE {$t} SET status = 'fixed' WHERE status = 'open' AND object_type = %s AND run_id < %d AND rule_id IN ({$ph})", array_merge( array( $type, $run_id ), $rule_ids ) );
 		Score::forget();
 		return (int) $wpdb->rows_affected;
 	}
@@ -93,7 +93,7 @@ final class Issues {
 		$list  = "SELECT * FROM {$t} WHERE {$whr} ORDER BY {$ob} {$ord} LIMIT %d OFFSET %d";
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$total = (int) ( $args ? \AdminKit\Helpers\Db::get_var( $count, $args ) : \AdminKit\Helpers\Db::get_var( $count ) );
-		$rows  = (array) \AdminKit\Helpers\Db::get_results( $list, array( array_merge( $args, array( $per, $off ) ) ) );
+		$rows  = (array) \AdminKit\Helpers\Db::get_results( $list, array_merge( $args, array( $per, $off ) ) );
 		// phpcs:enable
 		return array(
 			'rows'  => array_map( array( self::class, 'hydrate' ), $rows ),
@@ -121,9 +121,10 @@ final class Issues {
 		}
 		$t  = Db::table( 'issues' );
 		$ph = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-		\AdminKit\Helpers\Db::query( "UPDATE {$t} SET status = %s WHERE id IN ({$ph})", array( array_merge( array( $status ), $ids ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		\AdminKit\Helpers\Db::query( "UPDATE {$t} SET status = %s WHERE id IN ({$ph})", array_merge( array( $status ), $ids ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$affected = (int) $wpdb->rows_affected; // Score::forget() kendi sorgusunu çalıştırıp bu sayacı sıfırlayabilir.
 		Score::forget();
-		return (int) $wpdb->rows_affected;
+		return $affected;
 	}
 
 	/** Bir kuralın açık bulgularının kimlikleri. @return array<int,object> */

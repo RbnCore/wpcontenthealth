@@ -94,7 +94,7 @@ final class TermOps {
 			return new \WP_Error( 'tax', __( 'The terms are not in the same taxonomy.', 'contenthealth' ) );
 		}
 		$objs   = array_map( 'intval', (array) \AdminKit\Helpers\Db::get_col( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", array( $tt_from ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$have   = $objs ? array_map( 'intval', (array) \AdminKit\Helpers\Db::get_col( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $objs ), '%d' ) ) . ')', array( array_merge( array( $tt_to ), $objs ) ) ) ) : array(); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$have   = $objs ? array_map( 'intval', (array) \AdminKit\Helpers\Db::get_col( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $objs ), '%d' ) ) . ')', array_merge( array( $tt_to ), $objs ) ) ) : array(); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$moved  = array_values( array_diff( $objs, $have ) );
 		$dups   = array_values( array_intersect( $objs, $have ) );
 		$before = (string) wp_json_encode(
@@ -110,7 +110,7 @@ final class TermOps {
 		);
 		if ( ! $dry ) {
 			if ( $moved ) {
-				\AdminKit\Helpers\Db::query( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array( array_merge( array( $tt_to, $tt_from ), $moved ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				\AdminKit\Helpers\Db::query( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array_merge( array( $tt_to, $tt_from ), $moved ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
 			\AdminKit\Helpers\Db::delete( $wpdb->term_relationships, array( 'term_taxonomy_id' => $tt_from ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			self::purge( $from );
@@ -155,7 +155,7 @@ final class TermOps {
 		$moved   = array_map( 'intval', (array) $data['moved'] );
 		$dups    = array_map( 'intval', (array) $data['dups'] );
 		if ( $moved ) {
-			\AdminKit\Helpers\Db::query( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array( array_merge( array( $tt_from, $tt_to ), $moved ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			\AdminKit\Helpers\Db::query( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array_merge( array( $tt_from, $tt_to ), $moved ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 		foreach ( $dups as $obj ) {
 			\AdminKit\Helpers\Db::insert( $wpdb->term_relationships, array( 'object_id' => $obj, 'term_taxonomy_id' => $tt_from, 'term_order' => 0 ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery

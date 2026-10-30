@@ -129,7 +129,7 @@ final class DuplicateTitle extends SeoRule {
 		$ph_s = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
 		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- yer tutucu listesi sabit üretildi, değerler prepare ile bağlanır.
 		$sql  = "SELECT post_type, LOWER(post_title) AS t, GROUP_CONCAT(ID ORDER BY ID) AS ids, COUNT(*) AS c FROM {$wpdb->posts} WHERE post_type IN ({$ph_t}) AND post_status IN ({$ph_s}) AND post_title <> '' GROUP BY post_type, LOWER(post_title) HAVING c > 1";
-		$rows = \AdminKit\Helpers\Db::get_results( $sql, array( array_merge( $types, $statuses ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
+		$rows = \AdminKit\Helpers\Db::get_results( $sql, array_merge( $types, $statuses ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
 		$out  = array();
 		foreach ( (array) $rows as $r ) {
 			$ids = array_map( 'intval', explode( ',', (string) $r->ids ) );
