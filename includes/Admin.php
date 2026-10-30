@@ -221,13 +221,20 @@ final class Admin {
 	}
 
 	private static function head( bool $scan_button, bool $on_overview ): void {
-		echo '<header class="rbn-head"><div class="rbn-head__id"><h1>' . esc_html__( 'Content Health', 'contenthealth' ) . '</h1><span class="rbn-chip">v' . esc_html( CONTENTHEALTH_VERSION ) . '</span><span class="rbn-chip rbn-chip--ok"><span class="rbn-dot"></span>' . esc_html__( 'Active', 'contenthealth' ) . '</span></div><div class="rbn-head__act">';
+		$scan = array( 'label' => __( 'Scan now', 'contenthealth' ), 'icon' => 'scan', 'kind' => 'pri' );
 		if ( $scan_button ) {
-			echo '<button type="button" class="rbn-btn rbn-btn--pri" data-scan>' . Ui::icon( 'scan' ) . esc_html__( 'Scan now', 'contenthealth' ) . '</button>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$scan['data'] = array( 'scan' => '' );
 		} elseif ( ! $on_overview ) {
-			echo '<a class="rbn-btn rbn-btn--pri" href="' . esc_url( Ui::url( array( 'tara' => 1 ) ) ) . '">' . Ui::icon( 'scan' ) . esc_html__( 'Scan now', 'contenthealth' ) . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$scan['url'] = Ui::url( array( 'tara' => 1 ) );
 		}
-		echo '</div></header>';
+		echo \AdminKit\Helpers\Header::render( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Header::render() kaçışlar.
+			array(
+				'name'    => __( 'Content Health', 'contenthealth' ),
+				'version' => CONTENTHEALTH_VERSION,
+				'status'  => array( 'label' => __( 'Active', 'contenthealth' ), 'tone' => 'ok' ),
+				'actions' => $scan_button || ! $on_overview ? array( $scan ) : array(),
+			)
+		);
 	}
 
 	/** @param array<string,array<string,mixed>> $tabs */
