@@ -94,46 +94,90 @@ abstract class Rule {
 	}
 
 	/**
-	 * Kural ayarlarını temizler (kural sınıfı kendi alanlarını genişletir).
+	 * Kuralın ayar şeması (motor biçimi): `defaults()` bir SÖZLEŞMEDİR, tür buradan türetilir.
+	 * Temizleme/doğrulama AdminKit ayar motorundadır; kural sınıfı yalnız alan bildirir.
 	 *
-	 * @param array<string,mixed> $in  Ham girdi.
-	 * @param array<string,mixed> $cur Mevcut ayar.
-	 * @return array{config:array<string,mixed>,errors:array<int,string>}
+	 * @return array<string, array<string,mixed>>
 	 */
-	public function sanitize( array $in, array $cur ): array {
-		$errors = array();
-		$def    = $this->defaults();
-		foreach ( $def as $k => $dv ) {
-			if ( 'enabled' === $k ) {
-				if ( array_key_exists( 'enabled', $in ) ) {
-					$cur['enabled'] = ! empty( $in['enabled'] );
-				}
-				continue;
-			}
-			if ( ! array_key_exists( $k, $in ) ) {
-				continue;
-			}
-			if ( is_array( $dv ) ) {
-				$is_pat = 'patterns' === substr( $k, 0, 8 ) || 'pat_' === substr( $k, 0, 4 );
-				$list   = Settings::lines( $in[ $k ], ! $is_pat );
-				if ( $is_pat ) {
-					$v      = Patterns::validate_list( $list );
-					$list   = $v['valid'];
-					$errors = array_merge( $errors, $v['errors'] );
-				}
-				$cur[ $k ] = array_slice( array_map( static fn( $x ) => mb_substr( (string) $x, 0, Patterns::MAX_LEN ), $list ), 0, 100 );
-			} elseif ( is_bool( $dv ) ) {
-				$cur[ $k ] = (bool) $in[ $k ];
-			} elseif ( is_int( $dv ) ) {
-				$cur[ $k ] = max( 0, min( 100000, (int) $in[ $k ] ) );
-			} else {
-				$cur[ $k ] = sanitize_text_field( (string) $in[ $k ] );
+	public function settings_schema(): array {
+		$schema = array(
+			'enabled' => array(
+				'type'    => 'bool',
+				'default' => true,
+			),
+		);
+		foreach ( $this->defaults() as $key => $default ) {
+			if ( 'enabled' !== $key ) {
+				$schema[ (string) $key ] = self::field_schema( (string) $key, $default );
 			}
 		}
+		return $schema;
+	}
+
+	/**
+	 * Bir varsayılan değerin şema satırı.
+	 *
+	 * @param string $key     Alan adı (desen alanları ayrı temizlenir).
+	 * @param mixed  $default Varsayılan.
+	 * @return array<string,mixed>
+	 */
+	public static function field_schema( string $key, $default ): array {
+		if ( is_bool( $default ) ) {
+			return array(
+				'type'    => 'bool',
+				'default' => $default,
+			);
+		}
+		if ( is_int( $default ) ) {
+			return array(
+				'type'    => 'int',
+				'default' => $default,
+				'min'     => 0,
+				'max'     => 100000,
+			);
+		}
+		if ( is_array( $default ) ) {
+			$is_pattern = self::is_pattern_key( $key );
+			$row        = array(
+				'type'        => 'list',
+				'default'     => array_map( 'strval', array_values( $default ) ),
+				// Desen alanları kullanıcı regex'idir: ham metin (etiket sıyırma yok), yalnız satır ayracı.
+				'key'         => $is_pattern ? 'raw' : 'text',
+				'split'       => $is_pattern ? 'lines' : 'both',
+				'max_len'     => Patterns::MAX_LEN,
+				'max_entries' => 100,
+			);
+			if ( $is_pattern ) {
+				$row['clean'] = array( self::class, 'clean_patterns' );
+			}
+			return $row;
+		}
 		return array(
-			'config' => $cur,
-			'errors' => $errors,
+			'type'    => 'text',
+			'default' => (string) $default,
 		);
+	}
+
+	/** Desen listesi alanı mı (`patterns`, `patterns_head`, `pat_x`)? */
+	public static function is_pattern_key( string $key ): bool {
+		return 'patterns' === substr( $key, 0, 8 ) || 'pat_' === substr( $key, 0, 4 );
+	}
+
+	/**
+	 * Desen listesi temizleyicisi (motor `clean` kancası): geçersiz/çok yavaş desen atılır, neden hata olarak döner.
+	 *
+	 * @param mixed                $value  Motorun temizlediği liste.
+	 * @param mixed                $old    Eski değer.
+	 * @param string               $path   Alan yolu.
+	 * @param array<string,string> $errors Toplanan hatalar (yol => ileti).
+	 * @return array<int,string>
+	 */
+	public static function clean_patterns( $value, $old, string $path, array &$errors ): array {
+		$check = Patterns::validate_list( array_values( array_map( 'strval', (array) $value ) ) );
+		foreach ( $check['errors'] as $message ) {
+			$errors[ $path ] = (string) $message;
+		}
+		return array_values( array_map( 'strval', $check['valid'] ) );
 	}
 
 	/** Kısa yardımcı: bulgu ayrıntısı biçimi. */

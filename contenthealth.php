@@ -116,6 +116,9 @@ function contenthealth_boot(): void {
 	// Güncellemeyi AdminKit çekirdeği yapar (tek merkezi Updater); burada yalnız kayıt vardır.
 	\AdminKit\Core\Updater::register( 'contenthealth', CONTENTHEALTH_FILE, CONTENTHEALTH_VERSION );
 
+	// Ayar motoru: TEK şema bildirimi (motor AdminKit çekirdeğinde; burada temizleme/kaydetme kodu yoktur).
+	\ContentHealth\Settings::register();
+
 	add_filter(
 		'cron_schedules',
 		static function ( array $schedules ): array {

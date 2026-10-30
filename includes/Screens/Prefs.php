@@ -24,26 +24,6 @@ final class Prefs {
 	private const EDITOR_RULE   = 'ai_chat_residue';
 	private const EDITOR_FIELDS = array( 'patterns_head', 'patterns_tail', 'patterns_anywhere' );
 
-	private const TOP_BOOL = array( 'keep_modified', 'audit_on_save', 'delete_on_uninstall' );
-	private const TOP_KEYS = array( 'frequency', 'time_budget', 'batch_size', 'statuses', 'exclude_post_types', 'term_taxonomies', 'keep_modified', 'audit_on_save', 'delete_on_uninstall', 'live_host', 'alt_template', 'rules' );
-
-	/**
-	 * Gönderilen ayar dizisini yalnız bilinen anahtarlara indirger (Settings::save asıl temizliği yapar).
-	 *
-	 * @param array<string,mixed> $in
-	 * @return array<string,mixed>
-	 */
-	public static function normalize( array $in ): array {
-		$out = array_intersect_key( $in, array_flip( self::TOP_KEYS ) );
-		foreach ( self::TOP_BOOL as $b ) {
-			$out[ $b ] = ! empty( $in[ $b ] );
-		}
-		if ( isset( $out['rules'] ) && ! is_array( $out['rules'] ) ) {
-			unset( $out['rules'] );
-		}
-		return $out;
-	}
-
 	private static function label( string $key ): string {
 		$map = array(
 			'max_len'          => __( 'Maximum length (characters)', 'contenthealth' ),
