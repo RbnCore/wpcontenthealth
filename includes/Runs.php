@@ -19,7 +19,7 @@ final class Runs {
 	public static function get( int $id ): ?object {
 		global $wpdb;
 		$t   = Db::table( 'runs' );
-		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$t} WHERE id = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = \AdminKit\Helpers\Db::get_row( "SELECT * FROM {$t} WHERE id = %d", array( $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $row ? self::hydrate( $row ) : null;
 	}
 
@@ -38,7 +38,7 @@ final class Runs {
 	public static function active(): ?object {
 		global $wpdb;
 		$t   = Db::table( 'runs' );
-		$row = $wpdb->get_row( "SELECT * FROM {$t} WHERE status IN ('running','paused') ORDER BY id DESC LIMIT 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = \AdminKit\Helpers\Db::get_row( "SELECT * FROM {$t} WHERE status IN ('running','paused') ORDER BY id DESC LIMIT 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		if ( ! $row ) {
 			return null;
 		}
@@ -53,14 +53,14 @@ final class Runs {
 	public static function latest(): ?object {
 		global $wpdb;
 		$t   = Db::table( 'runs' );
-		$row = $wpdb->get_row( "SELECT * FROM {$t} ORDER BY id DESC LIMIT 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = \AdminKit\Helpers\Db::get_row( "SELECT * FROM {$t} ORDER BY id DESC LIMIT 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $row ? self::hydrate( $row ) : null;
 	}
 
 	public static function latest_finished(): ?object {
 		global $wpdb;
 		$t   = Db::table( 'runs' );
-		$row = $wpdb->get_row( "SELECT * FROM {$t} WHERE status = 'finished' ORDER BY id DESC LIMIT 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = \AdminKit\Helpers\Db::get_row( "SELECT * FROM {$t} WHERE status = 'finished' ORDER BY id DESC LIMIT 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $row ? self::hydrate( $row ) : null;
 	}
 
@@ -68,7 +68,7 @@ final class Runs {
 	public static function history( int $n = 10 ): array {
 		global $wpdb;
 		$t = Db::table( 'runs' );
-		return array_map( array( self::class, 'hydrate' ), (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t} ORDER BY id DESC LIMIT %d", $n ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return array_map( array( self::class, 'hydrate' ), (array) \AdminKit\Helpers\Db::get_results( "SELECT * FROM {$t} ORDER BY id DESC LIMIT %d", array( $n ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/**
@@ -88,8 +88,7 @@ final class Runs {
 			'limit'      => max( 0, (int) ( $scope['limit'] ?? 0 ) ),
 		);
 		$now   = current_time( 'mysql', true );
-		$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			Db::table( 'runs' ),
+		\AdminKit\Helpers\Db::insert( Db::table( 'runs' ),
 			array(
 				'status'       => 'running',
 				'trigger_type' => $trigger,
@@ -99,8 +98,7 @@ final class Runs {
 				'user_id'      => get_current_user_id(),
 				'started_at'   => $now,
 				'updated_at'   => $now,
-			)
-		);
+			) );
 		$id = (int) $wpdb->insert_id;
 		return $id ? Scanner::init( (object) array( 'id' => $id ) ) : new \WP_Error( 'db', __( 'Could not write the run record.', 'contenthealth' ) );
 	}
@@ -115,7 +113,7 @@ final class Runs {
 			}
 		}
 		$fields['updated_at'] = current_time( 'mysql', true );
-		$wpdb->update( Db::table( 'runs' ), $fields, array( 'id' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		\AdminKit\Helpers\Db::update( Db::table( 'runs' ), $fields, array( 'id' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}
 
 	public static function set_status( int $id, string $status, bool $finish = false ): void {

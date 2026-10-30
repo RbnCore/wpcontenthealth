@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ContentHealth;
 
+use AdminKit\Core\Security\Host;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Ctx {
@@ -22,7 +24,7 @@ final class Ctx {
 
 	public function __construct() {
 		$this->settings  = Settings::all();
-		$home            = (string) wp_parse_url( home_url(), PHP_URL_HOST );
+		$home            = Host::host( home_url() );
 		$this->home_host = $home;
 		$this->https     = 0 === strpos( home_url(), 'https://' );
 	}

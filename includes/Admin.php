@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace ContentHealth;
 
+use AdminKit\Core\Security\Guard;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Admin {
@@ -255,13 +257,6 @@ final class Admin {
 
 	/* ------------------------- admin-post işleyicileri ------------------------- */
 
-	private static function guard( string $nonce, string $field = '_wpnonce' ): void {
-		if ( ! current_user_can( self::CAP ) ) {
-			wp_die( esc_html__( 'You do not have permission for this action.', 'contenthealth' ), 403 );
-		}
-		check_admin_referer( $nonce, $field );
-	}
-
 	/** @param array<string,mixed> $extra */
 	private static function back( string $tab, string $msg, bool $err = false, array $extra = array() ): void {
 		$args = array_merge(
@@ -279,7 +274,7 @@ final class Admin {
 	}
 
 	public static function save(): void {
-		self::guard( 'contenthealth_save' );
+		Guard::admin_action( 'contenthealth_save', self::CAP );
 		$in = isset( $_POST['s'] ) && is_array( $_POST['s'] ) ? wp_unslash( $_POST['s'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Settings::save her alanı temizler.
 		foreach ( array( 'keep_modified', 'audit_on_save', 'delete_on_uninstall' ) as $b ) {
 			$in[ $b ] = ! empty( $in[ $b ] );
@@ -299,7 +294,7 @@ final class Admin {
 		if ( 'POST' !== ( $_SERVER['REQUEST_METHOD'] ?? '' ) || ! isset( $_POST['ch_bulk_nonce'] ) ) {
 			return;
 		}
-		self::guard( 'contenthealth_bulk', 'ch_bulk_nonce' );
+		Guard::admin_action( 'contenthealth_bulk', self::CAP, 'ch_bulk_nonce' );
 		$act = isset( $_POST['ch_act'] ) ? sanitize_key( wp_unslash( $_POST['ch_act'] ) ) : '';
 		$ids = isset( $_POST['ids'] ) ? array_map( 'intval', (array) wp_unslash( $_POST['ids'] ) ) : array();
 		if ( isset( $_POST['one'] ) ) {
@@ -322,7 +317,7 @@ final class Admin {
 	}
 
 	public static function export(): void {
-		self::guard( 'contenthealth_export' );
+		Guard::admin_action( 'contenthealth_export', self::CAP );
 		$f = Screens\Issues::filters_from( $_GET ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- guard() nonce'u doğruladı.
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );

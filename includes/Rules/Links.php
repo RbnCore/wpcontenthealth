@@ -189,7 +189,7 @@ final class OrphanContent extends LinkRule {
 		$ph_s = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
 		if ( 'collect' === $cursor['phase'] ) {
 			$sql  = "SELECT ID, post_content FROM {$wpdb->posts} WHERE ID > %d AND post_type IN ({$ph_t}) AND post_status IN ({$ph_s}) ORDER BY ID ASC LIMIT %d"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$rows = (array) $wpdb->get_results( $wpdb->prepare( $sql, array_merge( array( (int) $cursor['last'] ), $types, $statuses, array( $limit ) ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
+			$rows = (array) \AdminKit\Helpers\Db::get_results( $sql, array_merge( array( (int) $cursor['last'] ), $types, $statuses, array( $limit ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
 			$set  = array_fill_keys( array_map( 'intval', $cursor['linked'] ), true );
 			foreach ( $rows as $r ) {
 				foreach ( Url::hrefs( (string) $r->post_content ) as $h ) {
@@ -216,7 +216,7 @@ final class OrphanContent extends LinkRule {
 		$own  = (array) ( $this->config()['post_types'] ?: array( 'post' ) );
 		$ph_o = implode( ',', array_fill( 0, count( $own ), '%s' ) );
 		$sql  = "SELECT ID FROM {$wpdb->posts} WHERE post_type IN ({$ph_o}) AND post_status IN ({$ph_s})"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$ids  = $wpdb->get_col( $wpdb->prepare( $sql, array_merge( $own, $statuses ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
+		$ids  = \AdminKit\Helpers\Db::get_col( $sql, array_merge( $own, $statuses ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
 		$set  = array_fill_keys( array_map( 'intval', $cursor['linked'] ), true );
 		$out  = array();
 		foreach ( (array) $ids as $id ) {
@@ -268,7 +268,7 @@ final class BrokenInternalLinks extends LinkRule {
 			'bad'   => array(),
 		);
 		$budget = min( 4, max( 1, (int) $c['per_second'] * 2 ) );
-		$rows   = (array) $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_content FROM {$wpdb->posts} WHERE ID > %d AND post_status = 'publish' AND post_type IN ('" . implode( "','", array_map( 'esc_sql', $ctx->post_types() ) ) . "') ORDER BY ID ASC LIMIT 20", (int) $cursor['last'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery
+		$rows   = (array) \AdminKit\Helpers\Db::get_results( "SELECT ID, post_content FROM {$wpdb->posts} WHERE ID > %d AND post_status = 'publish' AND post_type IN ('" . implode( "','", array_map( 'esc_sql', $ctx->post_types() ) ) . "') ORDER BY ID ASC LIMIT 20", array( (int) $cursor['last'] ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.DirectDatabaseQuery
 		$sent   = 0;
 		$out    = array();
 		foreach ( $rows as $r ) {

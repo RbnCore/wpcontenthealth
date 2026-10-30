@@ -23,23 +23,11 @@ final class Issues {
 		global $wpdb;
 		$t   = Db::table( 'issues' );
 		$now = current_time( 'mysql', true );
-		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->prepare(
-				"INSERT INTO {$t} (object_type, object_id, rule_id, group_id, severity, details, status, first_seen, last_seen, run_id)
+		\AdminKit\Helpers\Db::query( "INSERT INTO {$t} (object_type, object_id, rule_id, group_id, severity, details, status, first_seen, last_seen, run_id)
 				VALUES (%s, %d, %s, %s, %s, %s, 'open', %s, %s, %d)
 				ON DUPLICATE KEY UPDATE details = VALUES(details), severity = VALUES(severity), group_id = VALUES(group_id),
-				last_seen = VALUES(last_seen), run_id = VALUES(run_id), status = IF(status = 'fixed', 'open', status)", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				$type,
-				$id,
-				$rule->id(),
-				$rule->group(),
-				$rule->severity(),
-				wp_json_encode( $details, JSON_UNESCAPED_UNICODE ),
-				$now,
-				$now,
-				$run_id
-			)
-		);
+				last_seen = VALUES(last_seen), run_id = VALUES(run_id), status = IF(status = 'fixed', 'open', status)", array( // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				$type, $id, $rule->id(), $rule->group(), $rule->severity(), wp_json_encode( $details, JSON_UNESCAPED_UNICODE ), $now, $now, $run_id ) );
 	}
 
 	/**
@@ -54,9 +42,7 @@ final class Issues {
 		}
 		$t  = Db::table( 'issues' );
 		$ph = implode( ',', array_fill( 0, count( $rule_ids ), '%s' ) );
-		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$wpdb->prepare( "UPDATE {$t} SET status = 'fixed' WHERE status = 'open' AND object_type = %s AND run_id < %d AND rule_id IN ({$ph})", array_merge( array( $type, $run_id ), $rule_ids ) )
-		);
+		\AdminKit\Helpers\Db::query( "UPDATE {$t} SET status = 'fixed' WHERE status = 'open' AND object_type = %s AND run_id < %d AND rule_id IN ({$ph})", array( array_merge( array( $type, $run_id ), $rule_ids ) ) );
 		Score::forget();
 		return (int) $wpdb->rows_affected;
 	}
@@ -64,7 +50,7 @@ final class Issues {
 	public static function get( int $id ): ?object {
 		global $wpdb;
 		$t   = Db::table( 'issues' );
-		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$t} WHERE id = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$row = \AdminKit\Helpers\Db::get_row( "SELECT * FROM {$t} WHERE id = %d", array( $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		return $row ? self::hydrate( $row ) : null;
 	}
 
@@ -106,8 +92,8 @@ final class Issues {
 		$count = "SELECT COUNT(*) FROM {$t} WHERE {$whr}";
 		$list  = "SELECT * FROM {$t} WHERE {$whr} ORDER BY {$ob} {$ord} LIMIT %d OFFSET %d";
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$total = (int) ( $args ? $wpdb->get_var( $wpdb->prepare( $count, $args ) ) : $wpdb->get_var( $count ) );
-		$rows  = (array) $wpdb->get_results( $wpdb->prepare( $list, array_merge( $args, array( $per, $off ) ) ) );
+		$total = (int) ( $args ? \AdminKit\Helpers\Db::get_var( $count, $args ) : \AdminKit\Helpers\Db::get_var( $count ) );
+		$rows  = (array) \AdminKit\Helpers\Db::get_results( $list, array( array_merge( $args, array( $per, $off ) ) ) );
 		// phpcs:enable
 		return array(
 			'rows'  => array_map( array( self::class, 'hydrate' ), $rows ),
@@ -120,7 +106,7 @@ final class Issues {
 		global $wpdb;
 		$t   = Db::table( 'issues' );
 		$out = array();
-		foreach ( (array) $wpdb->get_results( "SELECT rule_id, object_type, COUNT(*) c FROM {$t} WHERE status = 'open' GROUP BY rule_id, object_type" ) as $r ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		foreach ( (array) \AdminKit\Helpers\Db::get_results( "SELECT rule_id, object_type, COUNT(*) c FROM {$t} WHERE status = 'open' GROUP BY rule_id, object_type" ) as $r ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$out[ $r->rule_id ][ $r->object_type ] = (int) $r->c;
 		}
 		return $out;
@@ -135,7 +121,7 @@ final class Issues {
 		}
 		$t  = Db::table( 'issues' );
 		$ph = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
-		$wpdb->query( $wpdb->prepare( "UPDATE {$t} SET status = %s WHERE id IN ({$ph})", array_merge( array( $status ), $ids ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		\AdminKit\Helpers\Db::query( "UPDATE {$t} SET status = %s WHERE id IN ({$ph})", array( array_merge( array( $status ), $ids ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		Score::forget();
 		return (int) $wpdb->rows_affected;
 	}
@@ -153,6 +139,6 @@ final class Issues {
 		}
 		$sql .= ' ORDER BY id ASC LIMIT %d';
 		$args[] = $limit;
-		return array_map( array( self::class, 'hydrate' ), (array) $wpdb->get_results( $wpdb->prepare( $sql, $args ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return array_map( array( self::class, 'hydrate' ), (array) \AdminKit\Helpers\Db::get_results( $sql, $args ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }

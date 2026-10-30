@@ -78,10 +78,10 @@ final class SaveAudit {
 		}
 		$t       = Db::table( 'issues' );
 		$current = array();
-		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT id, rule_id, status, details FROM {$t} WHERE object_type = 'post' AND object_id = %d", $post->ID ) ) as $row ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		foreach ( (array) \AdminKit\Helpers\Db::get_results( "SELECT id, rule_id, status, details FROM {$t} WHERE object_type = 'post' AND object_id = %d", array( $post->ID ) ) as $row ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$current[ (string) $row->rule_id ] = $row;
 		}
-		$run_id = (int) $wpdb->get_var( "SELECT MAX(id) FROM " . Db::table( 'runs' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared
+		$run_id = (int) \AdminKit\Helpers\Db::get_var( "SELECT MAX(id) FROM " . Db::table( 'runs' ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared
 		$view   = new PostView( $post );
 		$t0     = microtime( true );
 		$n      = 0;
@@ -117,8 +117,7 @@ final class SaveAudit {
 		$d['fixed_reason'] = 'manual';
 		$d['fixed_at']     = current_time( 'mysql', true );
 		$d['fixed_user']   = get_current_user_id();
-		$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			Db::table( 'issues' ),
+		\AdminKit\Helpers\Db::update( Db::table( 'issues' ),
 			array(
 				'status'  => 'fixed',
 				'details' => wp_json_encode( $d, JSON_UNESCAPED_UNICODE ),
@@ -126,8 +125,7 @@ final class SaveAudit {
 			array(
 				'id'     => (int) $row->id,
 				'status' => 'open',
-			)
-		);
+			) );
 	}
 
 	/** Son kayıt-denetimi (GMT, `Y-m-d H:i:s`) ya da boş. */

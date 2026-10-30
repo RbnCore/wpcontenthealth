@@ -226,7 +226,7 @@ final class TermDuplicate extends Rule {
 		$tax  = array_values( array_filter( (array) $c['taxonomies'], 'taxonomy_exists' ) );
 		$out  = array();
 		foreach ( $tax as $tx ) {
-			$rows = (array) $wpdb->get_results( $wpdb->prepare( "SELECT t.term_id, t.name, tt.count FROM {$wpdb->terms} t INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id WHERE tt.taxonomy = %s", $tx ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$rows = (array) \AdminKit\Helpers\Db::get_results( "SELECT t.term_id, t.name, tt.count FROM {$wpdb->terms} t INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id WHERE tt.taxonomy = %s", array( $tx ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$by   = array();
 			foreach ( $rows as $r ) {
 				$f = Text::fold( (string) $r->name );
@@ -332,7 +332,7 @@ final class TermsPerPostHigh extends Rule {
 		if ( $tax ) {
 			$ph   = implode( ',', array_fill( 0, count( $tax ), '%s' ) );
 			$sql  = "SELECT tr.object_id, COUNT(*) AS c FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy IN ({$ph}) AND p.post_status = 'publish' GROUP BY tr.object_id HAVING c > %d"; // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			$rows = (array) $wpdb->get_results( $wpdb->prepare( $sql, array_merge( $tax, array( (int) $c['max'] ) ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
+			$rows = (array) \AdminKit\Helpers\Db::get_results( $sql, array( array_merge( $tax, array( (int) $c['max'] ) ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.DirectDatabaseQuery
 			foreach ( $rows as $r ) {
 				$out[] = array(
 					'post',

@@ -196,7 +196,7 @@ final class Issues {
 			return array();
 		}
 		$out = array();
-		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_modified_gmt FROM {$wpdb->posts} WHERE ID IN (" . implode( ',', array_fill( 0, count( $ids ), '%d' ) ) . ')', $ids ) ) as $p ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		foreach ( (array) \AdminKit\Helpers\Db::get_results( "SELECT ID, post_modified_gmt FROM {$wpdb->posts} WHERE ID IN (" . implode( ',', array_fill( 0, count( $ids ), '%d' ) ) . ')', $ids ) as $p ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			$out[ (int) $p->ID ] = (string) $p->post_modified_gmt;
 		}
 		return $out;

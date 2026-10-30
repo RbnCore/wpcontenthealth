@@ -137,7 +137,7 @@ final class Fixer {
 	/** Yazı alanlarına dönüştürücü uygular. */
 	private static function post_fields( object $issue, bool $dry, string $batch, string $action, callable $fn, array $fields ) {
 		global $wpdb;
-		$row = $wpdb->get_row( $wpdb->prepare( "SELECT ID, post_content, post_excerpt, post_title FROM {$wpdb->posts} WHERE ID = %d", $issue->object_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$row = \AdminKit\Helpers\Db::get_row( "SELECT ID, post_content, post_excerpt, post_title FROM {$wpdb->posts} WHERE ID = %d", array( $issue->object_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( ! $row ) {
 			return new \WP_Error( 'gone', __( 'Post not found.', 'contenthealth' ) );
 		}
@@ -172,7 +172,7 @@ final class Fixer {
 			$data['post_modified']     = current_time( 'mysql' );
 			$data['post_modified_gmt'] = current_time( 'mysql', true );
 		}
-		$ok = $wpdb->update( $wpdb->posts, $data, array( 'ID' => $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$ok = \AdminKit\Helpers\Db::update( $wpdb->posts, $data, array( 'ID' => $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( false === $ok ) {
 			return new \WP_Error( 'db', __( 'Could not update the post.', 'contenthealth' ) );
 		}
@@ -201,7 +201,7 @@ final class Fixer {
 		if ( is_wp_error( $res ) ) {
 			return $res;
 		}
-		$metas = (array) $wpdb->get_results( $wpdb->prepare( "SELECT meta_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key NOT IN ('_edit_lock','_edit_last') AND LENGTH(meta_value) < 200000", $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$metas = (array) \AdminKit\Helpers\Db::get_results( "SELECT meta_id, meta_key, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key NOT IN ('_edit_lock','_edit_last') AND LENGTH(meta_value) < 200000", array( $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		foreach ( $metas as $m ) {
 			$raw = (string) $m->meta_value;
 			if ( ! preg_match( '~https?[:.]~i', $raw ) ) {
@@ -221,7 +221,7 @@ final class Fixer {
 				Transform::diff( $raw, $out )
 			);
 			if ( ! $dry ) {
-				$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $out ), array( 'meta_id' => (int) $m->meta_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				\AdminKit\Helpers\Db::update( $wpdb->postmeta, array( 'meta_value' => $out ), array( 'meta_id' => (int) $m->meta_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				clean_post_cache( $issue->object_id );
 				Undo::record( $batch, 'fix_bad_host_url', 'post', $issue->object_id, 'postmeta:' . (int) $m->meta_id, $raw, $out, $issue->id );
 			}
@@ -348,7 +348,7 @@ final class Fixer {
 
 	private static function term_rename( object $issue, bool $dry, string $batch, array $opts ) {
 		global $wpdb;
-		$cur = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM {$wpdb->terms} WHERE term_id = %d", $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$cur = \AdminKit\Helpers\Db::get_var( "SELECT name FROM {$wpdb->terms} WHERE term_id = %d", array( $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( null === $cur ) {
 			return new \WP_Error( 'gone', __( 'Term not found.', 'contenthealth' ) );
 		}
@@ -362,7 +362,7 @@ final class Fixer {
 			return array( 'changes' => array() );
 		}
 		if ( ! $dry ) {
-			$wpdb->update( $wpdb->terms, array( 'name' => $new ), array( 'term_id' => $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			\AdminKit\Helpers\Db::update( $wpdb->terms, array( 'name' => $new ), array( 'term_id' => $issue->object_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			clean_term_cache( $issue->object_id );
 			Undo::record( $batch, 'fix_term_rename', 'term', $issue->object_id, 'term_name', (string) $cur, $new, $issue->id );
 		}

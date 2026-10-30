@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ContentHealth;
 
+use AdminKit\Core\Security\Host;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Url {
@@ -47,7 +49,7 @@ final class Url {
 		if ( ! preg_match( '~^https?://[^/]~i', $url ) ) {
 			return array( 'bozuk_biçim', 'missing or extra slash' );
 		}
-		$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+		$host = Host::host( $url );
 		if ( '' === $host ) {
 			return array( 'bozuk_biçim', 'no host name' );
 		}
@@ -55,7 +57,7 @@ final class Url {
 		if ( preg_match( '~\.([a-z]{2,12})\.\1$~', $host ) ) {
 			return array( 'cift_uzanti', 'repeated domain extension' );
 		}
-		if ( self::host_key( $home_host ) === $key ) {
+		if ( Host::same_site_pair( $home_host, $host ) ) {
 			return null;
 		}
 		if ( in_array( $key, $extra_dev_hosts, true ) ) {
@@ -63,7 +65,7 @@ final class Url {
 		}
 		if ( preg_match( '~(^|\.)(test|local|localhost|invalid|internal|lan|localdomain)$~', $host )
 			|| preg_match( '~^(127\.|10\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)\d+~', $host )
-			|| in_array( $host, array( 'localhost', '[::1]', '0.0.0.0' ), true )
+			|| in_array( $host, array( 'localhost', '::1', '0.0.0.0' ), true )
 			|| preg_match( '~^(staging|stage|dev|develop|test|preview|uat|qa)\d*\.~', $host ) ) {
 			return array( 'gelistirme_adresi', 'development/local/staging host' );
 		}
@@ -79,8 +81,8 @@ final class Url {
 		if ( '/' === $url[0] && ( ! isset( $url[1] ) || '/' !== $url[1] ) ) {
 			return true;
 		}
-		$host = (string) wp_parse_url( 0 === strpos( $url, '//' ) ? 'https:' . $url : $url, PHP_URL_HOST );
-		return '' !== $host && self::host_key( $host ) === self::host_key( $home_host );
+		$host = Host::host( 0 === strpos( $url, '//' ) ? 'https:' . $url : $url );
+		return '' !== $host && Host::same_site_pair( $host, $home_host );
 	}
 
 	/**

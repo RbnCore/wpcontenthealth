@@ -16,39 +16,39 @@ final class TermOps {
 	/** @return array<string,mixed>|null terim satırı + sınıflandırma + meta */
 	public static function snapshot( int $term_id ): ?array {
 		global $wpdb;
-		$term = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->terms} WHERE term_id = %d", $term_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$term = \AdminKit\Helpers\Db::get_row( "SELECT * FROM {$wpdb->terms} WHERE term_id = %d", array( $term_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		if ( ! $term ) {
 			return null;
 		}
 		return array(
 			'term' => $term,
-			'tt'   => (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->term_taxonomy} WHERE term_id = %d", $term_id ), ARRAY_A ), // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			'meta' => (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->termmeta} WHERE term_id = %d", $term_id ), ARRAY_A ), // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			'tt'   => (array) \AdminKit\Helpers\Db::get_results( "SELECT * FROM {$wpdb->term_taxonomy} WHERE term_id = %d", array( $term_id ), ARRAY_A ), // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			'meta' => (array) \AdminKit\Helpers\Db::get_results( "SELECT * FROM {$wpdb->termmeta} WHERE term_id = %d", array( $term_id ), ARRAY_A ), // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		);
 	}
 
 	/** Gerçek (sayaçtan bağımsız) ilişki sayısı. */
 	public static function real_count( int $term_id ): int {
 		global $wpdb;
-		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id WHERE tt.term_id = %d", $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		return (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->term_relationships} tr INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id WHERE tt.term_id = %d", array( $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}
 
 	private static function purge( int $term_id ): void {
 		global $wpdb;
-		$wpdb->delete( $wpdb->termmeta, array( 'term_id' => $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$wpdb->delete( $wpdb->term_taxonomy, array( 'term_id' => $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$wpdb->delete( $wpdb->terms, array( 'term_id' => $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		\AdminKit\Helpers\Db::delete( $wpdb->termmeta, array( 'term_id' => $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		\AdminKit\Helpers\Db::delete( $wpdb->term_taxonomy, array( 'term_id' => $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		\AdminKit\Helpers\Db::delete( $wpdb->terms, array( 'term_id' => $term_id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		clean_term_cache( $term_id );
 	}
 
 	private static function restore( array $snap ): void {
 		global $wpdb;
-		$wpdb->insert( $wpdb->terms, $snap['term'] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		\AdminKit\Helpers\Db::insert( $wpdb->terms, $snap['term'] ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		foreach ( $snap['tt'] as $r ) {
-			$wpdb->insert( $wpdb->term_taxonomy, $r ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			\AdminKit\Helpers\Db::insert( $wpdb->term_taxonomy, $r ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		}
 		foreach ( $snap['meta'] as $r ) {
-			$wpdb->insert( $wpdb->termmeta, $r ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			\AdminKit\Helpers\Db::insert( $wpdb->termmeta, $r ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		}
 	}
 
@@ -93,8 +93,8 @@ final class TermOps {
 		if ( ! $tt_from || ! $tt_to ) {
 			return new \WP_Error( 'tax', __( 'The terms are not in the same taxonomy.', 'contenthealth' ) );
 		}
-		$objs   = array_map( 'intval', (array) $wpdb->get_col( $wpdb->prepare( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", $tt_from ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-		$have   = $objs ? array_map( 'intval', (array) $wpdb->get_col( $wpdb->prepare( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $objs ), '%d' ) ) . ')', array_merge( array( $tt_to ), $objs ) ) ) ) : array(); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$objs   = array_map( 'intval', (array) \AdminKit\Helpers\Db::get_col( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d", array( $tt_from ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$have   = $objs ? array_map( 'intval', (array) \AdminKit\Helpers\Db::get_col( "SELECT object_id FROM {$wpdb->term_relationships} WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $objs ), '%d' ) ) . ')', array( array_merge( array( $tt_to ), $objs ) ) ) ) : array(); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$moved  = array_values( array_diff( $objs, $have ) );
 		$dups   = array_values( array_intersect( $objs, $have ) );
 		$before = (string) wp_json_encode(
@@ -110,9 +110,9 @@ final class TermOps {
 		);
 		if ( ! $dry ) {
 			if ( $moved ) {
-				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array_merge( array( $tt_to, $tt_from ), $moved ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				\AdminKit\Helpers\Db::query( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array( array_merge( array( $tt_to, $tt_from ), $moved ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 			}
-			$wpdb->delete( $wpdb->term_relationships, array( 'term_taxonomy_id' => $tt_from ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			\AdminKit\Helpers\Db::delete( $wpdb->term_relationships, array( 'term_taxonomy_id' => $tt_from ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			self::purge( $from );
 			wp_update_term_count_now( array( $tt_to ), $tax );
 			$map                          = (array) get_option( 'contenthealth_term_redirects', array() );
@@ -134,7 +134,7 @@ final class TermOps {
 		if ( ! is_array( $data ) ) {
 			return __( 'broken record', 'contenthealth' );
 		}
-		if ( null !== $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE term_id = %d", $id ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		if ( null !== \AdminKit\Helpers\Db::get_var( "SELECT term_id FROM {$wpdb->terms} WHERE term_id = %d", array( $id ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			return __( 'term already exists', 'contenthealth' );
 		}
 		if ( $dry ) {
@@ -155,10 +155,10 @@ final class TermOps {
 		$moved   = array_map( 'intval', (array) $data['moved'] );
 		$dups    = array_map( 'intval', (array) $data['dups'] );
 		if ( $moved ) {
-			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array_merge( array( $tt_from, $tt_to ), $moved ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			\AdminKit\Helpers\Db::query( "UPDATE {$wpdb->term_relationships} SET term_taxonomy_id = %d WHERE term_taxonomy_id = %d AND object_id IN (" . implode( ',', array_fill( 0, count( $moved ), '%d' ) ) . ')', array( array_merge( array( $tt_from, $tt_to ), $moved ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 		foreach ( $dups as $obj ) {
-			$wpdb->insert( $wpdb->term_relationships, array( 'object_id' => $obj, 'term_taxonomy_id' => $tt_from, 'term_order' => 0 ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			\AdminKit\Helpers\Db::insert( $wpdb->term_relationships, array( 'object_id' => $obj, 'term_taxonomy_id' => $tt_from, 'term_order' => 0 ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		}
 		$tax = (string) $from['tt'][0]['taxonomy'];
 		wp_update_term_count_now( array( $tt_from, $tt_to ), $tax );

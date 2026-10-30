@@ -113,7 +113,7 @@ final class Scanner {
 		global $wpdb;
 		$pt = implode( ',', array_fill( 0, count( $types ), '%s' ) );
 		$ps = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
-		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type IN ({$pt}) AND post_status IN ({$ps})", array_merge( $types, $statuses ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type IN ({$pt}) AND post_status IN ({$ps})", array_merge( $types, $statuses ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/** @param array<int,string> $tax */
@@ -123,7 +123,7 @@ final class Scanner {
 			return 0;
 		}
 		$ph = implode( ',', array_fill( 0, count( $tax ), '%s' ) );
-		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->term_taxonomy} WHERE taxonomy IN ({$ph})", $tax ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(*) FROM {$wpdb->term_taxonomy} WHERE taxonomy IN ({$ph})", $tax ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/**
@@ -140,7 +140,7 @@ final class Scanner {
 		if ( 'running' !== $run->status ) {
 			return $run;
 		}
-		if ( 1 !== (int) $wpdb->get_var( $wpdb->prepare( 'SELECT GET_LOCK(%s, 0)', self::LOCK . '_' . $wpdb->prefix ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		if ( 1 !== (int) \AdminKit\Helpers\Db::get_var( 'SELECT GET_LOCK(%s, 0)', array( self::LOCK . '_' . $wpdb->prefix ) ) ) { // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			return $run; // Başka bir adım çalışıyor; durumu olduğu gibi döndür.
 		}
 		try {
@@ -189,7 +189,7 @@ final class Scanner {
 				self::finish( $run );
 			}
 		} finally {
-			$wpdb->query( $wpdb->prepare( 'SELECT RELEASE_LOCK(%s)', self::LOCK . '_' . $wpdb->prefix ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			\AdminKit\Helpers\Db::query( 'SELECT RELEASE_LOCK(%s)', array( self::LOCK . '_' . $wpdb->prefix ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		}
 		return Runs::get( $run_id );
 	}
@@ -213,7 +213,7 @@ final class Scanner {
 		}
 		$pt   = implode( ',', array_fill( 0, count( $types ), '%s' ) );
 		$ps   = implode( ',', array_fill( 0, count( $statuses ), '%s' ) );
-		$rows = (array) $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_type, post_title, post_content, post_excerpt, post_name, post_parent FROM {$wpdb->posts} WHERE ID > %d AND post_type IN ({$pt}) AND post_status IN ({$ps}) ORDER BY ID ASC LIMIT %d", array_merge( array( (int) $cursor['last'] ), $types, $statuses, array( $lim ) ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows = (array) \AdminKit\Helpers\Db::get_results( "SELECT ID, post_type, post_title, post_content, post_excerpt, post_name, post_parent FROM {$wpdb->posts} WHERE ID > %d AND post_type IN ({$pt}) AND post_status IN ({$ps}) ORDER BY ID ASC LIMIT %d", array_merge( array( (int) $cursor['last'] ), $types, $statuses, array( $lim ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$units = 0;
 		foreach ( $rows as $row ) {
 			$view = new PostView( $row );
@@ -250,7 +250,7 @@ final class Scanner {
 			}
 		}
 		$ph    = implode( ',', array_fill( 0, count( $tax ), '%s' ) );
-		$rows  = (array) $wpdb->get_results( $wpdb->prepare( "SELECT t.term_id, t.name, t.slug, tt.taxonomy, tt.count, tt.parent FROM {$wpdb->terms} t INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id WHERE t.term_id > %d AND tt.taxonomy IN ({$ph}) ORDER BY t.term_id ASC LIMIT %d", array_merge( array( (int) $cursor['last'] ), $tax, array( $limit ) ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$rows  = (array) \AdminKit\Helpers\Db::get_results( "SELECT t.term_id, t.name, t.slug, tt.taxonomy, tt.count, tt.parent FROM {$wpdb->terms} t INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_id = t.term_id WHERE t.term_id > %d AND tt.taxonomy IN ({$ph}) ORDER BY t.term_id ASC LIMIT %d", array_merge( array( (int) $cursor['last'] ), $tax, array( $limit ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.NotPrepared,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$units = 0;
 		foreach ( $rows as $row ) {
 			$obj = (object) array(

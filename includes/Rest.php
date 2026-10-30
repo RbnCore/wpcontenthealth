@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ContentHealth;
 
+use AdminKit\Core\Security\Guard;
+
 defined( 'ABSPATH' ) || exit;
 
 final class Rest {
@@ -16,7 +18,7 @@ final class Rest {
 	public const NS = 'contenthealth/v1';
 
 	public static function register(): void {
-		$perm = array( self::class, 'can' );
+		$perm = Guard::rest();
 		$post = \WP_REST_Server::CREATABLE;
 		$get  = \WP_REST_Server::READABLE;
 		register_rest_route( self::NS, '/status', array( 'methods' => $get, 'callback' => array( self::class, 'status' ), 'permission_callback' => $perm ) );
@@ -39,10 +41,6 @@ final class Rest {
 		register_rest_route( self::NS, '/pattern-test', array( 'methods' => $post, 'callback' => array( self::class, 'pattern_test' ), 'permission_callback' => $perm ) );
 		register_rest_route( self::NS, '/onboarding', array( 'methods' => $post, 'callback' => array( self::class, 'onboarding' ), 'permission_callback' => $perm ) );
 		register_rest_route( self::NS, '/undo', array( 'methods' => $post, 'callback' => array( self::class, 'undo' ), 'permission_callback' => $perm ) );
-	}
-
-	public static function can(): bool {
-		return current_user_can( 'manage_options' );
 	}
 
 	/** @return array<string,mixed> */

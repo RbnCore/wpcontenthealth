@@ -20,8 +20,7 @@ final class Undo {
 
 	public static function record( string $batch, string $action, string $type, int $id, string $field, string $before, string $after, int $issue_id = 0 ): int {
 		global $wpdb;
-		$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			Db::table( 'undo' ),
+		\AdminKit\Helpers\Db::insert( Db::table( 'undo' ),
 			array(
 				'batch_id'     => $batch,
 				'action'       => $action,
@@ -35,8 +34,7 @@ final class Undo {
 				'issue_id'     => $issue_id,
 				'user_id'      => get_current_user_id(),
 				'created_at'   => current_time( 'mysql', true ),
-			)
-		);
+			) );
 		return (int) $wpdb->insert_id;
 	}
 
@@ -44,13 +42,13 @@ final class Undo {
 	public static function batches( int $n = 20, int $offset = 0 ): array {
 		global $wpdb;
 		$t = Db::table( 'undo' );
-		return (array) $wpdb->get_results( $wpdb->prepare( "SELECT batch_id, MIN(id) no, MIN(action) action, MIN(object_type) object_type, COUNT(*) items, COUNT(DISTINCT object_id) objects, SUM(undone_at IS NULL) pending, MIN(created_at) created_at, MIN(user_id) user_id FROM {$t} GROUP BY batch_id ORDER BY MIN(id) DESC LIMIT %d OFFSET %d", $n, max( 0, $offset ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (array) \AdminKit\Helpers\Db::get_results( "SELECT batch_id, MIN(id) no, MIN(action) action, MIN(object_type) object_type, COUNT(*) items, COUNT(DISTINCT object_id) objects, SUM(undone_at IS NULL) pending, MIN(created_at) created_at, MIN(user_id) user_id FROM {$t} GROUP BY batch_id ORDER BY MIN(id) DESC LIMIT %d OFFSET %d", array( $n, max( 0, $offset ) ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	public static function batch_count(): int {
 		global $wpdb;
 		$t = Db::table( 'undo' );
-		return (int) $wpdb->get_var( "SELECT COUNT(DISTINCT batch_id) FROM {$t}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (int) \AdminKit\Helpers\Db::get_var( "SELECT COUNT(DISTINCT batch_id) FROM {$t}" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/** @return array<int,object> */
@@ -58,9 +56,9 @@ final class Undo {
 		global $wpdb;
 		$t = Db::table( 'undo' );
 		if ( ctype_digit( $key ) ) {
-			return (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t} WHERE id = %d", (int) $key ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			return (array) \AdminKit\Helpers\Db::get_results( "SELECT * FROM {$t} WHERE id = %d", array( (int) $key ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
-		return (array) $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t} WHERE batch_id = %s ORDER BY id DESC", $key ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (array) \AdminKit\Helpers\Db::get_results( "SELECT * FROM {$t} WHERE batch_id = %s ORDER BY id DESC", array( $key ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/**
@@ -86,7 +84,7 @@ final class Undo {
 					if ( (int) $row->issue_id > 0 ) {
 						Issues::set_status( array( (int) $row->issue_id ), 'open' ); // Düzeltme geri alındı: bulgu yeniden açık, tekrar düzeltilebilir.
 					}
-					$wpdb->update( Db::table( 'undo' ), array( 'undone_at' => current_time( 'mysql', true ) ), array( 'id' => (int) $row->id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					\AdminKit\Helpers\Db::update( Db::table( 'undo' ), array( 'undone_at' => current_time( 'mysql', true ) ), array( 'id' => (int) $row->id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				}
 			} else {
 				++$out['skipped'];
@@ -102,7 +100,7 @@ final class Undo {
 		$id    = (int) $row->object_id;
 		$field = (string) $row->field;
 		if ( in_array( $field, array( 'post_content', 'post_excerpt', 'post_title' ), true ) ) {
-			$cur = $wpdb->get_var( $wpdb->prepare( "SELECT {$field} FROM {$wpdb->posts} WHERE ID = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- alan adı beyaz listeden.
+			$cur = \AdminKit\Helpers\Db::get_var( "SELECT {$field} FROM {$wpdb->posts} WHERE ID = %d", array( $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- alan adı beyaz listeden.
 			if ( null === $cur ) {
 				return __( 'post is gone', 'contenthealth' );
 			}
@@ -110,14 +108,14 @@ final class Undo {
 				return __( 'content changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
-				$wpdb->update( $wpdb->posts, array( $field => $row->before_value ), array( 'ID' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				\AdminKit\Helpers\Db::update( $wpdb->posts, array( $field => $row->before_value ), array( 'ID' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				clean_post_cache( $id );
 			}
 			return true;
 		}
 		if ( 0 === strpos( $field, 'postmeta:' ) ) {
 			$mid = (int) substr( $field, 9 );
-			$cur = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->postmeta} WHERE meta_id = %d", $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$cur = \AdminKit\Helpers\Db::get_var( "SELECT meta_value FROM {$wpdb->postmeta} WHERE meta_id = %d", array( $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			if ( null === $cur ) {
 				return __( 'meta row is gone', 'contenthealth' );
 			}
@@ -125,7 +123,7 @@ final class Undo {
 				return __( 'meta changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
-				$wpdb->update( $wpdb->postmeta, array( 'meta_value' => $row->before_value ), array( 'meta_id' => $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				\AdminKit\Helpers\Db::update( $wpdb->postmeta, array( 'meta_value' => $row->before_value ), array( 'meta_id' => $mid ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				clean_post_cache( $id );
 			}
 			return true;
@@ -141,7 +139,7 @@ final class Undo {
 			return true;
 		}
 		if ( 'term_name' === $field ) {
-			$cur = $wpdb->get_var( $wpdb->prepare( "SELECT name FROM {$wpdb->terms} WHERE term_id = %d", $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$cur = \AdminKit\Helpers\Db::get_var( "SELECT name FROM {$wpdb->terms} WHERE term_id = %d", array( $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			if ( null === $cur ) {
 				return __( 'term is gone', 'contenthealth' );
 			}
@@ -149,7 +147,7 @@ final class Undo {
 				return __( 'term changed afterwards', 'contenthealth' );
 			}
 			if ( ! $dry ) {
-				$wpdb->update( $wpdb->terms, array( 'name' => $row->before_value ), array( 'term_id' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				\AdminKit\Helpers\Db::update( $wpdb->terms, array( 'name' => $row->before_value ), array( 'term_id' => $id ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				clean_term_cache( $id );
 			}
 			return true;
