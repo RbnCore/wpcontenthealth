@@ -133,26 +133,13 @@ final class Settings {
 	}
 
 	/**
-	 * Satır satır ya da dizi girdisini temiz dizi yapar.
+	 * Satır satır ya da dizi girdisini temiz dizi yapar (kural AdminKit ayar motorundadır: tek kopya).
 	 *
 	 * @param mixed $v      Girdi.
 	 * @param bool  $commas Virgül de ayraç sayılsın mı (desenlerde HAYIR: {0,220} bozulur).
 	 * @return array<int,string>
 	 */
 	public static function lines( $v, bool $commas = true ): array {
-		if ( is_string( $v ) ) {
-			$v = preg_split( $commas ? '/\r\n|\r|\n|,/' : '/\r\n|\r|\n/', $v ) ?: array();
-		}
-		if ( ! is_array( $v ) ) {
-			return array();
-		}
-		$out = array();
-		foreach ( $v as $line ) {
-			$line = trim( (string) $line );
-			if ( '' !== $line ) {
-				$out[] = $line;
-			}
-		}
-		return $out;
+		return \AdminKit\Core\Settings::lines( $v, $commas );
 	}
 }
