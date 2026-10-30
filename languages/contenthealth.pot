@@ -2192,3 +2192,11 @@ msgstr ""
 msgctxt "CSV column header"
 msgid "type"
 msgstr ""
+
+#: includes/Screens/Prefs.php:111
+msgid "New versions come from the official releases on GitHub."
+msgstr ""
+
+#: includes/Screens/Prefs.php:111
+msgid "Updates"
+msgstr ""

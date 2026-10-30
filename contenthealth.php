@@ -44,13 +44,13 @@ register_deactivation_hook( __FILE__, array( \ContentHealth\Cron::class, 'unsche
 
 /**
  * Çalışma zamanı kapısı (cekirdek.md §6):
- * AdminKit API >= 3 zorunludur (merkezi güncelleyici). Karşılanmazsa eklenti kancalarını eklemeden güvenle kapanır
- * ve yönetimde uyarı gösterir.
+ * AdminKit API >= 4 zorunludur (merkezi güncelleyici + ortak güncelleme kartı Kit\UpdateCard). Karşılanmazsa eklenti
+ * kancalarını eklemeden güvenle kapanır ve yönetimde uyarı gösterir.
  */
 add_action(
 	'plugins_loaded',
 	static function (): void {
-		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 3 || ! class_exists( 'AdminKit\Core\Core' ) ) {
+		if ( ! defined( 'ADMINKIT_CORE_API' ) || ADMINKIT_CORE_API < 4 || ! class_exists( 'AdminKit\Core\Core' ) || ! class_exists( 'AdminKit\Kit\UpdateCard' ) ) {
 			add_action(
 				'admin_notices',
 				static function (): void {

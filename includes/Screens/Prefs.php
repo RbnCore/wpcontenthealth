@@ -100,6 +100,17 @@ final class Prefs {
 			echo '</div>';
 		}
 		echo '<div class="rbn-form-actions"><button type="submit" class="rbn-btn rbn-btn--pri" data-save>' . Ui::icon( 'save' ) . esc_html__( 'Save changes', 'contenthealth' ) . '</button><button type="button" class="rbn-btn" data-revert>' . esc_html__( 'Cancel', 'contenthealth' ) . '</button></div></form>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		self::update_card();
+	}
+
+	/**
+	 * Güncelleme kartı: gövde AdminKit'in TEK ortak bileşenidir (Kit\UpdateCard); biz yalnız slug ve dönüş adresi veririz.
+	 * Kart kendi formunu taşır (admin-post.php), bu yüzden ayar formunun DIŞINDA çizilir.
+	 */
+	private static function update_card(): void {
+		echo '<section class="rbn-card" aria-labelledby="h-upd"><div class="rbn-card__h"><h2 id="h-upd">' . esc_html__( 'Updates', 'contenthealth' ) . '</h2><p>' . esc_html__( 'New versions come from the official releases on GitHub.', 'contenthealth' ) . '</p></div><div class="rbn-card__b">';
+		echo \AdminKit\Kit\UpdateCard::render( 'contenthealth', array( 'return_url' => Ui::url( array( 'tab' => 'settings' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- UpdateCard kaçışlı çıktı verir.
+		echo '</div></section>';
 	}
 
 	/** @param array<string,mixed> $s */
