@@ -105,7 +105,9 @@ abstract class Rule {
 		$def    = $this->defaults();
 		foreach ( $def as $k => $dv ) {
 			if ( 'enabled' === $k ) {
-				$cur['enabled'] = ! empty( $in['enabled'] );
+				if ( array_key_exists( 'enabled', $in ) ) {
+					$cur['enabled'] = ! empty( $in['enabled'] );
+				}
 				continue;
 			}
 			if ( ! array_key_exists( $k, $in ) ) {
