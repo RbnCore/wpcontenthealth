@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace ContentHealth\Rules;
 
+use AdminKit\Core\Security\Host;
 use ContentHealth\Ctx;
 use ContentHealth\Rule;
 use ContentHealth\Text;
@@ -278,6 +279,14 @@ final class BrokenInternalLinks extends LinkRule {
 				}
 				$abs = 0 === strpos( $h, '/' ) && 0 !== strpos( $h, '//' ) ? home_url( $h ) : $h;
 				$abs = strtok( $abs, '#' ) ?: $abs;
+				// A protocol-relative link (`//example.com/x`) gains a scheme before it is requested; the recorded
+				// address stays as the author wrote it.
+				$probe = 0 === strpos( $abs, '//' ) ? 'https:' . $abs : $abs;
+				// One door for outgoing link checks (WPRJ-685 D-1): `Host::allowed()` must accept the address — an
+				// absolute http(s) URL on this site — before anything is requested.
+				if ( ! Host::allowed( $probe, array( $ctx->home_host ), array( 'http', 'https' ) ) ) {
+					continue;
+				}
 				$k   = substr( md5( $abs ), 0, 10 );
 				if ( isset( $cursor['seen'][ $k ] ) ) {
 					if ( $cursor['seen'][ $k ] > 0 ) {
@@ -299,7 +308,7 @@ final class BrokenInternalLinks extends LinkRule {
 					);
 				}
 				usleep( (int) ( 1000000 / max( 1, (int) $c['per_second'] ) ) );
-				$res = wp_remote_head( $abs, array( 'timeout' => 8, 'redirection' => 3, 'sslverify' => false ) );
+				$res = wp_remote_head( $probe, array( 'timeout' => 8, 'redirection' => 3, 'sslverify' => false ) );
 				++$sent;
 				++$cursor['sent'];
 				$code = is_wp_error( $res ) ? 599 : (int) wp_remote_retrieve_response_code( $res );
