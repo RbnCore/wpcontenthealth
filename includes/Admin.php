@@ -186,7 +186,7 @@ final class Admin {
 
 	public static function render(): void {
 		Ui::sprite();
-		echo '<div class="wrap"><hr class="wp-header-end" />';
+		echo '<div class="wrap">';
 		if ( ! current_user_can( self::CAP ) ) {
 			echo '<div class="rbn-wrap" id="ch" role="region" aria-label="' . esc_attr__( 'Content Health', 'contenthealth' ) . '" data-screen="yetki"' . Ui::tone_attr() . '><section class="rbn-card"><div class="rbn-card__b">' . Ui::empty_state( 'lock', __( 'You do not have access to this page', 'contenthealth' ), __( 'Only the administrator role can use Content Health. Ask your site administrator for access.', 'contenthealth' ), '<a class="rbn-btn" href="' . esc_url( admin_url() ) . '">' . esc_html__( 'Back to the dashboard', 'contenthealth' ) . '</a>' ) . '</div></section></div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Ui kaçışlar.
 			return;
