@@ -203,7 +203,7 @@ final class Admin {
 			Ui::tone_attr() // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- sabit öznitelik.
 		);
 		echo '<p class="rbn-sr" id="live" role="status" aria-live="polite"></p>';
-		self::head( 'overview' === $cur && ! $onb, 'overview' === $cur );
+		self::head( 'overview' === $cur && ! $onb, 'overview' === $cur, (string) ( $tabs[ $cur ]['label'] ?? '' ) );
 		if ( ! $onb ) {
 			self::nav( $tabs, $cur );
 		}
@@ -220,7 +220,7 @@ final class Admin {
 		echo '</div>';
 	}
 
-	private static function head( bool $scan_button, bool $on_overview ): void {
+	private static function head( bool $scan_button, bool $on_overview, string $title ): void {
 		$scan = array( 'label' => __( 'Scan now', 'contenthealth' ), 'icon' => 'scan', 'kind' => 'pri' );
 		if ( $scan_button ) {
 			$scan['data'] = array( 'scan' => '' );
@@ -230,6 +230,8 @@ final class Admin {
 		echo \AdminKit\Helpers\Header::render( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Header::render() kaçışlar.
 			array(
 				'name'    => __( 'Content Health', 'contenthealth' ),
+				'title'        => $title,
+				'title_hidden' => true,
 				'version' => CONTENTHEALTH_VERSION,
 				'status'  => array( 'label' => __( 'Active', 'contenthealth' ), 'tone' => 'ok' ),
 				'actions' => $scan_button || ! $on_overview ? array( $scan ) : array(),
