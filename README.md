@@ -44,7 +44,7 @@ Site owners and editors with a growing archive: content pasted from chat assista
 ## Installation
 
 1. Install and activate **AdminKit** first; ContentHealth cannot be activated without it.
-2. Download `contenthealth-0.1.6.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
+2. Download `contenthealth-0.1.7.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
 3. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
 4. Open **RBN Kit → Content Health** and press **Scan now**. A three-step welcome screen offers to set scan frequency, scope and the first scan; you can skip it.
 
@@ -73,7 +73,7 @@ The screen lives under the shared **RBN Kit** top-level menu, just below Dashboa
 
 ## Version and license
 
-- Version 0.1.6
+- Version 0.1.7
 - License: GPL-2.0-or-later (see [LICENSE](LICENSE))
 - Text domain: `contenthealth`
 

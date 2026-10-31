@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: ContentHealth 0.1.5\n"
+"Project-Id-Version: ContentHealth 0.1.7\n"
 "Report-Msgid-Bugs-To: https://github.com/RbnCore\n"
 "POT-Creation-Date: 2026-10-29 07:58+0300\n"
 "Language: tr_TR\n"

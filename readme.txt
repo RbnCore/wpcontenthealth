@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
 Requires Plugins: adminkit
-Stable tag: 0.1.6
+Stable tag: 0.1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,18 @@ Yes. Every run writes the previous value and its SHA-256 digest to the log; cont
 Not by default. If you choose "Delete on uninstall" in Settings, the tables and settings are deleted.
 
 == Changelog ==
+
+= 0.1.7 =
+* New: Rule and preference switches take effect as soon as you change them (no Save button needed).
+* Settings export and import now carries the rule and kit settings, with transfer flags per section (a site address field is not copied to another site).
+* Settings are saved and cleared by the shared AdminKit settings engine; the plugin's own save code is removed.
+* The update card on the Settings tab is the shared AdminKit component, and update checks go through the central updater.
+* The internal link scan follows the central host rule, so a scan cannot be pointed at another host.
+* Admin actions go through one capability, host and query gate. Rule and security keys keep their real `0` value instead of falling back to the default.
+* Confirmation dialogs and notices use the shared AdminKit components; the screens no longer fall back to the browser's own dialog.
+* One page header on every screen, with the same heading and brand line as the other RBN plugins.
+* Turkish translation updated; dead code and unused strings removed.
+* Fixed: WP-CLI commands are registered only when the WP-CLI class exists, and a database query whose argument was wrapped twice no longer fails.
 
 = 0.1.6 =
 * Updates: the plugin is now updated by the AdminKit core (one central updater, AdminKit 0.1.1 or newer; "Update URI" header added). The package is checked with its SHA-256 digest and Ed25519 signature before installation. The plugin itself still calls no external service; the check goes through AdminKit and follows the RBN Kit network setting.
