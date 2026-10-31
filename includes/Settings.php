@@ -37,45 +37,54 @@ final class Settings {
 		self::textdomain();
 		$schema = array(
 			'frequency'           => array(
-				'type'    => 'enum',
-				'default' => 'off',
-				'values'  => array( 'off', 'hourly', 'daily', 'weekly' ),
+				'type'     => 'enum',
+				'portable' => true,
+				'default'  => 'off',
+				'values'   => array( 'off', 'hourly', 'daily', 'weekly' ),
 			),
 			'time_budget'         => array(
-				'type'    => 'int',
-				'default' => 5,
-				'min'     => 1,
-				'max'     => 20,
+				'type'     => 'int',
+				'portable' => true,
+				'default'  => 5,
+				'min'      => 1,
+				'max'      => 20,
 			),
 			'batch_size'          => array(
-				'type'    => 'int',
-				'default' => 100,
-				'min'     => 10,
-				'max'     => 500,
+				'type'     => 'int',
+				'portable' => true,
+				'default'  => 100,
+				'min'      => 10,
+				'max'      => 500,
 			),
 			'statuses'            => array(
-				'type'    => 'list',
-				'default' => array( 'publish' ),
+				'type'     => 'list',
+				'portable' => true,
+				'default'  => array( 'publish' ),
 			),
 			'exclude_post_types'  => array(
-				'type'    => 'list',
-				'default' => array( 'attachment' ),
+				'type'     => 'list',
+				'portable' => true,
+				'default'  => array( 'attachment' ),
 			),
 			'keep_modified'       => array(
-				'type'    => 'bool',
-				'default' => true,
+				'type'     => 'bool',
+				'portable' => true,
+				'default'  => true,
 			),
 			'audit_on_save'       => array(
-				'type'    => 'bool',
-				'default' => true,
+				'type'     => 'bool',
+				'portable' => true,
+				'default'  => true,
 			),
 			'delete_on_uninstall' => array(
-				'type'    => 'bool',
-				'default' => false,
+				'type'     => 'bool',
+				'portable' => true,
+				'default'  => false,
 			),
 			'live_host'           => array(
-				'type'    => 'host_port',
-				'default' => '',
+				'type'          => 'host_port',
+				'site_specific' => true,
+				'default'       => '',
 			),
 		);
 		// Modüller kendi ayar varsayılanlarını bildirir (alt_template, term_taxonomies); tür varsayılandan türetilir.
@@ -210,6 +219,15 @@ final class Settings {
 	 * @return array<string,mixed>
 	 */
 	private static function module_field( $default ): array {
+		// Modül ayarları siteye bağlı değildir: ayar dosyasıyla başka siteye taşınır (docs/ayar-tasima.md, AdminKit).
+		return self::module_row( $default ) + array( 'portable' => true );
+	}
+
+	/**
+	 * @param mixed $default Modül varsayılanı.
+	 * @return array<string, mixed>
+	 */
+	private static function module_row( $default ): array {
 		if ( is_array( $default ) ) {
 			return array(
 				'type'    => 'list',

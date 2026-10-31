@@ -102,8 +102,9 @@ abstract class Rule {
 	public function settings_schema(): array {
 		$schema = array(
 			'enabled' => array(
-				'type'    => 'bool',
-				'default' => true,
+				'type'     => 'bool',
+				'default'  => true,
+				'portable' => true,
 			),
 		);
 		foreach ( $this->defaults() as $key => $default ) {
@@ -122,6 +123,16 @@ abstract class Rule {
 	 * @return array<string,mixed>
 	 */
 	public static function field_schema( string $key, $default ): array {
+		// Kural ayarları siteye bağlı değildir (eşik/desen): ayar dosyasıyla başka siteye taşınır (AdminKit).
+		return self::field_row( $key, $default ) + array( 'portable' => true );
+	}
+
+	/**
+	 * @param string $key     Alan adı.
+	 * @param mixed  $default Varsayılan.
+	 * @return array<string,mixed>
+	 */
+	private static function field_row( string $key, $default ): array {
 		if ( is_bool( $default ) ) {
 			return array(
 				'type'    => 'bool',
