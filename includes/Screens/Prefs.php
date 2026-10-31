@@ -24,6 +24,18 @@ final class Prefs {
 	private const EDITOR_RULE   = 'ai_chat_residue';
 	private const EDITOR_FIELDS = array( 'patterns_head', 'patterns_tail', 'patterns_anywhere' );
 
+	/**
+	 * Anında anahtar işareti: kural tek yerde (AdminKit `Form::instant`), burada kopyalanmaz.
+	 *
+	 * @param string $path  Motorun şema yolu (`keep_modified`, `rules.latex_leftovers.enabled`).
+	 * @param string $label Onay sorusunda görünen ad.
+	 */
+	private static function instant( string $path, string $label ): string {
+		return class_exists( '\AdminKit\Core\Settings\Form' )
+			? \AdminKit\Core\Settings\Form::attrs( \AdminKit\Core\Settings\Form::instant( Settings::SLUG, $path, $label ) )
+			: '';
+	}
+
 	private static function label( string $key ): string {
 		$map = array(
 			'max_len'          => __( 'Maximum length (characters)', 'contenthealth' ),
@@ -129,7 +141,7 @@ final class Prefs {
 		$id   = $rule->id();
 		$name = 's[rules][' . $id . ']';
 		$dom  = 'r-' . $id;
-		echo '<div class="ch-rule"><div class="ch-rule__m"><input type="hidden" name="' . esc_attr( $name ) . '[enabled]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="' . esc_attr( $dom ) . '" name="' . esc_attr( $name ) . '[enabled]" value="1"' . checked( ! empty( $cfg['enabled'] ), true, false ) . ' aria-describedby="' . esc_attr( $dom ) . '-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html( $rule->label() ) . '</b><span class="rbn-help" id="' . esc_attr( $dom ) . '-h">' . esc_html( $rule->description() ) . '</span></span></label></div>';
+		echo '<div class="ch-rule"><div class="ch-rule__m"><input type="hidden" name="' . esc_attr( $name ) . '[enabled]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="' . esc_attr( $dom ) . '" name="' . esc_attr( $name ) . '[enabled]" value="1"' . checked( ! empty( $cfg['enabled'] ), true, false ) . self::instant( 'rules.' . $id . '.enabled', $rule->label() ) . ' aria-describedby="' . esc_attr( $dom ) . '-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html( $rule->label() ) . '</b><span class="rbn-help" id="' . esc_attr( $dom ) . '-h">' . esc_html( $rule->description() ) . '</span></span></label></div>';
 		$fields = '';
 		foreach ( $rule->defaults() as $k => $dv ) {
 			if ( 'enabled' === $k || ( self::EDITOR_RULE === $id && in_array( $k, self::EDITOR_FIELDS, true ) ) ) {
@@ -177,9 +189,9 @@ final class Prefs {
 	/** @param array<string,mixed> $s */
 	private static function safety_card( array $s ): void {
 		echo '<section class="rbn-card" aria-labelledby="h-sf"><div class="rbn-card__h"><h2 id="h-sf">' . esc_html__( 'Safety', 'contenthealth' ) . '</h2></div><div class="rbn-card__b"><div class="ch-stack">';
-		echo '<input type="hidden" name="s[keep_modified]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="t-km" name="s[keep_modified]" value="1"' . checked( ! empty( $s['keep_modified'] ), true, false ) . ' aria-describedby="t-km-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html__( 'Keep the last modified date when fixing', 'contenthealth' ) . '</b><span class="rbn-help" id="t-km-h">' . esc_html__( 'When on, fixed posts do not show as “updated”.', 'contenthealth' ) . '</span></span></label>';
-		echo '<input type="hidden" name="s[audit_on_save]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="t-as" name="s[audit_on_save]" value="1"' . checked( ! empty( $s['audit_on_save'] ), true, false ) . ' aria-describedby="t-as-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html__( 'Re-check on save', 'contenthealth' ) . '</b><span class="rbn-help" id="t-as-h">' . esc_html__( 'When you save a post, only that post\'s findings are checked again; a finding you fixed by hand becomes “fixed” on its own. Rules that look at the whole site, such as duplicate title and orphan content, wait for the scan.', 'contenthealth' ) . '</span></span></label>';
-		echo '<input type="hidden" name="s[delete_on_uninstall]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="t-du" name="s[delete_on_uninstall]" value="1"' . checked( ! empty( $s['delete_on_uninstall'] ), true, false ) . ' aria-describedby="t-du-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html__( 'Delete data when the plugin is deleted', 'contenthealth' ) . '</b><span class="rbn-help" id="t-du-h">' . esc_html__( 'When off, findings, settings and the undo log remain even if the plugin is deleted.', 'contenthealth' ) . '</span></span></label>';
+		echo '<input type="hidden" name="s[keep_modified]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="t-km" name="s[keep_modified]" value="1"' . checked( ! empty( $s['keep_modified'] ), true, false ) . self::instant( 'keep_modified', __( 'Keep the last modified date when fixing', 'contenthealth' ) ) . ' aria-describedby="t-km-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html__( 'Keep the last modified date when fixing', 'contenthealth' ) . '</b><span class="rbn-help" id="t-km-h">' . esc_html__( 'When on, fixed posts do not show as “updated”.', 'contenthealth' ) . '</span></span></label>';
+		echo '<input type="hidden" name="s[audit_on_save]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="t-as" name="s[audit_on_save]" value="1"' . checked( ! empty( $s['audit_on_save'] ), true, false ) . self::instant( 'audit_on_save', __( 'Re-check on save', 'contenthealth' ) ) . ' aria-describedby="t-as-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html__( 'Re-check on save', 'contenthealth' ) . '</b><span class="rbn-help" id="t-as-h">' . esc_html__( 'When you save a post, only that post\'s findings are checked again; a finding you fixed by hand becomes “fixed” on its own. Rules that look at the whole site, such as duplicate title and orphan content, wait for the scan.', 'contenthealth' ) . '</span></span></label>';
+		echo '<input type="hidden" name="s[delete_on_uninstall]" value="0"><label class="rbn-switch"><input type="checkbox" role="switch" id="t-du" name="s[delete_on_uninstall]" value="1"' . checked( ! empty( $s['delete_on_uninstall'] ), true, false ) . self::instant( 'delete_on_uninstall', __( 'Delete data when the plugin is deleted', 'contenthealth' ) ) . ' aria-describedby="t-du-h"><span class="rbn-switch__x"></span><span class="ch-switch__t"><b>' . esc_html__( 'Delete data when the plugin is deleted', 'contenthealth' ) . '</b><span class="rbn-help" id="t-du-h">' . esc_html__( 'When off, findings, settings and the undo log remain even if the plugin is deleted.', 'contenthealth' ) . '</span></span></label>';
 		echo '</div></div></section>';
 	}
 
