@@ -5,7 +5,7 @@ Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 8.1
 Requires Plugins: adminkit
-Stable tag: 0.1.7
+Stable tag: 0.1.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,9 @@ Yes. Every run writes the previous value and its SHA-256 digest to the log; cont
 Not by default. If you choose "Delete on uninstall" in Settings, the tables and settings are deleted.
 
 == Changelog ==
+
+= 0.1.8 =
+* Fix: the Content Health tile link text color is read from the single `--rbn-a` token, so a Dark Mode plugin can no longer override the hover and focus color.
 
 = 0.1.7 =
 * New: Rule and preference switches take effect as soon as you change them (no Save button needed).
