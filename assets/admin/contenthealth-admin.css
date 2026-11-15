@@ -801,12 +801,12 @@
   border-radius: var(--rbn-r-lg);
   box-shadow: var(--rbn-shadow);
   text-decoration: none;
-  color: var(--rbn-text);
+  --rbn-a: var(--rbn-text); /* AdminKit bağlantı yazı jetonu (Dark Mode eklentisi hover/odak rengini ezemesin) */
+  color: var(--rbn-a);
 }
 
 .rbn-wrap .ch-tile:hover {
   border-color: var(--rbn-ac);
-  color: var(--rbn-text);
 }
 
 .rbn-wrap .ch-tile[aria-current="true"] {
