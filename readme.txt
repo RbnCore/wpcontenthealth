@@ -2,7 +2,7 @@
 Contributors: rbnbilisim
 Tags: content health, seo, cleanup, taxonomy, wp-cli
 Requires at least: 6.5
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 8.1
 Requires Plugins: adminkit
 Stable tag: 0.1.8
@@ -49,6 +49,7 @@ Not by default. If you choose "Delete on uninstall" in Settings, the tables and 
 * Fix: the Content Health tile link text color is read from the single `--rbn-a` token, so a Dark Mode plugin can no longer override the hover and focus color.
 
 = 0.1.7 =
+* Requirement: AdminKit core API level 4 (AdminKit 0.1.2 or newer) is now required.
 * New: Rule and preference switches take effect as soon as you change them (no Save button needed).
 * Settings export and import now carries the rule and kit settings, with transfer flags per section (a site address field is not copied to another site).
 * Settings are saved and cleared by the shared AdminKit settings engine; the plugin's own save code is removed.

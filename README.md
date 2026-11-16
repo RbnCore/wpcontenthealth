@@ -52,7 +52,7 @@ You can also copy the `contenthealth` folder into `wp-content/plugins/`.
 
 ## Updating
 
-Updates are done by the **AdminKit** core (0.1.1 or newer), which has one central updater for all RBN plugins: it looks for a new release only inside WordPress' own update check, and installs a package only after its SHA-256 digest and Ed25519 signature match. The check follows the RBN Kit network setting (RBN Kit → AdminKit → Network); when GitHub access is off, nothing is contacted. The plugin itself never contacts GitHub.
+Updates are done by the **AdminKit** core (0.1.2 or newer), which has one central updater for all RBN plugins: it looks for a new release only inside WordPress' own update check, and installs a package only after its SHA-256 digest and Ed25519 signature match. The check follows the RBN Kit network setting (RBN Kit → AdminKit → Network); when GitHub access is off, nothing is contacted. The plugin itself never contacts GitHub.
 
 You can still update by hand: upload the new `contenthealth-<version>.zip` over the installed copy (Plugins → Add New → Upload Plugin → *Replace current*). Settings, findings and the undo log are kept: the database schema is additive and versioned, and an update only touches files.
 
