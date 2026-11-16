@@ -7,7 +7,7 @@ ContentHealth is a content-health panel for WordPress, in the spirit of Site Hea
 ContentHealth does not work without the **AdminKit** plugin. Its header declares `Requires Plugins: adminkit`.
 
 - On WordPress 6.5 and later, WordPress refuses to activate ContentHealth while AdminKit is missing or inactive.
-- A second check runs on every request: without AdminKit, or with an AdminKit older than core API level 1, ContentHealth adds no hook, prints nothing and shows one admin notice with a link to activate AdminKit (when it is installed) or to download and install it.
+- A second check runs on every request: without AdminKit, or with an AdminKit older than core API level 4, ContentHealth adds no hook, prints nothing and shows one admin notice with a link to activate AdminKit (when it is installed) or to download and install it.
 - Install and activate **AdminKit first**, then ContentHealth.
 
 AdminKit supplies what this plugin shares with the other RBN plugins: the RBN Kit menu, the admin interface kit, the cache group `contenthealth.scores` and the log channel `contenthealth.errors`.
@@ -44,7 +44,7 @@ Site owners and editors with a growing archive: content pasted from chat assista
 ## Installation
 
 1. Install and activate **AdminKit** first; ContentHealth cannot be activated without it.
-2. Download `contenthealth-0.1.7.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
+2. Download `contenthealth-0.1.8.zip` from [Releases](https://github.com/RbnCore/wpcontenthealth/releases). If you downloaded the package by hand, compare its SHA-256 with the `.sha256` asset next to it.
 3. In WordPress go to **Plugins → Add New → Upload Plugin**, choose the zip, install and activate.
 4. Open **RBN Kit → Content Health** and press **Scan now**. A three-step welcome screen offers to set scan frequency, scope and the first scan; you can skip it.
 
@@ -73,7 +73,7 @@ The screen lives under the shared **RBN Kit** top-level menu, just below Dashboa
 
 ## Version and license
 
-- Version 0.1.7
+- Version 0.1.8
 - License: GPL-2.0-or-later (see [LICENSE](LICENSE))
 - Text domain: `contenthealth`
 
